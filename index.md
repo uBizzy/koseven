@@ -2,7 +2,8 @@
 layout: default
 title: Home | koseven - PHP framework
 ---
-## [Download](https://github.com/koseven/koseven/archive/master.zip)
+
+## [Download 3.3.6](https://github.com/koseven/koseven/archive/3.3.6.zip)
 
 ### [Join the Telegram group](https://telegram.me/koseven)
 
