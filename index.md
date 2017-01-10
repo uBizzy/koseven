@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home | koseven - PHP framework
+title: Koseven a Kohana Framework fork compatible with PHP7
 ---
 
 ## [Download 3.3.6](https://github.com/koseven/koseven/archive/3.3.6.zip)
