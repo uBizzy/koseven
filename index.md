@@ -1,6 +1,6 @@
 ## [Download](https://github.com/koseven/koseven/archive/master.zip)
 
-### [Join the Telegram group] (https://telegram.me/koseven)
+### [Join the Telegram group](https://telegram.me/koseven)
 
 # Koseven PHP Framework
 
