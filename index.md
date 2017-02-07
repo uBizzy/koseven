@@ -5,6 +5,8 @@ title: Koseven a Kohana Framework fork compatible with PHP7
 
 ## [Download 3.3.6](https://github.com/koseven/koseven/archive/3.3.6.zip)
 
+## [Modules](https://koseven.ga/modules.html)
+
 ### [Join the Telegram group](https://telegram.me/koseven)
 
 # Koseven PHP Framework
@@ -33,7 +35,7 @@ So far is exactly as last stable version of KO 3.3.6 released on Jul 25, 2016. B
 
 ## Are modules of Kohana compatible?
 
-Yes they are, just be sure are compatible with KO 3.3.X. 
+Yes they are, just be sure are compatible with KO 3.3.X. Check the compatible list here [Modules](https://koseven.ga/modules.html).
 
 ## Why all modules in 1 repo?
 
