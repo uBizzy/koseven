@@ -9,7 +9,7 @@ title: Koseven a Kohana Framework fork compatible with PHP7
 
 # Koseven PHP Framework
 
-Koseven is a PHP framework based on [Kohana](http://kohanaframework.org/) 3.3.X . Fully compatible with Kohana and updated to work with PHP7
+Koseven is a PHP framework based on defunct [Kohana](http://kohanaframework.org/) 3.3.X . Fully compatible with Kohana and updated to work with PHP7
 
 Koseven is an elegant, open source, and object oriented HMVC framework built using PHP7, by a team of volunteers. It aims to be swift, secure, and small.
 
@@ -17,19 +17,19 @@ Released under a [BSD license](LICENSE.md), Koseven can be used legally for any 
 
 ## Why a Kohana alternative?
 
-I use Kohana 3.3.x in many live projects and migration will be really complex into any new PHP framework. Keeping the project alive and updated is a priority. Kohana team (which I belong too) will not release any new version. [Kohana is DEAD] (http://discourse.kohanaframework.org/t/search-for-collaborators/56)
+I use Kohana 3.3.x in many live projects and migration will be really complex into any new PHP framework. Keeping the project alive and updated is a priority. Kohana team (which I belong too) will not release any new version. [Kohana is DEAD](http://discourse.kohanaframework.org/t/kohana-retirement-2017-07-01/1277)
 
-I will keep updated tihs repo with any other new issues or features on Kohana.
+I will keep updated tihs repo with any other new issues or features released at Kohana.
 
 ## Will work as dropin of Kohana?
 
-If you were using 3.3.x version normally yes. Normally? theres 2 breaking changes that may affect you be aware. We have removed MySQL (you need to use MySQLi) and exception.php is now compatible with PHP7.
+If you were using 3.3.x version normally yes. Normally? theres 2 breaking changes that may affect you, be aware. We have removed MySQL (you need to use MySQLi) and exception.php is now compatible with PHP7.
 
 We have also added the pagination module.
 
 ## What changes have you made?
 
-So far is exactly as last stable version of KO 3.3.6 released on Jul 25, 2016. But compatible with PHP 7 / PHP 7.1. I personally would like only to add fixes, bug fixes, speed improvements and the rest leave it for the modules.
+So far is exactly as last stable version of KO 3.3.6 released on Jul 25, 2016. But compatible with PHP 7 / PHP 7.1. We only add fixes, bug fixes, speed improvements and the rest leave it for the modules.
 
 ## Are modules of Kohana compatible?
 
