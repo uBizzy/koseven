@@ -6,7 +6,7 @@
 [![Telegram](https://img.shields.io/badge/Telegram-joinChat-blue.svg)](https://telegram.me/koseven)
 [![Build Status](https://travis-ci.org/koseven/koseven.svg?branch=devel)](https://travis-ci.org/koseven/koseven)
 
-## [Download 3.3.7](https://github.com/koseven/koseven/archive/3.3.7.zip)
+## [Download 3.3.7](https://github.com/koseven/koseven/releases/tag/3.3.7)
 
 ### [Join the Telegram group](https://telegram.me/koseven)
 
@@ -27,9 +27,16 @@ And so the Koseven repository was born and will keep this repository updated for
 
 ## Will work as dropin of Kohana?
 
-If you were using 3.3.x version normally yes. Normally? There are 2 breaking changes that may affect you, be aware. We have removed MySQL support (in favor for MySQLi) and exception.php is now compatible with PHP7.
+If you were using 3.3.x version normally yes. Normally? There are 4 breaking changes that may affect you, be aware. Please check how to migrate.
 
 We have also added the pagination module.
+
+## Migrate Kohana 3.3.x to Koseven 3.3.7
+
+- **Kohana_Kohana_Exception**, all functions that received parameter Exception $e have been replaced to just $e. If you are extending the class verify you have the same.
+- **Kohana_URL**, now function site has a new parameter `$subdomain = NULL`, if you are extending the class and this function add it.
+- **Module encrypt**, now encryption works as a module, if you are using new Encrypt or similar you need to enable the module in your bootstrap ex: `'encrypt'       => MODPATH.'encrypt',` 
+- **MySQL driver** has been removed. If you are still using it, please install MySQLi driver and then edit your `config/database.php` and then set as `'type'       => 'MySQLi'`
 
 ## What changes have you made?
 
