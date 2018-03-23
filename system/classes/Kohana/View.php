@@ -238,14 +238,12 @@ class Kohana_View {
 		catch (Exception $e)
 		{
 			/**
-			 * Display the exception message.
+			 * Display the exception message and halt script execution.
 			 *
 			 * We use this method here because it's impossible to throw an
 			 * exception from __toString().
 			 */
-			$error_response = Kohana_Exception::_handler($e);
-
-			return $error_response->body();
+			Kohana_Exception::handler($e);
 		}
 	}
 
