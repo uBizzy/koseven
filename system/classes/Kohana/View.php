@@ -244,6 +244,9 @@ class Kohana_View {
 			 * exception from __toString().
 			 */
 			Kohana_Exception::handler($e);
+			
+			// This line will never ne reached
+			return '';
 		}
 	}
 
