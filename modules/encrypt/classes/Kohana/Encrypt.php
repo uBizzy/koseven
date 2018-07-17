@@ -98,9 +98,8 @@ class Kohana_Encrypt {
      * to convert it to a string. This string can be stored in a database,
      * displayed, and passed using most other means without corruption.
      *
-     * @param String $message
+     * @param String $message Message to be encrypted
      * @return null|string
-     * @internal param string $data data to be encrypted
      */
 	public function encode(String $message): ?string
 	{

@@ -57,8 +57,6 @@ abstract class Kohana_Encrypt_Engine
      * Decrypts the ciphertext
      * @param String $ciphertext Your ciphertext to be decrypted.
      * @return null|string
-     * @internal param String $iv
-     * @internal param String $data
      */
     abstract public function decrypt(String $ciphertext): ?string;
 
