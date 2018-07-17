@@ -22,58 +22,21 @@ abstract class Kohana_Encrypt_Engine
     protected $_mode;
 
     /**
-     * @var string mcrypt cipher
+     * @var string cipher
      */
     protected $_cipher;
 
     /**
-     * Creates a new mcrypt wrapper.
+     * Creates a new Encrypt object.
      *
-     * @param   mixed $key_config mcrypt key or config array
-     * @param   string $mode mcrypt mode
-     * @param   string $cipher mcrypt cipher
+     * @param array $config
      * @throws Kohana_Exception
      */
-    public function __construct($key_config, $mode = NULL, $cipher = NULL)
+    public function __construct(array $config)
     {
-        if (is_array($key_config))
+        if (isset($config['key']))
         {
-            if (isset($key_config['key']))
-            {
-                $this->_key = $key_config['key'];
-            }
-            else
-            {
-                // No default encryption key is provided!
-                throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
-            }
-
-            if (isset($key_config['mode']))
-            {
-                $this->_mode = $key_config['mode'];
-            }
-            // Mode not specified in config array, use argument
-            else if ($mode !== NULL)
-            {
-                $this->_mode = $mode;
-            }
-
-            if (isset($key_config['cipher']))
-            {
-                $this->_cipher = $key_config['cipher'];
-            }
-            // Cipher not specified in config array, use argument
-            else if ($cipher !== NULL)
-            {
-                $this->_cipher = $cipher;
-            }
-        }
-        else if (is_string($key_config))
-        {
-            // Store the key, mode, and cipher
-            $this->_key = $key_config;
-            $this->_mode = $mode;
-            $this->_cipher = $cipher;
+            $this->_key = $config['key'];
         }
         else
         {
@@ -83,15 +46,16 @@ abstract class Kohana_Encrypt_Engine
     }
 
     /**
-     * Encrypts
-     * @param String $message Your message to be encrypted
+     * Encrypts the message
+     * @param String $message Your message to be encrypted.
      * @param String $iv
      * @return null|string
      */
     abstract public function encrypt(String $message, String $iv): ?string;
 
     /**
-     * @param String $ciphertext Your ciphertext to be decoded
+     * Decrypts the ciphertext
+     * @param String $ciphertext Your ciphertext to be decrypted.
      * @return null|string
      * @internal param String $iv
      * @internal param String $data
@@ -99,7 +63,7 @@ abstract class Kohana_Encrypt_Engine
     abstract public function decrypt(String $ciphertext): ?string;
 
     /**
-     * Creates random IV (Initialization vector)
+     * Creates random IV (Initialization vector) for each encryption action.
      * @return string
      */
     abstract public function create_iv(): string;

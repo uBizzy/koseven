@@ -19,8 +19,13 @@
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
+class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
+{
+    use Traits_Encrypt_Iv;
 
+    /**
+     * @var String Engine type
+     */
     const TYPE = 'Openssl';
 
 	/**
@@ -31,21 +36,23 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
     /**
      * Creates a new openssl wrapper.
      *
-     * @param mixed $key_config
-     * @param   string $mode openssl mode
-     * @param   string $cipher openssl cipher
+     * @param array $config Array with configuration
      * @throws Kohana_Exception
-     * @internal param string $key encryption key
      */
-	public function __construct($key_config, $mode = NULL, $cipher = NULL)
+	public function __construct(array $config)
 	{
-		if ($cipher === NULL)
+	    if( ! function_exists('openssl_cipher_iv_length'))
+	    {
+	        throw new Kohana_Exception('OpenSSL extension is not installed.');
+        }
+
+		if ( ! isset($config['cipher']) || $config['cipher'] === NULL)
 		{
 			// Add the default cipher
-			$cipher = 'AES-256-CBC';
+			$this->_cipher = 'AES-256-CBC';
 		}
 
-		parent::__construct($key_config, $mode, $cipher);
+		parent::__construct($config);
 
 		$this->_iv_size = openssl_cipher_iv_length($this->_cipher);
 
@@ -60,7 +67,6 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 				throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be 16 for AES-128-CBC');
 			}
 		}
-
 		elseif ($this->_cipher === 'AES-256-CBC')
 		{
 			if ($length !== 32)
@@ -69,7 +75,6 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 				throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be 32 for AES-256-CBC');
 			}
 		}
-
 		else
 		{
 			// No valid encryption cipher is provided!
@@ -80,6 +85,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
     /**
      * Encrypts a string and returns an encrypted string that can be decoded.
      * @param String $data
+     * @param String $iv
      * @return null|string
      */
 	public function encrypt(String $data, String $iv): ?string
@@ -164,7 +170,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 	 * @param  mixed  $value
 	 * @return string
 	 */
-	protected function hash($iv, $value)
+	protected function hash($iv, $value): string
 	{
 		return hash_hmac('sha256', $iv.$value, $this->_key);
 	}
@@ -175,10 +181,10 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 	 * @param  mixed  $payload
 	 * @return bool
 	 */
-	protected function valid_payload($payload)
+	protected function valid_payload($payload): bool
 	{
-		return is_array($payload) AND
-				isset($payload['iv'], $payload['value'], $payload['mac']) AND
+		return is_array($payload) &&
+				isset($payload['iv'], $payload['value'], $payload['mac']) &&
 				strlen(base64_decode($payload['iv'], TRUE)) === $this->_iv_size;
 	}
 
@@ -188,35 +194,11 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 	 * @param  array  $payload
 	 * @return bool
 	 */
-	protected function valid_mac(array $payload)
+	protected function valid_mac(array $payload): bool
 	{
-		$bytes = $this->create_iv($this->_iv_size);
+		$bytes = $this->create_iv();
 		$calculated = hash_hmac('sha256', $this->hash($payload['iv'], $payload['value']), $bytes, TRUE);
 
 		return hash_equals(hash_hmac('sha256', $payload['mac'], $bytes, TRUE), $calculated);
-	}
-
-    /**
-     * Proxy for the random_bytes function - to allow mocking and testing against KAT vectors
-     * @return string the initialization vector or FALSE on error
-     * @throws Kohana_Exception
-     */
-	public function create_iv(): string
-	{
-		if (function_exists('random_bytes'))
-		{
-			return random_bytes($this->_iv_size);
-		}
-
-		if (function_exists('mcrypt_create_iv'))
-		{
-			$key = mcrypt_create_iv($this->_iv_size, MCRYPT_DEV_URANDOM);
-			if (mb_strlen($key, '8bit') === $this->_iv_size)
-			{
-				return $key;
-			}
-		}
-
-		throw new Kohana_Exception('Could not create initialization vector.');
 	}
 }

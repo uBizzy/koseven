@@ -19,6 +19,11 @@
  */
 class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 {
+    use Traits_Encrypt_Iv;
+
+    /**
+     * @var String Engine type
+     */
     const TYPE = 'Sodium';
 
     /**
@@ -28,15 +33,13 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 
     /**
      * Sodium constructor.
-     * @param mixed $key_config
-     * @param null $mode
-     * @param null $cipher
+     * @param array $config Array with configuration
      * @throws Kohana_Exception
      */
-    public function __construct($key_config, $mode = NULL, $cipher = NULL)
+    public function __construct($config)
     {
-        parent::__construct($key_config, $mode, $cipher);
-        if(function_exists('sodium_crypto_aead_aes256gcm_is_available') &&  ! sodium_crypto_aead_aes256gcm_is_available())
+        parent::__construct($config);
+        if( ! function_exists('sodium_crypto_aead_aes256gcm_is_available') || ! sodium_crypto_aead_aes256gcm_is_available())
         {
             throw new Kohana_Exception('Sodium extension is not available');
         }
@@ -119,20 +122,10 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
      * @param $payload
      * @return bool
      */
-    protected function valid_payload($payload)
+    protected function valid_payload($payload): bool
     {
-        return is_array($payload) AND
-            isset($payload['iv'], $payload['value']) AND
+        return is_array($payload) &&
+            isset($payload['iv'], $payload['value']) &&
             strlen(base64_decode($payload['iv'], TRUE)) === $this->_iv_size;
-    }
-
-    /**
-     * Creates random IV (Initialization vector)
-     * @see https://paragonie.com/book/pecl-libsodium/read/08-advanced.md#crypto-aead-aes256gcm
-     * @return string
-     */
-    public function create_iv(): string
-    {
-        return random_bytes($this->_iv_size);
     }
 }

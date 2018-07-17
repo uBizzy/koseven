@@ -61,38 +61,32 @@ class Kohana_Encrypt {
 			}
 
 			// Create a new instance
-			Encrypt::$instances[$name] = new Encrypt($config);
+			Encrypt::$instances[$name] = new self($name, $config);
 		}
 
 		return Encrypt::$instances[$name];
 	}
 
-	/**
-	 * Creates a new Encrypt Engine instance.
-	 *
-	 * @param   string  $key_config    encryption key or config array
-	 * @param   string  $mode          encryption mode
-	 * @param   string  $cipher        encryption cipher
-	 */
-	public function __construct($key_config, $mode = NULL, $cipher = NULL)
+    /**
+     * Creates a new Encrypt Engine instance.
+     *
+     * @param array $config
+     * @param String $name
+     */
+	private function __construct(String $name, array $config)
 	{
-		if (is_string($key_config))
-		{
-			$this->_engine = new Encrypt_Engine_Mcrypt($key_config, $mode, $cipher);
-		}
-		else
-		{
-			if ( ! isset($key_config['type']))
-			{
-				$key_config['type'] = Encrypt_Engine_Openssl::TYPE;
-			}
+        if ( ! isset($config['type']))
+        {
+            $config['type'] = Encrypt_Engine_Openssl::TYPE;
+        }
 
-			// Set the engine class name
-			$engine_name = 'Encrypt_Engine_'.ucfirst($key_config['type']);
+        $this->_name = $name;
 
-			// Create the engine class
-			$this->_engine = new $engine_name($key_config);
-		}
+        // Set the engine class name
+        $engine_name = 'Encrypt_Engine_'.ucfirst($config['type']);
+
+        // Create the engine class
+        $this->_engine = new $engine_name($config);
 	}
 
     /**
@@ -128,7 +122,7 @@ class Kohana_Encrypt {
 	}
 
 	/**
-	 * Proxy for the mcrypt_create_iv function - to allow mocking and testing against KAT vectors
+	 * Proxy for the create_iv function - to allow mocking and testing against KAT vectors
 	 *
 	 * @return string the initialization vector or FALSE on error
 	 */
@@ -143,6 +137,6 @@ class Kohana_Encrypt {
      */
 	public function __toString(): string
     {
-        return get_class($this->_engine);
+        return get_class($this->_engine) . ' (' . $this->_name. ')';
     }
 }

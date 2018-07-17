@@ -24,8 +24,11 @@
  * @license    https://koseven.ga/LICENSE.md
  * @deprecated
  */
-class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
-
+class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
+{
+    /**
+     * @var String Engine type
+     */
     const TYPE = 'Mcrypt';
 
 	/**
@@ -41,28 +44,25 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 	 */
 	protected $_iv_size;
 
-	/**
-	 * Creates a new mcrypt wrapper.
-	 *
-	 * @param   mixed   $key_config    mcrypt key or config array
-	 * @param   string  $mode          mcrypt mode
-	 * @param   string  $cipher        mcrypt cipher
-	 */
-	public function __construct($key_config, $mode = NULL, $cipher = NULL)
+    /**
+     * Creates a new mcrypt wrapper.
+     *
+     * @param array $config Array with configuration
+     */
+	public function __construct($config)
 	{
-		if ($mode === NULL)
+        parent::__construct($config);
+		if ( ! isset($config['mode']) || $config['mode'] === NULL)
 		{
 			// Add the default mode
-			$mode = MCRYPT_MODE_NOFB;
+			$this->_mode = constant('MCRYPT_MODE_NOFB');
 		}
 
-		if ($cipher === NULL)
+		if (! isset($config['cipher']) || $config['cipher'] === NULL)
 		{
 			// Add the default cipher
-			$cipher = MCRYPT_RIJNDAEL_128;
+			$this->_cipher = constant('MCRYPT_RIJNDAEL_128');
 		}
-
-		parent::__construct($key_config, $mode, $cipher);
 
 		// Find the max length of the key, based on cipher and mode
 		$size = mcrypt_get_key_size($this->_cipher, $this->_mode);
@@ -93,20 +93,20 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
     /**
      * Encrypts a string and returns an encrypted string that can be decoded.
      *
-     *     $data = $encrypt->encode($data);
+     *     $data = $encrypt->encode($message);
      *
      * The encrypted binary data is encoded using [base64](http://php.net/base64_encode)
      * to convert it to a string. This string can be stored in a database,
      * displayed, and passed using most other means without corruption.
      *
-     * @param String $data data to be encrypted
-     * @param String $iv
+     * @param String $message Message to be encrypted
+     * @param String $iv IV (Initialization vector)
      * @return null|string
      */
-	public function encrypt(String $data, String $iv): ?string
+	public function encrypt(String $message, String $iv): ?string
 	{
 		// Encrypt the data using the configured options and generated iv
-		$data = mcrypt_encrypt($this->_cipher, $this->_key, $data, $this->_mode, $iv);
+		$data = mcrypt_encrypt($this->_cipher, $this->_key, $message, $this->_mode, $iv);
 
 		// Use base64 encoding to convert to a string
 		return base64_encode($iv.$data);
@@ -115,15 +115,15 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
     /**
      * Decrypts an encoded string back to its original value.
      *
-     *     $data = $encrypt->decode($data);
+     *     $data = $encrypt->decode($ciphertext);
      *
-     * @param   string $data encoded string to be decrypted
-     * @return NULL|string if decryption fails
+     * @param String $ciphertext Encoded string to be decrypted
+     * @return null|string if decryption fails
      */
-	public function decrypt(String $data): ?string
+	public function decrypt(String $ciphertext): ?string
 	{
 		// Convert the data back to binary
-		$data = base64_decode($data, TRUE);
+		$data = base64_decode($ciphertext, TRUE);
 
 		if ( ! $data)
 		{
