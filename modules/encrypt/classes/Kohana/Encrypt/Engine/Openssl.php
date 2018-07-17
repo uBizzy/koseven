@@ -21,18 +21,22 @@
  */
 class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 
+    const TYPE = 'Openssl';
+
 	/**
 	 * @var int the size of the Initialization Vector (IV) in bytes
 	 */
 	protected $_iv_size;
 
-	/**
-	 * Creates a new openssl wrapper.
-	 *
-	 * @param   string  $key    encryption key
-	 * @param   string  $mode   openssl mode
-	 * @param   string  $cipher openssl cipher
-	 */
+    /**
+     * Creates a new openssl wrapper.
+     *
+     * @param mixed $key_config
+     * @param   string $mode openssl mode
+     * @param   string $cipher openssl cipher
+     * @throws Kohana_Exception
+     * @internal param string $key encryption key
+     */
 	public function __construct($key_config, $mode = NULL, $cipher = NULL)
 	{
 		if ($cipher === NULL)
@@ -56,7 +60,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 				throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be 16 for AES-128-CBC');
 			}
 		}
-			
+
 		elseif ($this->_cipher === 'AES-256-CBC')
 		{
 			if ($length !== 32)
@@ -65,7 +69,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 				throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be 32 for AES-256-CBC');
 			}
 		}
-		
+
 		else
 		{
 			// No valid encryption cipher is provided!
@@ -73,13 +77,12 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 		}
 	}
 
-	/**
-	 * Encrypts a string and returns an encrypted string that can be decoded.
-	 *
-	 * @param   string  $data   data to be encrypted
-	 * @return  string
-	 */
-	public function encrypt($data, $iv)
+    /**
+     * Encrypts a string and returns an encrypted string that can be decoded.
+     * @param String $data
+     * @return null|string
+     */
+	public function encrypt(String $data, String $iv): ?string
 	{
 		// First we will encrypt the value using OpenSSL. After this is encrypted we
 		// will proceed to calculating a MAC for the encrypted value so that this
@@ -89,7 +92,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 		if ($value === FALSE)
 		{
 			// Encryption failed
-			return FALSE;
+			return NULL;
 		}
 
 		// Once we have the encrypted value we will go ahead base64_encode the input
@@ -99,23 +102,22 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 
 		$json = json_encode(compact('iv', 'value', 'mac'));
 
-		if (! is_string($json))
+		if ( ! is_string($json))
 		{
 			// Encryption failed
-			return FALSE;
+			return NULL;
 		}
 
 		return base64_encode($json);
 	}
 
-	/**
-	 * Decrypts an encoded string back to its original value.
-	 *
-	 * @param   string  $data   encoded string to be decrypted
-	 * @return  FALSE   if decryption fails
-	 * @return  string
-	 */
-	public function decrypt($data)
+    /**
+     * Decrypts an encoded string back to its original value.
+     *
+     * @param   string $data encoded string to be decrypted
+     * @return NULL|string if decryption fails
+     */
+	public function decrypt(String $data): ?string
 	{
 		// Convert the data back to binary
 		$data = json_decode(base64_decode($data), TRUE);
@@ -126,30 +128,30 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 		if ( ! $this->valid_payload($data))
 		{
 			// Decryption failed
-			return FALSE;
+			return NULL;
 		}
 
 		if ( ! $this->valid_mac($data))
 		{
 			// Decryption failed
-			return FALSE;
+			return NULL;
 		}
 
 		$iv = base64_decode($data['iv']);
 		if ( ! $iv)
 		{
 			// Invalid base64 data
-			return FALSE;
+			return NULL;
 		}
 
 		// Here we will decrypt the value. If we are able to successfully decrypt it
 		// we will then unserialize it and return it out to the caller. If we are
-		// unable to decrypt this value we will throw out an exception message.
+		// unable to decrypt this value we will return NULL.
 		$decrypted = \openssl_decrypt($data['value'], $this->_cipher, $this->_key, 0, $iv);
 
 		if ($decrypted === FALSE)
 		{
-			return FALSE;
+			return NULL;
 		}
 
 		return $decrypted;
@@ -193,13 +195,13 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 
 		return hash_equals(hash_hmac('sha256', $payload['mac'], $bytes, TRUE), $calculated);
 	}
-		
-	/**
-	 * Proxy for the random_bytes function - to allow mocking and testing against KAT vectors
-	 *
-	 * @return string the initialization vector or FALSE on error
-	 */
-	public function create_iv()
+
+    /**
+     * Proxy for the random_bytes function - to allow mocking and testing against KAT vectors
+     * @return string the initialization vector or FALSE on error
+     * @throws Kohana_Exception
+     */
+	public function create_iv(): string
 	{
 		if (function_exists('random_bytes'))
 		{
@@ -217,5 +219,4 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 
 		throw new Kohana_Exception('Could not create initialization vector.');
 	}
-
 }

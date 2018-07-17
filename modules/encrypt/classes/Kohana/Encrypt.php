@@ -1,32 +1,43 @@
 <?php
 
+/**
+ * Class Kohana_Encrypt
+ *
+ * @package    Kohana
+ * @category   Security
+ * @author     Koseven Team
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
+ */
 class Kohana_Encrypt {
 
 	/**
-	 * @var  string  default instance name
+	 * @var string Name of default config instance
 	 */
 	public static $default = 'default';
 
 	/**
-	 * @var  array  Encrypt class instances
+	 * @var array Encrypt class instances
 	 */
 	public static $instances = [];
 
 	/**
-	 * @var  engine  Encryption engine
+	 * @var  Kohana_Encrypt_Engine Encryption engine
 	 */
 	public $_engine = NULL;
 
-	/**
-	 * Returns a singleton instance of Encrypt. An encryption key must be
-	 * provided in your "encrypt" configuration file.
-	 *
-	 *     $encrypt = Encrypt::instance();
-	 *
-	 * @param   string  $name   configuration group name
-	 * @return  Encrypt
-	 */
-	public static function instance($name = NULL, array $config = NULL)
+    /**
+     * Returns a singleton instance of Encrypt. An encryption key must be
+     * provided in your "encrypt" configuration file.
+     *
+     *     $encrypt = Encrypt::instance();
+     *
+     * @param string $name configuration group name
+     * @param array|null $config
+     * @return Encrypt
+     * @throws Kohana_Exception
+     */
+	public static function instance(String $name = NULL, array $config = NULL)
 	{
 		if ($name === NULL)
 		{
@@ -57,7 +68,7 @@ class Kohana_Encrypt {
 	}
 
 	/**
-	 * Creates a new mcrypt wrapper.
+	 * Creates a new Encrypt Engine instance.
 	 *
 	 * @param   string  $key_config    encryption key or config array
 	 * @param   string  $mode          encryption mode
@@ -69,12 +80,11 @@ class Kohana_Encrypt {
 		{
 			$this->_engine = new Encrypt_Engine_Mcrypt($key_config, $mode, $cipher);
 		}
-		
 		else
 		{
 			if ( ! isset($key_config['type']))
 			{
-				$key_config['type'] = 'mcrypt';
+				$key_config['type'] = Encrypt_Engine_Openssl::TYPE;
 			}
 
 			// Set the engine class name
@@ -85,38 +95,36 @@ class Kohana_Encrypt {
 		}
 	}
 
-	/**
-	 * Encrypts a string and returns an encrypted string that can be decoded.
-	 *
-	 *     $data = $encrypt->encode($data);
-	 *
-	 * The encrypted binary data is encoded using [base64](http://php.net/base64_encode)
-	 * to convert it to a string. This string can be stored in a database,
-	 * displayed, and passed using most other means without corruption.
-	 *
-	 * @param   string  $data   data to be encrypted
-	 * @return  string
-	 */
-	public function encode($data)
+    /**
+     * Encrypts a string and returns an encrypted string that can be decoded.
+     *
+     *     $data = $encrypt->encode($message);
+     *
+     * The encrypted binary data is encoded using [base64](http://php.net/base64_encode)
+     * to convert it to a string. This string can be stored in a database,
+     * displayed, and passed using most other means without corruption.
+     *
+     * @param String $message
+     * @return null|string
+     * @internal param string $data data to be encrypted
+     */
+	public function encode(String $message): ?string
 	{
-		// Get an initialization vector
-		$iv = $this->_create_iv();
-
-		return $this->_engine->encrypt($data, $iv);
+		return $this->_engine->encrypt($message, $this->_create_iv());
 	}
 
-	/**
-	 * Decrypts an encoded string back to its original value.
-	 *
-	 *     $data = $encrypt->decode($data);
-	 *
-	 * @param   string  $data   encoded string to be decrypted
-	 * @return  FALSE   if decryption fails
-	 * @return  string
-	 */
-	public function decode($data)
+    /**
+     * Decrypts an encoded string back to its original value.
+     *
+     *     $data = $encrypt->decode($ciphertext);
+     *
+     * @param String $ciphertext
+     * @return null|string if decryption fails
+     * @internal param string $data encoded string to be decrypted
+     */
+	public function decode(String $ciphertext): ?string
 	{
-		return $this->_engine->decrypt($data);
+		return $this->_engine->decrypt($ciphertext);
 	}
 
 	/**
@@ -129,4 +137,12 @@ class Kohana_Encrypt {
 		return $this->_engine->create_iv();
 	}
 
+    /**
+     * Returns text representation of Encrypt class
+     * @return string
+     */
+	public function __toString(): string
+    {
+        return get_class($this->_engine);
+    }
 }

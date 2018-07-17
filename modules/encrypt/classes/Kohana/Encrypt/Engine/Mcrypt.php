@@ -22,8 +22,11 @@
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
+ * @deprecated
  */
 class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
+
+    const TYPE = 'Mcrypt';
 
 	/**
 	 * @var  string  RAND type to use
@@ -87,19 +90,20 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 		$this->_iv_size = mcrypt_get_iv_size($this->_cipher, $this->_mode);
 	}
 
-	/**
-	 * Encrypts a string and returns an encrypted string that can be decoded.
-	 *
-	 *     $data = $encrypt->encode($data);
-	 *
-	 * The encrypted binary data is encoded using [base64](http://php.net/base64_encode)
-	 * to convert it to a string. This string can be stored in a database,
-	 * displayed, and passed using most other means without corruption.
-	 *
-	 * @param   string  $data   data to be encrypted
-	 * @return  string
-	 */
-	public function encrypt($data, $iv)
+    /**
+     * Encrypts a string and returns an encrypted string that can be decoded.
+     *
+     *     $data = $encrypt->encode($data);
+     *
+     * The encrypted binary data is encoded using [base64](http://php.net/base64_encode)
+     * to convert it to a string. This string can be stored in a database,
+     * displayed, and passed using most other means without corruption.
+     *
+     * @param String $data data to be encrypted
+     * @param String $iv
+     * @return null|string
+     */
+	public function encrypt(String $data, String $iv): ?string
 	{
 		// Encrypt the data using the configured options and generated iv
 		$data = mcrypt_encrypt($this->_cipher, $this->_key, $data, $this->_mode, $iv);
@@ -108,16 +112,15 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 		return base64_encode($iv.$data);
 	}
 
-	/**
-	 * Decrypts an encoded string back to its original value.
-	 *
-	 *     $data = $encrypt->decode($data);
-	 *
-	 * @param   string  $data   encoded string to be decrypted
-	 * @return  FALSE   if decryption fails
-	 * @return  string
-	 */
-	public function decrypt($data)
+    /**
+     * Decrypts an encoded string back to its original value.
+     *
+     *     $data = $encrypt->decode($data);
+     *
+     * @param   string $data encoded string to be decrypted
+     * @return NULL|string if decryption fails
+     */
+	public function decrypt(String $data): ?string
 	{
 		// Convert the data back to binary
 		$data = base64_decode($data, TRUE);
@@ -125,7 +128,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 		if ( ! $data)
 		{
 			// Invalid base64 data
-			return FALSE;
+			return NULL;
 		}
 
 		// Extract the initialization vector from the data
@@ -134,7 +137,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 		if ($this->_iv_size !== strlen($iv))
 		{
 			// The iv is not the expected size
-			return FALSE;
+			return NULL;
 		}
 
 		// Remove the iv from the data
@@ -144,27 +147,34 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 		return rtrim(mcrypt_decrypt($this->_cipher, $this->_key, $data, $this->_mode, $iv), "\0");
 	}
 
-	/**
-	 * Proxy for the mcrypt_create_iv function - to allow mocking and testing against KAT vectors
-	 *
-	 * @return string the initialization vector or FALSE on error
-	 */
-	public function create_iv()
+    /**
+     * Proxy for the mcrypt_create_iv function - to allow mocking and testing against KAT vectors
+     * @return string the initialization vector or FALSE on error
+     * @throws Kohana_Exception
+     */
+	public function create_iv(): string
 	{
 		// Create a random initialization vector of the proper size for the current cipher
-		return mcrypt_create_iv($this->_iv_size, Encrypt_Engine_Mcrypt::$_rand);
+        $iv = mcrypt_create_iv($this->_iv_size, Encrypt_Engine_Mcrypt::$_rand);
+		if($iv)
+		{
+		    return $iv;
+        }
+
+        throw new Kohana_Exception('Could not generate random iv');
 	}
 
-	/**
-	 * Normalize key for PHP 5.6 for backwards compatibility
-	 *
-	 * This method is a shim to make PHP 5.6 behave in a B/C way for
-	 * legacy key padding when shorter-than-supported keys are used
-	 *
-	 * @param   string  $key    encryption key
-	 * @param   string  $cipher mcrypt cipher
-	 * @param   string  $mode   mcrypt mode
-	 */
+    /**
+     * Normalize key for PHP 5.6 for backwards compatibility
+     *
+     * This method is a shim to make PHP 5.6 behave in a B/C way for
+     * legacy key padding when shorter-than-supported keys are used
+     *
+     * @param   string $key encryption key
+     * @param   string $cipher mcrypt cipher
+     * @param   string $mode mcrypt mode
+     * @return bool|string
+     */
 	protected function _normalize_key($key, $cipher, $mode)
 	{
 		// open the cipher

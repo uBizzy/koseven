@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Encrypt_Engine_Openssl
+ * Class Encrypt_Engine_Sodium
  *
  * @package    Kohana
  * @category   Security
@@ -9,4 +9,4 @@
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine_Openssl {}
+class Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine_Sodium {}
