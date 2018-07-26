@@ -1,9 +1,9 @@
 <?php
 
-return array(
+return [
 
-	'default' => array(
-		'type'       => 'mcrypt',
+	'default' => [
+		'type' => 'mcrypt',
 		/**
 		 * The following options must be set:
 		 *
@@ -12,7 +12,7 @@ return array(
 		 * integer  cipher  encryption cipher, one of the Mcrpyt cipher constants
 		 */
 		'cipher' => MCRYPT_RIJNDAEL_128,
-		'mode'   => MCRYPT_MODE_NOFB,
-	),
+		'mode' => MCRYPT_MODE_NOFB,
+	],
 
-);
+];

@@ -10,14 +10,14 @@
 class Model_Auth_User_Token extends ORM {
 
 	// Relationships
-	protected $_belongs_to = array(
-		'user' => array('model' => 'User'),
-	);
+	protected $_belongs_to = [
+		'user' => ['model' => 'User'],
+	];
 	
-	protected $_created_column = array(
+	protected $_created_column = [
 		'column' => 'created',
 		'format' => TRUE,
-	);
+	];
 
 	/**
 	 * Handles garbage collection and deleting of expired objects.
@@ -69,7 +69,7 @@ class Model_Auth_User_Token extends ORM {
 		{
 			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));
 		}
-		while (ORM::factory('User_Token', array('token' => $token))->loaded());
+		while (ORM::factory('User_Token', ['token' => $token])->loaded());
 
 		return $token;
 	}

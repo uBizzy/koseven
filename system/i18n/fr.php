@@ -1,8 +1,8 @@
 <?php
 
-return array(
+return [
 
 	'French' => 'Français',
 	'Hello, world!' => 'Bonjour, monde!',
 
-);
+];

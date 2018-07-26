@@ -37,7 +37,7 @@ class Kohana_Cache_Memcached extends Cache
         $this->memcached_instance = new Memcached;
 
         // load servers from configuration
-        $servers = Arr::get($this->_config, 'servers', array());
+        $servers = Arr::get($this->_config, 'servers', []);
 
         if (empty($servers))
         {
@@ -46,7 +46,7 @@ class Kohana_Cache_Memcached extends Cache
         }
 
         // load options from configuration
-        $options = Arr::get($this->_config, 'options', array());
+        $options = Arr::get($this->_config, 'options', []);
 
         // set options
         foreach ($options as $option => $value)

@@ -16,7 +16,7 @@ class Kohana_Inflector {
 	/**
 	 * @var  array  cached inflections
 	 */
-	protected static $cache = array();
+	protected static $cache = [];
 
 	/**
 	 * @var  array  uncountable words

@@ -1,9 +1,9 @@
 <?php
 
-return array(
+return [
 
-	'cookie' => array(
+	'cookie' => [
 		'encrypted' => FALSE,
-	),
+	],
 
-);
+];

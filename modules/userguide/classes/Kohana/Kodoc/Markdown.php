@@ -26,7 +26,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	 *
 	 * @var  array
 	 */
-	protected $_heading_ids = array();
+	protected $_heading_ids = [];
 	
 	/**
 	 * @var  array   the generated table of contents
@@ -169,7 +169,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	{
 		if (preg_match_all('/{{([^\s{}]++)}}/', $text, $matches, PREG_SET_ORDER))
 		{
-			$replace = array();
+			$replace = [];
 
 			foreach ($matches as $set)
 			{
@@ -262,10 +262,10 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	
 	protected function _add_to_toc($level, $name, $id)
 	{
-		self::$_toc[] = array(
+		self::$_toc[] = [
 			'level' => $level,
 			'name'  => $name,
-			'id'    => $id);
+			'id'    => $id];
 	}
 
 	public function doTOC($text)

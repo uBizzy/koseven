@@ -1,11 +1,9 @@
 <?php
 
-return array
-(
-	'default' => array
-	(
+return [
+	'default' => [
 		'type'       => 'MySQLi',
-		'connection' => array(
+		'connection' => [
 			/**
 			 * MySQLi driver config information
 			 *
@@ -31,14 +29,14 @@ return array
 			'password'   => FALSE,
 			'persistent' => FALSE,
 			'ssl'        => NULL,
-		),
+		],
 		'table_prefix' => '',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
-	),
-	'alternate' => array(
+	],
+	'alternate' => [
 		'type'       => 'PDO',
-		'connection' => array(
+		'connection' => [
 			/**
 			 * The following options are available for PDO:
 			 *
@@ -51,7 +49,7 @@ return array
 			'username'   => 'root',
 			'password'   => 'r00tdb',
 			'persistent' => FALSE,
-		),
+		],
 		/**
 		 * The following extra options are available for PDO:
 		 *
@@ -60,5 +58,5 @@ return array
 		'table_prefix' => '',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
-	),
-);
+	],
+];

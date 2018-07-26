@@ -23,13 +23,15 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	 * A default set of environment to be applied before each test
 	 * @var array
 	 */
-	protected $environmentDefault = array();
+	protected $environmentDefault = [];
 
 	/**
 	 * Creates a predefined environment using the default environment
 	 *
 	 * Extending classes that have their own setUp() should call
 	 * parent::setUp()
+	 * 
+	 * @codeCoverageIgnore
 	 */
 	public function setUp()
 	{
@@ -43,6 +45,8 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	 *
 	 * Extending classes that have their own tearDown()
 	 * should call parent::tearDown()
+	 * 
+	 * @codeCoverageIgnore
 	 */
 	public function tearDown()
 	{
@@ -78,6 +82,7 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	 * * Static Variable
 	 * * Config option
 	 *
+	 * @codeCoverageIgnore
 	 * @param array $environment List of environment to set
 	 */
 	public function setEnvironment(array $environment)

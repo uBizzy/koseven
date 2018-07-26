@@ -1,5 +1,4 @@
 <?php
-use PHPUnit\Framework\TestCase;
 /**
  * @package    Kohana/Cache
  * @group      kohana
@@ -9,7 +8,7 @@ use PHPUnit\Framework\TestCase;
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_CacheTest extends TestCase {
+class Kohana_CacheTest extends Unittest_TestCase {
 
 	const BAD_GROUP_DEFINITION  = 1010;
 	const EXPECT_SELF           = 1001;
@@ -23,32 +22,29 @@ class Kohana_CacheTest extends TestCase {
 	{
 		$tmp = realpath(sys_get_temp_dir());
 
-		$base = array();
+		$base = [];
 
 		if (Kohana::$config->load('cache.file'))
 		{
-			$base = array(
+			$base = [
 				// Test default group
-				array(
+				[
 					NULL,
 					Cache::instance('file')
-				),
+				],
 				// Test defined group
-				array(
+				[
 					'file',
 					Cache::instance('file')
-				),
-			);
+				],
+			];
 		}
 
-
-		return array(
+		return $base + [
 			// Test bad group definition
-			$base+array(
-				Kohana_CacheTest::BAD_GROUP_DEFINITION,
-				'Failed to load Kohana Cache group: 1010'
-			),
-		);
+			Kohana_CacheTest::BAD_GROUP_DEFINITION,
+			'Failed to load Kohana Cache group: 1010'
+		];
 	}
 
 	/**
@@ -60,14 +56,6 @@ class Kohana_CacheTest extends TestCase {
 	 */
 	public function test_instance($group, $expected)
 	{
-		if (in_array($group, array(
-			Kohana_CacheTest::BAD_GROUP_DEFINITION,
-			)
-		))
-		{
-			$this->setExpectedException('Cache_Exception');
-		}
-
 		try
 		{
 			$cache = Cache::instance($group);
@@ -113,42 +101,42 @@ class Kohana_CacheTest extends TestCase {
 	 */
 	public function provider_config()
 	{
-		return array(
-			array(
-				array(
+		return [
+			[
+				[
 					'server'     => 'otherhost',
 					'port'       => 5555,
 					'persistent' => TRUE,
-				),
+				],
 				NULL,
 				Kohana_CacheTest::EXPECT_SELF,
-				array(
+				[
 					'server'     => 'otherhost',
 					'port'       => 5555,
 					'persistent' => TRUE,
-				),
-			),
-			array(
+				],
+			],
+			[
 				'foo',
 				'bar',
 				Kohana_CacheTest::EXPECT_SELF,
-				array(
+				[
 					'foo'        => 'bar'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'server',
 				NULL,
 				NULL,
-				array()
-			),
-			array(
+				[]
+			],
+			[
 				NULL,
 				NULL,
-				array(),
-				array()
-			)
-		);
+				[],
+				[]
+			]
+		];
 	}
 
 	/**
@@ -164,15 +152,18 @@ class Kohana_CacheTest extends TestCase {
 	 */
 	public function test_config($key, $value, $expected_result, array $expected_config)
 	{
-		$cache = $this->createMock('Cache_File', NULL, array(), '', FALSE);
+		$cache = $this->createMock('Cache_File');
+
+		$cache_reflection = new ReflectionClass('Cache_File');
+		$config = $cache_reflection->getMethod('config');
 
 		if ($expected_result === Kohana_CacheTest::EXPECT_SELF)
 		{
 			$expected_result = $cache;
 		}
 
-		$this->assertSame($expected_result, $cache->config($key, $value));
-		$this->assertSame($expected_config, $cache->config());
+		$this->assertSame($expected_result, $config->invoke($cache, $key, $value));
+		$this->assertSame($expected_config, $config->invoke($cache));
 	}
 
 	/**
@@ -182,32 +173,12 @@ class Kohana_CacheTest extends TestCase {
 	 */
 	public function provider_sanitize_id()
 	{
-		return array(
-			array(
+		return [
+			[
 				'foo',
-				'foo'
-			),
-			array(
-				'foo+-!@',
-				'foo+-!@'
-			),
-			array(
-				'foo/bar',
-				'foo_bar',
-			),
-			array(
-				'foo\\bar',
-				'foo_bar'
-			),
-			array(
-				'foo bar',
-				'foo_bar'
-			),
-			array(
-				'foo\\bar snafu/stfu',
-				'foo_bar_snafu_stfu'
-			)
-		);
+				'0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33'
+			],
+		];
 	}
 
 	/**
@@ -223,16 +194,9 @@ class Kohana_CacheTest extends TestCase {
 	 */
 	public function test_sanitize_id($id, $expected)
 	{
-		$cache = $this->getMock('Cache', array(
-			'get',
-			'set',
-			'delete',
-			'delete_all'
-			), array(array()),
-			'', FALSE
-		);
+		$cache = $this->createMock('Cache');
 
-		$cache_reflection = new ReflectionClass($cache);
+		$cache_reflection = new ReflectionClass('Cache');
 		$sanitize_id = $cache_reflection->getMethod('_sanitize_id');
 		$sanitize_id->setAccessible(TRUE);
 

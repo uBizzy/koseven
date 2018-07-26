@@ -28,7 +28,7 @@ abstract class Kohana_Log_Writer {
 	 * Numeric log level to string lookup table.
 	 * @var array
 	 */
-	protected $_log_levels = array(
+	protected $_log_levels = [
 		LOG_EMERG   => 'EMERGENCY',
 		LOG_ALERT   => 'ALERT',
 		LOG_CRIT    => 'CRITICAL',
@@ -37,7 +37,7 @@ abstract class Kohana_Log_Writer {
 		LOG_NOTICE  => 'NOTICE',
 		LOG_INFO    => 'INFO',
 		LOG_DEBUG   => 'DEBUG',
-	);
+	];
 
 	/**
 	 * @var  int  Level to use for stack traces

@@ -36,40 +36,40 @@ class ORM_Behavior_Slug extends ORM_Behavior {
 	public function on_construct($model, $id)
 	{
 		if (($id !== NULL) AND ! is_array($id) AND ! ctype_digit($id))
-		{
-			$model->where($this->_slug_column, '=', $id)->find();
+    {
+      $model->where($this->_slug_column, '=', $id)->find();
 
-			// Prevent further record loading
-			return FALSE;
-		}
-		
-		return TRUE;
+      // Prevent further record loading
+      return FALSE;
+    }
+    
+    return TRUE;
 	}
 
-	/**
-	 * The model is updated, add a slug value if empty
-	 *
-	 * @param   ORM   $model The model
-	 */
-	public function on_update($model)
-	{
-		$this->create_slug($model);
-	}
-	
-	/**
-	 * A new model is created, add a slug value
-	 *
-	 * @param   ORM   $model The model
-	 */
-	public function on_create($model)
-	{
-		$this->create_slug($model);
-	}
-	 
-	private function create_slug($model)
-	{
-		$index = 0;
-		$current_slug = $model->get($this->_slug_column);
+  /**
+   * The model is updated, add a slug value if empty
+   *
+   * @param   ORM   $model The model
+   */
+  public function on_update($model)
+  {
+    $this->create_slug($model);
+  }
+  
+  /**
+   * A new model is created, add a slug value
+   *
+   * @param   ORM   $model The model
+   */
+  public function on_create($model)
+  {
+    $this->create_slug($model);
+  }
+   
+  private function create_slug($model)
+  {
+    $index = 0;
+    $current_slug = $model->get($this->_slug_column);
  
 		// Create a valid slug name
 		$source = $model->get($this->_slug_source_column);
@@ -178,7 +178,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
 			return $string;
 
 		if ($this->seems_utf8($string)) {
-			$chars = array(
+			$chars = [
 			// Decompositions for Latin-1 Supplement
 			chr(195).chr(128) => 'A', chr(195).chr(129) => 'A',
 			chr(195).chr(130) => 'A', chr(195).chr(131) => 'A',
@@ -282,10 +282,12 @@ class ORM_Behavior_Slug extends ORM_Behavior {
 			// Euro Sign
 			chr(226).chr(130).chr(172) => 'E',
 			// GBP (Pound) Sign
-			chr(194).chr(163) => '');
+			chr(194).chr(163) => ''];
 
 			$string = strtr($string, $chars);
-		} else {
+		}
+    else
+    {
 			// Assume ISO-8859-1 if not UTF-8
 			$chars['in'] = chr(128).chr(131).chr(138).chr(142).chr(154).chr(158)
 				.chr(159).chr(162).chr(165).chr(181).chr(192).chr(193).chr(194)
@@ -301,8 +303,8 @@ class ORM_Behavior_Slug extends ORM_Behavior {
 			$chars['out'] = "EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy";
 
 			$string = strtr($string, $chars['in'], $chars['out']);
-			$double_chars['in'] = array(chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254));
-			$double_chars['out'] = array('OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th');
+			$double_chars['in'] = [chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254)];
+			$double_chars['out'] = ['OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th'];
 			$string = str_replace($double_chars['in'], $double_chars['out'], $string);
 		}
 

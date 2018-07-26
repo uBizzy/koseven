@@ -54,7 +54,7 @@ class Kohana_Config_File_ReaderTest extends Kohana_Unittest_TestCase {
 	{
 		$config = new Kohana_Config_File_Reader('gafloogle');
 
-		$this->assertSame(array(), $config->load('values'));
+		$this->assertSame([], $config->load('values'));
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Kohana_Config_File_ReaderTest extends Kohana_Unittest_TestCase {
 	{
 		$config = new Kohana_Config_File_Reader;
 
-		$this->assertSame(array(), $config->load('gafloogle'));
+		$this->assertSame([], $config->load('gafloogle'));
 	}
 
 	/**
@@ -88,7 +88,7 @@ class Kohana_Config_File_ReaderTest extends Kohana_Unittest_TestCase {
 		// any number of modifications to the system config in the 
 		// actual output.  Therefore to increase compatability we just 
 		// check that we've got an array and that it's not empty
-		$this->assertNotSame(array(), $values);
+		$this->assertNotSame([], $values);
 		$this->assertInternalType('array',    $values);
 	}
 }

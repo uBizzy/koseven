@@ -43,11 +43,11 @@ class Kohana_Request_Client_InternalTest extends Unittest_TestCase
 
 	public function provider_response_failure_status()
 	{
-		return array(
-			array('', 'Welcome', 'missing_action', 'Welcome/missing_action', 404),
-			array('kohana3', 'missing_controller', 'index', 'kohana3/missing_controller/index', 404),
-			array('', 'Template', 'missing_action', 'kohana3/Template/missing_action', 500),
-		);
+		return [
+			['', 'Welcome', 'missing_action', 'Welcome/missing_action', 404],
+			['kohana3', 'missing_controller', 'index', 'kohana3/missing_controller/index', 404],
+			['', 'Template', 'missing_action', 'kohana3/Template/missing_action', 500],
+		];
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Kohana_Request_Client_InternalTest extends Unittest_TestCase
 	public function test_response_failure_status($directory, $controller, $action, $uri, $expected)
 	{
 		// Mock for request object
-		$request = $this->createMock('Request', array('directory', 'controller', 'action', 'uri', 'response', 'method'), array($uri));
+		$request = $this->createMock('Request', ['directory', 'controller', 'action', 'uri', 'response', 'method'], [$uri]);
 
 		$request->expects($this->any())
 			->method('directory')

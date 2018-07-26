@@ -1,6 +1,5 @@
 <?php
-return array
-(
+return [
 /*	
     'default' => 'file',                            // allows to specify default cache directl from config file
     'prefix'  => 'cache1_',                          //used to avoid duplicates when using _sanitize_id
@@ -71,4 +70,4 @@ return array
 		)
 	)
 */
-);
+];

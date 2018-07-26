@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * The maximum execution time, in seconds. If set to zero, no time limit is imposed.
@@ -13,4 +13,4 @@ return array(
 	 */
 	'expand_all' => FALSE,
 
-);
+];

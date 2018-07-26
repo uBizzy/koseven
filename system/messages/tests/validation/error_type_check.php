@@ -1,9 +1,9 @@
 <?php
 
-return array(
+return [
 
-	'email' => array(
+	'email' => [
 		'custom' => 'very nice email address you have there',
-	),
+	],
 
-);
+];

@@ -93,7 +93,14 @@ class Kohana_URL {
 				// If subdomain passed, then append to host
 				if( ! is_null($subdomain))
 				{
-					$host = $subdomain.'.'.$host;
+					if(strstr($host, '.') === false)
+					{
+						$host = $subdomain . '.' . $host;
+					}
+					else
+					{
+						$host = $subdomain . '.' . substr($host, strpos($host, '.') + 1);
+					}
 				}
 				
 				// make $host lowercase
@@ -104,7 +111,7 @@ class Kohana_URL {
 				if ($host && '' !== preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $host)) {
 					throw new Kohana_Exception(
 						'Invalid host :host',
-						array(':host' => $host)
+						[':host' => $host]
 					);
 				}
 
@@ -113,7 +120,7 @@ class Kohana_URL {
 				{
 					throw new Kohana_Exception(
 						'Untrusted host :host. If you trust :host, add it to the trusted hosts in the `url` config file.',
-						array(':host' => $host)
+						[':host' => $host]
 					);
 				}
 			}
@@ -145,7 +152,7 @@ class Kohana_URL {
 		if ( ! UTF8::is_ascii($path))
 		{
 			// Encode all non-ASCII characters, as per RFC 1738
-			$path = preg_replace_callback('~([^/]+)~', 'URL::_rawurlencode_callback', $path);
+			$path = preg_replace_callback('~([^/#]+)~', 'URL::_rawurlencode_callback', $path);
 		}
 
 		// Concat the URL

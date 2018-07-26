@@ -1,10 +1,12 @@
-# Koseven PHP Framework
+[![Koseven Logo](https://i.imgur.com/2CeT8JL.png)](https://koseven.ga/)
+
 [![Latest Stable Version](https://poser.pugx.org/koseven/koseven/v/stable)](https://packagist.org/packages/koseven/koseven)
 [![Github Issues](http://githubbadges.herokuapp.com/koseven/koseven/issues.svg)](https://github.com/koseven/koseven/issues)
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/koseven/koseven/pulls.svg)](https://github.com/koseven/koseven/pulls)
 [![License](https://poser.pugx.org/koseven/koseven/license.svg)](https://packagist.org/packages/koseven/koseven)
 [![Telegram](https://img.shields.io/badge/Telegram-joinChat-blue.svg)](https://telegram.me/koseven)
 [![Build Status](https://travis-ci.org/koseven/koseven.svg?branch=devel)](https://travis-ci.org/koseven/koseven)
+[![Coverage Status](https://coveralls.io/repos/github/koseven/koseven/badge.svg?branch=devel)](https://coveralls.io/github/koseven/koseven?branch=devel)
 
 ## [Download 3.3.7](https://github.com/koseven/koseven/releases/tag/3.3.7)
 
@@ -60,7 +62,7 @@ Feel free to [open an issue on github](https://github.com/koseven/koseven/issues
 
 ## Documentation
 
-We are working to improve the original Kohana documentation but in the meantime fill free to use the one provided by KO.
+We are working to improve the original Kohana documentation but in the meantime feel free to use the one provided by KO.
 
 Koseven documentation can be found at [docs.koseven.ga](https://docs.koseven.ga) which also contains an API browser.
 
@@ -74,6 +76,9 @@ If you've stumbled across a bug, please help us out by [reporting the bug](https
 * Actual result
 
 This will help us to fix the bug as quickly as possible, and if you'd like to fix it yourself feel free to [fork us on GitHub](https://github.com/koseven) and submit a pull request!
+
+## Reporting security vulnerabilities
+Open an [issue](https://github.com/koseven/koseven/issues/new) on github and describe the problem as detailed as possible. Or do a pull request if you have a patch and describe the issue there.
 
 ## Contributing
 

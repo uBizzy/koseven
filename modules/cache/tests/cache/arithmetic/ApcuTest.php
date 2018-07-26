@@ -44,10 +44,10 @@ class Kohana_ApcuTest extends Kohana_CacheArithmeticMethodsTest {
             Kohana::$config->load('cache')
                 ->set(
                     'apcu',
-                    array(
+                    [
                         'driver'             => 'apcu',
                         'default_expire'     => 3600,
-                    )
+                    ]
                 );
         }
 

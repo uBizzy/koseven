@@ -14,7 +14,7 @@ class Kohana_Database_Query_Builder_Update extends Database_Query_Builder_Where 
 	protected $_table;
 
 	// SET ...
-	protected $_set = array();
+	protected $_set = [];
 
 	/**
 	 * Set the table for a update.
@@ -57,7 +57,7 @@ class Kohana_Database_Query_Builder_Update extends Database_Query_Builder_Where 
 	{
 		foreach ($pairs as $column => $value)
 		{
-			$this->_set[] = array($column, $value);
+			$this->_set[] = [$column, $value];
 		}
 
 		return $this;
@@ -72,7 +72,7 @@ class Kohana_Database_Query_Builder_Update extends Database_Query_Builder_Where 
 	 */
 	public function value($column, $value)
 	{
-		$this->_set[] = array($column, $value);
+		$this->_set[] = [$column, $value];
 
 		return $this;
 	}
@@ -125,11 +125,11 @@ class Kohana_Database_Query_Builder_Update extends Database_Query_Builder_Where 
 		$this->_table = NULL;
 
 		$this->_set   =
-		$this->_where = array();
+		$this->_where = [];
 
 		$this->_limit = NULL;
 
-		$this->_parameters = array();
+		$this->_parameters = [];
 
 		$this->_sql = NULL;
 

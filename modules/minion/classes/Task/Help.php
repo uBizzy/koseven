@@ -8,8 +8,8 @@
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Task_Help extends Minion_Task
-{
+class Task_Help extends Minion_Task {
+
 	/**
 	 * Generates a help list for all tasks
 	 *
@@ -25,4 +25,5 @@ class Task_Help extends Minion_Task
 
 		echo $view;
 	}
+
 }

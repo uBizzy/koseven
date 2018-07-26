@@ -26,9 +26,9 @@ class Route_Holder
 	 */
 	public static function default_return_callback($uri)
 	{
-		return array(
+		return [
 
-		);
+		];
 	}
 
 	/**
@@ -38,10 +38,10 @@ class Route_Holder
 	 */
 	public static function matches_returns_array_of_parameters_on_successful_match($uri)
 	{
-		return array(
+		return [
 			'controller' => 'welcome',
 			'action' => 'index',
-		);
+		];
 	}
 
 	/**
@@ -53,10 +53,10 @@ class Route_Holder
 	{
 		if (substr($uri, 0, 5) == 'admin')
 		{
-			return array(
+			return [
 				'controller' => 'foo',
 				'action' => 'bar',
-			);
+			];
 		}
 	}
 
@@ -69,9 +69,9 @@ class Route_Holder
 	{
 		if ($uri == 'info/about_us')
 		{
-			return array(
+			return [
 
-			);
+			];
 		}
 	}
 

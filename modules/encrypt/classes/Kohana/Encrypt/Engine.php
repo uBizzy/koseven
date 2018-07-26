@@ -61,8 +61,8 @@ abstract class Kohana_Encrypt_Engine {
 		else if (is_string($key_config))
 		{
 			// Store the key, mode, and cipher
-			$this->_key    = $key_config;
-			$this->_mode   = $mode;
+			$this->_key = $key_config;
+			$this->_mode = $mode;
 			$this->_cipher = $cipher;
 		}
 		else
@@ -74,4 +74,5 @@ abstract class Kohana_Encrypt_Engine {
 
 	abstract public function encrypt($data, $iv);
 	abstract public function decrypt($data);
+
 }

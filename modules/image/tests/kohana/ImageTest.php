@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package    Kohana/Image
  * @group      kohana
@@ -9,11 +8,12 @@
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
+class Kohana_ImageTest extends Unittest_TestCase {
 
-class Kohana_ImageTest extends PHPUnit_Framework_TestCase {
-
-	protected function setUp()
+	public function setUp()
 	{
+		parent::setUp();
+
 		if ( ! extension_loaded('gd'))
 		{
 			$this->markTestSkipped('The GD extension is not available.');
@@ -33,4 +33,4 @@ class Kohana_ImageTest extends PHPUnit_Framework_TestCase {
 		unlink(Kohana::$cache_dir.'/test_image');
 	}
 
-} // End Kohana_ImageTest
+}

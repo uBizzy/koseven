@@ -9,7 +9,7 @@
  */
 class Kohana_Auth_Bcrypt extends Auth {
 
-    public function __construct($config = array())
+    public function __construct($config = [])
     {
         if ( ! isset($config['cost']) OR ! is_numeric($config['cost']) OR $config['cost'] < 10)
         {
@@ -28,7 +28,7 @@ class Kohana_Auth_Bcrypt extends Auth {
         if ($token = Cookie::get('authautologin'))
         {
             // Load the token and user
-            $token = ORM::factory('User_Token', array('token' => $token));
+            $token = ORM::factory('User_Token', ['token' => $token]);
 
             if ($token->loaded() AND $token->user->loaded())
             {
@@ -94,7 +94,7 @@ class Kohana_Auth_Bcrypt extends Auth {
             Cookie::delete('authautologin');
 
             // Clear the autologin token from the database
-            $token = ORM::factory('User_Token', array('token' => $token));
+            $token = ORM::factory('User_Token', ['token' => $token]);
 
             if ($token->loaded() AND $logout_all)
             {
@@ -134,16 +134,16 @@ class Kohana_Auth_Bcrypt extends Auth {
         $user = ORM::factory('User');
         $user->where($user->unique_key($username), '=', $username)->find();
 
-        if ($user->loaded() AND $user->has('roles', ORM::factory('Role', array('name' => 'login'))) AND password_verify($password, $user->password))
+        if ($user->loaded() AND $user->has('roles', ORM::factory('Role', ['name' => 'login'])) AND password_verify($password, $user->password))
         {
             if ($remember === TRUE)
             {
                 // Token data
-                $data = array(
+                $data = [
                     'user_id' => $user->pk(),
                     'expires' => time() + $this->_config['lifetime'],
                     'user_agent' => hash('sha256', Request::$user_agent),
-                );
+                ];
 
                 // Create a new autologin token
                 $token = ORM::factory('User_Token')
@@ -157,7 +157,7 @@ class Kohana_Auth_Bcrypt extends Auth {
             $this->complete_login($user);
             $user->complete_login();
 
-            if (password_needs_rehash($user->password, PASSWORD_BCRYPT, array('cost' => $this->_config['cost'])))
+            if (password_needs_rehash($user->password, PASSWORD_BCRYPT, ['cost' => $this->_config['cost']]))
             {
                 $user->password = $password;
                 $user->save();

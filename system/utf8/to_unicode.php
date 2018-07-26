@@ -17,7 +17,7 @@ function _to_unicode($str)
 	// Cached expected number of octets in the current sequence
 	$m_bytes = 1;
 
-	$out = array();
+	$out = [];
 
 	$len = strlen($str);
 
@@ -134,9 +134,9 @@ function _to_unicode($str)
 			{
 				// ((0xC0 & (*in) != 0x80) AND (m_state != 0))
 				// Incomplete multi-octet sequence
-				throw new UTF8_Exception("UTF8::to_unicode: Incomplete multi-octet sequence in UTF-8 at byte ':byte'", array(
+				throw new UTF8_Exception("UTF8::to_unicode: Incomplete multi-octet sequence in UTF-8 at byte ':byte'", [
 					':byte' => $i,
-				));
+				]);
 			}
 		}
 	}

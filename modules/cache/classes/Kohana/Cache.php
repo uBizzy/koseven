@@ -90,7 +90,7 @@ abstract class Kohana_Cache {
 	/**
 	 * @var   Kohana_Cache instances
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 	/**
 	 * Creates a singleton of a Kohana Cache group. If no group is supplied
@@ -136,7 +136,7 @@ abstract class Kohana_Cache {
 		{
 			throw new Cache_Exception(
 				'Failed to load Kohana Cache group: :group',
-				array(':group' => $group)
+				[':group' => $group]
 			);
 		}
 
@@ -153,7 +153,7 @@ abstract class Kohana_Cache {
 	/**
 	 * @var  Config
 	 */
-	protected $_config = array();
+	protected $_config = [];
 
 	/**
 	 * Ensures singleton pattern is observed, loads the default expiry

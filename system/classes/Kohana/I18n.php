@@ -33,7 +33,7 @@ class Kohana_I18n {
 	/**
 	 * @var  array  cache of loaded languages
 	 */
-	protected static $_cache = array();
+	protected static $_cache = [];
 
 	/**
 	 * Get and set the target language.
@@ -53,7 +53,7 @@ class Kohana_I18n {
 		if ($lang)
 		{
 			// Normalize the language
-			I18n::$lang = strtolower(str_replace(array(' ', '_'), '-', $lang));
+			I18n::$lang = strtolower(str_replace([' ', '_'], '-', $lang));
 		}
 
 		return I18n::$lang;
@@ -101,7 +101,7 @@ class Kohana_I18n {
 		}
 
 		// New translation table
-		$table = array();
+		$table = [];
 
 		// Split the language: language, region, locale, etc
 		$parts = explode('-', $lang);
@@ -113,7 +113,7 @@ class Kohana_I18n {
 
 			if ($files = Kohana::find_file('i18n', $path, NULL, TRUE))
 			{
-				$t = array();
+				$t = [];
 				foreach ($files as $file)
 				{
 					// Merge the language strings into the sub table

@@ -11,10 +11,10 @@
 abstract class Kohana_Image {
 
 	// Resizing constraints
-	const NONE    = 0x01;
-	const WIDTH   = 0x02;
-	const HEIGHT  = 0x03;
-	const AUTO    = 0x04;
+	const NONE = 0x01;
+	const WIDTH = 0x02;
+	const HEIGHT = 0x03;
+	const AUTO = 0x04;
 	const INVERSE = 0x05;
 	const PRECISE = 0x06;
 
@@ -110,7 +110,7 @@ abstract class Kohana_Image {
 		if (empty($file) OR empty($info))
 		{
 			throw new Kohana_Exception('Not an image or invalid image: :file',
-				array(':file' => Debug::path($file)));
+				[':file' => Debug::path($file)]);
 		}
 
 		// Store the image information
@@ -623,7 +623,7 @@ abstract class Kohana_Image {
 			if ( ! is_writable($file))
 			{
 				throw new Kohana_Exception('File must be writable: :file',
-					array(':file' => Debug::path($file)));
+					[':file' => Debug::path($file)]);
 			}
 		}
 		else
@@ -634,7 +634,7 @@ abstract class Kohana_Image {
 			if ( ! is_dir($directory) OR ! is_writable($directory))
 			{
 				throw new Kohana_Exception('Directory must be writable: :directory',
-					array(':directory' => Debug::path($directory)));
+					[':directory' => Debug::path($directory)]);
 			}
 		}
 
@@ -778,4 +778,4 @@ abstract class Kohana_Image {
 	 */
 	abstract protected function _do_render($type, $quality);
 
-} // End Image
+}

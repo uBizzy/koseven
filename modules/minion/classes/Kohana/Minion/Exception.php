@@ -62,4 +62,5 @@ class Kohana_Minion_Exception extends Kohana_Exception {
 	{
 		return Kohana_Exception::text($this);
 	}
+
 }

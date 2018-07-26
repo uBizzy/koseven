@@ -24,35 +24,35 @@ class Kohana_Request_Client_ExternalTest extends Unittest_TestCase {
 	{
 		Request_Client_External::$client = 'Request_Client_Stream';
 
-		$return = array(
-			array(
-				array(),
+		$return = [
+			[
+				[],
 				NULL,
 				'Request_Client_Stream'
-			),
-			array(
-				array(),
+			],
+			[
+				[],
 				'Request_Client_Stream',
 				'Request_Client_Stream'
-			)
-		);
+			]
+		];
 
 		if (extension_loaded('curl'))
 		{
-			$return[] = array(
-				array(),
+			$return[] = [
+				[],
 				'Request_Client_Curl',
 				'Request_Client_Curl'
-			);
+			];
 		}
 
 		if (extension_loaded('http'))
 		{
-			$return[] = array(
-				array(),
+			$return[] = [
+				[],
 				'Request_Client_HTTP',
 				'Request_Client_HTTP'
-			);
+			];
 		}
 
 		return $return;
@@ -80,28 +80,28 @@ class Kohana_Request_Client_ExternalTest extends Unittest_TestCase {
 	 */
 	public function provider_options()
 	{
-		return array(
-			array(
+		return [
+			[
 				NULL,
 				NULL,
-				array()
-			),
-			array(
-				array('foo' => 'bar', 'stfu' => 'snafu'),
+				[]
+			],
+			[
+				['foo' => 'bar', 'stfu' => 'snafu'],
 				NULL,
-				array('foo' => 'bar', 'stfu' => 'snafu')
-			),
-			array(
+				['foo' => 'bar', 'stfu' => 'snafu']
+			],
+			[
 				'foo',
 				'bar',
-				array('foo' => 'bar')
-			),
-			array(
-				array('foo' => 'bar'),
+				['foo' => 'bar']
+			],
+			[
+				['foo' => 'bar'],
 				'foo',
-				array('foo' => 'bar')
-			)
-		);
+				['foo' => 'bar']
+			]
+		];
 	}
 
 	/**
@@ -131,27 +131,27 @@ class Kohana_Request_Client_ExternalTest extends Unittest_TestCase {
 	public function provider_execute()
 	{
 		$json = '{"foo": "bar", "snafu": "stfu"}';
-		$post = array('foo' => 'bar', 'snafu' => 'stfu');
+		$post = ['foo' => 'bar', 'snafu' => 'stfu'];
 
-		return array(
-			array(
+		return [
+			[
 				'application/json',
 				$json,
-				array(),
-				array(
+				[],
+				[
 					'content-type' => 'application/json',
 					'body'         => $json
-				)
-			),
-			array(
+				]
+			],
+			[
 				'application/json',
 				$json,
 				$post,
-				array(
+				[
 					'content-type' => 'application/x-www-form-urlencoded; charset='.Kohana::$charset,
 					'body'         => http_build_query($post, NULL, '&')
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 }

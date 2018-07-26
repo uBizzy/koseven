@@ -10,7 +10,7 @@ class Kohana_Encrypt {
 	/**
 	 * @var  array  Encrypt class instances
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 	/**
 	 * @var  engine  Encryption engine
@@ -46,7 +46,7 @@ class Kohana_Encrypt {
 			{
 				// No default encryption key is provided!
 				throw new Kohana_Exception('No encryption key is defined in the encryption configuration group: :group',
-					array(':group' => $name));
+					[':group' => $name]);
 			}
 
 			// Create a new instance
@@ -128,4 +128,5 @@ class Kohana_Encrypt {
 	{
 		return $this->_engine->create_iv();
 	}
+
 }

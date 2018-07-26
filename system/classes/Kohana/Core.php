@@ -39,16 +39,6 @@ class Kohana_Core {
 	public static $is_windows = FALSE;
 
 	/**
-	 * @var  boolean  True if [magic quotes](http://php.net/manual/en/security.magicquotes.php) is enabled.
-	 */
-	public static $magic_quotes = FALSE;
-
-	/**
-	 * @var  boolean  TRUE if PHP safe mode is on
-	 */
-	public static $safe_mode = FALSE;
-
-	/**
 	 * @var  string
 	 */
 	public static $content_type = 'text/html';
@@ -66,7 +56,7 @@ class Kohana_Core {
 	/**
 	 * @var  array   list of valid host names for this instance
 	 */
-	public static $hostnames = array();
+	public static $hostnames = [];
 
 	/**
 	 * @var  string  base URL to the application
@@ -106,7 +96,7 @@ class Kohana_Core {
 	/**
 	 * @var  array  Types of errors to display at shutdown
 	 */
-	public static $shutdown_errors = array(E_PARSE, E_ERROR, E_USER_ERROR);
+	public static $shutdown_errors = [E_PARSE, E_ERROR, E_USER_ERROR];
 
 	/**
 	 * @var  boolean  set the X-Powered-By header
@@ -131,17 +121,17 @@ class Kohana_Core {
 	/**
 	 * @var  array   Currently active modules
 	 */
-	protected static $_modules = array();
+	protected static $_modules = [];
 
 	/**
 	 * @var  array   Include paths that are used to find files
 	 */
-	protected static $_paths = array(APPPATH, SYSPATH);
+	protected static $_paths = [APPPATH, SYSPATH];
 
 	/**
 	 * @var  array   File path cache, used when caching is true in [Kohana::init]
 	 */
-	protected static $_files = array();
+	protected static $_files = [];
 
 	/**
 	 * @var  boolean  Has the file path cache changed during this execution?  Used internally when when caching is true in [Kohana::init]
@@ -151,7 +141,6 @@ class Kohana_Core {
 	/**
 	 * Initializes the environment:
 	 *
-	 * - Disables register_globals and magic_quotes_gpc
 	 * - Determines the current environment
 	 * - Set global settings
 	 * - Sanitizes GET, POST, and COOKIE variables
@@ -174,7 +163,6 @@ class Kohana_Core {
 	 * @throws  Kohana_Exception
 	 * @param   array   $settings   Array of settings.  See above.
 	 * @return  void
-	 * @uses    Kohana::globals
 	 * @uses    Kohana::sanitize
 	 * @uses    Kohana::cache
 	 * @uses    Profiler
@@ -208,10 +196,10 @@ class Kohana_Core {
 		if (Kohana::$errors === TRUE)
 		{
 			// Enable Kohana exception handling, adds stack traces and error source.
-			set_exception_handler(array('Kohana_Exception', 'handler'));
+			set_exception_handler(['Kohana_Exception', 'handler']);
 
 			// Enable Kohana error handling, converts all PHP errors to exceptions.
-			set_error_handler(array('Kohana', 'error_handler'));
+			set_error_handler(['Kohana', 'error_handler']);
 		}
 
 		/**
@@ -223,13 +211,7 @@ class Kohana_Core {
 		}
 
 		// Enable the Kohana shutdown handler, which catches E_FATAL errors.
-		register_shutdown_function(array('Kohana', 'shutdown_handler'));
-
-		if ((PHP_VERSION_ID < 50300) AND ini_get('register_globals'))
-		{
-			// Reverse the effects of register_globals
-			Kohana::globals();
-		}
+		register_shutdown_function(['Kohana', 'shutdown_handler']);
 
 		if (isset($settings['expose']))
 		{
@@ -238,9 +220,6 @@ class Kohana_Core {
 
 		// Determine if we are running in a Windows environment
 		Kohana::$is_windows = (DIRECTORY_SEPARATOR === '\\');
-
-		// Determine if we are running in safe mode
-		Kohana::$safe_mode = (PHP_VERSION_ID >= 50300) OR ((bool) ini_get('safe_mode'));
 
 		if (isset($settings['cache_dir']))
 		{
@@ -257,7 +236,7 @@ class Kohana_Core {
 				catch (Exception $e)
 				{
 					throw new Kohana_Exception('Could not create cache directory :dir',
-						array(':dir' => Debug::path($settings['cache_dir'])));
+						[':dir' => Debug::path($settings['cache_dir'])]);
 				}
 			}
 
@@ -273,7 +252,7 @@ class Kohana_Core {
 		if ( ! is_writable(Kohana::$cache_dir))
 		{
 			throw new Kohana_Exception('Directory :dir must be writable',
-				array(':dir' => Debug::path(Kohana::$cache_dir)));
+				[':dir' => Debug::path(Kohana::$cache_dir)]);
 		}
 
 		if (isset($settings['cache_life']))
@@ -291,7 +270,7 @@ class Kohana_Core {
 		if (Kohana::$caching === TRUE)
 		{
 			// Load the file path cache
-			Kohana::$_files = Kohana::cache('Kohana::find_file()');
+			Kohana::$_files = Kohana::file_cache('Kohana::find_file()');
 		}
 
 		if (isset($settings['charset']))
@@ -317,9 +296,6 @@ class Kohana_Core {
 			// Set the index file
 			Kohana::$index_file = trim($settings['index_file'], '/');
 		}
-
-		// Determine if the extremely evil magic quotes are enabled
-		Kohana::$magic_quotes = (bool) get_magic_quotes_gpc();
 
 		// Sanitize all request variables
 		$_GET    = Kohana::sanitize($_GET);
@@ -352,7 +328,7 @@ class Kohana_Core {
 		if (Kohana::$_init)
 		{
 			// Removed the autoloader
-			spl_autoload_unregister(array('Kohana', 'auto_load'));
+			spl_autoload_unregister(['Kohana', 'auto_load']);
 
 			if (Kohana::$errors)
 			{
@@ -367,8 +343,8 @@ class Kohana_Core {
 			Kohana::$log = Kohana::$config = NULL;
 
 			// Reset internal storage
-			Kohana::$_modules = Kohana::$_files = array();
-			Kohana::$_paths   = array(APPPATH, SYSPATH);
+			Kohana::$_modules = Kohana::$_files = [];
+			Kohana::$_paths   = [APPPATH, SYSPATH];
 
 			// Reset file cache status
 			Kohana::$_files_changed = FALSE;
@@ -379,56 +355,8 @@ class Kohana_Core {
 	}
 
 	/**
-	 * Reverts the effects of the `register_globals` PHP setting by unsetting
-	 * all global variables except for the default super globals (GPCS, etc),
-	 * which is a [potential security hole.][ref-wikibooks]
-	 *
-	 * This is called automatically by [Kohana::init] if `register_globals` is
-	 * on.
-	 *
-	 *
-	 * [ref-wikibooks]: http://en.wikibooks.org/wiki/PHP_Programming/Register_Globals
-	 *
-	 * @return  void
-	 */
-	public static function globals()
-	{
-		if (isset($_REQUEST['GLOBALS']) OR isset($_FILES['GLOBALS']))
-		{
-			// Prevent malicious GLOBALS overload attack
-			echo "Global variable overload attack detected! Request aborted.\n";
-
-			// Exit with an error status
-			exit(1);
-		}
-
-		// Get the variable names of all globals
-		$global_variables = array_keys($GLOBALS);
-
-		// Remove the standard global variables from the list
-		$global_variables = array_diff($global_variables, array(
-			'_COOKIE',
-			'_ENV',
-			'_GET',
-			'_FILES',
-			'_POST',
-			'_REQUEST',
-			'_SERVER',
-			'_SESSION',
-			'GLOBALS',
-		));
-
-		foreach ($global_variables as $name)
-		{
-			// Unset the global variable, effectively disabling register_globals
-			unset($GLOBALS[$name]);
-		}
-	}
-
-	/**
 	 * Recursively sanitizes an input variable:
 	 *
-	 * - Strips slashes if magic quotes are enabled
 	 * - Normalizes all newlines to LF
 	 *
 	 * @param   mixed   $value  any variable
@@ -446,16 +374,10 @@ class Kohana_Core {
 		}
 		elseif (is_string($value))
 		{
-			if (Kohana::$magic_quotes === TRUE)
-			{
-				// Remove slashes added by magic quotes
-				$value = stripslashes($value);
-			}
-
 			if (strpos($value, "\r") !== FALSE)
 			{
 				// Standardize newlines
-				$value = str_replace(array("\r\n", "\r"), "\n", $value);
+				$value = str_replace(["\r\n", "\r"], "\n", $value);
 			}
 		}
 
@@ -561,7 +483,7 @@ class Kohana_Core {
 		}
 
 		// Start a new list of include paths, APPPATH first
-		$paths = array(APPPATH);
+		$paths = [APPPATH];
 
 		foreach ($modules as $name => $path)
 		{
@@ -573,10 +495,10 @@ class Kohana_Core {
 			else
 			{
 				// This module is invalid, remove it
-				throw new Kohana_Exception('Attempted to load an invalid or missing module \':module\' at \':path\'', array(
+				throw new Kohana_Exception('Attempted to load an invalid or missing module \':module\' at \':path\'', [
 					':module' => $name,
 					':path'   => Debug::path($path),
-				));
+				]);
 			}
 		}
 
@@ -682,7 +604,7 @@ class Kohana_Core {
 			$paths = array_reverse(Kohana::$_paths);
 
 			// Array of files that have been found
-			$found = array();
+			$found = [];
 
 			foreach ($paths as $dir)
 			{
@@ -756,7 +678,7 @@ class Kohana_Core {
 		}
 
 		// Create an array for the files
-		$found = array();
+		$found = [];
 
 		foreach ($paths as $path)
 		{
@@ -983,7 +905,7 @@ class Kohana_Core {
 		if ( ! isset($messages[$file]))
 		{
 			// Create a new message list
-			$messages[$file] = array();
+			$messages[$file] = [];
 
 			if ($files = Kohana::find_file('messages', $file))
 			{
@@ -1046,7 +968,7 @@ class Kohana_Core {
 			if (Kohana::$caching === TRUE AND Kohana::$_files_changed === TRUE)
 			{
 				// Write the file path cache
-				Kohana::cache('Kohana::find_file()', Kohana::$_files);
+				Kohana::file_cache('Kohana::find_file()', Kohana::$_files);
 			}
 		}
 		catch (Exception $e)

@@ -33,7 +33,7 @@ class Kohana_Database_Expression {
 	 * @param   array   $parameters unquoted parameter values
 	 * @return  void
 	 */
-	public function __construct($value, $parameters = array())
+	public function __construct($value, $parameters = [])
 	{
 		// Set the expression string
 		$this->_value = $value;
@@ -126,7 +126,7 @@ class Kohana_Database_Expression {
 		if ( ! empty($this->_parameters))
 		{
 			// Quote all of the parameter values
-			$params = array_map(array($db, 'quote'), $this->_parameters);
+			$params = array_map([$db, 'quote'], $this->_parameters);
 
 			// Replace the values in the expression
 			$value = strtr($value, $params);

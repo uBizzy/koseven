@@ -1,6 +1,5 @@
 <?php
-return array
-(
+return [
     // @link http://github.com/gimpe/kohana-memcached
     /*
     'memcached' => array(
@@ -139,4 +138,4 @@ return array
         'default_expire' => 3600,
     )
 	*/
-);
+];
