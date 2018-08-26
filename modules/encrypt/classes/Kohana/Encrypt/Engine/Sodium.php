@@ -22,7 +22,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
     use Traits_Encrypt_Iv;
 
     /**
-     * @var String Engine type
+     * @var string Engine type
      */
     const TYPE = 'Sodium';
 
@@ -49,11 +49,11 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 
     /**
      * Encrypts
-     * @param String $message Your message to be encrypted
-     * @param String $iv
+     * @param string $message Your message to be encrypted
+     * @param string $iv
      * @return null|string
      */
-    public function encrypt(String $message, String $iv): ?string
+    public function encrypt(string $message, string $iv): ?string
     {
         $value = sodium_crypto_aead_aes256gcm_encrypt($message, '', $iv, $this->_key);
 
@@ -80,10 +80,10 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
     }
 
     /**
-     * @param String $ciphertext
+     * @param string $ciphertext
      * @return null|string
      */
-    public function decrypt(String $ciphertext): ?string
+    public function decrypt(string $ciphertext): ?string
     {
         // Convert the data back to binary
         $data = json_decode(base64_decode($ciphertext), TRUE);
