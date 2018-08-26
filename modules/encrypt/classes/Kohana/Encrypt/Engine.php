@@ -49,14 +49,14 @@ abstract class Kohana_Encrypt_Engine
      * @param string $iv
      * @return null|string
      */
-    abstract public function encrypt(string $message, string $iv): ?string;
+    abstract public function encrypt(string $message, string $iv);
 
     /**
      * Decrypts the ciphertext
      * @param string $ciphertext Your ciphertext to be decrypted.
      * @return null|string
      */
-    abstract public function decrypt(string $ciphertext): ?string;
+    abstract public function decrypt(string $ciphertext);
 
     /**
      * Creates random IV (Initialization vector) for each encryption action.

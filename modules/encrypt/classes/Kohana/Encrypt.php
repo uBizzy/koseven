@@ -99,7 +99,7 @@ class Kohana_Encrypt {
      * @param string $message Message to be encrypted
      * @return null|string
      */
-    public function encode(string $message): ?string
+    public function encode(string $message)
     {
         return $this->_engine->encrypt($message, $this->_create_iv());
     }
@@ -113,7 +113,7 @@ class Kohana_Encrypt {
      * @return null|string if decryption fails
      * @internal param string $data encoded string to be decrypted
      */
-    public function decode(string $ciphertext): ?string
+    public function decode(string $ciphertext)
     {
         return $this->_engine->decrypt($ciphertext);
     }

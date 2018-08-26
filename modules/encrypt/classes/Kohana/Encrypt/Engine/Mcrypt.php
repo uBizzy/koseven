@@ -103,7 +103,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
      * @param string $iv IV (Initialization vector)
      * @return null|string
      */
-    public function encrypt(string $message, string $iv): ?string
+    public function encrypt(string $message, string $iv)
     {
         // Encrypt the data using the configured options and generated iv
         $data = mcrypt_encrypt($this->_cipher, $this->_key, $message, $this->_mode, $iv);
@@ -120,7 +120,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
      * @param string $ciphertext Encoded string to be decrypted
      * @return null|string if decryption fails
      */
-    public function decrypt(string $ciphertext): ?string
+    public function decrypt(string $ciphertext)
     {
         // Convert the data back to binary
         $data = base64_decode($ciphertext, TRUE);

@@ -87,7 +87,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
      * @param string $iv
      * @return null|string
      */
-    public function encrypt(string $data, string $iv): ?string
+    public function encrypt(string $data, string $iv)
     {
         // First we will encrypt the value using OpenSSL. After this is encrypted we
         // will proceed to calculating a MAC for the encrypted value so that this
@@ -122,7 +122,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
      * @param   string $data encoded string to be decrypted
      * @return NULL|string if decryption fails
      */
-    public function decrypt(string $data): ?string
+    public function decrypt(string $data)
     {
         // Convert the data back to binary
         $data = json_decode(base64_decode($data), TRUE);

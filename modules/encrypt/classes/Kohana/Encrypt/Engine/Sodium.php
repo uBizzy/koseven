@@ -50,7 +50,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
      * @param string $iv
      * @return null|string
      */
-    public function encrypt(string $message, string $iv): ?string
+    public function encrypt(string $message, string $iv)
     {
         $value = sodium_crypto_aead_aes256gcm_encrypt($message, '', $iv, $this->_key);
 
@@ -80,7 +80,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
      * @param string $ciphertext
      * @return null|string
      */
-    public function decrypt(string $ciphertext): ?string
+    public function decrypt(string $ciphertext)
     {
         // Convert the data back to binary
         $data = json_decode(base64_decode($ciphertext), TRUE);
