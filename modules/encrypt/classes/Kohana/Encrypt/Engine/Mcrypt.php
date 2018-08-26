@@ -17,7 +17,7 @@
  *    data is written in binary form. By default, the "nofb" mode is used,
  *    which produces short output with high entropy.
  *
- * @package    Kohana
+ * @package    Kohana/Encrypt
  * @category   Security
  * @author     Kohana Team
  * @copyright  (c) Kohana Team

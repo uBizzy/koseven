@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    Kohana
+ * @package    Kohana/Encrypt
  * @category   Security
  * @author     Koseven Team
  * @copyright  (c) Kohana Team
