@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Trait Traits_Encrypt_Iv
- *
  * @package    Kohana
  * @category   Security
  * @author     Koseven Team

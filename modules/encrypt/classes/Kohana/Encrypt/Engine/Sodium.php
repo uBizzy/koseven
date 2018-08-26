@@ -1,15 +1,12 @@
 <?php
 
 /**
- * Class Kohana_Encrypt_Engine_Sodium
  * The Encrypt Sodium engine provides two-way encryption of text and binary strings
  * using the [Sodium](http://php.net/sodium) extension, which consists of two
  * parts: the key and the cipher.
  *
  * The Key
  * :  A secret passphrase that is used for encoding and decoding
- *
- *
  *
  * @package    Kohana
  * @category   Security

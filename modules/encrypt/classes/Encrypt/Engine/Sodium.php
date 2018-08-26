@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Encrypt_Engine_Sodium
- *
  * @package    Kohana
  * @category   Security
  * @author     Koseven Team

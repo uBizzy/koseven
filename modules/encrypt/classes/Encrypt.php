@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Encrypt
- *
  * @package    Kohana
  * @category   Security
  * @author     Koseven Team

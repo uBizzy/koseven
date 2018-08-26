@@ -12,7 +12,6 @@
  *    is mathematically calculated. By default, the "AES-256-CBC" cipher
  *    is used.
  *
- *
  * @package    Kohana
  * @category   Security
  * @author     Kohana Team

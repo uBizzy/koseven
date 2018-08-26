@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Encrypt_Engine_Mcrypt
- *
  * @package    Kohana
  * @category   Security
  * @author     Koseven Team
