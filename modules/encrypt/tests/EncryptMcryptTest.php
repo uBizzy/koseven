@@ -1,14 +1,15 @@
 <?php
 /**
- * @package    Kohana/Encrypt
  * @group      kohana
  * @group      kohana.encrypt
+ * 
+ * @package    Kohana/Encrypt
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class EncryptMcryptTest extends EncryptBase
+class EncryptMcryptTest extends EncryptTestBase
 {
 	/**
 	 * @return void
@@ -21,7 +22,7 @@ class EncryptMcryptTest extends EncryptBase
             'type' => Encrypt_Engine_Mcrypt::TYPE,
             'cipher' => MCRYPT_RIJNDAEL_128,
             'mode' => MCRYPT_MODE_CBC,
-            'key' => EncryptBase::KEY,
+            'key' => EncryptTestBase::KEY,
         ]);
     }
 

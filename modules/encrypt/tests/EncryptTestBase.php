@@ -1,14 +1,15 @@
 <?php
 /**
- * @package    Kohana/Encrypt
  * @group      kohana
  * @group      kohana.encrypt
+ * 
+ * @package    Kohana/Encrypt
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class EncryptBase extends Unittest_TestCase
+abstract class EncryptTestBase extends Unittest_TestCase
 {
 	/**
 	 * @var string encryption key

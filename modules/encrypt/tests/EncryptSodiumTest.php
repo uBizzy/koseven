@@ -1,14 +1,15 @@
 <?php
 /**
- * @package    Kohana/Encrypt
  * @group      kohana
  * @group      kohana.encrypt
+ * 
+ * @package    Kohana/Encrypt
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class EncryptSodiumTest extends EncryptBase
+class EncryptSodiumTest extends EncryptTestBase
 {
 	/**
 	 * @return void
@@ -24,7 +25,7 @@ class EncryptSodiumTest extends EncryptBase
 
         $this->set_config([
             'type' => Encrypt_Engine_Sodium::TYPE,
-            'key' => EncryptBase::KEY,
+            'key' => EncryptTestBase::KEY,
         ]);
     }
 

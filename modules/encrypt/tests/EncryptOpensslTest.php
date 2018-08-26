@@ -1,14 +1,15 @@
 <?php
 /**
- * @package    Kohana/Encrypt
  * @group      kohana
  * @group      kohana.encrypt
+ * 
+ * @package    Kohana/Encrypt
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class EncryptOpensslTest extends EncryptBase
+class EncryptOpensslTest extends EncryptTestBase
 {
 	/**
 	 * @return void
@@ -19,7 +20,7 @@ class EncryptOpensslTest extends EncryptBase
 
         $this->set_config([
             'type' => Encrypt_Engine_Openssl::TYPE,
-            'key' => EncryptBase::KEY,
+            'key' => EncryptTestBase::KEY,
         ]);
     }
 
