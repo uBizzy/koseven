@@ -12,14 +12,11 @@ Next, you will need to set the encryption key in encrypt.php inside config direc
 
 Encryption and decryption is supported thru the following engines:
 
-- mcrypt
+- mcrypt (deprecated)
 - openssl
 - sodium
 
 ## Quick usage
 
-```php
-$encoded = Encrypt::instance()->encode('data');
-
-$decoded = Encrypt::instance()->encode($encoded); // data
-```
+    $encoded = Encrypt::instance()->encode('data');
+    $decoded = Encrypt::instance()->encode($encoded); // data

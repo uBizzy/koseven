@@ -2,7 +2,7 @@
 
 return [
 	'modules' => [
-		'database' => [
+		'encrypt' => [
 			'enabled' => TRUE,
 			'name' => 'Encrypt',
 			'description' => 'Module for encrypting and decrypting data.',
