@@ -8,26 +8,36 @@
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class EncryptTest extends Unittest_TestCase
+class EncryptBase extends Unittest_TestCase
 {
-	public function setUp()
-	{
-		parent::setUp();
+	/**
+	 * @var string encryption key
+	 */
+	const KEY = '01234567890123456789012345678901';
 
-		Kohana::$config->load('encrypt')->set(
-			'default',
-			[
-				'type' => Kohana_Encrypt_Engine_Openssl::TYPE,
-				'key' => '01234567890123456789012345678901',
-			]
-		);
+	/**
+	 * @return void
+	 */
+    public function setUp()
+    {
+        parent::setUp();
+
+		// clear instances
+		Encrypt::$instances = [];
 	}
 
 	/**
-	 * @dataProvider provider_encode_and_decode
 	 * @return void
 	 */
-	public function test_encode_and_decode($encryptable)
+	public function set_config(array $config)
+	{
+		Kohana::$config->load('encrypt')->set('default', $config);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function encode_and_decode($encryptable)
 	{
 		$this->assertEquals($encryptable, Encrypt::instance()->decode(Encrypt::instance()->encode($encryptable)));
 	}
