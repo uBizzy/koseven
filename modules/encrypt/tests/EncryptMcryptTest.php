@@ -18,6 +18,11 @@ class EncryptMcryptTest extends EncryptTestBase
     {
         parent::setUp();
 
+		if ( ! extension_loaded('mcrypt'))
+		{
+			$this->markTestSkipped('The Mcrypt extension is not available.');
+		}
+
         $this->set_config([
             'type' => Encrypt_Engine_Mcrypt::TYPE,
             'cipher' => MCRYPT_RIJNDAEL_128,
