@@ -18,5 +18,16 @@ Encryption and decryption is supported thru the following engines:
 
 ## Quick usage
 
+encrypt.php config file:
+
+    return [
+        'default' => [
+            'type' => Kohana_Encrypt_Engine_Openssl::TYPE,
+            'key' => 'strongpassword'
+        ]
+    ]
+
+your code:
+
     $encoded = Encrypt::instance()->encode('data');
-    $decoded = Encrypt::instance()->encode($encoded); // data
+    echo Encrypt::instance()->decode($encoded); // data
