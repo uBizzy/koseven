@@ -32,20 +32,27 @@ abstract class EncryptTestBase extends Unittest_TestCase
 		Encrypt::$instances = [];
 	}
 
-	public function set_config(array $config): void
+	/**
+	 * @return void
+	 */
+	public function set_config(array $config)
 	{
 		Kohana::$config->load('encrypt')->set('default', $config);
 	}
 
 	/**
 	 * @dataProvider provider_encode_and_decode
+	 * @return void
 	 */
-	public function test_encode_and_decode(string $encryptable): void
+	public function test_encode_and_decode(string $encryptable)
 	{
 		$this->encode_and_decode($encryptable);
 	}
 
-	public function encode_and_decode($encryptable): void
+	/**
+	 * @return void
+	 */
+	public function encode_and_decode($encryptable)
 	{
 		$this->assertEquals($encryptable, Encrypt::instance()->decode(Encrypt::instance()->encode($encryptable)));
 	}

@@ -26,8 +26,9 @@ class EncryptOpensslTest extends EncryptTestBase
 
 	/**
 	 * @dataProvider provider_encode_and_decode
+     * @return void
 	 */
-	public function test_128_bit(string $encryptable): void
+	public function test_128_bit(string $encryptable)
 	{
         $this->set_config([
             'type' => Encrypt_Engine_Openssl::TYPE,
