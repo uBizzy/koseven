@@ -25,16 +25,7 @@ class EncryptSodiumTest extends EncryptTestBase
 
         $this->set_config([
             'type' => Encrypt_Engine_Sodium::TYPE,
-            'key' => EncryptTestBase::KEY,
+            'key' => EncryptTestBase::KEY32,
         ]);
     }
-
-    /**
-	 * @dataProvider provider_encode_and_decode
-	 * @return void
-	 */
-	public function test_encode_and_decode(string $encryptable)
-	{
-		$this->encode_and_decode($encryptable);
-	}
 }

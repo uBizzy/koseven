@@ -20,16 +20,20 @@ class EncryptOpensslTest extends EncryptTestBase
 
         $this->set_config([
             'type' => Encrypt_Engine_Openssl::TYPE,
-            'key' => EncryptTestBase::KEY,
+            'key' => EncryptTestBase::KEY32,
         ]);
     }
 
-    /**
+	/**
 	 * @dataProvider provider_encode_and_decode
-	 * @return void
 	 */
-	public function test_encode_and_decode(string $encryptable)
+	public function test_128_bit(string $encryptable): void
 	{
+        $this->set_config([
+            'type' => Encrypt_Engine_Openssl::TYPE,
+            'cipher' => 'AES-128-CBC',
+            'key' => EncryptTestBase::KEY16,
+		]);
 		$this->encode_and_decode($encryptable);
 	}
 }

@@ -12,9 +12,14 @@
 abstract class EncryptTestBase extends Unittest_TestCase
 {
 	/**
-	 * @var string encryption key
+	 * @var string 256 bit encryption key
 	 */
-	const KEY = '01234567890123456789012345678901';
+	const KEY16 = '0123456789012345';
+
+	/**
+	 * @var string 256 bit encryption key
+	 */
+	const KEY32 = '01234567890123456789012345678901';
 
 	/**
 	 * @return void
@@ -27,18 +32,20 @@ abstract class EncryptTestBase extends Unittest_TestCase
 		Encrypt::$instances = [];
 	}
 
-	/**
-	 * @return void
-	 */
-	public function set_config(array $config)
+	public function set_config(array $config): void
 	{
 		Kohana::$config->load('encrypt')->set('default', $config);
 	}
 
 	/**
-	 * @return void
+	 * @dataProvider provider_encode_and_decode
 	 */
-	public function encode_and_decode($encryptable)
+	public function test_encode_and_decode(string $encryptable): void
+	{
+		$this->encode_and_decode($encryptable);
+	}
+
+	public function encode_and_decode($encryptable): void
 	{
 		$this->assertEquals($encryptable, Encrypt::instance()->decode(Encrypt::instance()->encode($encryptable)));
 	}
@@ -51,6 +58,9 @@ abstract class EncryptTestBase extends Unittest_TestCase
 			],
 			[
 				'777888000',
+			],
+			[
+				'verylongTEXTwithSTUFFandnumbers0123456789',
 			],
 		];
 	}

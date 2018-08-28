@@ -25,18 +25,21 @@ class EncryptMcryptTest extends EncryptTestBase
 
         $this->set_config([
             'type' => Encrypt_Engine_Mcrypt::TYPE,
-            'cipher' => MCRYPT_RIJNDAEL_128,
-            'mode' => MCRYPT_MODE_CBC,
-            'key' => EncryptTestBase::KEY,
+            'key' => EncryptTestBase::KEY32,
         ]);
-    }
+	}
 
 	/**
 	 * @dataProvider provider_encode_and_decode
-	 * @return void
 	 */
-	public function test_encode_and_decode(string $encryptable)
+	public function test_256_bit(string $encryptable): void
 	{
+        $this->set_config([
+            'type' => Encrypt_Engine_Mcrypt::TYPE,
+            'cipher' => MCRYPT_RIJNDAEL_256,
+            'mode' => MCRYPT_MODE_CBC,
+            'key' => EncryptTestBase::KEY32,
+		]);
 		$this->encode_and_decode($encryptable);
 	}
 }
