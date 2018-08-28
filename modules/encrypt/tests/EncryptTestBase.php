@@ -12,7 +12,7 @@
 abstract class EncryptTestBase extends Unittest_TestCase
 {
 	/**
-	 * @var string 256 bit encryption key
+	 * @var string 128 bit encryption key
 	 */
 	const KEY16 = '0123456789012345';
 
