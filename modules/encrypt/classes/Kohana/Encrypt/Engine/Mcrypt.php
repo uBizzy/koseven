@@ -53,20 +53,10 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
 	{
 		parent::__construct($config);
 
-		if (isset($config['mode']))
-		{
-			$this->_mode = $config['mode'];
-		}
-
 		if ( ! isset($config['mode']) || $config['mode'] === NULL)
 		{
 			// Add the default mode
 			$this->_mode = constant('MCRYPT_MODE_NOFB');
-		}
-
-		if (isset($config['cipher']))
-		{
-			$this->_cipher = $config['cipher'];
 		}
 
 		if ( ! isset($config['cipher']) || $config['cipher'] === NULL)

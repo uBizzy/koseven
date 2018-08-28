@@ -41,6 +41,16 @@ abstract class Kohana_Encrypt_Engine
 			// No default encryption key is provided!
 			throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
 		}
+
+		if (isset($config['mode']))
+		{
+			$this->_mode = $config['mode'];
+		}
+
+		if (isset($config['cipher']))
+		{
+			$this->_cipher = $config['cipher'];
+		}
 	}
 
 	/**
