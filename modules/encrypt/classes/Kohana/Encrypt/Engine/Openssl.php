@@ -12,8 +12,7 @@
  *    is mathematically calculated. By default, the "AES-256-CBC" cipher
  *    is used.
  *
- *
- * @package    Kohana
+ * @package    Kohana/Encrypt
  * @category   Security
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
@@ -21,30 +20,30 @@
  */
 class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 {
-    use Traits_Encrypt_Iv;
+	use Traits_Encrypt_Iv;
 
-    /**
-     * @var String Engine type
-     */
-    const TYPE = 'Openssl';
+	/**
+	 * @var string Engine type
+	 */
+	const TYPE = 'Openssl';
 
 	/**
 	 * @var int the size of the Initialization Vector (IV) in bytes
 	 */
 	protected $_iv_size;
 
-    /**
-     * Creates a new openssl wrapper.
-     *
-     * @param array $config Array with configuration
-     * @throws Kohana_Exception
-     */
+	/**
+	 * Creates a new openssl wrapper.
+	 *
+	 * @param array $config Array with configuration
+	 * @throws Kohana_Exception
+	 */
 	public function __construct(array $config)
 	{
-	    if( ! function_exists('openssl_cipher_iv_length'))
-	    {
-	        throw new Kohana_Exception('OpenSSL extension is not installed.');
-        }
+		if( ! function_exists('openssl_cipher_iv_length'))
+		{
+			throw new Kohana_Exception('OpenSSL extension is not installed.');
+		}
 
 		if ( ! isset($config['cipher']) || $config['cipher'] === NULL)
 		{
@@ -82,13 +81,13 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 		}
 	}
 
-    /**
-     * Encrypts a string and returns an encrypted string that can be decoded.
-     * @param String $data
-     * @param String $iv
-     * @return null|string
-     */
-	public function encrypt(String $data, String $iv): ?string
+	/**
+	 * Encrypts a string and returns an encrypted string that can be decoded.
+	 * @param string $data
+	 * @param string $iv
+	 * @return null|string
+	 */
+	public function encrypt(string $data, string $iv)
 	{
 		// First we will encrypt the value using OpenSSL. After this is encrypted we
 		// will proceed to calculating a MAC for the encrypted value so that this
@@ -117,13 +116,13 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 		return base64_encode($json);
 	}
 
-    /**
-     * Decrypts an encoded string back to its original value.
-     *
-     * @param   string $data encoded string to be decrypted
-     * @return NULL|string if decryption fails
-     */
-	public function decrypt(String $data): ?string
+	/**
+	 * Decrypts an encoded string back to its original value.
+	 *
+	 * @param   string $data encoded string to be decrypted
+	 * @return NULL|string if decryption fails
+	 */
+	public function decrypt(string $data)
 	{
 		// Convert the data back to binary
 		$data = json_decode(base64_decode($data), TRUE);
