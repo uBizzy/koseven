@@ -14,7 +14,7 @@ trait Traits_Encrypt_Iv
 	 * @return string the initialization vector or FALSE on error
 	 * @throws Kohana_Exception
 	 */
-	public function create_iv(): string
+	public function create_iv()
 	{
 		if (function_exists('random_bytes'))
 		{

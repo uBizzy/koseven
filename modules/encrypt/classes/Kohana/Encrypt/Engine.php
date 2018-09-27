@@ -72,5 +72,5 @@ abstract class Kohana_Encrypt_Engine
 	 * Creates random IV (Initialization vector) for each encryption action.
 	 * @return string
 	 */
-	abstract public function create_iv(): string;
+	abstract public function create_iv();
 }
