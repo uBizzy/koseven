@@ -54,9 +54,14 @@ abstract class EncryptTestBase extends Unittest_TestCase
 	 */
 	public function encode_and_decode($encryptable)
 	{
-		$this->assertEquals($encryptable, Encrypt::instance()->decode(Encrypt::instance()->encode($encryptable)));
+		$instance = Encrypt::instance();
+		$this->assertEquals($encryptable,$instance->decode($instance->encode($encryptable)));
 	}
 
+	/**
+	 * Data source for encode_and_decode test
+	 * @return array
+	 */
 	public function provider_encode_and_decode(): array
 	{
 		return [

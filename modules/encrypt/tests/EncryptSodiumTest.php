@@ -22,10 +22,19 @@ class EncryptSodiumTest extends EncryptTestBase
 		{
 			$this->markTestSkipped('The Sodium extension is not available.');
 		}
-
-        $this->set_config([
-            'type' => Encrypt_Engine_Sodium::TYPE,
-            'key' => EncryptTestBase::KEY32,
-        ]);
     }
+
+	/**
+	 * @dataProvider provider_encode_and_decode
+	 * @return void
+	 */
+	public function test_256_bit(string $encryptable)
+	{
+		$this->set_config([
+			'type' => Encrypt_Engine_Sodium::TYPE,
+			'key' => EncryptTestBase::KEY32,
+		]);
+
+		$this->encode_and_decode($encryptable);
+	}
 }
