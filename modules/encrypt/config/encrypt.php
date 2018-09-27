@@ -4,14 +4,15 @@
  *
  * string   key     secret passphrase
  */
+
 return [
     'default' => [
         'type' => Kohana_Encrypt_Engine_Openssl::TYPE,
-        'key' => NULL
+        'key' => NULL,
     ],
 //    'sodium' => [
 //        'type' => Kohana_Encrypt_Engine_Sodium::TYPE,
-//        'key' => NULL
+//        'key' => NULL,
 //    ],
 //    /**
 //     * Mcrypt is deprecated and should not be used,
@@ -24,6 +25,6 @@ return [
 //        'type' => Kohana_Encrypt_Engine_Mcrypt::TYPE,
 //        'cipher' => MCRYPT_RIJNDAEL_128,
 //        'mode' => MCRYPT_MODE_CBC,
-//        'key' => NULL
-//    ]
+//        'key' => NULL,
+//    ],
 ];

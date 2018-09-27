@@ -36,9 +36,20 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 	public function __construct($config)
 	{
 		parent::__construct($config);
-		if( ! function_exists('sodium_crypto_aead_aes256gcm_is_available') || ! sodium_crypto_aead_aes256gcm_is_available())
+		if( ! extension_loaded('sodium') || ! sodium_crypto_aead_aes256gcm_is_available())
 		{
 			throw new Kohana_Exception('Sodium extension is not available');
+		}
+
+		$length = mb_strlen($this->_key, '8bit');
+
+		if ($length !== constant('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES'))
+		{
+			// No valid encryption key is provided!
+			throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be :required_length for AEAD-AES-256-GCM, is: :current_length',[
+				':required_length' => constant('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES'),
+				':current_length' => $length
+			]);
 		}
 
 		$this->_iv_size = constant('SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES');
@@ -77,13 +88,27 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 	}
 
 	/**
-	 * @param string $ciphertext
+	 * Decrypts the ciphertext
+	 * @param string $ciphertext Ciphertext to be decrypted
 	 * @return null|string
 	 */
 	public function decrypt(string $ciphertext)
 	{
 		// Convert the data back to binary
-		$data = json_decode(base64_decode($ciphertext), TRUE);
+        $decode = base64_decode($ciphertext);
+        //Check if base64 decoding succeeded
+        if($decode === false)
+        {
+            return NULL;
+        }
+
+        $data = json_decode($decode, TRUE);
+
+        //check if json_decode succeeded
+		if(is_null($data))
+		{
+			return NULL;
+		}
 
 		// If the payload is not valid JSON or does not have the proper keys set we will
 		// assume it is invalid and bail out of the routine since we will not be able
@@ -95,7 +120,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 		}
 
 		$iv = base64_decode($data['iv']);
-		if ( ! $iv)
+		if ($iv === FALSE)
 		{
 			// Invalid base64 data
 			return NULL;
@@ -104,7 +129,14 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 		// Here we will decrypt the value. If we are able to successfully decrypt it
 		// we will then unserialize it and return it out to the caller. If we are
 		// unable to decrypt this value we will return NULL.
-		$decrypted = sodium_crypto_aead_aes256gcm_decrypt(base64_decode($data['value']), '', $iv, $this->_key);
+		$value = base64_decode($data['value']);
+
+		if($value === FALSE)
+		{
+			return NULL;
+		}
+
+		$decrypted = sodium_crypto_aead_aes256gcm_decrypt($value, '', $iv, $this->_key);
 
 		if ($decrypted === FALSE)
 		{
