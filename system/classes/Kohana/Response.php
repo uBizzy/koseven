@@ -81,6 +81,7 @@ class Kohana_Response implements HTTP_Response {
 		422 => 'Unprocessable Entity',
 		423 => 'Locked',
 		424 => 'Failed Dependency',
+		429 => 'Too Many Requests',
 
 		// Server Error 5xx
 		500 => 'Internal Server Error',

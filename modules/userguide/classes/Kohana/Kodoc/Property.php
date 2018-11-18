@@ -81,7 +81,7 @@ class Kohana_Kodoc_Property extends Kodoc {
 		}
 
 		// Store the defult property
-		$this->default = Debug::vars($default);;
+		$this->default = Debug::vars($default);
 	}
 
 } // End Kodoc_Property

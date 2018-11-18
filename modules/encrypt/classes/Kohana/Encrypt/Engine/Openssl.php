@@ -11,7 +11,6 @@
  * :  A [cipher](http://php.net/manual/en/openssl.ciphers.php) determines how the encryption
  *    is mathematically calculated. By default, the "AES-256-CBC" cipher
  *    is used.
- *
  * @package    Kohana/Encrypt
  * @category   Security
  * @author     Kohana Team

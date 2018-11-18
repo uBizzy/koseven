@@ -121,28 +121,6 @@ if (($ob_len = ob_get_length()) !== FALSE)
 	}
 }
 
-// Preset cache config if not set
-$cache_config = Kohana::$config->load('cache');
-
-if (($cache_config->get('default') === NULL AND $cache_config->get('file') === NULL) OR
-	($cache_config->get('default') === 'file' AND $cache_config->get('file') === NULL))
-{
-	$cache_config->set(
-		'file',
-		[
-			'driver' => 'file',
-			'cache_dir' => APPPATH.'cache',
-			'default_expire' => 3600,
-			'ignore_on_delete' => [
-				'file_we_want_to_keep.cache',
-				'.gitignore',
-				'.git',
-				'.svn'
-			]
-		]
-	);
-}
-
 // Enable all modules we can find
 $modules_iterator = new DirectoryIterator(MODPATH);
 
@@ -158,4 +136,4 @@ foreach ($modules_iterator as $module)
 
 Kohana::modules($modules);
 
-unset($cache_config, $modules_iterator, $modules, $module);
+unset($modules_iterator, $modules, $module);

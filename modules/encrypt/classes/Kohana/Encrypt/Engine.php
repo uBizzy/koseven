@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @package    Kohana/Encrypt
  * @category   Security
- * @author     Koseven Team
- * @copyright  (c) Kohana Team
+ * @package    Kohana/Encrypt
+ * @author     Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_Encrypt_Engine
-{
+abstract class Kohana_Encrypt_Engine {
 	/**
 	 * @var string Encryption key
 	 */

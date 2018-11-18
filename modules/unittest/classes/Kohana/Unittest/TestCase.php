@@ -1,8 +1,16 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
+
 /**
  * A version of the stock PHPUnit testcase that includes some extra helpers
  * and default settings
+ *
+ * @package    Kohana/UnitTest
+ * @author     Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_Unittest_TestCase extends TestCase {
 	

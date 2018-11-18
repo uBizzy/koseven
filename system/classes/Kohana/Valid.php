@@ -102,11 +102,11 @@ class Kohana_Valid {
          * @link  http://www.iamcal.com/publish/articles/php/parsing_email/
          * @link  http://www.w3.org/Protocols/rfc822/
          * 
-         * @param String $email E-mail address
-         * @param bool $strict Strict e-mail checking
+         * @param  string  $email   e-mail address
+         * @param  bool    $strict  strict e-mail checking
          * @return bool
          */
-        public static function email(String $email, bool $strict = FALSE): bool
+        public static function email($email, $strict = FALSE): bool
         {
             if ($strict)
             {

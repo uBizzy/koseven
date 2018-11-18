@@ -16,8 +16,8 @@
 class Kohana_Core {
 
 	// Release version and codename
-	const VERSION  = '3.3.7';
-	const CODENAME = 'lazarus';
+	const VERSION  = '3.3.9';
+	const CODENAME = 'karlsruhe';
 
 	// Common environment type constants for consistency and convenience
 	const PRODUCTION  = 10;
@@ -270,7 +270,7 @@ class Kohana_Core {
 		if (Kohana::$caching === TRUE)
 		{
 			// Load the file path cache
-			Kohana::$_files = Kohana::file_cache('Kohana::find_file()');
+			Kohana::$_files = Kohana::cache('Kohana::find_file()');
 		}
 
 		if (isset($settings['charset']))
@@ -722,7 +722,7 @@ class Kohana_Core {
 						if ( ! isset($found[$key]))
 						{
 							// Add new files to the list
-							$found[$key] = realpath($file->getPathName());
+							$found[$key] = realpath($file->getPathname());
 						}
 					}
 				}
@@ -968,7 +968,7 @@ class Kohana_Core {
 			if (Kohana::$caching === TRUE AND Kohana::$_files_changed === TRUE)
 			{
 				// Write the file path cache
-				Kohana::file_cache('Kohana::find_file()', Kohana::$_files);
+				Kohana::cache('Kohana::find_file()', Kohana::$_files);
 			}
 		}
 		catch (Exception $e)

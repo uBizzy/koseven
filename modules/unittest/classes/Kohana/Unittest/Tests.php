@@ -42,8 +42,6 @@ class Kohana_Unittest_Tests {
 		restore_error_handler();
 
 		spl_autoload_register(['Unittest_tests', 'autoload']);
-
-		Unittest_tests::$cache = (($cache = Kohana::cache('unittest_whitelist_cache')) === NULL) ? [] : $cache;
 	}
 
 	/**

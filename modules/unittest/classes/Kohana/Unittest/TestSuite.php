@@ -1,9 +1,17 @@
 <?php
+
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\TestResult;
+
 /**
  * A version of the stock PHPUnit testsuite that supports whitelisting
- * for code coverage filter
+ * for code coverage filter.
+ *
+ * @package    Kohana/UnitTest
+ * @author     Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_Unittest_TestSuite extends TestSuite 
 {
