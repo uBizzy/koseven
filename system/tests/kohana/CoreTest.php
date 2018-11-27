@@ -158,7 +158,7 @@ class Kohana_CoreTest extends Unittest_TestCase
 	 * 
 	 * @test
 	 */
-	public function test_find_file_cache_saved()
+	/*public function test_find_file_cache_saved()
 	{
 		$old_caching     = Kohana::$caching;
 		$old_errors      = Kohana::$errors;
@@ -175,7 +175,7 @@ class Kohana_CoreTest extends Unittest_TestCase
 
 		Kohana::$caching = $old_caching;
 		Kohana::$errors  = $old_errors;
-	}
+	}*/
 
 	/**
 	 * Provides test data for test_message()
