@@ -38,22 +38,29 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
     {
         if ( ! extension_loaded('redis'))
         {
+            // @codeCoverageIgnoreStart
             throw new Cache_Exception(__METHOD__.' Redis PHP extension not loaded!');
+            // @codeCoverageIgnoreEnd
         }
 
         parent::__construct($config);
 
-        $this->_redis = new Redis();
         $servers = Arr::get($this->_config, 'servers', NULL);
+        if (empty($servers))
+        {
+            throw new Cache_Exception('No Redis servers defined in configuration');
+        }
+
+        $this->_redis = new Redis();
+        // Allow passing redis mock class for unit testing
+        if ($redis = Arr::get($this->_config, 'redis_mock', FALSE)) {
+            $this->_redis = $redis;
+        }
 
         // Global cache prefix so the keys in redis is organized
         $cache_prefix = Arr::get($this->_config, 'cache_prefix', NULL);
         $this->_tag_prefix = Arr::get($this->_config, 'tag_prefix', $this->_tag_prefix). ':';
 
-        if (empty($servers))
-        {
-            throw new Cache_Exception('No Redis servers defined in configuration');
-        }
 
         foreach($servers as $server)
         {
@@ -94,16 +101,12 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
      */
     public function get($id, $default = NULL)
     {
-        if (Kohana::$caching === FALSE)
-        {
-            return NULL;
-        }
-
         $value = NULL;
         if (is_array($id))
         {
             // sanitize keys
             $ids = array_map([$this, '_sanitize_id'], $id);
+
             // return key/value
             $value = array_combine($id, $this->_redis->mget($ids));
         }
@@ -128,36 +131,31 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
      */
     public function set($id, $data, $lifetime = 3600)
     {
-        if (Kohana::$caching === FALSE)
-        {
-            return NULL;
-        }
-
         if (is_array($id))
         {
             // sanitize keys
             $ids = array_map([$this, '_sanitize_id'], $id);
             // use mset to put it all in redis
-            $this->_redis->mset(array_combine($ids, array_values($data)));
+            $set = $this->_redis->mset(array_combine($ids, array_values($data)));
             $this->_set_ttl($ids, $lifetime);  // give it an array of keys and one lifetime
         }
         else
         {
             $id = $this->_sanitize_id($id);
-            $this->_redis->mset([$id => $data]);
+            $set = $this->_redis->mset([$id => $data]);
             $this->_set_ttl($id, $lifetime);
         }
 
-        return TRUE;
+        return $set;
     }
 
     /**
      * Delete Value
      *
      * @param string $id    Cached Key
-     * @return int          Number of Keys deleted
+     * @return int|null     Number of Keys deleted
      */
-    public function delete($id) : int
+    public function delete($id)
     {
         $id = $this->_sanitize_id($id);
         return $this->_redis->del($id);
@@ -265,7 +263,6 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
         if ($this->_redis->exists($this->_tag_prefix.$tag))
         {
             $keys = $this->_redis->lRange($this->_tag_prefix.$tag, 0, -1);
-
             if (!empty($keys) AND count($keys))
             {
                 $rows = [];
