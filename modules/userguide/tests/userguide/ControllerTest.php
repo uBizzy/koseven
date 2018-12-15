@@ -19,10 +19,10 @@ class Userguide_ControllerTest extends Unittest_TestCase
 	public function provider_file_finds_markdown_files()
 	{
 		return [
-			['userguide/adding', 'guide'.DIRECTORY_SEPARATOR.'userguide/adding.md'],
-			['userguide/adding.md', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
-			['userguide/adding.markdown', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
-			['userguide/does_not_exist.md', FALSE]
+			['userguide'.DIRECTORY_SEPARATOR.'adding', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'adding.md', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'adding.markdown', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'does_not_exist.md', FALSE]
 		];
 	}
 
