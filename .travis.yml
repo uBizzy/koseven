@@ -8,10 +8,6 @@ php:
 
 before_script:
   - composer install
-  - printf "\n" | pecl install -f redis
-  - printf "\n" | pecl install -f imagick
-  - printf "\n" | pecl install -f memcached
-  - printf "\n" | pecl install -f apcu
 
 script:
   - vendor/bin/phpunit
