@@ -1,15 +1,8 @@
 # Project language is PHP7
 language: php
 
-# Test on multiple Operating systems
-os:
-  - linux
-
-# Linux OS should be trusty (16.04)
-matrix:
-  include:
-    - os: linux
-      dist: xenial
+# Test on Ubuntu Xenial (16.04)
+dist: xenial
 
 # Supported PHP-Versions
 php:
