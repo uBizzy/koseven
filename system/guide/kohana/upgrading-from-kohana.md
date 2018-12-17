@@ -7,7 +7,7 @@ If you were using 3.3.x version, there are 6 breaking changes that may affect yo
 - **Module encrypt**, now encryption works as a module, if you are using new Encrypt or similar you need to enable the module in your bootstrap ex: `'encrypt'       => MODPATH.'encrypt',` 
 - **MySQL driver** has been removed. If you are still using it, please install MySQLi driver and then edit your `config/database.php` and then set as `'type'       => 'MySQLi'`
 - **APC driver** has been removed. If you are still using it, please install APCu driver and then edit your `config/cache.php` and configure apcu.
-- **Memcache driver** has been removed. If you are still using it, please install Memcached driver and then edit your `config/cache.php` and configure memcached.
+- **Memcache driver** has been removed. If you are still using it, please install Memcached driver and then edit/create your `config/cache.memcached.php` and configure memcached.
 
 ## New modules included
 
