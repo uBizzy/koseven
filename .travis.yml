@@ -4,13 +4,12 @@ language: php
 # Test on multiple Operating systems
 os:
   - linux
-  - windows
 
-# Linux OS should be trusty (14.04.5 LTS) @TODO Maybe update linux os?
+# Linux OS should be trusty (16.04)
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
 
 # Supported PHP-Versions
 php:
