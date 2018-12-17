@@ -1,19 +1,64 @@
-dist: trusty
+# Project language is PHP
 language: php
 
+# Use containerized infrastructure
+sudo: false
+
+# Test on Ubuntu Xenial (16.04)
+dist: xenial
+
+# Supported PHP-Versions
 php:
   - 7.0
   - 7.1
   - 7.2
 
-before_script: 
-  - composer install
+# Cache Composer's cache
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
+# Also Test on Trusty (14.04 LTS)
+matrix:
+  include:
+    - dist: trusty
+      php: 7.0
+    - dist: trusty
+      php: 7.1
+    - dist: trusty
+      php: 7.2
+
+# Services to start (with their default configuration)
+services:
+  - redis-server
+  - memcached
+  - mysql
+
+# Execute this commands before installing dependencies
+before_install:
+  - composer self-update
+  - composer validate
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
+
+# Install dependencies
+install:
+  - composer install
+  - printf "\n" | pecl install -f redis
+  - printf "\n" | pecl install -f imagick
+  - printf "\n" | pecl install -f apcu
+
+# Execute commands before executing script (e.g Add extensions to php.ini)
+before_script:
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+# Execute commands which should make the build pass or fail
 script:
   - vendor/bin/phpunit
 
+# Execute commands which should run after successful build
 after_success:
   - travis_retry vendor/bin/php-coveralls
 
+# Disable E-Mail notifications
 notifications:
   email: false
