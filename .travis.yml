@@ -28,7 +28,6 @@ install:
   - printf "\n" | pecl install -f redis
   - printf "\n" | pecl install -f imagick
   - printf "\n" | pecl install -f apcu
-  - printf "\n" | pecl install -f apcu_bc
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
