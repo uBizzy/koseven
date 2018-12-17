@@ -1,4 +1,4 @@
-# Project language is PHP7
+# Project language is PHP
 language: php
 
 # Test on Ubuntu Xenial (16.04)
@@ -25,7 +25,6 @@ install:
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
-  - echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 # Execute commands which should make the build pass or fail
