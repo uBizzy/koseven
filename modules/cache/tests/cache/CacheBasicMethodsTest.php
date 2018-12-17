@@ -76,6 +76,7 @@ TESTTEXT;
 					'ttl'     => 0,           // Time to live
 					'wait'    => FALSE,       // Test wait time to let cache expire
 					'type'    => 'string',    // Type test
+                    'tags'    => ['tag_str'],   // Tag for item
 					'default' => NULL         // Default value get should return
 				],
 				'foobar'
@@ -87,6 +88,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'integer',
+                    'tags'    => ['tag_int'],
 					'default' => NULL
 				],
 				101010
@@ -98,6 +100,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'float',
+                    'tags'    => ['tag_float'],
 					'default' => NULL
 				],
 				10.00
@@ -112,6 +115,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'array',
+                    'tags'    => ['tag_arr'],
 					'default' => NULL
 				],
 				[
@@ -126,6 +130,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'boolean',
+                    'tags'    => ['tag_bool'],
 					'default' => NULL
 				],
 				TRUE
@@ -137,7 +142,8 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'null',
-					'default' => NULL
+                    'tags'    => ['tag_null'],
+					'default' => NULL,
 				],
 				NULL
 			],
@@ -148,6 +154,7 @@ TESTTEXT;
 					'ttl'     => NULL,
 					'wait'    => FALSE,
 					'type'    => 'object',
+                    'tags'    => ['tag_obj'],
 					'default' => NULL
 				],
 				$object
@@ -159,6 +166,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_mult', 'tag_mult2'],
 					'default' => NULL
 				],
 				'foo bar snafu'
@@ -170,6 +178,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => 1,
 					'type'    => 'string',
+                    'tags'    => ['tag_ttl'],
 					'default' => NULL
 				],
 				'cache value that should last'
@@ -181,6 +190,7 @@ TESTTEXT;
 					'ttl'     => 3,
 					'wait'    => 5,
 					'type'    => 'null',
+                    'tags'    => ['tag_bar'],
 					'default' => NULL
 				],
 				NULL
@@ -192,6 +202,7 @@ TESTTEXT;
 					'ttl'     => 3,
 					'wait'    => 5,
 					'type'    => 'string',
+                    'tags'    => ['tag_snafu'],
 					'default' => 'something completely different!'
 				],
 				'something completely different!'
@@ -203,6 +214,7 @@ TESTTEXT;
 					'ttl'     => 10,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_html', 'tag_code'],
 					'default' => NULL,
 				],
 				$html_text
@@ -214,6 +226,7 @@ TESTTEXT;
 					'ttl'     => 60*5,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_ttl'],
 					'default' => NULL,
 				],
 				'blabla'
@@ -225,6 +238,7 @@ TESTTEXT;
 					'ttl'     => 60*50,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_ttl'],
 					'default' => NULL,
 				],
 				'bla bla'
@@ -272,27 +286,32 @@ TESTTEXT;
 	 *  - The a cached value is deleted from cache
 	 *  - The cache returns a TRUE value upon deletion
 	 *  - The cache returns a FALSE value if no value exists to delete
+     *
+     * @depends test_set_get
+     *
+     * @dataProvider provider_set_get
 	 *
+     * @param   array   $data
+     * @param   mixed   $expected
+     * @throws  Cache_Exception
 	 * @return  void
 	 */
-	public function test_delete()
+	public function test_delete(array $data, $expected)
 	{
 		// Init
 		$cache = $this->cache();
 		$cache->delete_all();
+		extract($data);
 
-		// Test deletion if real cached value
-		if ( ! $cache->set('test_delete_1', 'This should not be here!', 0))
-		{
-			$this->fail('Unable to set cache value to delete!');
-		}
+		// Test deletion of real cached value
+        $cache->set($id, $value, 3600);
 
 		// Test delete returns TRUE and check the value is gone
-		$this->assertTrue($cache->delete('test_delete_1'));
-		$this->assertNull($cache->get('test_delete_1'));
+		$this->assertTrue($cache->delete($id));
+		$this->assertNull($cache->get($id));
 
-		// Test non-existant cache value returns FALSE if no error
-		$this->assertFalse($cache->delete('test_delete_1'));
+		// Test non-existent cache value returns FALSE if no error
+		$this->assertFalse($cache->delete($id));
 	}
 
 	/**
