@@ -45,6 +45,7 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
 
         parent::__construct($config);
 
+        // Get Configured Servers
         $servers = Arr::get($this->_config, 'servers', NULL);
         if (empty($servers))
         {
@@ -52,10 +53,6 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
         }
 
         $this->_redis = new Redis();
-        // Allow passing redis mock class for unit testing
-        if ($redis = Arr::get($this->_config, 'redis_mock', FALSE)) {
-            $this->_redis = $redis;
-        }
 
         // Global cache prefix so the keys in redis is organized
         $cache_prefix = Arr::get($this->_config, 'cache_prefix', NULL);
@@ -152,13 +149,13 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
     /**
      * Delete Value
      *
-     * @param string $id    Cached Key
-     * @return int|null     Number of Keys deleted
+     * @param  string $id    Cached Key
+     * @return bool   Number of Keys deleted
      */
-    public function delete($id)
+    public function delete($id) : bool
     {
         $id = $this->_sanitize_id($id);
-        return $this->_redis->del($id);
+        return $this->_redis->del($id) >= 1;
     }
 
     /**
