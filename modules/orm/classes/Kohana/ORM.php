@@ -825,24 +825,27 @@ class Kohana_ORM extends Model implements serializable {
 	}
 
 	/**
-	 * Set values from an array with support for one-one relationships.  This method should be used
+	 * Set values from an array with support for one-one relationships. This method should be used
 	 * for loading in post data, etc.
 	 *
-	 * @param  array $values   Array of column => val
+	 * @param  array $values   Array of column => value
 	 * @param  array $expected Array of keys to take from $values
 	 * @return ORM
 	 */
 	public function values(array $values, array $expected = NULL)
 	{
-		// Default to expecting everything except the primary key
+		// Default to expecting all columns
 		if ($expected === NULL)
 		{
 			$expected = array_keys($this->_table_columns);
-
-			// Don't set the primary key by default
-			unset($values[$this->_primary_key]);
 		}
 
+		// Don't set the primary key if model loaded and column not set
+		if ($this->_primary_key AND $this->_loaded)
+		{
+			unset($values[$this->_primary_key]);
+		}
+		
 		foreach ($expected as $key => $column)
 		{
 			if (is_string($key))
