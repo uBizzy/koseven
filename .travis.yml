@@ -25,9 +25,15 @@ before_install:
 # Install dependencies
 install:
   - composer install
-  - pecl -q install redis
-  - pecl -q install memcached
-  - pecl -q install apcu
+  - printf "\n" | pecl install -f redis
+  - printf "\n" | pecl install -f imagick
+  - printf "\n" | pecl install -f apcu
+  - printf "\n" | pecl install -f apcu_bc
+
+# Execute commands before executing script (e.g Add extensions to php.ini)
+before_script:
+  - echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 # Execute commands which should make the build pass or fail
 script:
