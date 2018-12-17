@@ -43,7 +43,7 @@ class Kohana_RedisTest extends Kohana_CacheBasicMethodsTest {
                             'port'       => 6379,
                             'persistent' => FALSE,
                             'prefix'     => 'prefix',
-                            'password'   => '',
+                            'password'   => 'password',
                         ],
                     ],
                 ]

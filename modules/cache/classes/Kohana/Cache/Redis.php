@@ -18,7 +18,7 @@ class Kohana_Cache_Redis extends Cache implements Cache_Tagging
 
     /**
      * Redis instance
-     * @var object
+     * @var Redis
      */
     protected $_redis;
 
