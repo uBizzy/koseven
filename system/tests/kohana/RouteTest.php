@@ -21,6 +21,7 @@ class Kohana_RouteTest extends Unittest_TestCase
 {
 	/**
 	 * Remove all caches
+     * @throws Cache_Exception
 	 */
 	// @codingStandardsIgnoreStart
 	public function setUp()
@@ -30,7 +31,18 @@ class Kohana_RouteTest extends Unittest_TestCase
 
 		Kohana::$config->load('url')->set('trusted_hosts', ['kohanaframework\.org']);
 
-		$this->cleanCacheDir();
+        /**
+         * If Unit-Testing a cache driver "Kohana_Cache" is indeed available
+         * while initialization and testing. Therefore we do not have to clear cache dir
+         * we have to clear cache of selected user cache driver
+         *
+         * @see https://github.com/koseven/koseven/issues/275#issuecomment-447935858
+         */
+        $cache = Cache::instance();
+        $cache->delete_all();
+
+        // Otherwise just clean cache dir
+        $this->cleanCacheDir();
 	}
 
 	/**
@@ -636,7 +648,7 @@ class Kohana_RouteTest extends Unittest_TestCase
 	public function test_uri_throws_exception_if_required_params_are_missing($uri, $regex, $uri_array)
 	{
 		$route = new Route($uri, $regex);
-        
+
         $this->expectException('Kohana_Exception');
 		$route->uri($uri_array);
 	}
