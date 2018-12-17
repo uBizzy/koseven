@@ -10,10 +10,17 @@ php:
   - 7.1
   - 7.2
 
+# Services to start (with their default configuration)
+services:
+  - redis-server
+  - memcached
+  - mysql
+
 # Execute this commands before installing dependencies
 before_install:
   - composer self-update
   - composer validate
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
 
 # Install dependencies
 install:
