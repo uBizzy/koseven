@@ -14,6 +14,11 @@ php:
 matrix:
   include:
     - dist: trusty
+      php: 7.0
+    - dist: trusty
+      php: 7.1
+    - dist: trusty
+      php: 7.2
 
 # Services to start (with their default configuration)
 services:
