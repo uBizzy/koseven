@@ -10,6 +10,11 @@ php:
   - 7.1
   - 7.2
 
+# Also Test on Trusty (14.04 LTS)
+matrix:
+  include:
+    - dist: trusty
+
 # Services to start (with their default configuration)
 services:
   - redis-server
