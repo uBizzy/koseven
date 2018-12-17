@@ -1,6 +1,9 @@
 # Project language is PHP
 language: php
 
+# Use containerized infrastructure
+sudo: false
+
 # Test on Ubuntu Xenial (16.04)
 dist: xenial
 
@@ -9,6 +12,11 @@ php:
   - 7.0
   - 7.1
   - 7.2
+
+# Cache Composer's cache
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 # Also Test on Trusty (14.04 LTS)
 matrix:
