@@ -117,7 +117,7 @@ class Kohana_NumTest extends Unittest_TestCase
 	}
 
 	/**
-	 * @todo test locales
+	 * @TODO test locales
 	 * @test
 	 * @dataProvider provider_format
 	 * @param integer $number

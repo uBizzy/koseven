@@ -422,6 +422,7 @@ abstract class Kohana_Database {
 	 * Objects passed to this function will be converted to strings.
 	 * [Database_Expression] objects will be compiled.
 	 * [Database_Query] objects will be compiled and converted to a sub-query.
+	 * [stdClass] objects will be serialized using the `serialize` method.
 	 * All other objects will be converted using the `__toString` method.
 	 *
 	 * @param   mixed   $value  any value to quote
@@ -453,6 +454,12 @@ abstract class Kohana_Database {
 			{
 				// Compile the expression
 				return $value->compile($this);
+			}
+			elseif ($value instanceof stdClass)
+			{
+				// Convert the object to a string
+				// Object of class stdClass could not be converted to string
+				return $this->quote(serialize($value));
 			}
 			else
 			{

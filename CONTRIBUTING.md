@@ -75,3 +75,22 @@ Koseven currently uses PHPUnit for unit testing. This is installed with composer
  * Finally, run `vendor/bin/phpunit --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php`
 
 This will run the unit tests for core and all the modules and tell you if anything failed. If you haven't changed anything and you get failures, please create a new issue on  and paste the output (including the error) in the issue. Please note that a few tests only pass on linux systems.
+
+## Automated Unit Tests
+Automated Unit Testing is done via [Travis CI](https://travis-ci.org/).
+Tests which took place in Travis will also determine the Coverage Status of the project.
+There are currently the following services (with their default configurations) loaded, which can be used for Unit Testing:
+
+* redis
+* memcached
+* mysql (with database: 'unittest')
+
+Following PHP Extensions are loaded:
+* redis
+* imagick
+* apcu
+* and of course all default php extensions
+
+If you need additional extensions or services for Unit Testing, please feel free to open an issue.
+If you need to test - for example: a redis server - you can set a default configuration for travis tests by
+checking the enviroment variable `TRAVIS_TEST`. If it is set AND is true, unit tests are performed by travis ci

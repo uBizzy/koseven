@@ -756,7 +756,7 @@ class Kohana_Core {
      *
      *     // Get the "foo" cache
      *     $foo = Kohana::cache('foo');
-     *     
+     *
      * @throws  Kohana_Exception
      * @param   string  $name       name of the cache
      * @param   mixed   $data       data to cache

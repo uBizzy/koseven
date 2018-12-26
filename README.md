@@ -11,6 +11,7 @@
 ## [Download 3.3.8](https://github.com/koseven/koseven/releases/tag/3.3.8)
 
 ### [Join the Telegram group](https://telegram.me/koseven)
+### [Join the Forum](https://gitq.com/koseven/koseven/)
 
 Koseven is a PHP framework based on defunct [Kohana](http://kohanaframework.org/) 3.3.X . Fully compatible with Kohana and updated to work with PHP7
 
