@@ -24,17 +24,35 @@ class EncryptOpensslTest extends EncryptTestBase
         ]);
     }
 
-	/**
-	 * @dataProvider provider_encode_and_decode
+    /**
+     * @dataProvider provider_encode_and_decode
+     * @param string $plaintext
      * @return void
-	 */
-	public function test_128_bit(string $encryptable)
+     */
+	public function test_128_bit(string $plaintext)
 	{
         $this->set_config([
             'type' => Encrypt_Engine_Openssl::TYPE,
             'cipher' => 'AES-128-CBC',
             'key' => EncryptTestBase::KEY16,
 		]);
-		$this->encode_and_decode($encryptable);
+
+		$this->encode_and_decode($plaintext);
 	}
+
+    /**
+     * @dataProvider provider_encode_and_decode
+     * @param string $plaintext
+     * @return void
+     */
+    public function test_256_bit(string $plaintext)
+    {
+        $this->set_config([
+            'type' => Encrypt_Engine_Openssl::TYPE,
+            'cipher' => 'AES-256-CBC',
+            'key' => EncryptTestBase::KEY32,
+        ]);
+
+        $this->encode_and_decode($plaintext);
+    }
 }
