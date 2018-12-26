@@ -44,7 +44,7 @@ class EncryptMcryptTest extends EncryptTestBase
             'key' => EncryptTestBase::KEY16,
         ]);
 
-        $this->encode_and_decode($plaintext);
+        $this->test_encode_and_decode($plaintext);
     }
 
     /**
@@ -61,6 +61,6 @@ class EncryptMcryptTest extends EncryptTestBase
             'key' => EncryptTestBase::KEY32,
         ]);
 
-        $this->encode_and_decode($plaintext);
+        $this->test_encode_and_decode($plaintext);
     }
 }

@@ -37,7 +37,7 @@ class EncryptOpensslTest extends EncryptTestBase
             'key' => EncryptTestBase::KEY16,
 		]);
 
-		$this->encode_and_decode($plaintext);
+		$this->test_encode_and_decode($plaintext);
 	}
 
     /**
@@ -53,6 +53,6 @@ class EncryptOpensslTest extends EncryptTestBase
             'key' => EncryptTestBase::KEY32,
         ]);
 
-        $this->encode_and_decode($plaintext);
+        $this->test_encode_and_decode($plaintext);
     }
 }
