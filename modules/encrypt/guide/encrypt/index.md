@@ -22,8 +22,10 @@ encrypt.php config file:
 
     return [
         'default' => [
-            'type' => Kohana_Encrypt_Engine_Openssl::TYPE,
-            'key' => 'strongpassword'
+            Engine::CONFIG_TYPE => OpenSSL::TYPE,
+            Engine::CONFIG_KEY => NULL,
+            //Additional OpenSSL configuration
+            Engine::CONFIG_CIPHER => OpenSSL::AES_256_CBC,
         ]
     ]
 
