@@ -1,5 +1,7 @@
 <?php
 
+use Encrypt_Engine_Sodium as Sodium;
+
 /**
  * @group      kohana
  * @group      kohana.encrypt
@@ -38,8 +40,8 @@ class EncryptSodiumTest extends EncryptTestBase
     public function test_256_bit(string $plaintext)
     {
         $this->set_config([
-            'type' => Encrypt_Engine_Sodium::TYPE,
-            'key' => EncryptTestBase::KEY32,
+            Sodium::CONFIG_TYPE => Sodium::TYPE,
+            Sodium::CONFIG_KEY => EncryptTestBase::KEY32,
         ]);
 
         $this->test_encode_and_decode($plaintext);
@@ -58,8 +60,8 @@ class EncryptSodiumTest extends EncryptTestBase
         // Init
         extract($vectors);
         $this->set_config([
-            'type' => Encrypt_Engine_Sodium::TYPE,
-            'key' => EncryptTestBase::KEY32,
+            Sodium::CONFIG_TYPE => Sodium::TYPE,
+            Sodium::CONFIG_KEY => EncryptTestBase::KEY32,
         ]);
 
         // Test encryption with known answers

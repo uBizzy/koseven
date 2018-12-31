@@ -154,4 +154,16 @@ class Kohana_Encrypt
     {
         return get_class($this->_engine) . ' (' . $this->_name . ')';
     }
+
+    /**
+     * Override __debugInfo function to not display detailed info
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'name' => $this->_name,
+            'engine' => $this->__toString()
+        ];
+    }
 }

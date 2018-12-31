@@ -52,11 +52,16 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
 
     /**
      * Creates a new mcrypt wrapper.
-     *
      * @param array $config Array with configuration
+     * @throws Kohana_Exception
      */
     public function __construct($config)
     {
+        if (!extension_loaded('mcrypt'))
+        {
+            throw new Kohana_Exception('Sodium extension is not available');
+        }
+
         parent::__construct($config);
 
         if (!isset($config[self::CONFIG_MODE]) || $config[self::CONFIG_MODE] === NULL)

@@ -50,13 +50,13 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
             throw new Kohana_Exception('OpenSSL extension is not installed.');
         }
 
+        parent::__construct($config);
+
         if (!isset($config[self::CONFIG_CIPHER]) || $config[self::CONFIG_CIPHER] === NULL)
         {
             // Add the default cipher
             $this->_cipher = static::AES_256_CBC;
         }
-
-        parent::__construct($config);
 
         $this->_iv_size = openssl_cipher_iv_length($this->_cipher);
 

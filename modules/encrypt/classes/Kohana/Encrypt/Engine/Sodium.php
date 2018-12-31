@@ -35,11 +35,12 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
      */
     public function __construct($config)
     {
-        parent::__construct($config);
         if (!extension_loaded('sodium') || !sodium_crypto_aead_aes256gcm_is_available())
         {
             throw new Kohana_Exception('Sodium extension is not available');
         }
+
+        parent::__construct($config);
 
         $length = mb_strlen($this->_key, '8bit');
 

@@ -1,5 +1,6 @@
 <?php
 
+use Encrypt_Engine_Mcrypt as Mcrypt;
 /**
  * @group      kohana
  * @group      kohana.encrypt
@@ -25,8 +26,10 @@ class EncryptMcryptTest extends EncryptTestBase
         }
 
         $this->set_config([
-            'type' => Encrypt_Engine_Mcrypt::TYPE,
-            'key' => EncryptTestBase::KEY32,
+            Mcrypt::CONFIG_TYPE => Mcrypt::TYPE,
+            Mcrypt::CONFIG_KEY => EncryptTestBase::KEY32,
+            Mcrypt::CONFIG_CIPHER => MCRYPT_RIJNDAEL_128,
+            Mcrypt::CONFIG_MODE => MCRYPT_MODE_CBC,
         ]);
     }
 
@@ -38,10 +41,10 @@ class EncryptMcryptTest extends EncryptTestBase
     public function test_128_bit(string $plaintext)
     {
         $this->set_config([
-            'type' => Encrypt_Engine_Mcrypt::TYPE,
-            'cipher' => MCRYPT_RIJNDAEL_128,
-            'mode' => MCRYPT_MODE_CBC,
-            'key' => EncryptTestBase::KEY16,
+            Mcrypt::CONFIG_TYPE => Mcrypt::TYPE,
+            Mcrypt::CONFIG_KEY => EncryptTestBase::KEY16,
+            Mcrypt::CONFIG_CIPHER => MCRYPT_RIJNDAEL_128,
+            Mcrypt::CONFIG_MODE => MCRYPT_MODE_CBC,
         ]);
 
         $this->test_encode_and_decode($plaintext);
@@ -55,10 +58,10 @@ class EncryptMcryptTest extends EncryptTestBase
     public function test_256_bit(string $plaintext)
     {
         $this->set_config([
-            'type' => Encrypt_Engine_Mcrypt::TYPE,
-            'cipher' => MCRYPT_RIJNDAEL_128,
-            'mode' => MCRYPT_MODE_CBC,
-            'key' => EncryptTestBase::KEY32,
+            Mcrypt::CONFIG_TYPE => Mcrypt::TYPE,
+            Mcrypt::CONFIG_KEY => EncryptTestBase::KEY32,
+            Mcrypt::CONFIG_CIPHER => MCRYPT_RIJNDAEL_128,
+            Mcrypt::CONFIG_MODE => MCRYPT_MODE_CBC,
         ]);
 
         $this->test_encode_and_decode($plaintext);
