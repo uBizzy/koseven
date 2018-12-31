@@ -583,14 +583,26 @@ class Kohana_ORM extends Model implements serializable {
 	 * Check whether the model data has been modified.
 	 * If $field is specified, checks whether that field was modified.
 	 *
-	 * @param string  $field  field to check for changes
-	 * @return  bool  Whether or not the field has changed
+	 * @param string  $field      Field to check for changes
+	 * @return array|string|null  Null if $field has not changed. String value if $field has changed.
+	 *                            Array of all changed fields if $field is not provided.
 	 */
 	public function changed($field = NULL)
 	{
 		return ($field === NULL)
 			? $this->_changed
 			: Arr::get($this->_changed, $field);
+	}
+
+	/**
+	 * Check whether a specific field has changed. This function is similar to changed() except a field is required, and
+	 * it returns a boolean.
+	 *
+	 * @param string $field  Field to check for changes.
+	 * @return bool          True if field has changed, false if it has not.
+	 */
+	public function has_changed($field) {
+		return array_key_exists($this->_changed, $field);
 	}
 
 	/**
