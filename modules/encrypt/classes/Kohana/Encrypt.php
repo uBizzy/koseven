@@ -9,7 +9,6 @@
  */
 class Kohana_Encrypt
 {
-
     /**
      * @var string Name of default config instance
      */
@@ -52,7 +51,7 @@ class Kohana_Encrypt
                 $config = Kohana::$config->load('encrypt')->$name;
             }
 
-            if (!isset($config['key']))
+            if (!isset($config[Kohana_Encrypt_Engine::CONFIG_KEY]))
             {
                 // No default encryption key is provided!
                 throw new Kohana_Exception('No encryption key is defined in the encryption configuration group: :group',
@@ -74,15 +73,15 @@ class Kohana_Encrypt
      */
     private function __construct(string $name, array $config)
     {
-        if (!isset($config['type']))
+        if (!isset($config[Kohana_Encrypt_Engine::CONFIG_TYPE]))
         {
-            $config['type'] = Encrypt_Engine_Openssl::TYPE;
+            $config[Kohana_Encrypt_Engine::CONFIG_TYPE] = Encrypt_Engine_Openssl::TYPE;
         }
 
         $this->_name = $name;
 
         // Set the engine class name
-        $engine_name = 'Encrypt_Engine_' . ucfirst($config['type']);
+        $engine_name = 'Encrypt_Engine_' . ucfirst($config[Kohana_Encrypt_Engine::CONFIG_TYPE]);
 
         // Create the engine class
         $this->setEngine(new $engine_name($config));
@@ -93,7 +92,7 @@ class Kohana_Encrypt
      * @param Kohana_Encrypt_Engine $engine
      * @return void
      */
-    private function setEngine(Kohana_Encrypt_Engine $engine): void
+    private function setEngine(Kohana_Encrypt_Engine $engine)
     {
         $this->_engine = $engine;
     }

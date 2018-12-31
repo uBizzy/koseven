@@ -8,69 +8,78 @@
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_Encrypt_Engine {
-	/**
-	 * @var string Encryption key
-	 */
-	protected $_key;
+abstract class Kohana_Encrypt_Engine
+{
+    /**
+     * @var string name of the engine in configuration
+     */
+    const CONFIG_TYPE = 'type';
 
-	/**
-	 * @var string mcrypt mode
-	 */
-	protected $_mode;
+    /**
+     * @var string name of the key in configuration
+     */
+    const CONFIG_KEY = 'key';
 
-	/**
-	 * @var string cipher
-	 */
-	protected $_cipher;
+    /**
+     * @var string name of the cipher in configuration
+     */
+    const CONFIG_CIPHER = 'cipher';
 
-	/**
-	 * Creates a new Encrypt object.
-	 *
-	 * @param array $config
-	 * @throws Kohana_Exception
-	 */
-	public function __construct(array $config)
-	{
-		if (isset($config['key']))
-		{
-			$this->_key = $config['key'];
-		}
-		else
-		{
-			// No default encryption key is provided!
-			throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
-		}
+    /**
+     * @var string Encryption key
+     */
+    protected $_key;
 
-		if (isset($config['mode']))
-		{
-			$this->_mode = $config['mode'];
-		}
+    /**
+     * @var string mcrypt mode
+     */
+    protected $_mode;
 
-		if (isset($config['cipher']))
-		{
-			$this->_cipher = $config['cipher'];
-		}
-	}
+    /**
+     * @var string cipher
+     */
+    protected $_cipher;
 
-	/**
-	 * Encrypts the message
-	 * @param string $message Your message to be encrypted.
-	 * @param string $iv
-	 * @return null|string
-	 */
-	abstract public function encrypt(string $message, string $iv);
+    /**
+     * Creates a new Encrypt object.
+     *
+     * @param array $config
+     * @throws Kohana_Exception
+     */
+    public function __construct(array $config)
+    {
+        if (!isset($config[self::CONFIG_KEY]))
+        {
+            // No default encryption key is provided!
+            throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
+        }
 
-	/**
-	 * Decrypts the ciphertext
-	 * @param string $ciphertext Your ciphertext to be decrypted.
-	 * @return null|string
-	 */
-	abstract public function decrypt(string $ciphertext);
+        $this->_key = $config[self::CONFIG_KEY];
 
-	/**
-	 * Creates random IV (Initialization vector) for each encryption action.
-	 * @return string
-	 */
-	abstract public function create_iv();
+        if (isset($config[self::CONFIG_CIPHER]))
+        {
+            $this->_cipher = $config[self::CONFIG_CIPHER];
+        }
+    }
+
+    /**
+     * Encrypts the message
+     * @param string $message Your message to be encrypted.
+     * @param string $iv
+     * @return null|string
+     */
+    abstract public function encrypt(string $message, string $iv);
+
+    /**
+     * Decrypts the ciphertext
+     * @param string $ciphertext Your ciphertext to be decrypted.
+     * @return null|string
+     */
+    abstract public function decrypt(string $ciphertext);
+
+    /**
+     * Creates random IV (Initialization vector) for each encryption action.
+     * @return string
+     */
+    abstract public function create_iv();
 }
