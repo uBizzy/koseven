@@ -85,7 +85,17 @@ class Kohana_Encrypt
         $engine_name = 'Encrypt_Engine_' . ucfirst($config['type']);
 
         // Create the engine class
-        $this->_engine = new $engine_name($config);
+        $this->setEngine(new $engine_name($config));
+    }
+
+    /**
+     * Set engine, ensure its parent is Kohana_Encrypt_Engine
+     * @param Kohana_Encrypt_Engine $engine
+     * @return void
+     */
+    private function setEngine(Kohana_Encrypt_Engine $engine): void
+    {
+        $this->_engine = $engine;
     }
 
     /**
