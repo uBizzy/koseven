@@ -55,11 +55,6 @@ abstract class Kohana_Encrypt_Engine
         }
 
         $this->_key = $config[self::CONFIG_KEY];
-
-        if (isset($config[self::CONFIG_CIPHER]))
-        {
-            $this->_cipher = $config[self::CONFIG_CIPHER];
-        }
     }
 
     /**

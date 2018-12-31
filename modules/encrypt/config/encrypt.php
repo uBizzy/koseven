@@ -14,6 +14,8 @@ return [
     'default' => [
         Engine::CONFIG_TYPE => OpenSSL::TYPE,
         Engine::CONFIG_KEY => NULL,
+        //Additional OpenSSL configuration
+        Engine::CONFIG_CIPHER => OpenSSL::AES_256_CBC,
     ],
 //    'sodium' => [
 //        Engine::CONFIG_TYPE => Sodium::TYPE,
@@ -27,8 +29,8 @@ return [
 //     * integer  cipher  encryption cipher, one of the Mcrypt cipher constants
 //     */
 //    'mcrypt' => [
-//        Encrypt::CONFIG_TYPE => Mcrypt::TYPE,
-//        Encrypt::CONFIG_KEY => NULL,
+//        Mcrypt::CONFIG_TYPE => Mcrypt::TYPE,
+//        Mcrypt::CONFIG_KEY => NULL,
 //        // Additional mcrypt configuration
 //        Mcrypt::CONFIG_CIPHER => MCRYPT_RIJNDAEL_128,
 //        Mcrypt::CONFIG_MODE => MCRYPT_MODE_CBC,
