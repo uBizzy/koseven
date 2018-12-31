@@ -52,7 +52,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 
         parent::__construct($config);
 
-        if (!empty($config[self::CONFIG_CIPHER]))
+        if (empty($config[self::CONFIG_CIPHER]))
         {
             // Add the default cipher
             $this->_cipher = static::AES_256_CBC;

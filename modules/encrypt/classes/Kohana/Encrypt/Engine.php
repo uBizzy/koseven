@@ -48,7 +48,7 @@ abstract class Kohana_Encrypt_Engine
      */
     public function __construct(array $config)
     {
-        if (!isset($config[self::CONFIG_KEY]))
+        if (empty($config[self::CONFIG_KEY]))
         {
             // No default encryption key is provided!
             throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
