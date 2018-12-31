@@ -88,7 +88,7 @@ class Kohana_Encrypt
     }
 
     /**
-     * Set engine, ensure its parent is Kohana_Encrypt_Engine
+     * Set engine, ensure extends Kohana_Encrypt_Engine
      * @param Kohana_Encrypt_Engine $engine
      * @return void
      */
@@ -138,7 +138,6 @@ class Kohana_Encrypt
 
     /**
      * Proxy for the create_iv function - to allow mocking and testing against KAT vectors
-     *
      * @return string the initialization vector or FALSE on error
      */
     protected function _create_iv()
@@ -153,17 +152,5 @@ class Kohana_Encrypt
     public function __toString(): string
     {
         return get_class($this->_engine) . ' (' . $this->_name . ')';
-    }
-
-    /**
-     * Override __debugInfo function to not display detailed info
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return [
-            'name' => $this->_name,
-            'engine' => $this->__toString()
-        ];
     }
 }

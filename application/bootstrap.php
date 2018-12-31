@@ -132,7 +132,7 @@ Kohana::modules([
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
 	// 'database'   => MODPATH.'database',   // Database access
-    // 'encrypt'    => MODPATH.'encrypt',    // Encryption supprt
+    // 'encrypt'    => MODPATH.'encrypt',    // Encryption support
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	// 'minion'     => MODPATH.'minion',     // CLI Tasks
 	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping

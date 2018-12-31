@@ -77,4 +77,15 @@ abstract class Kohana_Encrypt_Engine
      * @return string
      */
     abstract public function create_iv();
+
+    /**
+     * Override __debugInfo function to not display key in var_dump
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        $result = get_object_vars($this);
+        unset($result['_key']);
+        return $result;
+    }
 }
