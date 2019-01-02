@@ -230,13 +230,13 @@ Single-line IF statements should only be used when breaking normal execution (e.
 
 ### Comparison Operations
 
-Please use OR and AND for comparison:
+Please use || and && for comparison:
 
 	// Correct:
-	if (($foo AND $bar) OR ($b AND $c))
+	if (($foo && $bar) || ($b && $c))
 
 	// Incorrect:
-	if (($foo && $bar) || ($b && $c))
+	if (($foo AND $bar) OR ($b AND $c))
 	
 Please use elseif, not else if:
 
