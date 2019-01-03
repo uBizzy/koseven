@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package    Kohana/Encrypt
  * @author     Kohana Team
@@ -10,19 +9,34 @@
 class Kohana_Encrypt
 {
     /**
-     * @var string Name of default config instance
+	 * Name of default config instance
+     * @var string
      */
     public static $default = 'default';
 
+	/**
+	 * Name of default engine to use
+	 * @var string
+	 */
+    public static $default_engine = 'sodium';
+
     /**
-     * @var array Encrypt class instances
+	 * Encrypt class instances
+     * @var array
      */
     public static $instances = [];
 
+	/**
+	 * Engine Name
+	 * @var string
+	 */
+    private $_name;
+
     /**
-     * @var  Kohana_Encrypt_Engine Encryption engine
+	 * Encryption engine
+     * @var Kohana_Encrypt_Engine
      */
-    private $_engine = NULL;
+    private $_engine;
 
     /**
      * Returns a singleton instance of Encrypt. An encryption key must be
@@ -30,20 +44,20 @@ class Kohana_Encrypt
      *
      *     $encrypt = Encrypt::instance();
      *
-     * @param string $name configuration group name
-     * @param array|null $config
-     * @return Encrypt
+     * @param  string 		$name 		Configuration group name
+     * @param  array|null 	$config		Configuration
+     * @return self
      * @throws Kohana_Exception
      */
-    public static function instance(string $name = NULL, array $config = NULL)
+    public static function instance(string $name = NULL, array $config = NULL) : self
     {
         if ($name === NULL)
         {
             // Use the default instance name
-            $name = Encrypt::$default;
+            $name = self::$default;
         }
 
-        if (!isset(Encrypt::$instances[$name]))
+        if (!isset(self::$instances[$name]))
         {
             if ($config === NULL)
             {
@@ -51,7 +65,7 @@ class Kohana_Encrypt
                 $config = Kohana::$config->load('encrypt')->$name;
             }
 
-            if (!isset($config[Kohana_Encrypt_Engine::CONFIG_KEY]))
+            if (!isset($config['key']))
             {
                 // No default encryption key is provided!
                 throw new Kohana_Exception('No encryption key is defined in the encryption configuration group: :group',
@@ -59,42 +73,29 @@ class Kohana_Encrypt
             }
 
             // Create a new instance
-            Encrypt::$instances[$name] = new self($name, $config);
+			self::$instances[$name] = new self($name, $config);
         }
 
-        return Encrypt::$instances[$name];
+        return self::$instances[$name];
     }
 
     /**
      * Creates a new Encrypt Engine instance.
      *
-     * @param array $config
-     * @param string $name
+	 * @param string $name		Engine Name
+     * @param array  $config	Configuration
      */
     private function __construct(string $name, array $config)
     {
-        if (!isset($config[Kohana_Encrypt_Engine::CONFIG_TYPE]))
-        {
-            $config[Kohana_Encrypt_Engine::CONFIG_TYPE] = Encrypt_Engine_Openssl::TYPE;
-        }
-
-        $this->_name = $name;
+    	// Get Driver Type
+		$config['type'] = $config['type'] ?? self::$default_engine;
 
         // Set the engine class name
-        $engine_name = 'Encrypt_Engine_' . ucfirst($config[Kohana_Encrypt_Engine::CONFIG_TYPE]);
+        $engine_name = 'Encrypt_Engine_' . ucfirst($config['type']);
 
         // Create the engine class
-        $this->setEngine(new $engine_name($config));
-    }
-
-    /**
-     * Set engine, ensure extends Kohana_Encrypt_Engine
-     * @param Kohana_Encrypt_Engine $engine
-     * @return void
-     */
-    private function setEngine(Kohana_Encrypt_Engine $engine)
-    {
-        $this->_engine = $engine;
+		$this->_name = $name;
+		$this->_engine = new $engine_name($config);
     }
 
     /**
@@ -109,15 +110,16 @@ class Kohana_Encrypt
      * WARNING! The $iv variable is for testing purposes only, do not use this variable
      * unless you REALLY know what you are doing.
      *
-     * @param string $message Message to be encrypted
-     * @param string|null Initialization Vector $iv
+     * @param  string 		$message  Message to be encrypted
+     * @param  string|null 	$iv 	  Initialization Vector
      * @return null|string
+	 * @throws Exception
      */
     public function encode(string $message, string $iv = NULL)
     {
-        if (is_null($iv))
+        if ($iv === NULL)
         {
-            $iv = $this->_create_iv();
+            $iv = $this->_engine->create_iv();
         }
         return $this->_engine->encrypt($message, $iv);
     }
@@ -127,22 +129,12 @@ class Kohana_Encrypt
      *
      *     $data = $encrypt->decode($ciphertext);
      *
-     * @param string $ciphertext
-     * @return null|string if decryption fails
-     * @internal param string $data encoded string to be decrypted
+     * @param  string  $ciphertext	Text to decrypt
+     * @return null|string
      */
     public function decode(string $ciphertext)
     {
         return $this->_engine->decrypt($ciphertext);
-    }
-
-    /**
-     * Proxy for the create_iv function - to allow mocking and testing against KAT vectors
-     * @return string the initialization vector or FALSE on error
-     */
-    protected function _create_iv()
-    {
-        return $this->_engine->create_iv();
     }
 
     /**

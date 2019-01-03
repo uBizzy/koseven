@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @category   Security
  * @package    Kohana/Encrypt
- * @author     Kohana Team
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
@@ -11,50 +10,43 @@
 abstract class Kohana_Encrypt_Engine
 {
     /**
-     * @var string name of the engine in configuration
-     */
-    const CONFIG_TYPE = 'type';
-
-    /**
-     * @var string name of the key in configuration
-     */
-    const CONFIG_KEY = 'key';
-
-    /**
-     * @var string name of the cipher in configuration
-     */
-    const CONFIG_CIPHER = 'cipher';
-
-    /**
-     * @var string Encryption key
+	 * Encryption key
+     * @var string
      */
     protected $_key;
 
     /**
-     * @var string mcrypt mode
+	 * Encryption Mode (mcrypt)
+     * @var string
      */
     protected $_mode;
 
     /**
-     * @var string cipher
+	 * Cipher
+     * @var string
      */
     protected $_cipher;
 
+	/**
+	 * The size of the Initialization Vector (IV) in bytes
+	 * @var int
+	 */
+	protected $_iv_size;
+
     /**
      * Creates a new Encrypt object.
-     *
-     * @param array $config
+     * @param  array $config	 Configuration
      * @throws Kohana_Exception
      */
     public function __construct(array $config)
     {
-        if (empty($config[self::CONFIG_KEY]))
+        if (empty($config['key']))
         {
             // No default encryption key is provided!
             throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
         }
 
-        $this->_key = $config[self::CONFIG_KEY];
+        $this->_key = $config['key'];
     }
 
     /**
@@ -74,9 +66,33 @@ abstract class Kohana_Encrypt_Engine
 
     /**
      * Creates random IV (Initialization vector) for each encryption action.
-     * @return string
+	 * @throws Exception     Not possible to gather sufficient entropy.
+     * @return string		 Initialization Vector
      */
-    abstract public function create_iv();
+    public function create_iv() : string {
+		if (function_exists('random_bytes'))
+		{
+			return random_bytes($this->_iv_size);
+		}
+		throw new Kohana_Exception('Could not create initialization vector.');
+	}
+
+	/**
+	 * Check if key has valid length
+	 * @param  int $expected  Expected Key Length
+	 * @throws Kohana_Exception
+	 */
+	protected function valid_key_length($expected) {
+		$length = mb_strlen($this->_key, '8bit');
+		if ($length !== $expected)
+		{
+			throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be :required_length for :cipher, is: :current_length', [
+				':cipher'          => $this->_cipher,
+				':required_length' => $expected,
+				':current_length'  => $length
+			]);
+		}
+	}
 
     /**
      * Override __debugInfo function to not display key in var_dump

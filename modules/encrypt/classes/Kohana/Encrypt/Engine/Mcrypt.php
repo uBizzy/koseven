@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The Encrypt Mcrypt engine provides two-way encryption of text and binary strings
  * using the [Mcrypt](http://php.net/mcrypt) extension, which consists of three
@@ -20,35 +19,21 @@
  *
  * @package    Kohana/Encrypt
  * @category   Security
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
+ * @author     Koseven Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
- * @deprecated
+ * @deprecated since 4.0
  */
 class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
 {
     /**
-     * @var string Engine type
-     */
-    const TYPE = 'Mcrypt';
-
-    /**
-     * @var string name of the mode in configuration
-     */
-    const CONFIG_MODE = 'mode';
-
-    /**
+	 * Only MCRYPT_DEV_URANDOM and MCRYPT_DEV_RANDOM are considered safe.
+	 * Using MCRYPT_RAND will silently revert to MCRYPT_DEV_URANDOM
+	 *
      * @var  string  RAND type to use
-     *
-     * Only MCRYPT_DEV_URANDOM and MCRYPT_DEV_RANDOM are considered safe.
-     * Using MCRYPT_RAND will silently revert to MCRYPT_DEV_URANDOM
      */
     protected static $_rand = MCRYPT_DEV_URANDOM;
-
-    /**
-     * @var int the size of the Initialization Vector (IV) in bytes
-     */
-    protected $_iv_size;
 
     /**
      * Creates a new mcrypt wrapper.
@@ -57,53 +42,27 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
      */
     public function __construct($config)
     {
-        if (!extension_loaded('mcrypt'))
+        if ( ! extension_loaded('mcrypt'))
         {
-            throw new Kohana_Exception('Sodium extension is not available');
+            throw new Kohana_Exception('Mcrypt extension is not available');
         }
 
         parent::__construct($config);
 
-        if (empty($config[self::CONFIG_MODE]))
-        {
-            // Add the default mode
-            $this->_mode = constant('MCRYPT_MODE_CBC');
-        }
-        else
-        {
-            $this->_mode = $config[self::CONFIG_MODE];
-        }
+        $this->_mode = $config['mode'] ?? constant('MCRYPT_MODE_CBC');
+        $this->_cipher = $config['cipher'] ?? constant('MCRYPT_RIJNDAEL_128');
 
-        if (empty($config[self::CONFIG_CIPHER]))
-        {
-            // Add the default cipher
-            $this->_cipher = constant('MCRYPT_RIJNDAEL_128');
-        }
-        else
-        {
-            $this->_cipher = $config[self::CONFIG_CIPHER];
-        }
+		$required_length = mcrypt_get_key_size($this->_cipher, $this->_mode);
 
-        // Find the max length of the key, based on cipher and mode
-        $size = mcrypt_get_key_size($this->_cipher, $this->_mode);
-
-        if (isset($this->_key[$size]))
-        {
-            // Shorten the key to the maximum size
-            $this->_key = substr($this->_key, 0, $size);
-        }
-        else
-        {
-            $this->_key = $this->_normalize_key($this->_key, $this->_cipher, $this->_mode);
-        }
+		$this->valid_key_length($required_length);
 
         /*
          * Silently use MCRYPT_DEV_URANDOM when the chosen random number generator
          * is not one of those that are considered secure.
          */
-        if ((Encrypt_Engine_Mcrypt::$_rand !== MCRYPT_DEV_URANDOM) AND (Encrypt_Engine_Mcrypt::$_rand !== MCRYPT_DEV_RANDOM))
+        if ((self::$_rand !== MCRYPT_DEV_URANDOM) AND (self::$_rand !== MCRYPT_DEV_RANDOM))
         {
-            Encrypt_Engine_Mcrypt::$_rand = MCRYPT_DEV_URANDOM;
+            self::$_rand = MCRYPT_DEV_URANDOM;
         }
 
         // Store the IV size
@@ -119,8 +78,8 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
      * to convert it to a string. This string can be stored in a database,
      * displayed, and passed using most other means without corruption.
      *
-     * @param string $message Message to be encrypted
-     * @param string $iv IV (Initialization vector)
+     * @param  string $message  Message to be encrypted
+     * @param  string $iv 		IV (Initialization vector)
      * @return null|string
      */
     public function encrypt(string $message, string $iv)
@@ -137,7 +96,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
      *
      *     $data = $encrypt->decode($ciphertext);
      *
-     * @param string $ciphertext Encoded string to be decrypted
+     * @param  string $ciphertext Encoded string to be decrypted
      * @return null|string if decryption fails
      */
     public function decrypt(string $ciphertext)
@@ -176,42 +135,10 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
     {
         // Create a random initialization vector of the proper size for the current cipher
         $iv = mcrypt_create_iv($this->_iv_size, Encrypt_Engine_Mcrypt::$_rand);
-        if ($iv)
+        if ($iv === FALSE)
         {
-            return $iv;
+			throw new Kohana_Exception('Could not create initialization vector.');
         }
-
-        throw new Kohana_Exception('Could not generate random iv');
+        return $iv;
     }
-
-    /**
-     * Normalize key for PHP 5.6 for backwards compatibility
-     *
-     * This method is a shim to make PHP 5.6 behave in a B/C way for
-     * legacy key padding when shorter-than-supported keys are used
-     *
-     * @param   string $key encryption key
-     * @param   string $cipher mcrypt cipher
-     * @param   string $mode mcrypt mode
-     * @return bool|string
-     */
-    protected function _normalize_key($key, $cipher, $mode)
-    {
-        // open the cipher
-        $td = mcrypt_module_open($cipher, '', $mode, '');
-
-        // loop through the supported key sizes
-        foreach (mcrypt_enc_get_supported_key_sizes($td) as $supported)
-        {
-            // if key is short, needs padding
-            if (strlen($key) <= $supported)
-            {
-                return str_pad($key, $supported, "\0");
-            }
-        }
-
-        // at this point key must be greater than max supported size, shorten it
-        return substr($key, 0, mcrypt_get_key_size($cipher, $mode));
-    }
-
 }

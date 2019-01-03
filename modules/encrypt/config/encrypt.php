@@ -2,20 +2,20 @@
 /**
  * The following options must be set:
  *
- * string   key     secret passphrase
+ * string   type    Driver Type
+ * string   key     Secret Passphrase
  */
-
 return [
-    'default' => [
-        Kohana_Encrypt_Engine::CONFIG_TYPE => Kohana_Encrypt_Engine_Openssl::TYPE,
-        Kohana_Encrypt_Engine::CONFIG_KEY => NULL,
-        //Additional OpenSSL configuration
-        Kohana_Encrypt_Engine::CONFIG_CIPHER => Kohana_Encrypt_Engine_Openssl::AES_256_CBC,
-    ],
-//    'sodium' => [
-//        Kohana_Encrypt_Engine::CONFIG_TYPE => Kohana_Encrypt_Engine_Sodium::TYPE,
-//        Kohana_Encrypt_Engine::CONFIG_KEY => NULL,
-//    ],
+	'default' => [
+		'type'    => 'sodium',
+		'key'     => NULL,
+		'cipher'  => Encrypt_Engine_Sodium::AES_256_GCM
+	],
+//    'openssl' => [
+//    	'type' => 'openssl,
+//    	'key' => NULL,
+//    	'cipher' => Encrypt_Engine_Openssl::AES_256_CBC,
+//    ]
 //    /**
 //     * Mcrypt is deprecated and should not be used,
 //     * however it requires additional options:
@@ -24,10 +24,9 @@ return [
 //     * integer  cipher  encryption cipher, one of the Mcrypt cipher constants
 //     */
 //    'mcrypt' => [
-//        Kohana_Encrypt_Engine::CONFIG_TYPE => Kohana_Encrypt_Engine_Mcrypt::TYPE,
-//        Kohana_Encrypt_Engine::CONFIG_KEY => NULL,
-//        // Additional mcrypt configuration
-//        Kohana_Encrypt_Engine::CONFIG_CIPHER => MCRYPT_RIJNDAEL_128,
-//        Kohana_Encrypt_Engine_Mcrypt::CONFIG_MODE => MCRYPT_MODE_CBC,
+//        'type'   => 'mcrypt',
+//        'key'    => NULL,
+//        'cipher' => MCRYPT_RIJNDAEL_128,
+//        'mode'   => MCRYPT_MODE_CBC,
 //    ],
 ];

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The Encrypt Openssl engine provides two-way encryption of text and binary strings
  * using the [OpenSSL](http://php.net/openssl) extension, which consists of two
@@ -10,83 +9,50 @@
  *
  * The Cipher
  * :  A [cipher](http://php.net/manual/en/openssl.ciphers.php) determines how the encryption
- *    is mathematically calculated. By default, the "AES-256-CBC" cipher
- *    is used.
+ *    is mathematically calculated. By default, the "AES-256-CBC" cipher is used.
+ *
  * @package    Kohana/Encrypt
  * @category   Security
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
+ * @author     Koseven Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 {
-    use Traits_Encrypt_Iv;
-
-    /** @var string AES_128_CBC code */
+	/**
+	 * AES_128_CBC
+	 * @var	string
+	 */
     const AES_128_CBC = 'AES-128-CBC';
-    /** @var string AES_256_CBC code */
+
+	/**
+	 * AES_256_CBC
+	 * @var	string
+	 */
     const AES_256_CBC = 'AES-256-CBC';
 
     /**
-     * @var string Engine type
-     */
-    const TYPE = 'Openssl';
-
-    /**
-     * @var int the size of the Initialization Vector (IV) in bytes
-     */
-    protected $_iv_size;
-
-    /**
      * Creates a new openssl wrapper.
-     *
-     * @param array $config Array with configuration
+     * @param  array $config Configuration
      * @throws Kohana_Exception
      */
     public function __construct(array $config)
     {
-        if (!extension_loaded('openssl'))
+        if ( ! extension_loaded('openssl'))
         {
             throw new Kohana_Exception('OpenSSL extension is not installed.');
         }
 
         parent::__construct($config);
 
-        if (empty($config[self::CONFIG_CIPHER]))
-        {
-            // Add the default cipher
-            $this->_cipher = static::AES_256_CBC;
-        }
-        else
-        {
-            $this->_cipher = $config[self::CONFIG_CIPHER];
-        }
+		$this->_cipher = $config['cipher'] ?? self::AES_256_CBC;
 
         $this->_iv_size = openssl_cipher_iv_length($this->_cipher);
 
-        $length = mb_strlen($this->_key, '8bit');
+        $required_length = $this->_cipher === self::AES_128_CBC ? 16 : 32;
 
-        // Validate configuration
-        switch ($this->_cipher)
-        {
-            case static::AES_128_CBC:
-                if ($length !== 16)
-                {
-                    // No valid encryption key is provided!
-                    throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be 16 for AES-128-CBC');
-                }
-                break;
-            case static::AES_256_CBC:
-                if ($length !== 32)
-                {
-                    // No valid encryption key is provided!
-                    throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be 32 for AES-256-CBC');
-                }
-                break;
-            default:
-                // No valid encryption cipher is provided!
-                throw new Kohana_Exception('No valid and safe encryption cipher is defined in the encryption configuration.');
-        }
+		$this->valid_key_length($required_length);
     }
 
     /**
@@ -100,7 +66,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
         // First we will encrypt the value using OpenSSL. After this is encrypted we
         // will proceed to calculating a MAC for the encrypted value so that this
         // value can be verified later as not having been changed by the users.
-        $value = \openssl_encrypt($data, $this->_cipher, $this->_key, 0, $iv);
+        $value = openssl_encrypt($data, $this->_cipher, $this->_key, 0, $iv);
 
         if ($value === FALSE)
         {
@@ -115,20 +81,14 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 
         $json = json_encode(compact('iv', 'value', 'mac'));
 
-        if (!is_string($json))
-        {
-            // Encryption failed
-            return NULL;
-        }
-
-        return base64_encode($json);
+        return !is_string($json) ? NULL : base64_encode($json);
     }
 
     /**
      * Decrypts an encoded string back to its original value.
-     *
      * @param   string $data encoded string to be decrypted
      * @return NULL|string if decryption fails
+	 * @throws Exception
      */
     public function decrypt(string $data)
     {
@@ -138,36 +98,18 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
         // If the payload is not valid JSON or does not have the proper keys set we will
         // assume it is invalid and bail out of the routine since we will not be able
         // to decrypt the given value. We'll also check the MAC for this encryption.
-        if (!$this->valid_payload($data))
+        if (!$this->valid_payload($data) || !$this->valid_mac($data) || !$iv = base64_decode($data['iv']))
         {
             // Decryption failed
-            return NULL;
-        }
-
-        if (!$this->valid_mac($data))
-        {
-            // Decryption failed
-            return NULL;
-        }
-
-        $iv = base64_decode($data['iv']);
-        if (!$iv)
-        {
-            // Invalid base64 data
             return NULL;
         }
 
         // Here we will decrypt the value. If we are able to successfully decrypt it
         // we will then unserialize it and return it out to the caller. If we are
         // unable to decrypt this value we will return NULL.
-        $decrypted = \openssl_decrypt($data['value'], $this->_cipher, $this->_key, 0, $iv);
+        $decrypted = openssl_decrypt($data['value'], $this->_cipher, $this->_key, 0, $iv);
 
-        if ($decrypted === FALSE)
-        {
-            return NULL;
-        }
-
-        return $decrypted;
+        return $decrypted === FALSE ? NULL : $decrypted;
     }
 
     /**
@@ -200,12 +142,12 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
      *
      * @param  array $payload
      * @return bool
+	 * @throws Exception
      */
     protected function valid_mac(array $payload): bool
     {
         $bytes = $this->create_iv();
         $calculated = hash_hmac('sha256', $this->hash($payload['iv'], $payload['value']), $bytes, TRUE);
-
         return hash_equals(hash_hmac('sha256', $payload['mac'], $bytes, TRUE), $calculated);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The Encrypt Sodium engine provides two-way encryption of text and binary strings
  * using the [Sodium](http://php.net/sodium) extension, which consists of two
@@ -8,25 +7,38 @@
  * The Key
  * :  A secret passphrase that is used for encoding and decoding
  *
+ * The Cipher
+ * :  A [cipher](https://paragonie.com/book/pecl-libsodium/read/08-advanced.md) determines how the encryption
+ *    is mathematically calculated. By default, the "AES-256-GCM" cipher is used.
+ *
  * @package    Kohana/Encrypt
  * @category   Security
  * @author     Koseven Team
- * @copyright  (c) Kohana Team
+ * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 {
-    use Traits_Encrypt_Iv;
+	/**
+	 * AES 256 + GCM
+	 * NOTE only available on specific hardware
+	 */
+    const AES_256_GCM = 'aes256gcm';
 
-    /**
-     * @var string Engine type
-     */
-    const TYPE = 'Sodium';
+	/**
+	 * ChaCha20 + Poly1305
+	 */
+	const CHACHA_POLY = 'chacha20poly1305';
 
-    /**
-     * @var int the size of the Initialization Vector (IV) in bytes
-     */
-    protected $_iv_size;
+	/**
+	 * ChaCha20 + Poly1305 [IETF]
+	 */
+	const CHACHA_POLY_IETF = 'chacha20poly1305_ietf';
+
+	/**
+	 * XChaCha20 + Poly1305 [IETF]
+	 */
+	const XCHACHA_POLY_IETF = 'xchacha20poly1305_ietf';
 
     /**
      * Sodium constructor.
@@ -35,26 +47,31 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
      */
     public function __construct($config)
     {
-        if (!extension_loaded('sodium') || !sodium_crypto_aead_aes256gcm_is_available())
+        if ( ! extension_loaded('sodium'))
         {
             throw new Kohana_Exception('Sodium extension is not available');
         }
 
+        // Check if cipher is set, otherwise fallback to AES 256 + GCM
+		if ( ! isset($config['cipher']) || $config['cipher'] === NULL)
+		{
+			// Add the default cipher
+			$this->_cipher = self::AES_256_GCM;
+		}
+
+		// Can you access AES-256-GCM? This is only available if you have supported hardware.
+		if ($this->_cipher === Encrypt_Engine_Sodium::AES_256_GCM && ! sodium_crypto_aead_aes256gcm_is_available()) {
+			throw new Kohana_Exception('AES-256-GCM is not available on your hardware.');
+		}
+
         parent::__construct($config);
 
-        $length = mb_strlen($this->_key, '8bit');
+		$required_length = constant('SODIUM_CRYPTO_AEAD_'.strtoupper($this->_cipher).'_KEYBYTES');
 
-        if ($length !== constant('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES'))
-        {
-            // No valid encryption key is provided!
-            throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be :required_length for AEAD-AES-256-GCM, is: :current_length', [
-                ':required_length' => constant('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES'),
-                ':current_length' => $length
-            ]);
-        }
+		$this->valid_key_length($required_length);
 
-        $this->_iv_size = constant('SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES');
-    }
+		$this->_iv_size = constant('SODIUM_CRYPTO_AEAD_'.strtoupper($this->_cipher).'_NPUBBYTES');
+	}
 
     /**
      * Encrypts
@@ -64,7 +81,9 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
      */
     public function encrypt(string $message, string $iv)
     {
-        $value = sodium_crypto_aead_aes256gcm_encrypt($message, '', $iv, $this->_key);
+		$value = call_user_func(
+			'sodium_crypto_aead_' . $this->_cipher . '_encrypt', $message, '', $iv, $this->_key
+		);
 
         if ($value === FALSE)
         {
@@ -72,79 +91,43 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
             return NULL;
         }
 
-        //Base64 encode binary data, otherwise they cannot be
-        //transformed into JSON.
+        //Base64 encode binary data, otherwise they cannot be transformed into JSON.
         $value = base64_encode($value);
         $iv = base64_encode($iv);
 
         $json = json_encode(compact('iv', 'value'));
 
-        if (!is_string($json))
-        {
-            // Encryption failed
-            return NULL;
-        }
-
-        return base64_encode($json);
+		return !is_string($json) ? NULL : base64_encode($json);
     }
 
     /**
      * Decrypts the ciphertext
-     * @param string $ciphertext Ciphertext to be decrypted
+     * @param  string $ciphertext Ciphertext to be decrypted
      * @return null|string
      */
     public function decrypt(string $ciphertext)
     {
         // Convert the data back to binary
         $decode = base64_decode($ciphertext);
-        //Check if base64 decoding succeeded
-        if ($decode === FALSE)
-        {
+
+		// If the payload is not valid JSON or does not have the proper keys set we will
+		// assume it is invalid and bail out of the routine since we will not be able
+		// to decrypt the given value. We'll also check the MAC for this encryption.
+        if (
+			$decode === FALSE || ($data = json_decode($decode, TRUE)) === NULL ||
+			! $this->valid_payload($data) || ! ($iv = base64_decode($data['iv'])) ||
+			($value = base64_decode($data['value'])) === FALSE
+		) {
             return NULL;
         }
 
-        $data = json_decode($decode, TRUE);
+        // Here we will decrypt the value.
+		// If we are unable to decrypt this value we will return NULL.
+		$decrypted = call_user_func(
+			'sodium_crypto_aead_' . $this->_cipher . '_decrypt', $value, '', $iv, $this->_key
+		);
 
-        //check if json_decode succeeded
-        if (is_null($data))
-        {
-            return NULL;
-        }
-
-        // If the payload is not valid JSON or does not have the proper keys set we will
-        // assume it is invalid and bail out of the routine since we will not be able
-        // to decrypt the given value. We'll also check the MAC for this encryption.
-        if (!$this->valid_payload($data))
-        {
-            // Decryption failed
-            return NULL;
-        }
-
-        $iv = base64_decode($data['iv']);
-        if ($iv === FALSE)
-        {
-            // Invalid base64 data
-            return NULL;
-        }
-
-        // Here we will decrypt the value. If we are able to successfully decrypt it
-        // we will then unserialize it and return it out to the caller. If we are
-        // unable to decrypt this value we will return NULL.
-        $value = base64_decode($data['value']);
-
-        if ($value === FALSE)
-        {
-            return NULL;
-        }
-
-        $decrypted = sodium_crypto_aead_aes256gcm_decrypt($value, '', $iv, $this->_key);
-
-        if ($decrypted === FALSE)
-        {
-            return NULL;
-        }
-
-        return $decrypted;
+		return $decrypted === FALSE ? NULL : $decrypted;
     }
 
     /**
