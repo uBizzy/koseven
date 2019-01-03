@@ -7,14 +7,14 @@
  */
 return [
 	'default' => [
-		'type'    => 'sodium',
+		'type'    => 'openssl',
 		'key'     => NULL,
-		'cipher'  => Encrypt_Engine_Sodium::AES_256_GCM
+		'cipher'  => Encrypt_Engine_Openssl::AES_256_CBC
 	],
-//    'openssl' => [
-//    	'type' => 'openssl,
-//    	'key' => NULL,
-//    	'cipher' => Encrypt_Engine_Openssl::AES_256_CBC,
+//	  'sodium' => [
+//		'type'    => 'sodium',
+//		'key'     => NULL,
+//		'cipher'  => Encrypt_Engine_Sodium::AES_256_GCM
 //    ]
 //    /**
 //     * Mcrypt is deprecated and should not be used,
