@@ -52,7 +52,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
             throw new Kohana_Exception('Sodium extension is not available');
         }
 
-        // Check if cipher is set, otherwise fallback to AES 256 + GCM
+		// Check if cipher is set, otherwise fallback to AES 256 + GCM
 		if ( ! isset($config['cipher']) || $config['cipher'] === NULL)
 		{
 			// Add the default cipher
@@ -113,13 +113,22 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 		// If the payload is not valid JSON or does not have the proper keys set we will
 		// assume it is invalid and bail out of the routine since we will not be able
 		// to decrypt the given value. We'll also check the MAC for this encryption.
-        if (
-			$decode === FALSE || ($data = json_decode($decode, TRUE)) === NULL ||
-			! $this->valid_payload($data) || ! ($iv = base64_decode($data['iv'])) ||
-			($value = base64_decode($data['value'])) === FALSE
-		) {
-            return NULL;
-        }
+		if ($decode === FALSE) {
+			return NULL;
+		}
+
+		$data = json_decode($decode, TRUE);
+
+		if ($data === NULL || !$this->valid_payload($data)) {
+			return NULL;
+		}
+
+		$iv = base64_decode($data['iv']);
+		$value = base64_decode($data['value']);
+
+		if ($iv === NULL || $value === NULL) {
+			return NULL;
+		}
 
         // Here we will decrypt the value.
 		// If we are unable to decrypt this value we will return NULL.
