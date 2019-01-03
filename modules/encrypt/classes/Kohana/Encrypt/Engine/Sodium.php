@@ -49,7 +49,9 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
     {
         if ( ! extension_loaded('sodium'))
         {
+			// @codeCoverageIgnoreStart
             throw new Kohana_Exception('Sodium extension is not available');
+			// @codeCoverageIgnoreEnd
         }
 
 		// Check if cipher is set, otherwise fallback to AES 256 + GCM
@@ -57,11 +59,15 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 		{
 			// Add the default cipher
 			$this->_cipher = self::AES_256_GCM;
+		} else {
+			$this->_cipher = $config['cipher'];
 		}
 
 		// Can you access AES-256-GCM? This is only available if you have supported hardware.
 		if ($this->_cipher === Encrypt_Engine_Sodium::AES_256_GCM && ! sodium_crypto_aead_aes256gcm_is_available()) {
+			// @codeCoverageIgnoreStart
 			throw new Kohana_Exception('AES-256-GCM is not available on your hardware.');
+			// @codeCoverageIgnoreEnd
 		}
 
         parent::__construct($config);
