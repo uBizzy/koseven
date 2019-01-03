@@ -52,7 +52,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
 
         $required_length = $this->_cipher === self::AES_128_CBC ? 16 : 32;
 
-		$this->valid_key_length($required_length);
+        $this->valid_key_length($required_length);
     }
 
     /**
@@ -98,7 +98,8 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
         // If the payload is not valid JSON or does not have the proper keys set we will
         // assume it is invalid and bail out of the routine since we will not be able
         // to decrypt the given value. We'll also check the MAC for this encryption.
-        if (!$this->valid_payload($data) || !$this->valid_mac($data) || !$iv = base64_decode($data['iv']))
+		$iv = base64_decode($data['iv']);
+        if (!$iv || !$this->valid_payload($data) || !$this->valid_mac($data))
         {
             // Decryption failed
             return NULL;
