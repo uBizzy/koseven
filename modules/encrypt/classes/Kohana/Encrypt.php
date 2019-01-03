@@ -1,7 +1,17 @@
 <?php
 /**
+ * Encryption Class for Kohana.
+ *
+ * - Handles Encryption instances and proxies encrypt/decrypt functions
+ *
+ * Example Usage:
+ * 		$engine = Encrypt::instance();
+ * 		$msg 	= $engine->encode('Crypt this!'); 	-> will return an encrypted string
+ * 		$text 	= $engine->decode($msg); 			-> will return "Crypt this!"
+ *
  * @package    Kohana/Encrypt
- * @author     Kohana Team
+ * @category   Security
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
@@ -84,6 +94,7 @@ class Kohana_Encrypt
      *
 	 * @param string $name		Engine Name
      * @param array  $config	Configuration
+	 * @throws Kohana_Exception
      */
     private function __construct(string $name, array $config)
     {
@@ -95,7 +106,22 @@ class Kohana_Encrypt
 
         // Create the engine class
 		$this->_name = $name;
+
+		// Since user can define class via string we need to check if it exists
+		if (!class_exists($engine_name)) {
+			throw new Kohana_Exception('Encryption type: :name defined in the encryption configuratin does not exist.', [
+				':name'          => $engine_name,
+			]);
+		}
+
 		$this->_engine = new $engine_name($config);
+
+		// make sure class is instance of Kohana_Encrypt_Engine
+		if (!$this->_engine instanceof Kohana_Encrypt_Engine) {
+			throw new Kohana_Exception('Encryption type: :name defined in the encryption configuration is not a valid type/driver class.', [
+				':name'          => $engine_name,
+			]);
+		}
     }
 
     /**
