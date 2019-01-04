@@ -1,85 +1,104 @@
 <?php
-
 /**
+ * @category   Security
  * @package    Kohana/Encrypt
- * @author     Kohana Team
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_Encrypt_Engine {
+abstract class Kohana_Encrypt_Engine
+{
+    /**
+	 * Encryption key
+     * @var string
+     */
+    protected $_key;
+
+    /**
+	 * Encryption Mode (mcrypt)
+     * @var string
+     */
+    protected $_mode;
+
+    /**
+	 * Cipher
+     * @var string
+     */
+    protected $_cipher;
 
 	/**
-	 * @var string Encryption key
+	 * The size of the Initialization Vector (IV) in bytes
+	 * @var int
 	 */
-	protected $_key;
+	protected $_iv_size;
 
-	/**
-	 * @var string mcrypt mode
-	 */
-	protected $_mode;
+    /**
+     * Creates a new Encrypt object.
+     * @param  array $config	 Configuration
+     * @throws Kohana_Exception
+     */
+    public function __construct(array $config)
+    {
+        $this->_key = $config['key'];
+    }
 
-	/**
-	 * @var string mcrypt cipher
-	 */
-	protected $_cipher;
+    /**
+     * Encrypts the message
+     * @param string $message Your message to be encrypted.
+     * @param string $iv
+     * @return null|string
+     */
+    abstract public function encrypt(string $message, string $iv);
 
-	/**
-	 * Creates a new mcrypt wrapper.
-	 *
-	 * @param   mixed   $key_config    mcrypt key or config array
-	 * @param   string  $mode          mcrypt mode
-	 * @param   string  $cipher        mcrypt cipher
-	 */
-	public function __construct($key_config, $mode = NULL, $cipher = NULL)
-	{
-		if (is_array($key_config))
+    /**
+     * Decrypts the ciphertext
+     * @param string $ciphertext Your ciphertext to be decrypted.
+     * @return null|string
+     */
+    abstract public function decrypt(string $ciphertext);
+
+    /**
+     * Creates random IV (Initialization vector) for each encryption action.
+	 * @throws Exception     Not possible to gather sufficient entropy.
+     * @return string		 Initialization Vector
+     */
+    public function create_iv() : string {
+		if (function_exists('random_bytes'))
 		{
-			if (isset($key_config['key']))
-			{
-				$this->_key = $key_config['key'];
-			}
-			else
-			{
-				// No default encryption key is provided!
-				throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
-			}
-
-			if (isset($key_config['mode']))
-			{
-				$this->_mode = $key_config['mode'];
-			}
-			// Mode not specified in config array, use argument
-			else if ($mode !== NULL)
-			{
-				$this->_mode = $mode;
-			}
-			
-			if (isset($key_config['cipher']))
-			{
-				$this->_cipher = $key_config['cipher'];
-			}
-			// Cipher not specified in config array, use argument
-			else if ($cipher !== NULL)
-			{
-				$this->_cipher = $cipher;
-			}
+			return random_bytes($this->_iv_size);
 		}
-		else if (is_string($key_config))
+		// @codeCoverageIgnoreStart
+		throw new Kohana_Exception('Could not create initialization vector.');
+		// @codeCoverageIgnoreEnd
+	}
+
+	/**
+	 * Check if key has valid length
+	 * @param  int $expected  Expected Key Length
+	 * @throws Kohana_Exception
+	 */
+	protected function valid_key_length($expected) {
+		$length = mb_strlen($this->_key, '8bit');
+		if ($length !== $expected)
 		{
-			// Store the key, mode, and cipher
-			$this->_key = $key_config;
-			$this->_mode = $mode;
-			$this->_cipher = $cipher;
-		}
-		else
-		{
-			// No default encryption key is provided!
-			throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
+			throw new Kohana_Exception('No valid encryption key is defined in the encryption configuration: length should be :required_length for :cipher, is: :current_length', [
+				':cipher'          => $this->_cipher,
+				':required_length' => $expected,
+				':current_length'  => $length
+			]);
 		}
 	}
 
-	abstract public function encrypt($data, $iv);
-	abstract public function decrypt($data);
-
+    /**
+     * Override __debugInfo function to not display key in var_dump
+	 * @codeCoverageIgnore
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        $result = get_object_vars($this);
+        unset($result['_key']);
+        return $result;
+    }
 }

@@ -1,0 +1,127 @@
+<?php
+/**
+ * @group      kohana
+ * @group      kohana.encrypt
+ *
+ * @package    Kohana/Encrypt
+ * @category   Test
+ * @author     Koseven Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
+ * @license    https://koseven.ga/LICENSE.md
+ */
+class EncryptMcryptTest extends EncryptTestBase
+{
+    /**
+	 * Setup class (should be created within every test)
+     * @return void
+	 * @throws Kohana_Exception
+     */
+    public function setUp()
+    {
+		if (!extension_loaded('mcrypt'))
+		{
+			$this->markTestSkipped('The Mcrypt extension is not available.');
+		}
+
+		$this->set_config([
+			'type' => 'mcrypt',
+			'key'  => EncryptTestBase::KEY32,
+			'cipher' => MCRYPT_RIJNDAEL_128,
+			'mode' => MCRYPT_MODE_CBC,
+		]);
+
+        parent::setUp();
+    }
+
+	/**
+	 * Testing against KAT Vectors
+	 *
+	 * @dataProvider provider_kat
+	 *
+	 * @param array $vectors
+	 *
+	 * @return void
+	 * @throws Kohana_Exception
+	 */
+    public function test_kat(array $vectors)
+    {
+		// Init
+		extract($vectors);
+
+        $this->set_config([
+            'type' => 'mcrypt',
+            'key'  => $key,
+            'cipher' => $cipher,
+            'mode' => $mode,
+        ]);
+
+		// Test encryption with known answers
+		$encrypt = Encrypt::instance();
+		$encrypted = $encrypt->encode($plaintext, $iv);
+
+		$this->assertEquals($ciphertext, $encrypted);
+		$decrypted = $encrypt->decode($encrypted);
+		$this->assertEquals($decrypted, $plaintext);
+    }
+
+	/**
+	 * Tests decrypt function with invalid ciphertext
+	 */
+	public function test_decrypt_invalid()
+	{
+		$encrypt = Encrypt::instance();
+		$this->assertNull($encrypt->decode(':/invalid?1'));
+		$this->assertNull($encrypt->decode(base64_encode('asdasd')));
+	}
+
+	/**
+	 * Data source for kat
+	 * @return array
+	 */
+	public function provider_kat(): array
+	{
+		return [
+			[
+				[
+					'iv' => '0000000000000000',
+					'ciphertext' => 'MDAwMDAwMDAwMDAwMDAwMOzjS0qd+IDZxiED7C1haC0=',
+					'plaintext'  => 'test',
+					'cipher'	 => MCRYPT_RIJNDAEL_128,
+					'key'		 => EncryptTestBase::KEY32,
+					'mode'		 => MCRYPT_MODE_CBC
+				]
+			],
+			[
+				[
+					'iv' => '1111111111111111',
+					'ciphertext' => 'MTExMTExMTExMTExMTExMc6vwMFD',
+					'plaintext' => 'test2',
+					'cipher'	 => NULL,
+					'key'		 => EncryptTestBase::KEY32,
+					'mode'		 => MCRYPT_MODE_CFB
+				]
+			],
+			[
+				[
+					'iv' => '2222222222222222',
+					'ciphertext' => 'MjIyMjIyMjIyMjIyMjIyMi3rgfz1csVLEu+1LQD2+8c=',
+					'plaintext' => 'test3',
+					'cipher'	 => MCRYPT_RIJNDAEL_128,
+					'key'		 => EncryptTestBase::KEY16,
+					'mode'		 => MCRYPT_MODE_ECB
+				]
+			],
+			[
+				[
+					'iv' => '3333333333333333',
+					'ciphertext' => 'MzMzMzMzMzMzMzMzMzMzM9NUlFYkvOEiSXWSYhwjkxg=',
+					'plaintext' => 'test4',
+					'cipher'	 => MCRYPT_RIJNDAEL_128,
+					'key'		 => EncryptTestBase::KEY16,
+					'mode'		 => NULL
+				]
+			]
+		];
+	}
+}
