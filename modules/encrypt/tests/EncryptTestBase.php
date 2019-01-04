@@ -55,24 +55,6 @@ abstract class EncryptTestBase extends Unittest_TestCase
     }
 
     /**
-	 * Checks if encoded string is same after decoding
-	 * WARNING: This could also pass if encryption is not
-	 * implemented correctly! Please ensure you do KAT tests!
-	 *
-     * @dataProvider provider_encode_and_decode
-	 *
-     * @param string $plaintext
-	 *
-     * @return void
-	 * @throws Kohana_Exception
-     */
-    public function test_encode_and_decode(string $plaintext)
-    {
-		$instance = Encrypt::instance();
-		$this->assertEquals($plaintext, $instance->decode($instance->encode($plaintext)));
-    }
-
-    /**
      * Test Encrypt class initialization
      * @return void
 	 * @throws Kohana_Exception
