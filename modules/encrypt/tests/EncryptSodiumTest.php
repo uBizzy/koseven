@@ -1,5 +1,4 @@
 <?php
-include_once 'EncryptTestBase.php';
 /**
  * @group      kohana
  * @group      kohana.encrypt
