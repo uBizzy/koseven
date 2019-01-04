@@ -77,15 +77,6 @@ class EncryptSodiumTest extends EncryptTestBase
 	}
 
 	/**
-	 * Skip this test, as it is not needed
-	 * @param string $plaintext
-	 */
-	public function test_encode_and_decode(string $plaintext)
-	{
-		$this->markTestSkipped();
-	}
-
-	/**
      * Data source for kat
      * @return array
      */

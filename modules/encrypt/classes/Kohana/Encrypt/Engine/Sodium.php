@@ -55,13 +55,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
         }
 
 		// Check if cipher is set, otherwise fallback to AES 256 + GCM
-		if ( ! isset($config['cipher']) || $config['cipher'] === NULL)
-		{
-			// Add the default cipher
-			$this->_cipher = self::AES_256_GCM;
-		} else {
-			$this->_cipher = $config['cipher'];
-		}
+		$this->_cipher = $config['cipher'] ?? self::AES_256_GCM;
 
 		// Can you access AES-256-GCM? This is only available if you have supported hardware.
 		if ($this->_cipher === Encrypt_Engine_Sodium::AES_256_GCM && ! sodium_crypto_aead_aes256gcm_is_available()) {
