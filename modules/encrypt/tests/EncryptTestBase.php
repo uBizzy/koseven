@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @group      kohana
  * @group      kohana.encrypt
@@ -7,22 +6,26 @@
  * @package    Kohana/Encrypt
  * @category   Test
  * @author     Koseven Team
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 abstract class EncryptTestBase extends Unittest_TestCase
 {
     /**
-     * @var string 128 bit encryption key
+	 * 128 bit encryption key
+     * @var string
      */
     const KEY16 = '0123456789012345';
 
     /**
-     * @var string 256 bit encryption key
+	 * 256 bit encryption key
+     * @var string
      */
     const KEY32 = '01234567890123456789012345678901';
 
     /**
+	 * Should be called from every test
      * @return void
      */
     public function setUp()
@@ -34,13 +37,17 @@ abstract class EncryptTestBase extends Unittest_TestCase
     }
 
     /**
+	 * Overwrites Configuration Values
+	 *
      * @param array $config
      * @param string|null $name
-     * @return void
+	 *
+	 * @return void
+	 * @throws Kohana_Exception
      */
     public function set_config(array $config, string $name = NULL)
     {
-        if (is_null($name))
+        if ($name === NULL)
         {
             $name = Encrypt::$default;
         }
@@ -48,28 +55,27 @@ abstract class EncryptTestBase extends Unittest_TestCase
     }
 
     /**
+	 * Checks if encoded string is same after decoding
+	 * WARNING: This could also pass if encryption is not
+	 * implemented correctly! Please ensure you do KAT tests!
+	 *
      * @dataProvider provider_encode_and_decode
+	 *
      * @param string $plaintext
+	 *
      * @return void
+	 * @throws Kohana_Exception
      */
     public function test_encode_and_decode(string $plaintext)
     {
-        $this->encode_and_decode($plaintext);
-    }
-
-    /**
-     * @param string $plaintext
-     * @return void
-     */
-    private function encode_and_decode(string $plaintext)
-    {
-        $instance = Encrypt::instance();
-        $this->assertEquals($plaintext, $instance->decode($instance->encode($plaintext)));
+		$instance = Encrypt::instance();
+		$this->assertEquals($plaintext, $instance->decode($instance->encode($plaintext)));
     }
 
     /**
      * Test Encrypt class initialization
      * @return void
+	 * @throws Kohana_Exception
      */
     public function test_initialization()
     {

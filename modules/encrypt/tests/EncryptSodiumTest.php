@@ -12,6 +12,7 @@
 class EncryptSodiumTest extends EncryptTestBase
 {
     /**
+	 * Setup class (should be created within every test)
      * @return void
      */
     public function setUp()
