@@ -1,11 +1,17 @@
 <?php
 /**
- * @category       Security
- * @package        Kohana/Encrypt
- * @author         Koseven Team
+ * Abstract Encryption Engine Base Class.
+ * Holds Encryption Key, Mode, Cipher and IV Size.
+ *
+ * Integrated Key Length Validation. Removes Key from var_dump
+ * to avoid dumping encryption key.
+ *
+ * @category   Security
+ * @package    Kohana/Encrypt
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
- * @license        https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_Encrypt_Engine {
 
@@ -81,6 +87,19 @@ abstract class Kohana_Encrypt_Engine {
 	}
 
 	/**
+	 * Override __debugInfo function to not display key in var_dump
+	 *
+	 * @codeCoverageIgnore
+	 * @return array
+	 */
+	public function __debugInfo()
+	{
+		$result = get_object_vars($this);
+		unset($result['_key']);
+		return $result;
+	}
+
+	/**
 	 * Check if key has valid length
 	 *
 	 * @param  int $expected Expected Key Length
@@ -97,18 +116,5 @@ abstract class Kohana_Encrypt_Engine {
 				':current_length' => $length
 			]);
 		}
-	}
-
-	/**
-	 * Override __debugInfo function to not display key in var_dump
-	 *
-	 * @codeCoverageIgnore
-	 * @return array
-	 */
-	public function __debugInfo()
-	{
-		$result = get_object_vars($this);
-		unset($result['_key']);
-		return $result;
 	}
 }
