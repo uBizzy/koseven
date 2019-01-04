@@ -41,7 +41,9 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
     {
         if ( ! extension_loaded('openssl'))
         {
+			// @codeCoverageIgnoreStart
             throw new Kohana_Exception('OpenSSL extension is not installed.');
+			// @codeCoverageIgnoreEnd
         }
 
         parent::__construct($config);
@@ -67,12 +69,6 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine
         // will proceed to calculating a MAC for the encrypted value so that this
         // value can be verified later as not having been changed by the users.
         $value = openssl_encrypt($data, $this->_cipher, $this->_key, 0, $iv);
-
-        if ($value === FALSE)
-        {
-            // Encryption failed
-            return NULL;
-        }
 
         // Once we have the encrypted value we will go ahead base64_encode the input
         // vector and create the MAC for the encrypted value so we can verify its
