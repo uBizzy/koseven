@@ -17,17 +17,17 @@ class EncryptSodiumTest extends EncryptTestBase
      */
     public function setUp()
     {
+		if (!extension_loaded('sodium'))
+		{
+			$this->markTestSkipped('The Sodium extension is not available.');
+		}
+
+		if (!sodium_crypto_aead_aes256gcm_is_available())
+		{
+			$this->markTestSkipped('Sodium AEAD AES 256 GCM is not available.');
+		}
+
         parent::setUp();
-
-        if (!extension_loaded('sodium'))
-        {
-            $this->markTestSkipped('The Sodium extension is not available.');
-        }
-
-        if (!sodium_crypto_aead_aes256gcm_is_available())
-        {
-            $this->markTestSkipped('Sodium AEAD AES 256 GCM is not available.');
-        }
     }
 
     /**
