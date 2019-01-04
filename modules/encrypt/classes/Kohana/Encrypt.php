@@ -118,9 +118,11 @@ class Kohana_Encrypt
 
 		// make sure class is instance of Kohana_Encrypt_Engine
 		if (!$this->_engine instanceof Kohana_Encrypt_Engine) {
+			// @codeCoverageIgnoreStart
 			throw new Kohana_Exception('Encryption type: :name defined in the encryption configuration is not a valid type/driver class.', [
 				':name'          => $engine_name,
 			]);
+			// @codeCoverageIgnoreEnd
 		}
     }
 

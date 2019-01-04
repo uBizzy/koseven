@@ -129,23 +129,6 @@ class EncryptSodiumTest extends EncryptTestBase
 	}
 
 	/**
-	 * Test with invalid Engine and expect Exception
-	 * @expectedException Kohana_Exception
-	 * @throws Kohana_Exception
-	 */
-	public function test_invalid_engine() {
-		// Init
-		$this->set_config([
-			'type'	 => 'arr',
-			'key'	 => EncryptTestBase::KEY32,
-			'cipher' => Encrypt_Engine_Sodium::AES_256_GCM
-		]);
-
-		// Expect Exception
-		$encrypt = Encrypt::instance();
-	}
-
-	/**
 	 * Testing to string function
 	 * @throws Kohana_Exception
 	 */
