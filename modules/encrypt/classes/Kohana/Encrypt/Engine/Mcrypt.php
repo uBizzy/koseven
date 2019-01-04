@@ -44,26 +44,25 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
     {
         if ( ! extension_loaded('mcrypt'))
         {
+			// @codeCoverageIgnoreStart
             throw new Kohana_Exception('Mcrypt extension is not available');
+			// @codeCoverageIgnoreEnd
         }
 
         parent::__construct($config);
 
-        $this->_mode = $config['mode'] ?? constant('MCRYPT_MODE_CBC');
-        $this->_cipher = $config['cipher'] ?? constant('MCRYPT_RIJNDAEL_128');
+        $this->_mode = $config['mode'] ?? MCRYPT_MODE_CBC;
+        $this->_cipher = $config['cipher'] ?? MCRYPT_RIJNDAEL_128;
 
 		$required_length = mcrypt_get_key_size($this->_cipher, $this->_mode);
 
 		$this->valid_key_length($required_length);
 
-        /*
-         * Silently use MCRYPT_DEV_URANDOM when the chosen random number generator
-         * is not one of those that are considered secure.
-         */
-        if ((self::$_rand !== MCRYPT_DEV_URANDOM) AND (self::$_rand !== MCRYPT_DEV_RANDOM))
-        {
-            self::$_rand = MCRYPT_DEV_URANDOM;
-        }
+		/*
+		 * Silently use MCRYPT_DEV_URANDOM when the chosen random number generator
+		 * does not exist
+		 */
+        !in_array(self::$_rand, [MCRYPT_DEV_URANDOM, MCRYPT_DEV_RANDOM, MCRYPT_RAND], TRUE) ? MCRYPT_DEV_URANDOM : self::$_rand;
 
         // Store the IV size
         $this->_iv_size = mcrypt_get_iv_size($this->_cipher, $this->_mode);
@@ -104,7 +103,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
         // Convert the data back to binary
         $data = base64_decode($ciphertext, TRUE);
 
-        if (!$data)
+        if ($data === FALSE)
         {
             // Invalid base64 data
             return NULL;
@@ -134,10 +133,17 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
     public function create_iv(): string
     {
         // Create a random initialization vector of the proper size for the current cipher
+		if (self::$_rand === MCRYPT_RAND) {
+			// @codeCoverageIgnoreStart
+			srand();
+			// @codeCoverageIgnoreEnd
+		}
         $iv = mcrypt_create_iv($this->_iv_size, Encrypt_Engine_Mcrypt::$_rand);
         if ($iv === FALSE)
         {
+			// @codeCoverageIgnoreStart
 			throw new Kohana_Exception('Could not create initialization vector.');
+			// @codeCoverageIgnoreEnd
         }
         return $iv;
     }

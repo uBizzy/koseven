@@ -68,11 +68,6 @@ class EncryptOpensslTest extends EncryptTestBase
 	 * @throws Kohana_Exception
 	 */
     public function test_decrypt_invalid() {
-		$this->set_config([
-			'type'	 => 'openssl',
-			'key'	 => EncryptTestBase::KEY32,
-			'cipher' => Encrypt_Engine_Openssl::AES_256_CBC
-		]);
 		$encrypt = Encrypt::instance();
 		$this->assertNull($encrypt->decode('invalid!'));
 	}

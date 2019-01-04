@@ -72,12 +72,6 @@ class EncryptSodiumTest extends EncryptTestBase
 	 */
     public function test_decrypt_invalid()
 	{
-    	// Init
-		$this->set_config([
-			'type'	 => 'sodium',
-			'key'	 => EncryptTestBase::KEY32
-		]);
-
 		$encrypt = Encrypt::instance();
 		$this->assertNull($encrypt->decode(':/invalid?1'));
 		$this->assertNull($encrypt->decode(base64_encode('asdasd')));
