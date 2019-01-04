@@ -54,9 +54,10 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine
         $this->_mode = $config['mode'] ?? MCRYPT_MODE_CBC;
         $this->_cipher = $config['cipher'] ?? MCRYPT_RIJNDAEL_128;
 
-		$required_length = mcrypt_get_key_size($this->_cipher, $this->_mode);
-
-		$this->valid_key_length($required_length);
+		// This function is highly discouraged it returns non valid results! Therefore we cannot check
+		// validity of key length
+		// $required_length = mcrypt_get_key_size($this->_cipher, $this->_mode);
+		// $this->valid_key_length($required_length);
 
 		/*
 		 * Silently use MCRYPT_DEV_URANDOM when the chosen random number generator
