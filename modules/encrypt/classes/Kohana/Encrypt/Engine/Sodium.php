@@ -91,15 +91,9 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 			'sodium_crypto_aead_' . $this->_cipher . '_encrypt', $message, '', $iv, $this->_key
 		);
 
-        if ($value === FALSE)
-        {
-            // Encryption failed
-            return NULL;
-        }
-
         //Base64 encode binary data, otherwise they cannot be transformed into JSON.
         $value = base64_encode($value);
-        $iv = base64_encode($iv);
+		$iv = base64_encode($iv);
 
         $json = json_encode(compact('iv', 'value'));
 
@@ -114,7 +108,7 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
     public function decrypt(string $ciphertext)
     {
         // Convert the data back to binary
-        $decode = base64_decode($ciphertext);
+        $decode = base64_decode($ciphertext, TRUE);
 
 		// If the payload is not valid JSON or does not have the proper keys set we will
 		// assume it is invalid and bail out of the routine since we will not be able
@@ -129,12 +123,8 @@ class Kohana_Encrypt_Engine_Sodium extends Kohana_Encrypt_Engine
 			return NULL;
 		}
 
-		$iv = base64_decode($data['iv']);
-		$value = base64_decode($data['value']);
-
-		if ($iv === NULL || $value === NULL) {
-			return NULL;
-		}
+		$iv = base64_decode($data['iv'], TRUE);
+		$value = base64_decode($data['value'], TRUE);
 
         // Here we will decrypt the value.
 		// If we are unable to decrypt this value we will return NULL.
