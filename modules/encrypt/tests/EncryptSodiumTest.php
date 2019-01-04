@@ -14,6 +14,7 @@ class EncryptSodiumTest extends EncryptTestBase
     /**
 	 * Setup class (should be created within every test)
      * @return void
+	 * @throws Kohana_Exception
      */
     public function setUp()
     {
@@ -26,6 +27,12 @@ class EncryptSodiumTest extends EncryptTestBase
 		{
 			$this->markTestSkipped('Sodium AEAD AES 256 GCM is not available.');
 		}
+
+		$this->set_config([
+			'type'	 => 'sodium',
+			'key'	 => EncryptTestBase::KEY32,
+			'cipher' => Encrypt_Engine_Sodium::AES_256_GCM
+		]);
 
         parent::setUp();
     }

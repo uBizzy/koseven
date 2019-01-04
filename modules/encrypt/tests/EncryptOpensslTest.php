@@ -15,6 +15,7 @@ class EncryptOpensslTest extends EncryptTestBase
     /**
 	 * Setup class (should be created within every test)
      * @return void
+	 * @throws Kohana_Exception
      */
     public function setUp()
     {
@@ -22,6 +23,12 @@ class EncryptOpensslTest extends EncryptTestBase
 		{
 			$this->markTestSkipped('The OpenSSL extension is not available.');
 		}
+
+		$this->set_config([
+			'type'	 => 'openssl',
+			'key'	 => EncryptTestBase::KEY32,
+			'cipher' => Encrypt_Engine_Openssl::AES_256_CBC
+		]);
 
         parent::setUp();
     }
@@ -43,7 +50,7 @@ class EncryptOpensslTest extends EncryptTestBase
 
 		$this->set_config([
 			'type'	 => 'openssl',
-			'key'	 =>$key,
+			'key'	 => $key,
 			'cipher' => $cipher
 		]);
 
