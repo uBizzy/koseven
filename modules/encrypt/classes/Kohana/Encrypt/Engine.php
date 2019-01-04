@@ -90,11 +90,11 @@ abstract class Kohana_Encrypt_Engine
 		}
 	}
 
-    /**
-     * Override __debugInfo function to not display key in var_dump
+	/**
+	 * Override __debugInfo function to not display key in var_dump
 	 * @codeCoverageIgnore
-     * @return array
-     */
+	 * @return array
+	 */
     public function __debugInfo()
     {
         $result = get_object_vars($this);
