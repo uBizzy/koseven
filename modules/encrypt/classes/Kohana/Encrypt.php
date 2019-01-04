@@ -75,7 +75,7 @@ class Kohana_Encrypt
                 $config = Kohana::$config->load('encrypt')->$name;
             }
 
-            if (!isset($config['key']))
+            if (!isset($config['key']) || $config['key'] === NULL || empty($config['key']))
             {
                 // No default encryption key is provided!
                 throw new Kohana_Exception('No encryption key is defined in the encryption configuration group: :group',

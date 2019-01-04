@@ -40,12 +40,6 @@ abstract class Kohana_Encrypt_Engine
      */
     public function __construct(array $config)
     {
-        if (empty($config['key']))
-        {
-            // No default encryption key is provided!
-            throw new Kohana_Exception('No encryption key is defined in the encryption configuration');
-        }
-
         $this->_key = $config['key'];
     }
 
@@ -74,7 +68,9 @@ abstract class Kohana_Encrypt_Engine
 		{
 			return random_bytes($this->_iv_size);
 		}
+		// @codeCoverageIgnoreStart
 		throw new Kohana_Exception('Could not create initialization vector.');
+		// @codeCoverageIgnoreEnd
 	}
 
 	/**
@@ -96,6 +92,7 @@ abstract class Kohana_Encrypt_Engine
 
     /**
      * Override __debugInfo function to not display key in var_dump
+	 * @codeCoverageIgnore
      * @return array
      */
     public function __debugInfo()

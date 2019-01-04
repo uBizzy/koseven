@@ -78,6 +78,83 @@ class EncryptSodiumTest extends EncryptTestBase
 	}
 
 	/**
+	 * Test with invalid Key Length and expect exception
+	 * @expectedException Kohana_Exception
+	 * @throws Kohana_Exception
+	 */
+	public function test_invalid_key_length() {
+    	// Init
+		$this->set_config([
+			'type'	 => 'sodium',
+			'key'	 => '1234',
+			'cipher' => Encrypt_Engine_Sodium::AES_256_GCM
+		]);
+
+		// Expect Exception
+		$encrypt = Encrypt::instance();
+	}
+
+	/**
+	 * Test with invalid / not set key and expect exception
+	 * @expectedException Kohana_Exception
+	 * @throws Kohana_Exception
+	 */
+	public function test_invalid_key() {
+		// Init
+		$this->set_config([
+			'type'	 => 'sodium',
+			'key'	 => NULL,
+			'cipher' => Encrypt_Engine_Sodium::AES_256_GCM
+		]);
+
+		// Expect Exception
+		$encrypt = Encrypt::instance();
+	}
+
+	/**
+	 * Test with non existent Engine Name and expect Exception
+	 * @expectedException Kohana_Exception
+	 * @throws Kohana_Exception
+	 */
+	public function test_non_existent_engine() {
+		// Init
+		$this->set_config([
+			'type'	 => 'doesnotexist',
+			'key'	 => EncryptTestBase::KEY32,
+			'cipher' => Encrypt_Engine_Sodium::AES_256_GCM
+		]);
+
+		// Expect Exception
+		$encrypt = Encrypt::instance();
+	}
+
+	/**
+	 * Test with invalid Engine and expect Exception
+	 * @expectedException Kohana_Exception
+	 * @throws Kohana_Exception
+	 */
+	public function test_invalid_engine() {
+		// Init
+		$this->set_config([
+			'type'	 => 'arr',
+			'key'	 => EncryptTestBase::KEY32,
+			'cipher' => Encrypt_Engine_Sodium::AES_256_GCM
+		]);
+
+		// Expect Exception
+		$encrypt = Encrypt::instance();
+	}
+
+	/**
+	 * Testing to string function
+	 * @throws Kohana_Exception
+	 */
+	public function test___toString() {
+		$encrypt = Encrypt::instance();
+		$this->assertSame("Encrypt_Engine_Sodium (default)", (string)$encrypt);
+	}
+
+	/**
      * Data source for kat
      * @return array
      */
