@@ -27,7 +27,7 @@ class Kohana_Encrypt {
 	 * Name of default engine to use
 	 * @var string
 	 */
-	public static $default_engine = 'sodium';
+	public static $default_engine = 'openssl';
 
 	/**
 	 * Encrypt class instances
