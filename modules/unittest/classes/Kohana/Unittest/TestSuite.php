@@ -15,26 +15,19 @@ use PHPUnit\Framework\TestResult;
  */
 abstract class Kohana_Unittest_TestSuite extends TestSuite 
 {
-	/**
-	 * Holds the details of files that should be whitelisted for
-	 * code coverage
-	 * 
-	 * @var array
-	 */
-	protected $_filter_calls = [
-		'addFileToWhitelist' => []
-	];
+    /**
+     * Holds the details of files that should be whitelisted for
+     * code coverage 
+     * @var array
+     */
+    protected $_filter_calls = [
+        'addFileToWhitelist' => []
+    ];
 
-	/**
+    /**
      * Runs the tests and collects their result in a TestResult.
-     *
-     * @param  PHPUnit_Framework_TestResult $result
-     * @param  mixed                        $filter
-     * @param  array                        $groups
-     * @param  array                        $excludeGroups
-     * @param  boolean                      $processIsolation
-     * @return PHPUnit_Framework_TestResult
-     * @throws InvalidArgumentException
+     * @param TestResult|NULL $result
+     * @return TestResult
      */
     public function run(TestResult $result = NULL): TestResult
     {
@@ -58,12 +51,12 @@ abstract class Kohana_Unittest_TestSuite extends TestSuite
 		return parent::run($result);
 	}
 
-	/**
-	 * Queues a file to be added to the code coverage whitelist when the suite runs
-	 * @param string $file 
-	 */
-	public function addFileToWhitelist($file)
-	{
-		$this->_filter_calls['addFileToWhitelist'][] = $file;
-	}
+    /**
+     * Queues a file to be added to the code coverage whitelist when the suite runs
+     * @param string $file 
+     */
+    public function addFileToWhitelist($file)
+    {
+    	$this->_filter_calls['addFileToWhitelist'][] = $file;
+    }
 }
