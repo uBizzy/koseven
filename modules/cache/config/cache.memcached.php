@@ -1,6 +1,6 @@
 <?php
 return [
-    // @link http://github.com/gimpe/kohana-memcached
+    // @link http://github.com/gimpe/k7-memcached
     /*
     'memcached' => array(
         'driver' => 'memcached',

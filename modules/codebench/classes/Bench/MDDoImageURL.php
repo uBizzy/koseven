@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
 class Bench_MDDoImageURL extends Codebench {
 
 	public $description =
-		'Optimization for the <code>doImageURL()</code> method of <code>Kohana_Kodoc_Markdown</code>
-		 for the Kohana Userguide.';
+		'Optimization for the <code>doImageURL()</code> method of <code>K7_Kodoc_Markdown</code>
+		 for the K7 Userguide.';
 
 	public $loops = 10000;
 

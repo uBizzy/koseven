@@ -1,3 +1,3 @@
 <?php
 
-class Form extends Kohana_Form {}
+class Form extends K7_Form {}

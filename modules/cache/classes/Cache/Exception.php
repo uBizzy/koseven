@@ -1,3 +1,3 @@
 <?php
 
-class Cache_Exception extends Kohana_Cache_Exception {}
+class Cache_Exception extends K7_Cache_Exception {}

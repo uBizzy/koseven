@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
@@ -8,7 +8,7 @@ class Bench_ValidColor extends Codebench {
 
 	public $description =
 		'Optimization for <code>Validate::color()</code>.
-		 See: http://forum.kohanaphp.com/comments.php?DiscussionID=2192.
+		 See: http://koseven.discourse.group/comments.php?DiscussionID=2192.
 
 		 Note that the methods with an <em>_invalid</em> suffix contain flawed regexes and should be
 		 completely discarded. I left them in here for educational purposes, and to remind myself

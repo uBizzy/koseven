@@ -1,23 +1,23 @@
 <?php
-include_once(Kohana::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    Kohana/Cache
- * @group      kohana
- * @group      kohana.cache
+ * @package    K7/Cache
+ * @group      k7
+ * @group      k7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_SqliteTest extends Kohana_CacheBasicMethodsTest {
+class K7_SqliteTest extends K7_CacheBasicMethodsTest {
 
 	/**
 	 * This method MUST be implemented by each driver to setup the `Cache`
 	 * instance for each test.
-	 * 
+	 *
 	 * This method should do the following tasks for each driver test:
-	 * 
+	 *
 	 *  - Test the Cache instance driver is available, skip test otherwise
 	 *  - Setup the Cache instance
 	 *  - Call the parent setup method, `parent::setUp()`
@@ -33,9 +33,9 @@ class Kohana_SqliteTest extends Kohana_CacheBasicMethodsTest {
 			$this->markTestSkipped('SQLite PDO PHP Extension is not available');
 		}
 
-		if ( ! Kohana::$config->load('cache.sqlite'))
+		if ( ! K7::$config->load('cache.sqlite'))
 		{
-			Kohana::$config->load('cache')
+			K7::$config->load('cache')
 				->set(
 					'sqlite',
 					[
@@ -50,4 +50,4 @@ class Kohana_SqliteTest extends Kohana_CacheBasicMethodsTest {
 		$this->cache(Cache::instance('sqlite'));
 	}
 
-} // End Kohana_SqliteTest
+} // End K7_SqliteTest

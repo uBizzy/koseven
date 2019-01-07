@@ -1,3 +1,3 @@
 <?php
 
-class Request extends Kohana_Request {}
+class Request extends K7_Request {}

@@ -3,16 +3,16 @@
 /**
  * Test case for Minion_Util
  *
- * @package    Kohana/Minion
- * @group      kohana
- * @group      kohana.minion
+ * @package    K7/Minion
+ * @group      k7
+ * @group      k7.minion
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
 
-class Minion_TaskTest extends Kohana_Unittest_TestCase
+class Minion_TaskTest extends K7_Unittest_TestCase
 {
 	/**
 	 * Provides test data for test_convert_task_to_class_name()

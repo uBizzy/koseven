@@ -3,11 +3,11 @@
 /**
  * Unit tests for internal methods of userguide controller
  *
- * @group kohana
- * @group kohana.userguide
- * @group kohana.userguide.controller
+ * @group k7
+ * @group k7.userguide
+ * @group k7.userguide.controller
  *
- * @package    Kohana/Userguide
+ * @package    K7/Userguide
  * @category   Tests
  * @author     Kohana Team
  * @copyright  (c) Kohana Team

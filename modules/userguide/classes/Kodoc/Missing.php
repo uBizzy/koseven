@@ -1,3 +1,3 @@
 <?php
 
-abstract class Kodoc_Missing extends Kohana_Kodoc_Missing {  }
+abstract class Kodoc_Missing extends K7_Kodoc_Missing {  }

@@ -1,3 +1,3 @@
 <?php
 
-class Controller_Userguide extends Kohana_Controller_Userguide {}
+class Controller_Userguide extends K7_Controller_Userguide {}

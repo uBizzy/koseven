@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    Kohana/ORM
+ * @package    K7/ORM
  * @author     Koseven Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
@@ -24,15 +24,15 @@ class ORM_Behavior_Guid extends ORM_Behavior {
 	 * Constructs a behavior object
 	 *
 	 * @param   array $config Configuration parameters
-	 */  
+	 */
   protected function __construct($config)
   {
     parent::__construct($config);
-    
+
     $this->_guid_column = Arr::get($config, 'column', $this->_guid_column);
     $this->_guid_only = Arr::get($config, 'guid_only', $this->_guid_only);
   }
-  
+
 	/**
 	 * Constructs a new model and loads a record if given
 	 *
@@ -46,12 +46,12 @@ class ORM_Behavior_Guid extends ORM_Behavior {
       if (UUID::valid($id))
       {
         $model->where($this->_guid_column, '=', $id)->find();
-        
+
         // Prevent further record loading
         return FALSE;
       }
     }
-    
+
     return TRUE;
 	}
 
@@ -64,7 +64,7 @@ class ORM_Behavior_Guid extends ORM_Behavior {
   {
     $this->create_guid($model);
   }
-  
+
   /**
    * A new model is created, add a guid value
    *
@@ -74,7 +74,7 @@ class ORM_Behavior_Guid extends ORM_Behavior {
   {
     $this->create_guid($model);
   }
-   
+
   private function create_guid($model)
   {
     $current_guid = $model->get($this->_guid_column);

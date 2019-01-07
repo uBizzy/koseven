@@ -6,7 +6,7 @@ Assuming you are creating a web application that allows your members to upload t
 
 ## Controller
 
-First we need to create a controller that handles the requests for uploading an image. We will name it `Controller_Avatar` and accessible through `/avatar` URL. Assuming that your project is located at [http://localhost/kohana](http://localhost/kohana), then our avatar controller is at [http://localhost/kohana/avatar](http://localhost/kohana/avatar).
+First we need to create a controller that handles the requests for uploading an image. We will name it `Controller_Avatar` and accessible through `/avatar` URL. Assuming that your project is located at [http://localhost/k7](http://localhost/k7), then our avatar controller is at [http://localhost/k7/avatar](http://localhost/k7/avatar).
 
 For simplicity, the upload form will be on `index` action and `upload` action will process the uploaded file. This is what our controller now looks like. Please note that we are not using [Controller_Template], just [Controller].
 

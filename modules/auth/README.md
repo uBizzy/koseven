@@ -1,9 +1,9 @@
-Kohana auth module
+K7 auth module
 ---
 
 I've forked the main Auth module because there were some fundamental flaws with it:
 
- 1. It's trivial to [bruteforce](http://dev.kohanaframework.org/issues/3163) publicly hidden salt hashes.
+ 1. It's trivial to [bruteforce](http://github.com/koseven/koseven/issues/3163) publicly hidden salt hashes.
     - I've fixed this by switching the password hashing algorithm to the more secure secret-key based hash_hmac method.
  2. ORM drivers were included.
     - I've fixed this by simply removing them. They cause confusion with new users because they think that Auth requires ORM. The only driver currently provided by default is the file driver.

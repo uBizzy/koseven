@@ -2,7 +2,7 @@
 /**
  * UTF8::transliterate_to_ascii
  *
- * @package    Kohana
+ * @package    K7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks

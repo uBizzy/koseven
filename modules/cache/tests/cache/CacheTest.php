@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    Kohana/Cache
- * @group      kohana
- * @group      kohana.cache
+ * @package    K7/Cache
+ * @group      k7
+ * @group      k7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_CacheTest extends Unittest_TestCase {
+class K7_CacheTest extends Unittest_TestCase {
 
 	const BAD_GROUP_DEFINITION  = 1010;
 	const EXPECT_SELF           = 1001;
@@ -22,7 +22,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 	{
 		$base = [];
 
-		if (Kohana::$config->load('cache.file'))
+		if (K7::$config->load('cache.file'))
 		{
 			$base = [
 				// Test default group
@@ -40,8 +40,8 @@ class Kohana_CacheTest extends Unittest_TestCase {
 
 		return $base + [[
 			// Test bad group definition
-			Kohana_CacheTest::BAD_GROUP_DEFINITION,
-			'Failed to load Kohana Cache group: 1010'
+			K7_CacheTest::BAD_GROUP_DEFINITION,
+			'Failed to load K7 Cache group: 1010'
 		]];
 	}
 
@@ -86,7 +86,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		}
 		catch (Cache_Exception $e)
 		{
-			$this->assertSame('Cloning of Kohana_Cache objects is forbidden',
+			$this->assertSame('Cloning of K7_Cache objects is forbidden',
 				$e->getMessage());
 			throw $e;
 		}
@@ -107,7 +107,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 					'persistent' => TRUE,
 				],
 				NULL,
-				Kohana_CacheTest::EXPECT_SELF,
+				K7_CacheTest::EXPECT_SELF,
 				[
 					'server'     => 'otherhost',
 					'port'       => 5555,
@@ -117,7 +117,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 			[
 				'foo',
 				'bar',
-				Kohana_CacheTest::EXPECT_SELF,
+				K7_CacheTest::EXPECT_SELF,
 				[
 					'foo'        => 'bar'
 				]
@@ -155,7 +155,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		$cache_reflection = new ReflectionClass('Cache_File');
 		$config = $cache_reflection->getMethod('config');
 
-		if ($expected_result === Kohana_CacheTest::EXPECT_SELF)
+		if ($expected_result === K7_CacheTest::EXPECT_SELF)
 		{
 			$expected_result = $cache;
 		}
@@ -199,10 +199,10 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		$sanitize_id->setAccessible(TRUE);
 
 		// Get Prefix if set
-        if ( ! $prefix = Kohana::$config->load('cache')->get('prefix', false)) {
+        if ( ! $prefix = K7::$config->load('cache')->get('prefix', false)) {
             $prefix = '';
         }
 
 		$this->assertSame($prefix.$expected, $sanitize_id->invoke($cache, $id));
 	}
-} // End Kohana_CacheTest
+} // End K7_CacheTest

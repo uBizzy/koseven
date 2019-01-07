@@ -1,3 +1,3 @@
 <?php
 
-class Database_Query extends Kohana_Database_Query {}
+class Database_Query extends K7_Database_Query {}

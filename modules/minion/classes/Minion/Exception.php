@@ -1,3 +1,3 @@
 <?php
 
-class Minion_Exception extends Kohana_Minion_Exception {}
+class Minion_Exception extends K7_Minion_Exception {}

@@ -1,3 +1,3 @@
 <?php
 
-class Pagination extends Kohana_Pagination {}
+class Pagination extends K7_Pagination {}

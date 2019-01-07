@@ -1,3 +1,3 @@
 <?php
 
-class Kodoc extends Kohana_Kodoc {}
+class Kodoc extends K7_Kodoc {}

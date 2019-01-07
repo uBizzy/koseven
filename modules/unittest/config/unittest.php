@@ -14,11 +14,11 @@ return [
 		'app' => TRUE,
 
 		// Set to array(TRUE) to include all modules, or use an array of module names
-		// (the keys of the array passed to Kohana::modules() in the bootstrap)
+		// (the keys of the array passed to K7::modules() in the bootstrap)
 		// Or set to FALSE to exclude all modules
 		'modules' => [TRUE],
 
-		// If you don't want the Kohana code coverage reports to pollute your app's,
+		// If you don't want the K7 code coverage reports to pollute your app's,
 		// then set this to FALSE
 		'system' => TRUE,
 	],

@@ -2,7 +2,7 @@
 /**
  * Default auth role
  *
- * @package    Kohana/Auth
+ * @package    K7/Auth
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md

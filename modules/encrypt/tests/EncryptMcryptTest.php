@@ -2,10 +2,10 @@
 /**
  * Unit Tests and KAT Tests for MCRYPT class which is deprecated since 4.0
  *
- * @group      kohana
- * @group      kohana.encrypt
+ * @group      k7
+ * @group      k7.encrypt
  *
- * @package    Kohana/Encrypt
+ * @package    K7/Encrypt
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
@@ -18,7 +18,7 @@ class EncryptMcryptTest extends EncryptTestBase {
 	 * Setup class (should be created within every test)
 	 *
 	 * @return void
-	 * @throws Kohana_Exception
+	 * @throws K7_Exception
 	 */
 	public function setUp()
 	{
@@ -44,7 +44,7 @@ class EncryptMcryptTest extends EncryptTestBase {
 	 * @param array $vectors
 	 *
 	 * @return void
-	 * @throws Kohana_Exception
+	 * @throws K7_Exception
 	 */
 	public function test_kat(array $vectors)
 	{

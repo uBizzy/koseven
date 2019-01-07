@@ -1,3 +1,3 @@
 <?php
 
-class ORM_Behavior_LocalBehavior extends Kohana_ORM_Behavior_LocalBehavior { }
+class ORM_Behavior_LocalBehavior extends K7_ORM_Behavior_LocalBehavior { }

@@ -1,8 +1,8 @@
 # Encrypt 
 
-The encrypt module is included with Koseven, but needs to be enabled before you can use it. To enable, open your `application/bootstrap.php` file and modify the call to [Kohana::modules] by including the encrypt module like so:
+The encrypt module is included with Koseven, but needs to be enabled before you can use it. To enable, open your `application/bootstrap.php` file and modify the call to [K7::modules] by including the encrypt module like so:
 
-    Kohana::modules(array(
+    K7::modules(array(
         ...
         'encrypt' => MODPATH.'encrypt',
         ...

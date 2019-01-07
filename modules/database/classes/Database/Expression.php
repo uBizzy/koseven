@@ -1,3 +1,3 @@
 <?php
 
-class Database_Expression extends Kohana_Database_Expression {}
+class Database_Expression extends K7_Database_Expression {}

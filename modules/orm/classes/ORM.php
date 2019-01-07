@@ -1,3 +1,3 @@
 <?php
 
-class ORM extends Kohana_ORM {}
+class ORM extends K7_ORM {}

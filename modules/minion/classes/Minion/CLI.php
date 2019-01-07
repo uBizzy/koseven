@@ -1,3 +1,3 @@
 <?php
 
-class Minion_CLI extends Kohana_Minion_CLI {}
+class Minion_CLI extends K7_Minion_CLI {}

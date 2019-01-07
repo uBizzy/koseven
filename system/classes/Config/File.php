@@ -1,3 +1,3 @@
 <?php
 
-class Config_File extends Kohana_Config_File {}
+class Config_File extends K7_Config_File {}

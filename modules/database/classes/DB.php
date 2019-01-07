@@ -1,3 +1,3 @@
 <?php
 
-class DB extends Kohana_DB {}
+class DB extends K7_DB {}

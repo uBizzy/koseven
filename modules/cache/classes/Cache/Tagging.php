@@ -1,3 +1,3 @@
 <?php
 
-interface Cache_Tagging extends Kohana_Cache_Tagging {}
+interface Cache_Tagging extends K7_Cache_Tagging {}

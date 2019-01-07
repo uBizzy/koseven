@@ -1,3 +1,3 @@
 <?php
 
-class Text extends Kohana_Text {}
+class Text extends K7_Text {}

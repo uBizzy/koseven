@@ -3,10 +3,10 @@
  * Test Base for Encryption Tests. Encryption tests need to extend this Class.
  * Checks simple encode and decode function and Provides Keys
  *
- * @group      kohana
- * @group      kohana.encrypt
+ * @group      k7
+ * @group      k7.encrypt
  *
- * @package    Kohana/Encrypt
+ * @package    K7/Encrypt
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
@@ -50,7 +50,7 @@ abstract class EncryptTestBase extends Unittest_TestCase {
 	 * @param string $plaintext
 	 *
 	 * @return void
-	 * @throws Kohana_Exception
+	 * @throws K7_Exception
 	 */
 	public function test_encode_and_decode(string $plaintext)
 	{
@@ -62,7 +62,7 @@ abstract class EncryptTestBase extends Unittest_TestCase {
 	 * Test Encrypt class initialization
 	 *
 	 * @return void
-	 * @throws Kohana_Exception
+	 * @throws K7_Exception
 	 */
 	public function test_initialization()
 	{
@@ -72,7 +72,7 @@ abstract class EncryptTestBase extends Unittest_TestCase {
 		$this->assertCount(1, Encrypt::$instances);
 		$this->assertArrayHasKey('default', Encrypt::$instances);
 
-		$this->set_config(Kohana::$config->load('encrypt')->default, 'secondary');
+		$this->set_config(K7::$config->load('encrypt')->default, 'secondary');
 		Encrypt::instance('secondary');
 		$this->assertCount(2, Encrypt::$instances);
 		$this->assertArrayHasKey('secondary', Encrypt::$instances);
@@ -85,14 +85,14 @@ abstract class EncryptTestBase extends Unittest_TestCase {
 	 * @param string|null $name
 	 *
 	 * @return void
-	 * @throws Kohana_Exception
+	 * @throws K7_Exception
 	 */
 	public function set_config(array $config, string $name = NULL)
 	{
 		if ($name === NULL) {
 			$name = Encrypt::$default;
 		}
-		Kohana::$config->load('encrypt')->set($name, $config);
+		K7::$config->load('encrypt')->set($name, $config);
 	}
 
 	/**

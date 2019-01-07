@@ -1,23 +1,23 @@
 <?php
-include_once(Kohana::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    Kohana/Cache
- * @group      kohana
- * @group      kohana.cache
+ * @package    K7/Cache
+ * @group      k7
+ * @group      k7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
+class K7_Cache_FileTest extends K7_CacheBasicMethodsTest {
 
 	/**
 	 * This method MUST be implemented by each driver to setup the `Cache`
 	 * instance for each test.
-	 * 
+	 *
 	 * This method should do the following tasks for each driver test:
-	 * 
+	 *
 	 *  - Test the Cache instance driver is available, skip test otherwise
 	 *  - Setup the Cache instance
 	 *  - Call the parent setup method, `parent::setUp()`
@@ -28,9 +28,9 @@ class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
 	{
 		parent::setUp();
 
-		if ( ! Kohana::$config->load('cache.file'))
+		if ( ! K7::$config->load('cache.file'))
 		{
-			Kohana::$config->load('cache')
+			K7::$config->load('cache')
 				->set(
 					'file',
 					[
@@ -58,7 +58,7 @@ class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
 	public function test_ignore_delete_file()
 	{
 		$cache = $this->cache();
-		$config = Kohana::$config->load('cache')->file;
+		$config = K7::$config->load('cache')->file;
 		$file = $config['cache_dir'].'/file_we_want_to_keep.cache';
 
 		// Lets pollute the cache folder
@@ -160,4 +160,4 @@ class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
 		//var_dump($cache->_is_expired($file));
 		return $file->isFile();
 	}
-} // End Kohana_SqliteTest
+} // End K7_SqliteTest

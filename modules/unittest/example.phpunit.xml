@@ -9,7 +9,7 @@
 -->
 <phpunit colors="true" bootstrap="rel/path/to/index.php">
 	<testsuites>
-		<testsuite name="Kohana Tests">
+		<testsuite name="K7 Tests">
 			<file>rel/path/to/unittest/tests.php</file>
 		</testsuite>
 	</testsuites>

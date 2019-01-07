@@ -1,3 +1,3 @@
 <?php
 
-class Database_Query_Builder_Select extends Kohana_Database_Query_Builder_Select {}
+class Database_Query_Builder_Select extends K7_Database_Query_Builder_Select {}

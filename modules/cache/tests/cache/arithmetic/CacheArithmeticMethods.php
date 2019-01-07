@@ -1,16 +1,16 @@
 <?php
-include_once(Kohana::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    Kohana/Cache/Memcache
- * @group      kohana
- * @group      kohana.cache
+ * @package    K7/Cache/Memcache
+ * @group      k7
+ * @group      k7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethodsTest {
+abstract class K7_CacheArithmeticMethodsTest extends K7_CacheBasicMethodsTest {
 
 	public function tearDown()
 	{
@@ -70,7 +70,7 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 
 	/**
 	 * Test for [Cache_Arithmetic::increment()]
-	 * 
+	 *
 	 * @dataProvider provider_increment
 	 *
 	 * @param   integer  start state
@@ -142,7 +142,7 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 
 	/**
 	 * Test for [Cache_Arithmetic::decrement()]
-	 * 
+	 *
 	 * @dataProvider provider_decrement
 	 *
 	 * @param   integer  start state
@@ -170,4 +170,4 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 		);
 	}
 
-} // End Kohana_CacheArithmeticMethodsTest
+} // End K7_CacheArithmeticMethodsTest

@@ -1,3 +1,3 @@
 <?php
 
-class Cache_File extends Kohana_Cache_File {}
+class Cache_File extends K7_Cache_File {}

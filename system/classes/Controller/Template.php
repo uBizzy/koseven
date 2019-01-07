@@ -1,3 +1,3 @@
 <?php
 
-abstract class Controller_Template extends Kohana_Controller_Template {}
+abstract class Controller_Template extends K7_Controller_Template {}

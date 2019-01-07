@@ -1,3 +1,3 @@
 <?php
 
-class Database_PDO extends Kohana_Database_PDO {}
+class Database_PDO extends K7_Database_PDO {}

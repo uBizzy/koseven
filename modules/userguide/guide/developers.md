@@ -16,19 +16,19 @@ First, you will need to tell git about the remote repository:
 
     > git remote add kohana git://github.com/kohana/kohana.git
 
-This tells git about the kohana repository and gives it a name which we can use to refer to it when
+This tells git about the k7 repository and gives it a name which we can use to refer to it when
 fetching changes from the repository.
 
 ## Developing locally
 
-There are 3 branches in all the kohana repositories:
+There are 3 branches in all the k7 repositories:
 
 * **master** This branch always points to the latest release tag. In essence it points to the last stable edition of the codebase
 * **3.0.x**  This is a release branch for development of the 3.0.x series, i.e. 3.0, 3.0.3, 3.0.8 etc.
 * **3.1.x**  This is a release branch for development of the 3.1.x series, i.e. 3.1, 3.1.4, 3.1.14 etc.
 
 To work on a specific release branch you need to check it out then check out the appropriate branches.
-Release branch names follow the same convention in both kohana/kohana and kohana/core.
+Release branch names follow the same convention in both k7/k7 and k7/core.
 
 To work on 3.0.x you'd do the following:
 
@@ -104,7 +104,7 @@ branch is perfectly acceptable.
 
 ## Merging Changes from Remote Repositories
 
-Now that you have a remote repository, you can pull changes in the remote "kohana" repository
+Now that you have a remote repository, you can pull changes in the remote "k7" repository
 into your local repository:
 
     > git pull kohana master
@@ -112,7 +112,7 @@ into your local repository:
 **Note:** Before you pull changes you should make sure that any modifications you've made locally
 have been committed.
 
-Sometimes a commit you've made locally will conflict with one made in the "kohana" one.
+Sometimes a commit you've made locally will conflict with one made in the "k7" one.
 
 There are a couple of scenarios where this might happen:
 
