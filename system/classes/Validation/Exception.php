@@ -1,3 +1,3 @@
 <?php
 
-class Validation_Exception extends K7_Validation_Exception {}
+class Validation_Exception extends KO7_Validation_Exception {}

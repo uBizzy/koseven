@@ -1,3 +1,3 @@
 <?php
 
-class Cookie extends K7_Cookie {}
+class Cookie extends KO7_Cookie {}

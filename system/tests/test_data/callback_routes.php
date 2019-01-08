@@ -2,7 +2,7 @@
 /**
  * A holding class for route callback tests
  *
- * @group k7
+ * @group ko7
  *
  * @package    Unittest
  * @author     Kohana Team

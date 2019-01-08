@@ -1,3 +1,3 @@
 <?php
 
-class Date extends K7_Date {}
+class Date extends KO7_Date {}

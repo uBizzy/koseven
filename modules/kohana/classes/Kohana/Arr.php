@@ -1,5 +1,5 @@
 <?php
 /**
- * @deprecated  since version 4.0 - Please use according K7 Class instead.
+ * @deprecated  since version 4.0 - Please use according KO7 Class instead.
  */
-class Kohana_Arr extends K7_Arr {}
+class Kohana_Arr extends KO7_Arr {}

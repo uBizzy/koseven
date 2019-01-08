@@ -2,18 +2,18 @@
 
 // -- Environment setup --------------------------------------------------------
 
-// Load the core K7 class
-require SYSPATH.'classes/K7/Core'.EXT;
+// Load the core KO7 class
+require SYSPATH.'classes/KO7/Core'.EXT;
 
-if (is_file(APPPATH.'classes/K7'.EXT))
+if (is_file(APPPATH.'classes/KO7'.EXT))
 {
 	// Application extends the core
-	require APPPATH.'classes/K7'.EXT;
+	require APPPATH.'classes/KO7'.EXT;
 }
 else
 {
 	// Load empty core extension
-	require SYSPATH.'classes/K7'.EXT;
+	require SYSPATH.'classes/KO7'.EXT;
 }
 
 /**
@@ -33,12 +33,12 @@ date_default_timezone_set('America/Chicago');
 setlocale(LC_ALL, 'en_US.utf-8');
 
 /**
- * Enable the K7 auto-loader.
+ * Enable the KO7 auto-loader.
  *
  * @link http://koseven.ga/guide/using.autoloading
  * @link http://www.php.net/manual/function.spl-autoload-register
  */
-spl_autoload_register(['K7', 'auto_load']);
+spl_autoload_register(['KO7', 'auto_load']);
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
@@ -46,10 +46,10 @@ spl_autoload_register(['K7', 'auto_load']);
  *
  * It is recommended to not enable this unless absolutely necessary.
  */
-//spl_autoload_register(array('K7', 'auto_load_lowercase'));
+//spl_autoload_register(array('KO7', 'auto_load_lowercase'));
 
 /**
- * Enable the K7 auto-loader for unserialization.
+ * Enable the KO7 auto-loader for unserialization.
  *
  * @link http://www.php.net/manual/function.spl-autoload-call
  * @link http://www.php.net/manual/var.configuration#unserialize-callback-func
@@ -59,7 +59,7 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 /**
  * Enable Custom Kohana Classes for Backwards Compatibility
  */
-if (K7::$compatibility AND is_file(APPPATH.'classes/Kohana'.EXT))
+if (KO7::$compatibility AND is_file(APPPATH.'classes/Kohana'.EXT))
 {
 	// Application extends the core
 	require APPPATH.'classes/Kohana'.EXT;
@@ -94,18 +94,18 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
 }
 
 /**
- * Set K7::$environment if a 'KOSEVEN_ENV' environment variable has been supplied.
+ * Set KO7::$environment if a 'KOSEVEN_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant K7::<INVALID_ENV_NAME>"
+ * saying "Couldn't find constant KO7::<INVALID_ENV_NAME>"
  */
 if (isset($_SERVER['KOSEVEN_ENV']))
 {
-	K7::$environment = constant('K7::'.strtoupper($_SERVER['KOSEVEN_ENV']));
+	KO7::$environment = constant('KO7::'.strtoupper($_SERVER['KOSEVEN_ENV']));
 }
 
 /**
- * Initialize K7, setting the default options.
+ * Initialize KO7, setting the default options.
  *
  * The following options are available:
  *
@@ -119,19 +119,19 @@ if (isset($_SERVER['KOSEVEN_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
-K7::init([
+KO7::init([
 	'base_url'   => '/',
 ]);
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-K7::$log->attach(new Log_File(APPPATH.'logs'));
+KO7::$log->attach(new Log_File(APPPATH.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
-K7::$config->attach(new Config_File);
+KO7::$config->attach(new Config_File);
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
@@ -153,7 +153,7 @@ $modules = array(
 /**
  * Load legacy Module for Kohana Support
  */
-if (K7::$compatibility)
+if (KO7::$compatibility)
 {
 	$modules = ['kohana' => MODPATH.'kohana'] + $modules;
 }
@@ -161,11 +161,11 @@ if (K7::$compatibility)
 /**
  * Initialize Modules
  */
-K7::modules($modules);
+KO7::modules($modules);
 
 /**
  * Cookie Salt
- * @see  http://koseven.ga/3.3/guide/k7/cookies
+ * @see  http://koseven.ga/3.3/guide/ko7/cookies
  *
  * If you have not defined a cookie salt in your Cookie class then
  * uncomment the line below and define a preferrably long salt.

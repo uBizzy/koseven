@@ -1,5 +1,5 @@
 <?php
 /**
- * @deprecated  since version 4.0 - Please use according K7 Class instead.
+ * @deprecated  since version 4.0 - Please use according KO7 Class instead.
  */
-class Kohana_Profiler extends K7_Profiler {}
+class Kohana_Profiler extends KO7_Profiler {}

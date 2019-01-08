@@ -1,3 +1,3 @@
 <?php
 
-class View extends K7_View {}
+class View extends KO7_View {}

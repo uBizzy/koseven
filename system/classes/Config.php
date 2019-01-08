@@ -1,3 +1,3 @@
 <?php
 
-class Config extends K7_Config {}
+class Config extends KO7_Config {}

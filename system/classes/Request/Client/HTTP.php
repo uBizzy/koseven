@@ -1,3 +1,3 @@
 <?php
 
-class Request_Client_HTTP extends K7_Request_Client_HTTP {}
+class Request_Client_HTTP extends KO7_Request_Client_HTTP {}

@@ -20,7 +20,7 @@
 					<li class="guide first">
 						<a href="<?php echo Route::url('docs/guide') ?>">User Guide</a>
 					</li>
-					<?php if (K7::$config->load('userguide.api_browser')): ?>
+					<?php if (KO7::$config->load('userguide.api_browser')): ?>
 					<li class="api">
 						<a href="<?php echo Route::url('docs/api') ?>">API Browser</a>
 					</li>
@@ -82,12 +82,12 @@
 			<?php endif ?>
 			</div>
 			<div class="span-12 last right">
-			<p>Powered by <?php echo HTML::anchor('https://koseven.ga/', 'Koseven') ?> v<?php echo K7::VERSION ?></p>
+			<p>Powered by <?php echo HTML::anchor('https://koseven.ga/', 'Koseven') ?> v<?php echo KO7::VERSION ?></p>
 			</div>
 		</div>
 	</div>
 
-<?php if (K7::$environment === K7::PRODUCTION): ?>
+<?php if (KO7::$environment === KO7::PRODUCTION): ?>
 <script type="text/javascript">
 //<![CDATA[
 (function() {

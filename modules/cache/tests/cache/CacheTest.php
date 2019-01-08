@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    K7/Cache
- * @group      k7
- * @group      k7.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_CacheTest extends Unittest_TestCase {
+class KO7_CacheTest extends Unittest_TestCase {
 
 	const BAD_GROUP_DEFINITION  = 1010;
 	const EXPECT_SELF           = 1001;
@@ -22,7 +22,7 @@ class K7_CacheTest extends Unittest_TestCase {
 	{
 		$base = [];
 
-		if (K7::$config->load('cache.file'))
+		if (KO7::$config->load('cache.file'))
 		{
 			$base = [
 				// Test default group
@@ -40,8 +40,8 @@ class K7_CacheTest extends Unittest_TestCase {
 
 		return $base + [[
 			// Test bad group definition
-			K7_CacheTest::BAD_GROUP_DEFINITION,
-			'Failed to load K7 Cache group: 1010'
+			KO7_CacheTest::BAD_GROUP_DEFINITION,
+			'Failed to load KO7 Cache group: 1010'
 		]];
 	}
 
@@ -86,7 +86,7 @@ class K7_CacheTest extends Unittest_TestCase {
 		}
 		catch (Cache_Exception $e)
 		{
-			$this->assertSame('Cloning of K7_Cache objects is forbidden',
+			$this->assertSame('Cloning of KO7_Cache objects is forbidden',
 				$e->getMessage());
 			throw $e;
 		}
@@ -107,7 +107,7 @@ class K7_CacheTest extends Unittest_TestCase {
 					'persistent' => TRUE,
 				],
 				NULL,
-				K7_CacheTest::EXPECT_SELF,
+				KO7_CacheTest::EXPECT_SELF,
 				[
 					'server'     => 'otherhost',
 					'port'       => 5555,
@@ -117,7 +117,7 @@ class K7_CacheTest extends Unittest_TestCase {
 			[
 				'foo',
 				'bar',
-				K7_CacheTest::EXPECT_SELF,
+				KO7_CacheTest::EXPECT_SELF,
 				[
 					'foo'        => 'bar'
 				]
@@ -155,7 +155,7 @@ class K7_CacheTest extends Unittest_TestCase {
 		$cache_reflection = new ReflectionClass('Cache_File');
 		$config = $cache_reflection->getMethod('config');
 
-		if ($expected_result === K7_CacheTest::EXPECT_SELF)
+		if ($expected_result === KO7_CacheTest::EXPECT_SELF)
 		{
 			$expected_result = $cache;
 		}
@@ -199,10 +199,10 @@ class K7_CacheTest extends Unittest_TestCase {
 		$sanitize_id->setAccessible(TRUE);
 
 		// Get Prefix if set
-        if ( ! $prefix = K7::$config->load('cache')->get('prefix', false)) {
+        if ( ! $prefix = KO7::$config->load('cache')->get('prefix', false)) {
             $prefix = '';
         }
 
 		$this->assertSame($prefix.$expected, $sanitize_id->invoke($cache, $id));
 	}
-} // End K7_CacheTest
+} // End KO7_CacheTest

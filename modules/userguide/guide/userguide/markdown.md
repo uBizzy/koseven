@@ -46,9 +46,9 @@ This is a normal link: [Kohana](http://kohanaframework.org).
 
 This link has a title: [Kohana](http://kohanaframework.org "The swift PHP framework")
 ~~~
-This is a normal link: [K7](http://koseven.ga)
+This is a normal link: [KO7](http://koseven.ga)
 
-This link has a title: [K7](http://koseven.ga "The swift PHP framework")
+This link has a title: [KO7](http://koseven.ga "The swift PHP framework")
 
 ## Code blocks
 
@@ -184,15 +184,15 @@ In addition to the features and syntax of [Markdown](http://daringfireball.net/p
 
 ## Namespacing
 
-The first thing to note is that all links are "namespaced" to the current module.  For example, from anywhere within the K7 core docs you do not need to include `k7` at the beginning of a link url.  For example: `[Hello World Tutorial](tutorials/hello-world)` rather than `(k7/tutorials/hello-world)`.
+The first thing to note is that all links are "namespaced" to the current module.  For example, from anywhere within the KO7 core docs you do not need to include `ko7` at the beginning of a link url.  For example: `[Hello World Tutorial](tutorials/hello-world)` rather than `(ko7/tutorials/hello-world)`.
 
-To link to a modules index page, have an empty url like: `[K7]()`.
+To link to a modules index page, have an empty url like: `[KO7]()`.
 
-To link to page in a different module, prefix your url with `../` and the module name.  For example: `[K7 Routes](../k7/routing)`
+To link to page in a different module, prefix your url with `../` and the module name.  For example: `[KO7 Routes](../ko7/routing)`
 
 **Images are also namespaced**, using `![Alt Text](imagename.jpg)` would look for `media/guide/<modulename>/imagename.jpg`.
 
-[!!] If you want your userguide pages to be browsable on github or similar sites outside K7's own userguide module, specify the optional .md file extension in your links
+[!!] If you want your userguide pages to be browsable on github or similar sites outside KO7's own userguide module, specify the optional .md file extension in your links
 
 ## API Links
 
@@ -212,7 +212,7 @@ If you want to have parameters and have the function be clickable, only put the 
 
 	[Kohana::$config]\('foobar','baz')
 	
-[K7::$config]\('foobar','baz')
+[KO7::$config]\('foobar','baz')
 
 ## Notes
 
@@ -232,6 +232,6 @@ Headers are automatically assigned an id, based on the content of the header, so
 
 ## Including Views
 
-If you need you may include a regular K7 View file by placing the name of the view in double curly brackets.  **If the view is not found, no error or exception will be shown, the curly brackets and view name will simply remain there!**
+If you need you may include a regular KO7 View file by placing the name of the view in double curly brackets.  **If the view is not found, no error or exception will be shown, the curly brackets and view name will simply remain there!**
 
 	{{some/view/file}}

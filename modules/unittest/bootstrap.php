@@ -16,8 +16,8 @@ $application = 'application';
 $modules = 'modules';
 
 /**
- * The directory in which the K7 resources are located. The system
- * directory must contain the classes/k7.php file.
+ * The directory in which the KO7 resources are located. The system
+ * directory must contain the classes/ko7.php file.
  *
  * @link http://koseven.ga/guide/about.install#system
  */
@@ -57,7 +57,7 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 
 /**
  * End of standard configuration! Changing any of the code below should only be
- * attempted by those with a working knowledge of K7 internals.
+ * attempted by those with a working knowledge of KO7 internals.
  *
  * @link http://koseven.ga/guide/using.configuration
  */
@@ -91,17 +91,17 @@ unset($application, $modules, $system);
 /**
  * Define the start time of the application, used for profiling.
  */
-if ( ! defined('K7_START_TIME'))
+if ( ! defined('KO7_START_TIME'))
 {
-	define('K7_START_TIME', microtime(TRUE));
+	define('KO7_START_TIME', microtime(TRUE));
 }
 
 /**
  * Define the memory usage at the start of the application, used for profiling.
  */
-if ( ! defined('K7_START_MEMORY'))
+if ( ! defined('KO7_START_MEMORY'))
 {
-	define('K7_START_MEMORY', memory_get_usage());
+	define('KO7_START_MEMORY', memory_get_usage());
 }
 
 // Bootstrap the application
@@ -134,6 +134,6 @@ foreach ($modules_iterator as $module)
 	}
 }
 
-K7::modules($modules);
+KO7::modules($modules);
 
 unset($modules_iterator, $modules, $module);

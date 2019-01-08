@@ -12,7 +12,7 @@
 </php>
 <phpunit colors="true" bootstrap="/path/to/your/unittest/bootstrap.php">
 	<testsuites>
-		<testsuite name="K7 Cache Tests">
+		<testsuite name="KO7 Cache Tests">
 			<directory suffix=".php">cache/</directory>
 		</testsuite>
 	</testsuites>

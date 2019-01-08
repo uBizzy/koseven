@@ -1,13 +1,13 @@
 <?php
 /**
- * Set K7::$environment if a 'KOHANA_ENV' environment variable has been supplied.
+ * Set KO7::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant K7::<INVALID_ENV_NAME>"
+ * saying "Couldn't find constant KO7::<INVALID_ENV_NAME>"
  */
 if (isset($_SERVER['KOHANA_ENV']))
 {
-	K7::$environment = constant('K7::'.strtoupper($_SERVER['KOSEVEN_ENV']));
+	KO7::$environment = constant('KO7::'.strtoupper($_SERVER['KOSEVEN_ENV']));
 }
 
 /**
@@ -15,7 +15,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 if ( ! defined('KOHANA_START_TIME'))
 {
-    define('KOHANA_START_TIME', K7_START_TIME);
+    define('KOHANA_START_TIME', KO7_START_TIME);
 }
 
 /**
@@ -23,5 +23,5 @@ if ( ! defined('KOHANA_START_TIME'))
  */
 if ( ! defined('KOHANA_START_MEMORY'))
 {
-    define('KOHANA_START_MEMORY', K7_START_MEMORY);
+    define('KOHANA_START_MEMORY', KO7_START_MEMORY);
 }

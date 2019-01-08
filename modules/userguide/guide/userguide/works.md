@@ -4,7 +4,7 @@ The userguide uses [Markdown](markdown) for the documentation.  Both the usergui
 
 ## Userguide pages
 
-Userguide pages are in the module they apply to, in `guide/<module>`. For example, documentation for K7 is in `system/guide/k7` and documentation for orm is in `modules/orm/guide/orm`, database is in `modules/database/guide/database`, etc.
+Userguide pages are in the module they apply to, in `guide/<module>`. For example, documentation for KO7 is in `system/guide/ko7` and documentation for orm is in `modules/orm/guide/orm`, database is in `modules/database/guide/database`, etc.
 
 Each module has an index page at `guide/<module>/index.md`.
 
@@ -16,10 +16,10 @@ For more info on how to make your module have userguide pages, see [Adding your 
 
 ### Images
 
-Any images used in the userguide pages must be in `media/guide/<module>/`.  For example, if a page has `![Image Title](hello-world.jpg)` the image would be located at `media/guide/<module>/hello-world.jpg`.  Images for the ORM module are in `modules/orm/media/guide/orm`, and images for the K7 docs are in `system/media/guide/k7`.
+Any images used in the userguide pages must be in `media/guide/<module>/`.  For example, if a page has `![Image Title](hello-world.jpg)` the image would be located at `media/guide/<module>/hello-world.jpg`.  Images for the ORM module are in `modules/orm/media/guide/orm`, and images for the KO7 docs are in `system/media/guide/ko7`.
 
 ### API browser
 
-The API browser is generated from the actual source code.  The descriptions for classes, constants, properties, and methods is extracted from the comments and parsed in Markdown.  For example if you look in the comment for [K7_Core::init](http://github.com/koseven/core/blob/c443c44922ef13421f4a/classes/koseven/core.php#L5) you can see a markdown list and table.  These are parsed and show correctly in the API browser.  `@param`, `@uses`, `@throws`, `@returns` and other tags are parsed as well.
+The API browser is generated from the actual source code.  The descriptions for classes, constants, properties, and methods is extracted from the comments and parsed in Markdown.  For example if you look in the comment for [KO7_Core::init](http://github.com/koseven/core/blob/c443c44922ef13421f4a/classes/koseven/core.php#L5) you can see a markdown list and table.  These are parsed and show correctly in the API browser.  `@param`, `@uses`, `@throws`, `@returns` and other tags are parsed as well.
 
 TODO: give more specific details on how to comment your classes, constants, methods, etc. including package and how it relates to the api module.

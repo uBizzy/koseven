@@ -1,3 +1,3 @@
 <?php
 
-class Inflector extends K7_Inflector {}
+class Inflector extends KO7_Inflector {}

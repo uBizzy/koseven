@@ -8,7 +8,7 @@ Pagination module for Koseven
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-K7::modules(array(
+KO7::modules(array(
 // ...
         'pagination'       => MODPATH.'pagination',
 // ...

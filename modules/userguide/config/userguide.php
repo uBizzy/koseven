@@ -9,7 +9,7 @@ return [
 	'api_packages' => TRUE,
 
 	// Enables Disqus comments on the API and User Guide pages
-	'show_comments' => K7::$environment === K7::PRODUCTION,
+	'show_comments' => KO7::$environment === KO7::PRODUCTION,
 
 	// Leave this alone
 	'modules' => [
@@ -33,6 +33,6 @@ return [
 
 	// Set transparent class name segments
 	'transparent_prefixes' => [
-		'K7' => TRUE,
+		'KO7' => TRUE,
 	]
 ];

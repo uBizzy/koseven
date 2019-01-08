@@ -1,3 +1,3 @@
 <?php
 
-class Log extends K7_Log {}
+class Log extends KO7_Log {}

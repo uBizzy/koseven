@@ -1,3 +1,3 @@
 <?php
 
-class Codebench extends K7_Codebench {}
+class Codebench extends KO7_Codebench {}

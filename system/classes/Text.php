@@ -1,3 +1,3 @@
 <?php
 
-class Text extends K7_Text {}
+class Text extends KO7_Text {}

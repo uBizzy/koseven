@@ -1,3 +1,3 @@
 <?php
 
-class Upload extends K7_Upload {}
+class Upload extends KO7_Upload {}

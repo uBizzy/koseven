@@ -1,16 +1,16 @@
 <?php
-include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    K7/Cache
- * @group      k7
- * @group      k7.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_Cache_FileTest extends K7_CacheBasicMethodsTest {
+class KO7_Cache_FileTest extends KO7_CacheBasicMethodsTest {
 
 	/**
 	 * This method MUST be implemented by each driver to setup the `Cache`
@@ -28,9 +28,9 @@ class K7_Cache_FileTest extends K7_CacheBasicMethodsTest {
 	{
 		parent::setUp();
 
-		if ( ! K7::$config->load('cache.file'))
+		if ( ! KO7::$config->load('cache.file'))
 		{
-			K7::$config->load('cache')
+			KO7::$config->load('cache')
 				->set(
 					'file',
 					[
@@ -58,7 +58,7 @@ class K7_Cache_FileTest extends K7_CacheBasicMethodsTest {
 	public function test_ignore_delete_file()
 	{
 		$cache = $this->cache();
-		$config = K7::$config->load('cache')->file;
+		$config = KO7::$config->load('cache')->file;
 		$file = $config['cache_dir'].'/file_we_want_to_keep.cache';
 
 		// Lets pollute the cache folder
@@ -160,4 +160,4 @@ class K7_Cache_FileTest extends K7_CacheBasicMethodsTest {
 		//var_dump($cache->_is_expired($file));
 		return $file->isFile();
 	}
-} // End K7_SqliteTest
+} // End KO7_SqliteTest

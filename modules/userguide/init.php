@@ -9,7 +9,7 @@ Route::set('docs/media', 'guide-media(/<file>)', ['file' => '.+'])
 	]);
 
 // API Browser, if enabled
-if (K7::$config->load('userguide.api_browser') === TRUE)
+if (KO7::$config->load('userguide.api_browser') === TRUE)
 {
 	Route::set('docs/api', 'guide-api(/<class>)', ['class' => '[a-zA-Z0-9_]+'])
 		->defaults([
@@ -35,7 +35,7 @@ class Markdown_Autoloader {
 	{
 		if ($class == 'Markdown_Parser' OR $class == 'MarkdownExtra_Parser')
 		{
-			include_once K7::find_file('vendor', 'markdown/markdown');
+			include_once KO7::find_file('vendor', 'markdown/markdown');
 		}
 	}
 }

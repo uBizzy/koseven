@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    K7/Cache
- * @group      k7
- * @group      k7.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class K7_CacheBasicMethodsTest extends Unittest_TestCase {
+abstract class KO7_CacheBasicMethodsTest extends Unittest_TestCase {
 
 	/**
 	 * @var     Cache driver for this test
@@ -318,7 +318,7 @@ TESTTEXT;
 	 * Tests [Cache::delete_all()] works as specified
 	 *
 	 * @return  void
-	 * @uses    K7_CacheBasicMethodsTest::provider_set_get()
+	 * @uses    KO7_CacheBasicMethodsTest::provider_set_get()
 	 */
 	public function test_delete_all()
 	{
@@ -347,4 +347,4 @@ TESTTEXT;
 		}
 	}
 
-} // End K7_CacheBasicMethodsTest
+} // End KO7_CacheBasicMethodsTest

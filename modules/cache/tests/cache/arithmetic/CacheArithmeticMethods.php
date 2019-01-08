@@ -1,16 +1,16 @@
 <?php
-include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    K7/Cache/Memcache
- * @group      k7
- * @group      k7.cache
+ * @package    KO7/Cache/Memcache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class K7_CacheArithmeticMethodsTest extends K7_CacheBasicMethodsTest {
+abstract class KO7_CacheArithmeticMethodsTest extends KO7_CacheBasicMethodsTest {
 
 	public function tearDown()
 	{
@@ -170,4 +170,4 @@ abstract class K7_CacheArithmeticMethodsTest extends K7_CacheBasicMethodsTest {
 		);
 	}
 
-} // End K7_CacheArithmeticMethodsTest
+} // End KO7_CacheArithmeticMethodsTest

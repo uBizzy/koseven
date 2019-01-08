@@ -1,3 +1,3 @@
 <?php
 
-class Response extends K7_Response {}
+class Response extends KO7_Response {}

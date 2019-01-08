@@ -1,3 +1,3 @@
 <?php
 
-class Cache_Sqlite extends K7_Cache_Sqlite {}
+class Cache_Sqlite extends KO7_Cache_Sqlite {}

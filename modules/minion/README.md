@@ -2,7 +2,7 @@
 
 Minion is a framework for running tasks via the CLI.
 
-The system is inspired by ruckusing, which had a nice system for defining tasks but lacked the desired flexibility for k7 integration.
+The system is inspired by ruckusing, which had a nice system for defining tasks but lacked the desired flexibility for ko7 integration.
 
 ## Getting Started
 
@@ -25,7 +25,7 @@ To view help for a specific minion task run
 	./minion {task} --help
 
 For security reasons Minion will only run from the cli.  Attempting to access it over http will cause
-a `K7_Exception` to be thrown.
+a `KO7_Exception` to be thrown.
 
 If you're unable to use the binary file for whatever reason then simply replace `./minion {task}` in the above
 examples with
@@ -59,4 +59,4 @@ Feel free to contribute tests(!), they can be found in the `tests/minion` direct
 
 ## License
 
-This is licensed under the [same license as K7](http://koseven.ga/license).
+This is licensed under the [same license as KO7](http://koseven.ga/license).

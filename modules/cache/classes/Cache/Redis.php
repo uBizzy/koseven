@@ -1,3 +1,3 @@
 <?php
 
-class Cache_Redis extends K7_Cache_Redis {}
+class Cache_Redis extends KO7_Cache_Redis {}

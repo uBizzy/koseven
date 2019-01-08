@@ -1,5 +1,5 @@
 <?php
 /**
- * @deprecated  since version 4.0 - Please use according K7 Class instead.
+ * @deprecated  since version 4.0 - Please use according KO7 Class instead.
  */
-class Kohana_Debug extends K7_Debug {}
+class Kohana_Debug extends KO7_Debug {}

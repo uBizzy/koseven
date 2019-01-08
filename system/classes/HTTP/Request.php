@@ -1,3 +1,3 @@
 <?php
 
-interface HTTP_Request extends K7_HTTP_Request {}
+interface HTTP_Request extends KO7_HTTP_Request {}

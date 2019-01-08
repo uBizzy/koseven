@@ -2,18 +2,18 @@
 /**
  * Unit tests for request client cache logic
  *
- * @group k7
- * @group k7.request
- * @group k7.request.client
- * @group k7.request.client.cache
+ * @group ko7
+ * @group ko7.request
+ * @group ko7.request.client
+ * @group ko7.request.client.cache
  *
- * @package    K7
+ * @package    KO7
  * @category   Tests
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_Request_Client_CacheTest extends Unittest_TestCase {
+class KO7_Request_Client_CacheTest extends Unittest_TestCase {
 
 	/**
 	 * Sets up a test route for caching
@@ -64,7 +64,7 @@ class K7_Request_Client_CacheTest extends Unittest_TestCase {
 	{
 		$route = new Route('welcome/index');
 		$route->defaults([
-			'controller' => 'K7_Request_CacheTest_Dummy',
+			'controller' => 'KO7_Request_CacheTest_Dummy',
 			'action'     => 'index',
 		]);
 
@@ -254,9 +254,9 @@ class K7_Request_Client_CacheTest extends Unittest_TestCase {
 	{
 		return $this->createMock('Cache_File');
 	}
-} // End K7_Request_Client_CacheTest
+} // End KO7_Request_Client_CacheTest
 
-class Controller_K7_Request_CacheTest_Dummy extends Controller
+class Controller_KO7_Request_CacheTest_Dummy extends Controller
 {
 	public function action_index()
 	{

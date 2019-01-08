@@ -1,14 +1,14 @@
 <?php
 /**
- * @group k7
- * @group k7.userguide
+ * @group ko7
+ * @group ko7.userguide
  *
- * @package    K7/Userguide
+ * @package    KO7/Userguide
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_KodocTest extends Unittest_TestCase
+class KO7_KodocTest extends Unittest_TestCase
 {
 	public function provider_parse_basic()
 	{
@@ -123,7 +123,7 @@ COMMENT
 	}
 
 	/**
-	 * @covers  K7_Kodoc::parse
+	 * @covers  KO7_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_basic
 	 *
@@ -170,11 +170,11 @@ COMMENT
 			[
 <<<'COMMENT'
 /**
- * @license K7
+ * @license KO7
  */
 COMMENT
 ,
-				['', ['license' => ['K7']]],
+				['', ['license' => ['KO7']]],
 			],
 			[
 <<<'COMMENT'
@@ -315,8 +315,8 @@ COMMENT
 	}
 
 	/**
-	 * @covers  K7_Kodoc::format_tag
-	 * @covers  K7_Kodoc::parse
+	 * @covers  KO7_Kodoc::format_tag
+	 * @covers  KO7_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_tags
 	 *
@@ -335,15 +335,15 @@ COMMENT
 	public function provider_transparent_classes()
 	{
 		return [
-			// K7_Core is a special case
-			['K7','K7_Core',NULL],
-			['Controller_Template','K7_Controller_Template',NULL],
-			['Controller_Template','K7_Controller_Template',
-				['K7_Controller_Template'=>'K7_Controller_Template',
+			// KO7_Core is a special case
+			['KO7','KO7_Core',NULL],
+			['Controller_Template','KO7_Controller_Template',NULL],
+			['Controller_Template','KO7_Controller_Template',
+				['KO7_Controller_Template'=>'KO7_Controller_Template',
 					'Controller_Template'=>'Controller_Template']
 			],
-			[FALSE,'K7_Controller_Template',
-				['K7_Controller_Template'=>'K7_Controller_Template']],
+			[FALSE,'KO7_Controller_Template',
+				['KO7_Controller_Template'=>'KO7_Controller_Template']],
 			[FALSE,'Controller_Template',NULL],
 		];
 	}
@@ -353,7 +353,7 @@ COMMENT
 	 *
 	 * Checks that a selection of transparent and non-transparent classes give expected results
 	 *
-	 * @group k7.userguide.3529-configurable-transparent-classes
+	 * @group ko7.userguide.3529-configurable-transparent-classes
 	 * @dataProvider provider_transparent_classes
 	 * @param mixed $expected
 	 * @param string $class

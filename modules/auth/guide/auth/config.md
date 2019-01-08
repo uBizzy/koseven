@@ -1,8 +1,8 @@
 # Configuration
 
-The default configuration file is located in `MODPATH/auth/config/auth.php`. You should copy this file to `APPPATH/config/auth.php` and make changes there, in keeping with the [cascading filesystem](../k7/files).
+The default configuration file is located in `MODPATH/auth/config/auth.php`. You should copy this file to `APPPATH/config/auth.php` and make changes there, in keeping with the [cascading filesystem](../ko7/files).
 
-[Config merging](../k7/config#config-merging) allows these default configuration settings to apply if you don't overwrite them in your application configuration file.
+[Config merging](../ko7/config#config-merging) allows these default configuration settings to apply if you don't overwrite them in your application configuration file.
 
 Name | Type | Default | Description
 -----|------|---------|------------

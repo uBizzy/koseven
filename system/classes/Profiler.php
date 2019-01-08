@@ -1,3 +1,3 @@
 <?php
 
-class Profiler extends K7_Profiler {}
+class Profiler extends KO7_Profiler {}

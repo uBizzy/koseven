@@ -1,5 +1,5 @@
 <?php
 /**
- * @deprecated  since version 4.0 - Please use according K7 Class instead.
+ * @deprecated  since version 4.0 - Please use according KO7 Class instead.
  */
-class Kohana_Log_StdErr extends K7_Log_StdErr {}
+class Kohana_Log_StdErr extends KO7_Log_StdErr {}

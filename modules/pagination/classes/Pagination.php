@@ -1,3 +1,3 @@
 <?php
 
-class Pagination extends K7_Pagination {}
+class Pagination extends KO7_Pagination {}

@@ -1,3 +1,3 @@
 <?php
 
-class Security extends K7_Security {}
+class Security extends KO7_Security {}

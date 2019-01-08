@@ -1,7 +1,7 @@
-K7 Cache library
+KO7 Cache library
 ====================
 
-The cache library for K7 3 provides a simple interface to the most common cache solutions. Developers are free to add their own caching solutions that follow the cache design pattern defined within this module.
+The cache library for KO7 3 provides a simple interface to the most common cache solutions. Developers are free to add their own caching solutions that follow the cache design pattern defined within this module.
 
 Supported cache solutions
 -------------------------
@@ -32,12 +32,12 @@ There are many different caching methods available for PHP, from the very basic 
 Using Cache
 -----------
 
-To use K7 Cache, download and extract the latest stable release of K7 Cache from [Github](http://github.com/samsoir/koseven-cache). Place the module into your K7 instances modules folder. Finally enable the module within the application bootstrap within the section entitled _modules_.
+To use KO7 Cache, download and extract the latest stable release of KO7 Cache from [Github](http://github.com/samsoir/koseven-cache). Place the module into your KO7 instances modules folder. Finally enable the module within the application bootstrap within the section entitled _modules_.
 
 Quick example
 -------------
 
-The following is a quick example of how to use K7 Cache. The example is using the SQLite driver.
+The following is a quick example of how to use KO7 Cache. The example is using the SQLite driver.
 
 	<?php
 	// Get a Sqlite Cache instance  

@@ -1,3 +1,3 @@
 <?php
 
-class Fragment extends K7_Fragment {}
+class Fragment extends KO7_Fragment {}

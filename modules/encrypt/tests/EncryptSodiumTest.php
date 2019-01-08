@@ -2,10 +2,10 @@
 /**
  * Unit Tests and KAT Tests for Sodium class. (Introduced in PHP7: libsodium
  *
- * @group          k7
- * @group          k7.encrypt
+ * @group          ko7
+ * @group          ko7.encrypt
  *
- * @package        K7/Encrypt
+ * @package        KO7/Encrypt
  * @category       Test
  * @author         Koseven Team
  * @copyright  (c) Koseven Team
@@ -17,7 +17,7 @@ class EncryptSodiumTest extends EncryptTestBase {
 	 * Setup class (should be created within every test)
 	 *
 	 * @return void
-	 * @throws K7_Exception
+	 * @throws KO7_Exception
 	 */
 	public function setUp()
 	{
@@ -42,11 +42,11 @@ class EncryptSodiumTest extends EncryptTestBase {
 	 * Tests against known answers
 	 *
 	 * @dataProvider provider_kat
-	 * @covers       K7_Encrypt_Engine_Sodium::encrypt
+	 * @covers       KO7_Encrypt_Engine_Sodium::encrypt
 	 *
 	 * @param  array $vectors Known Answers
 	 *
-	 * @throws K7_Exception
+	 * @throws KO7_Exception
 	 */
 	public function test_kat(array $vectors)
 	{
@@ -81,8 +81,8 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Test with invalid Key Length and expect exception
 	 *
-	 * @expectedException K7_Exception
-	 * @throws K7_Exception
+	 * @expectedException KO7_Exception
+	 * @throws KO7_Exception
 	 */
 	public function test_invalid_key_length()
 	{
@@ -100,8 +100,8 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Test with invalid / not set key and expect exception
 	 *
-	 * @expectedException K7_Exception
-	 * @throws K7_Exception
+	 * @expectedException KO7_Exception
+	 * @throws KO7_Exception
 	 */
 	public function test_invalid_key()
 	{
@@ -119,8 +119,8 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Test with non existent Engine Name and expect Exception
 	 *
-	 * @expectedException K7_Exception
-	 * @throws K7_Exception
+	 * @expectedException KO7_Exception
+	 * @throws KO7_Exception
 	 */
 	public function test_non_existent_engine()
 	{
@@ -138,7 +138,7 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Testing to string function
 	 *
-	 * @throws K7_Exception
+	 * @throws KO7_Exception
 	 */
 	public function test___toString()
 	{

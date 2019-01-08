@@ -8,18 +8,18 @@ if (isset($_ENV['TRAVIS']))
 }
 else
 {
-	include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
+	include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 	/**
-	 * @package    K7/Cache
-	 * @group      k7
-	 * @group      k7.cache
+	 * @package    KO7/Cache
+	 * @group      ko7
+	 * @group      ko7.cache
 	 * @category   Test
 	 * @author     Kohana Team
 	 * @copyright  (c) Kohana Team
 	 * @license    https://koseven.ga/LICENSE.md
 	 */
-	class K7_WincacheTest extends K7_CacheBasicMethodsTest {
+	class KO7_WincacheTest extends KO7_CacheBasicMethodsTest {
 
 		/**
 		 * This method MUST be implemented by each driver to setup the `Cache`
@@ -45,5 +45,5 @@ else
 			$this->cache(Cache::instance('wincache'));
 		}
 
-	} // End K7_WincacheTest
+	} // End KO7_WincacheTest
 }

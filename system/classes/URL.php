@@ -1,3 +1,3 @@
 <?php
 
-class URL extends K7_URL {}
+class URL extends KO7_URL {}

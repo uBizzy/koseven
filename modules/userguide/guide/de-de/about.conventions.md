@@ -1,6 +1,6 @@
 # Regeln
 
-Es wird dazu ermutigt, dem K7 [Programmierstil](http://dev.koseven.ga/wiki/k72/CodingStyle) zu folgen. Dieser benutzt den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungsstil#Allman_.2F_BSD_.2F_.E2.80.9EEast_Coast.E2.80.9C_.2F_Horstmann)-Stil.
+Es wird dazu ermutigt, dem KO7 [Programmierstil](http://dev.koseven.ga/wiki/ko72/CodingStyle) zu folgen. Dieser benutzt den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungsstil#Allman_.2F_BSD_.2F_.E2.80.9EEast_Coast.E2.80.9C_.2F_Horstmann)-Stil.
 
 ## Klassennamen und Dateilage {#classes}
 
@@ -12,7 +12,7 @@ Folgende Regeln gelten:
 2. alle Datei- und Verzeichnisnamen in Kleinbuchstaben
 3. alle Klassen werden im `classes`-Verzeichnis in jeder Ebene des [Kaskaden-Dateisystem](about.filesystem) zusammengefasst
 
-[!!] Im Gegensatz zu K7 v2.x besteht keine Unterteilung zwischen "Controllern", "Models", "Bibliotheken" und "Helfern". Alle Klassen befinden sich im "classes/"-Verzeichnis, unabhängig ob es statische "Helfer" oder Objekt-"Bibliotheken" sind. Man kann irgendeinen Klassen-Aufbau (statische Klasse, Singleton, Adapter) verwenden, den man mag.
+[!!] Im Gegensatz zu KO7 v2.x besteht keine Unterteilung zwischen "Controllern", "Models", "Bibliotheken" und "Helfern". Alle Klassen befinden sich im "classes/"-Verzeichnis, unabhängig ob es statische "Helfer" oder Objekt-"Bibliotheken" sind. Man kann irgendeinen Klassen-Aufbau (statische Klasse, Singleton, Adapter) verwenden, den man mag.
 
 ## Beispiele
 
@@ -36,7 +36,7 @@ Bitte benutze den den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungs
 
 ### Namensregeln
 
-K7 benutzt für Namen Unter_striche, keine BinnenVersalien (camelCase).
+KO7 benutzt für Namen Unter_striche, keine BinnenVersalien (camelCase).
 
 #### Klassen
 

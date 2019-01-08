@@ -1,3 +1,3 @@
 <?php
 
-interface HTTP_Response extends K7_HTTP_Response {}
+interface HTTP_Response extends KO7_HTTP_Response {}

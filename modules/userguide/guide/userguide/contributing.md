@@ -1,10 +1,10 @@
 # Contributing
 
-K7 is community driven, and we rely on community contributions for the documentation.
+KO7 is community driven, and we rely on community contributions for the documentation.
 
 ## Guidelines
 
-Documentation should use complete sentences, good grammar, and be as clear as possible.  Use lots of example code, but make sure the examples follow the K7 conventions and style.
+Documentation should use complete sentences, good grammar, and be as clear as possible.  Use lots of example code, but make sure the examples follow the KO7 conventions and style.
 
 Try to commit often, with each commit only changing a file or two, rather than changing a ton of files and commiting it all at once.  This will make it easier to offer feedback and merge your changes.   Make sure your commit messages are clear and descriptive.  Bad: "Added docs",  Good: "Added initial draft of hello world tutorial",  Bad: "Fixed typos",  Good: "Fixed typos on the query builder page"
 
@@ -18,7 +18,7 @@ If you want to contribute some changes, you can do so right from your browser wi
 
 First create an account on [GitHub](https://github.com/signup/free).
 
-You will need to fork the module for the area you want to improve.  For example, to improve the [ORM documentation](../orm) fork <http://github.com/k7/orm>.  To improve the [K7 documentation](../k7), fork <http://github.com/k7/core>, etc.  So, find the module you want to improve and click on the Fork button in the top right.
+You will need to fork the module for the area you want to improve.  For example, to improve the [ORM documentation](../orm) fork <http://github.com/ko7/orm>.  To improve the [KO7 documentation](../ko7), fork <http://github.com/ko7/core>, etc.  So, find the module you want to improve and click on the Fork button in the top right.
 
 ![Fork the module](contrib-github-fork.png)
 
@@ -38,13 +38,13 @@ Once your pull request has been accepted, you can delete your repository if you 
 
 ### Short version
 
-Fork the module whose docs you wish to improve (e.g. `git://github.com/k7/orm.git` or `git://github.com/k7/core.git`), checkout the `3.2/develop` branch (for the 3.2 docs), make changes, and then send a pull request.
+Fork the module whose docs you wish to improve (e.g. `git://github.com/ko7/orm.git` or `git://github.com/ko7/core.git`), checkout the `3.2/develop` branch (for the 3.2 docs), make changes, and then send a pull request.
 
 ### Long version
 
 (This still assumes you at least know your way around Git, especially how submodules work.)
 
- 1. Fork the specific repo you want to contribute to on GitHub. (For example, go to http://github.com/k7/core and click the fork button.)
+ 1. Fork the specific repo you want to contribute to on GitHub. (For example, go to http://github.com/ko7/core and click the fork button.)
 
  1. Now you need to add your fork as a "git remote" to your application and ensure you are on the right branch. An example for the [ORM](../orm) module and 3.2 docs:
 

@@ -7,8 +7,8 @@
 class Bench_MDDoIncludeViews extends Codebench {
 
 	public $description =
-		'Optimization for the <code>doIncludeViews()</code> method of <code>K7_Kodoc_Markdown</code>
-		 for the K7 Userguide.';
+		'Optimization for the <code>doIncludeViews()</code> method of <code>KO7_Kodoc_Markdown</code>
+		 for the KO7 Userguide.';
 
 	public $loops = 10000;
 

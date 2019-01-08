@@ -1,3 +1,3 @@
 <?php
 
-class Valid extends K7_Valid {}
+class Valid extends KO7_Valid {}

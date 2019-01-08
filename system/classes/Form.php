@@ -1,3 +1,3 @@
 <?php
 
-class Form extends K7_Form {}
+class Form extends KO7_Form {}

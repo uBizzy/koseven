@@ -1,3 +1,3 @@
 <?php
 
-class File extends K7_File {}
+class File extends KO7_File {}

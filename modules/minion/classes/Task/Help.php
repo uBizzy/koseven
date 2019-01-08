@@ -2,7 +2,7 @@
 /**
  * Help task to display general instructons and list all tasks
  *
- * @package    K7
+ * @package    KO7
  * @category   Helpers
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
@@ -17,7 +17,7 @@ class Task_Help extends Minion_Task {
 	 */
 	protected function _execute(array $params)
 	{
-		$tasks = $this->_compile_task_list(K7::list_files('classes/Task'));
+		$tasks = $this->_compile_task_list(KO7::list_files('classes/Task'));
 
 		$view = new View('minion/help/list');
 

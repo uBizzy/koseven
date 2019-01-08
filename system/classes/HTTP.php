@@ -1,3 +1,3 @@
 <?php
 
-abstract class HTTP extends K7_HTTP {}
+abstract class HTTP extends KO7_HTTP {}

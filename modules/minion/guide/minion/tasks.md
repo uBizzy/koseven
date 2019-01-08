@@ -60,7 +60,7 @@ Tasks can have built-in help. Minion will read class docblocks that you specify:
 	 *  - foo: this parameter does something. It is required.
 	 *  - bar: this parameter does something else. It should be numeric.
 	 *
-	 * @package    K7
+	 * @package    KO7
 	 * @category   Helpers
 	 * @author     Kohana Team
 	 * @copyright  (c) Kohana Team

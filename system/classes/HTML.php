@@ -1,3 +1,3 @@
 <?php
 
-class HTML extends K7_HTML {}
+class HTML extends KO7_HTML {}

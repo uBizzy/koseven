@@ -1,16 +1,16 @@
 <?php
-include_once(K7::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    K7/Cache
- * @group      k7
- * @group      k7.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_SqliteTest extends K7_CacheBasicMethodsTest {
+class KO7_SqliteTest extends KO7_CacheBasicMethodsTest {
 
 	/**
 	 * This method MUST be implemented by each driver to setup the `Cache`
@@ -33,9 +33,9 @@ class K7_SqliteTest extends K7_CacheBasicMethodsTest {
 			$this->markTestSkipped('SQLite PDO PHP Extension is not available');
 		}
 
-		if ( ! K7::$config->load('cache.sqlite'))
+		if ( ! KO7::$config->load('cache.sqlite'))
 		{
-			K7::$config->load('cache')
+			KO7::$config->load('cache')
 				->set(
 					'sqlite',
 					[
@@ -50,4 +50,4 @@ class K7_SqliteTest extends K7_CacheBasicMethodsTest {
 		$this->cache(Cache::instance('sqlite'));
 	}
 
-} // End K7_SqliteTest
+} // End KO7_SqliteTest

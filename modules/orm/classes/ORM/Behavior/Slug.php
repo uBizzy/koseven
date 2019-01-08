@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    K7/ORM
+ * @package    KO7/ORM
  * @author     Koseven Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md

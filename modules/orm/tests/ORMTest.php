@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Test case for K7_ORM
+ * Test case for KO7_ORM
  *
- * @package    K7/ORM
- * @group      k7
- * @group      k7.orm
+ * @package    KO7/ORM
+ * @group      ko7
+ * @group      ko7.orm
  * @category   Test
  * @author     Craig Duncan <git@duncanc.co.uk>
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
 
-class K7_ORMTest extends Unittest_TestCase
+class KO7_ORMTest extends Unittest_TestCase
 {
 	/**
 	 * Ensure has() doesn't attempt to count non-countables.
@@ -30,7 +30,7 @@ class K7_ORMTest extends Unittest_TestCase
 	}
 }
 
-class ORM_Example extends K7_ORM
+class ORM_Example extends KO7_ORM
 {
 	public function __construct()
 	{

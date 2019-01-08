@@ -1,3 +1,3 @@
 <?php
 
-interface Cache_GarbageCollect extends K7_Cache_GarbageCollect {}
+interface Cache_GarbageCollect extends KO7_Cache_GarbageCollect {}

@@ -41,16 +41,16 @@ function koggle(elem)
 }
 </script>
 <div id="koseven_error">
-	<h1><span class="type">K7_View_Exception [ 0 ]:</span> <span class="message">The requested view site could not be found</span></h1>
+	<h1><span class="type">KO7_View_Exception [ 0 ]:</span> <span class="message">The requested view site could not be found</span></h1>
 	<div id="error4ac2453378034" class="content">
-		<p><span class="file">SYSPATH/classes/k7/view.php [ 215 ]</span></p>
+		<p><span class="file">SYSPATH/classes/ko7/view.php [ 215 ]</span></p>
 		<pre class="source"><code><span class="line"><span class="number">210</span> 	 */
 
 </span><span class="line"><span class="number">211</span> 	public function set_filename($file)
 </span><span class="line"><span class="number">212</span> 	{
-</span><span class="line"><span class="number">213</span> 		if (($path = K7::find_file('views', $file)) === FALSE)
+</span><span class="line"><span class="number">213</span> 		if (($path = KO7::find_file('views', $file)) === FALSE)
 </span><span class="line"><span class="number">214</span> 		{
-</span><span class="line highlight"><span class="number">215</span> 			throw new K7_View_Exception('The requested view :file could not be found', array(
+</span><span class="line highlight"><span class="number">215</span> 			throw new KO7_View_Exception('The requested view :file could not be found', array(
 </span><span class="line"><span class="number">216</span> 				':file' =&gt; $file,
 
 </span><span class="line"><span class="number">217</span> 			));
@@ -62,10 +62,10 @@ function koggle(elem)
 				<p>
 
 					<span class="file">
-													<a href="#error4ac2453378034source0" onclick="return koggle('error4ac2453378034source0')">SYSPATH/classes/k7/view.php [ 115 ]</a>
+													<a href="#error4ac2453378034source0" onclick="return koggle('error4ac2453378034source0')">SYSPATH/classes/ko7/view.php [ 115 ]</a>
 											</span>
 					&raquo;
-					K7_View->set_filename(<a href="#error4ac2453378034args0" onclick="return koggle('error4ac2453378034args0')">arguments</a>)
+					KO7_View->set_filename(<a href="#error4ac2453378034args0" onclick="return koggle('error4ac2453378034args0')">arguments</a>)
 				</p>
 								<div id="error4ac2453378034args0" class="collapsed">
 					<table cellspacing="0">
@@ -95,10 +95,10 @@ function koggle(elem)
 								<li>
 				<p>
 					<span class="file">
-													<a href="#error4ac2453378034source1" onclick="return koggle('error4ac2453378034source1')">SYSPATH/classes/k7/view.php [ 26 ]</a>
+													<a href="#error4ac2453378034source1" onclick="return koggle('error4ac2453378034source1')">SYSPATH/classes/ko7/view.php [ 26 ]</a>
 											</span>
 					&raquo;
-					K7_View->__construct(<a href="#error4ac2453378034args1" onclick="return koggle('error4ac2453378034args1')">arguments</a>)
+					KO7_View->__construct(<a href="#error4ac2453378034args1" onclick="return koggle('error4ac2453378034args1')">arguments</a>)
 				</p>
 
 								<div id="error4ac2453378034args1" class="collapsed">
@@ -133,10 +133,10 @@ function koggle(elem)
 				<p>
 
 					<span class="file">
-													<a href="#error4ac2453378034source2" onclick="return koggle('error4ac2453378034source2')">SYSPATH/classes/k7/controller/template.php [ 32 ]</a>
+													<a href="#error4ac2453378034source2" onclick="return koggle('error4ac2453378034source2')">SYSPATH/classes/ko7/controller/template.php [ 32 ]</a>
 											</span>
 					&raquo;
-					K7_View::factory(<a href="#error4ac2453378034args2" onclick="return koggle('error4ac2453378034args2')">arguments</a>)
+					KO7_View::factory(<a href="#error4ac2453378034args2" onclick="return koggle('error4ac2453378034args2')">arguments</a>)
 				</p>
 								<div id="error4ac2453378034args2" class="collapsed">
 					<table cellspacing="0">
@@ -169,14 +169,14 @@ function koggle(elem)
 													{PHP internal call}
 											</span>
 					&raquo;
-					K7_Controller_Template->before()
+					KO7_Controller_Template->before()
 				</p>
 
 											</li>
 								<li>
 				<p>
 					<span class="file">
-													<a href="#error4ac2453378034source4" onclick="return koggle('error4ac2453378034source4')">SYSPATH/classes/k7/request.php [ 840 ]</a>
+													<a href="#error4ac2453378034source4" onclick="return koggle('error4ac2453378034source4')">SYSPATH/classes/ko7/request.php [ 840 ]</a>
 											</span>
 					&raquo;
 					ReflectionMethod->invoke(<a href="#error4ac2453378034args4" onclick="return koggle('error4ac2453378034args4')">arguments</a>)
@@ -239,7 +239,7 @@ function koggle(elem)
 
 											</span>
 					&raquo;
-					K7_Request->execute()
+					KO7_Request->execute()
 				</p>
 													<pre id="error4ac2453378034source5" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">71</span> /**
 </span><span class="line"><span class="number">72</span>  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
@@ -266,13 +266,13 @@ function koggle(elem)
 					<table cellspacing="0">
 											<tr>
 							<td><code>0</code></td>
-							<td><pre><small>string</small><span>(49)</span> "/var/www/k7/testing/application/bootstrap.php"</pre></td>
+							<td><pre><small>string</small><span>(49)</span> "/var/www/ko7/testing/application/bootstrap.php"</pre></td>
 						</tr>
 
 										</table>
 				</div>
 													<pre id="error4ac2453378034source6" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">101</span> 	// Load empty core extension
-</span><span class="line"><span class="number">102</span> 	require SYSPATH.'classes/k7'.EXT;
+</span><span class="line"><span class="number">102</span> 	require SYSPATH.'classes/ko7'.EXT;
 </span><span class="line"><span class="number">103</span> }
 </span><span class="line"><span class="number">104</span>
 </span><span class="line"><span class="number">105</span> // Bootstrap the application
@@ -296,10 +296,10 @@ function koggle(elem)
 				</tr>
 
 								<tr>
-					<td><code>SYSPATH/classes/k7/core.php</code></td>
+					<td><code>SYSPATH/classes/ko7/core.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7.php</code></td>
+					<td><code>SYSPATH/classes/ko7.php</code></td>
 				</tr>
 								<tr>
 					<td><code>APPPATH/bootstrap.php</code></td>
@@ -309,28 +309,28 @@ function koggle(elem)
 					<td><code>SYSPATH/classes/profiler.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/profiler.php</code></td>
+					<td><code>SYSPATH/classes/ko7/profiler.php</code></td>
 				</tr>
 								<tr>
 
-					<td><code>SYSPATH/classes/k7/log.php</code></td>
+					<td><code>SYSPATH/classes/ko7/log.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/config.php</code></td>
+					<td><code>SYSPATH/classes/ko7/config.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/log/file.php</code></td>
+					<td><code>SYSPATH/classes/ko7/log/file.php</code></td>
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/log/writer.php</code></td>
+					<td><code>SYSPATH/classes/ko7/log/writer.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/config/file.php</code></td>
+					<td><code>SYSPATH/classes/ko7/config/file.php</code></td>
 				</tr>
 								<tr>
 
-					<td><code>SYSPATH/classes/k7/config/reader.php</code></td>
+					<td><code>SYSPATH/classes/ko7/config/reader.php</code></td>
 				</tr>
 								<tr>
 					<td><code>MODPATH/codebench/init.php</code></td>
@@ -340,17 +340,17 @@ function koggle(elem)
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/route.php</code></td>
+					<td><code>SYSPATH/classes/ko7/route.php</code></td>
 				</tr>
 								<tr>
-					<td><code>/var/www/k7/userguide/init.php</code></td>
+					<td><code>/var/www/ko7/userguide/init.php</code></td>
 				</tr>
 								<tr>
 
 					<td><code>SYSPATH/classes/request.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/request.php</code></td>
+					<td><code>SYSPATH/classes/ko7/request.php</code></td>
 				</tr>
 								<tr>
 					<td><code>APPPATH/classes/controller/hello.php</code></td>
@@ -360,38 +360,38 @@ function koggle(elem)
 					<td><code>SYSPATH/classes/controller/template.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/controller/template.php</code></td>
+					<td><code>SYSPATH/classes/ko7/controller/template.php</code></td>
 				</tr>
 								<tr>
 
 					<td><code>SYSPATH/classes/controller.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/controller.php</code></td>
+					<td><code>SYSPATH/classes/ko7/controller.php</code></td>
 				</tr>
 								<tr>
 					<td><code>SYSPATH/classes/view.php</code></td>
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/view.php</code></td>
+					<td><code>SYSPATH/classes/ko7/view.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/view/exception.php</code></td>
+					<td><code>SYSPATH/classes/ko7/view/exception.php</code></td>
 				</tr>
 								<tr>
 
-					<td><code>SYSPATH/classes/k7/exception.php</code></td>
+					<td><code>SYSPATH/classes/ko7/exception.php</code></td>
 				</tr>
 								<tr>
 					<td><code>SYSPATH/classes/i18n.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/k7/i18n.php</code></td>
+					<td><code>SYSPATH/classes/ko7/i18n.php</code></td>
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/views/k7/error.php</code></td>
+					<td><code>SYSPATH/views/ko7/error.php</code></td>
 				</tr>
 							</table>
 		</div>
@@ -627,7 +627,7 @@ function koggle(elem)
 								<tr>
 
 					<td><code>SCRIPT_FILENAME</code></td>
-					<td><pre><small>string</small><span>(33)</span> "/var/www/k7/testing/index.php"</pre></td>
+					<td><pre><small>string</small><span>(33)</span> "/var/www/ko7/testing/index.php"</pre></td>
 				</tr>
 								<tr>
 					<td><code>REMOTE_PORT</code></td>
@@ -655,11 +655,11 @@ function koggle(elem)
 								<tr>
 
 					<td><code>REQUEST_URI</code></td>
-					<td><pre><small>string</small><span>(31)</span> "/k7/testing/index.php/hello"</pre></td>
+					<td><pre><small>string</small><span>(31)</span> "/ko7/testing/index.php/hello"</pre></td>
 				</tr>
 								<tr>
 					<td><code>SCRIPT_NAME</code></td>
-					<td><pre><small>string</small><span>(25)</span> "/k7/testing/index.php"</pre></td>
+					<td><pre><small>string</small><span>(25)</span> "/ko7/testing/index.php"</pre></td>
 
 				</tr>
 								<tr>
@@ -673,7 +673,7 @@ function koggle(elem)
 				</tr>
 								<tr>
 					<td><code>PHP_SELF</code></td>
-					<td><pre><small>string</small><span>(31)</span> "/k7/testing/index.php/hello"</pre></td>
+					<td><pre><small>string</small><span>(31)</span> "/ko7/testing/index.php/hello"</pre></td>
 
 				</tr>
 								<tr>

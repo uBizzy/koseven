@@ -1,3 +1,3 @@
 <?php
 
-abstract class Auth extends K7_Auth {}
+abstract class Auth extends KO7_Auth {}

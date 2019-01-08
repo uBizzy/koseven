@@ -1,3 +1,3 @@
 <?php
 
-abstract class Log_Writer extends K7_Log_Writer {}
+abstract class Log_Writer extends KO7_Log_Writer {}

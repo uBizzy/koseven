@@ -1,12 +1,12 @@
 <?php
 /**
- * @package    K7/Cache
+ * @package    KO7/Cache
  * @category   Test
  * @author     Koseven Team
  * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_RedisTest extends K7_CacheBasicMethodsTest {
+class KO7_RedisTest extends KO7_CacheBasicMethodsTest {
 
     /**
      * This method MUST be implemented by each driver to setup the `Cache`
@@ -19,7 +19,7 @@ class K7_RedisTest extends K7_CacheBasicMethodsTest {
      *  - Call the parent setup method, `parent::setUp()`
      *
      * @throws Cache_Exception
-     * @throws K7_Exception
+     * @throws KO7_Exception
      */
     public function setUp()
     {
@@ -31,7 +31,7 @@ class K7_RedisTest extends K7_CacheBasicMethodsTest {
 
         // Check if in Travis environment and set default redis test-server
         if (getenv('TRAVIS_TEST')) {
-            K7::$config->load('cache')->set('redis',
+            KO7::$config->load('cache')->set('redis',
                 [
                     'driver'             => 'redis',
                     'default_expire'     => 3600,
@@ -48,7 +48,7 @@ class K7_RedisTest extends K7_CacheBasicMethodsTest {
                     ],
                 ]
             );
-        } elseif ( ! ($config = K7::$config->load('cache')->get('redis', false)) OR empty($config['servers'])) {
+        } elseif ( ! ($config = KO7::$config->load('cache')->get('redis', false)) OR empty($config['servers'])) {
             $this->markTestSkipped('At least one Redis Server Must be Configured in your conf/cache.php!');
         }
 
@@ -99,7 +99,7 @@ class K7_RedisTest extends K7_CacheBasicMethodsTest {
      * @param array $data
      * @param mixed $expected
      *
-     * @throws K7_Exception
+     * @throws KO7_Exception
      */
     public function test_set_get_with_tags(array $data, $expected)
     {
@@ -123,7 +123,7 @@ class K7_RedisTest extends K7_CacheBasicMethodsTest {
         }
 
         // Get Prefix if set
-        if ( ! $prefix = K7::$config->load('cache')->get('prefix', false)) {
+        if ( ! $prefix = KO7::$config->load('cache')->get('prefix', false)) {
             $prefix = '';
         }
 
@@ -203,4 +203,4 @@ class K7_RedisTest extends K7_CacheBasicMethodsTest {
         }
     }
 
-} // End K7_RedisTest
+} // End KO7_RedisTest

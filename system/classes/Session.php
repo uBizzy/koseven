@@ -1,3 +1,3 @@
 <?php
 
-abstract class Session extends K7_Session {}
+abstract class Session extends KO7_Session {}

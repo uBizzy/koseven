@@ -1,16 +1,16 @@
 <?php
-include_once(K7::find_file('tests/cache/arithmetic', 'CacheArithmeticMethods'));
+include_once(KO7::find_file('tests/cache/arithmetic', 'CacheArithmeticMethods'));
 
 /**
- * @package    K7/Cache
- * @group      k7
- * @group      k7.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class K7_ApcuTest extends K7_CacheArithmeticMethodsTest {
+class KO7_ApcuTest extends KO7_CacheArithmeticMethodsTest {
 
     /**
      * This method MUST be implemented by each driver to setup the `Cache`
@@ -39,9 +39,9 @@ class K7_ApcuTest extends K7_CacheArithmeticMethodsTest {
                 'set "apc.enabled=1" and "apc.enable_cli=1" in your php.ini file');
         }
 
-        if ( ! K7::$config->load('cache.apcu'))
+        if ( ! KO7::$config->load('cache.apcu'))
         {
-            K7::$config->load('cache')
+            KO7::$config->load('cache')
                 ->set(
                     'apcu',
                     [
@@ -84,4 +84,4 @@ class K7_ApcuTest extends K7_CacheArithmeticMethodsTest {
         parent::test_set_get($data, $expected);
     }
 
-} // End K7_ApcuTest
+} // End KO7_ApcuTest
