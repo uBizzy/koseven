@@ -1,8 +1,8 @@
 # Database 
 
-KO7 3.0 comes with a robust module for working with databases. By default, the database module supports drivers for [MySQL](http://php.net/mysql) and [PDO](http://php.net/pdo), but new drivers can be made for other database servers.
+Koseven comes with a robust module for working with databases. By default, the database module supports drivers for [MySQL](http://php.net/mysql) and [PDO](http://php.net/pdo), but new drivers can be made for other database servers.
 
-The database module is included with the KO7 3.0 install, but needs to be enabled before you can use it. To enable, open your `application/bootstrap.php` file and modify the call to [KO7::modules] by including the database module like so:
+The database module is included with the Koseven install, but needs to be enabled before you can use it. To enable, open your `application/bootstrap.php` file and modify the call to [KO7::modules] by including the database module like so:
 
     KO7::modules(array(
         ...

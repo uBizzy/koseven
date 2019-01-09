@@ -1,3 +1,3 @@
 # UnitTest
 
-Unit tests for KO7
+Unit tests for Koseven

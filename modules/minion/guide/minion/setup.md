@@ -1,3 +1,3 @@
 # Minion Setup
 
-[!!] Since KO7 `3.3.x`, minion requires no additional setup to use.
+[!!] Minion is integrated in Koseven and requires no additional setup to use.

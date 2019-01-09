@@ -1,12 +1,11 @@
-# KO7 - userguide module
+# Koseven - userguide module
 
 ## What needs to be done?
 
-Most articles are stubs, with a couple links to pages to be used as a reference when writing the page.  The idea is to use the information on those links to help write the new ones.  Some of the old userguide pages can probably be mostly copied, with a few improvements, others will be better to be completely rewritten.  If you ever have questions, please feel free to jump in the ko7 irc channel.
-
+Most articles are stubs, with a couple links to pages to be used as a reference when writing the page.  The idea is to use the information on those links to help write the new ones.  Some of the old userguide pages can probably be mostly copied, with a few improvements, others will be better to be completely rewritten.
 ## Guidelines
 
-Documentation should use complete sentences, good grammar, and be as clear as possible.  Use lots of example code, but make sure the examples follow the KO7 conventions and style.
+Documentation should use complete sentences, good grammar, and be as clear as possible.  Use lots of example code, but make sure the examples follow the Koseven conventions and style.
 
 Try to commit often, with each commit only changing a file or two, rather than changing a ton of files and commiting it all at once.  This will make it easier to offer feedback and merge your changes.   Make sure your commit messages are clear and descriptive.  Good: "Added initial draft of hello world tutorial."  Bad: "working on docs".
 
@@ -18,7 +17,7 @@ The userguide uses [Markdown](http://daringfireball.net/projects/markdown/) and 
 
 ### Userguide pages
 
-Userguide pages are in the module they apply to, in `guide/<module>`. Documentation for KO7 is in `system/guide/ko7` and documentation for orm is in `modules/orm/guide/orm`, etc.
+Userguide pages are in the module they apply to, in `guide/<module>`. Documentation for Koseven is in `system/guide/ko7` and documentation for orm is in `modules/orm/guide/orm`, etc.
 
 Each module has an index page at `guide/<module>/index.md`.
 
@@ -26,7 +25,7 @@ Each module's menu is in `guide/<module>/menu.md`.
 
 ### Images
 
-Any images used in the userguide pages must be in `media/guide/<module>/`.  For example, if a userguide page has `![Image Title](hello-world.jpg)` the image would be located at `media/guide/<module>/hello-world.jpg`.  Images for the ORM module are in `modules/orm/media/guide/orm`, and images for the KO7 docs are in `system/media/guide/ko7`.
+Any images used in the userguide pages must be in `media/guide/<module>/`.  For example, if a userguide page has `![Image Title](hello-world.jpg)` the image would be located at `media/guide/<module>/hello-world.jpg`.  Images for the ORM module are in `modules/orm/media/guide/orm`, and images for the Koseven docs are in `system/media/guide/ko7`.
 
 ### API browser
 
@@ -38,7 +37,7 @@ In addition to the features and syntax of [Markdown](http://daringfireball.net/p
 
 ### Namespacing
 
-The first thing to note is that all urls are "namespaced". The name of the module is automatically added to links and image urls, you do not need to include it.  For example, to link to the hello world tutorial page from another page in the KO7 userguide, you should use `[Hello World Tutorial](tutorials/hello-world)` rather than `(ko7/tutorials/hello-world)`.  To link to pages in a different section of the guide, you can use `../`, for example `[Cache](../cache/usage)`.
+The first thing to note is that all urls are "namespaced". The name of the module is automatically added to links and image urls, you do not need to include it.  For example, to link to the hello world tutorial page from another page in the Koseven userguide, you should use `[Hello World Tutorial](tutorials/hello-world)` rather than `(ko7/tutorials/hello-world)`.  To link to pages in a different section of the guide, you can use `../`, for example `[Cache](../cache/usage)`.
 
 ### Notes
 

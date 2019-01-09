@@ -1,16 +1,16 @@
-# About KO7 Cache
+# About Koseven Cache
 
 [KO7_Cache] provides a common interface to a variety of caching engines. [Cache_Tagging] is
-supported where available natively to the cache system. KO7 Cache supports multiple 
+supported where available natively to the cache system. Koseven Cache supports multiple 
 instances of cache engines through a grouped singleton pattern.
 
 ## Supported cache engines
 
- *  APC/APCu ([Cache_Apc])
+ *  APCu ([Cache_Apcu])
  *  File ([Cache_File])
- *  Memcached ([Cache_Memcache])
- *  Memcached-tags ([Cache_Memcachetag])
+ *  Memcached ([Cache_Memcached])
  *  SQLite ([Cache_Sqlite])
+ *  Redis ([Cache_Redis])
  *  Wincache
 
 ## Introduction to caching
@@ -22,17 +22,17 @@ a complex set of instructions.
 Caching engines that use memory are considerably faster than file based alternatives. But
 memory is limited whereas disk space is plentiful. If caching large datasets, such as large database result sets, it is best to use file caching.
 
-[!!] Cache drivers require the relevant PHP extensions to be installed. APC, eAccelerator, Memecached and Xcache all require non-standard PHP extensions.
+[!!] Cache drivers require the relevant PHP extensions to be installed. APCu, Memecached and Redis all require non-standard PHP extensions.
 
-## What the KO7 Cache module does (and does not do)
+## What the Koseven Cache module does (and does not do)
 
 This module provides a simple abstracted interface to a wide selection of popular PHP cache engines. The caching API provides the basic caching methods implemented across all solutions, memory, network or disk based. Basic key / value storing is supported by all drivers, with additional tagging and garbage collection support where implemented or required.
 
-_KO7 Cache_ does not provide HTTP style caching for clients (web browsers) and/or proxies (_Varnish_, _Squid_). There are other KO7 modules that provide this functionality.
+_Koseven Cache_ does not provide HTTP style caching for clients (web browsers) and/or proxies (_Varnish_, _Squid_). There are other Koseven modules that provide this functionality.
 
 ## Choosing a cache provider
 
-Getting and setting values to cache is very simple when using the _KO7 Cache_ interface. The hardest choice is choosing which cache engine to use. When choosing a caching engine, the following criteria must be considered:
+Getting and setting values to cache is very simple when using the _Koseven Cache_ interface. The hardest choice is choosing which cache engine to use. When choosing a caching engine, the following criteria must be considered:
 
  1. __Does the cache need to be distributed?__
     This is an important consideration as it will severely limit the options available to solutions such as Memcache when a distributed solution is required.
@@ -43,15 +43,16 @@ Getting and setting values to cache is very simple when using the _KO7 Cache_ in
 
 Driver           | Storage      | Speed     | Tags     | Distributed | Automatic Garbage Collection | Notes
 ---------------- | ------------ | --------- | -------- | ----------- | ---------------------------- | -----------------------
-APC/APCu         | __Memory__   | Excellent | No       | No          | Yes | Widely available PHP opcode caching solution, improves php execution performance
+APCu             | __Memory__   | Excellent | No       | No          | Yes | Widely available PHP opcode caching solution, improves php execution performance
 Wincache         | __Memory__   | Excellent | No       | No          | Yes | Windows variant of APC
 File             | __Disk__     | Poor      | No       | No          | No  | Marginally faster than execution
-Memcache (tag)   | __Memory__   | Good      | No (yes) | Yes         | Yes | Generally fast distributed solution, but has a speed hit due to variable network latency and serialization
+Memcached        | __Memory__   | Good      | No       | Yes         | Yes | Generally fast distributed solution, but has a speed hit due to variable network latency and serialization
 Sqlite           | __Disk__     | Poor      | Yes      | No          | No  | Marginally faster than execution
+Redis            | __Memory__   | Good      | Yes      | Yes         | Yes | Generally fast distributed solution (faster than memcached), but has a speed hit due to variable network latency and serialization
 
-It is possible to have hybrid cache solutions that use a combination of the engines above in different contexts. This is supported with _KO7 Cache_ as well
+It is possible to have hybrid cache solutions that use a combination of the engines above in different contexts. This is supported with _Koseven Cache_ as well
 
 ## Minimum requirements
 
- *  KO7 3.0.4
- *  PHP 5.2.4 or greater
+ *  Koseven 3.4
+ *  PHP 7.0 or greater

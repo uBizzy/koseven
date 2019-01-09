@@ -1,4 +1,4 @@
-KO7 auth module
+Koseven auth module
 ---
 
 I've forked the main Auth module because there were some fundamental flaws with it:

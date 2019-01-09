@@ -4,7 +4,7 @@ The userguide uses [Markdown](markdown) for the documentation.  Both the usergui
 
 ## Userguide pages
 
-Userguide pages are in the module they apply to, in `guide/<module>`. For example, documentation for KO7 is in `system/guide/ko7` and documentation for orm is in `modules/orm/guide/orm`, database is in `modules/database/guide/database`, etc.
+Userguide pages are in the module they apply to, in `guide/<module>`. For example, documentation for Koseven is in `system/guide/ko7` and documentation for orm is in `modules/orm/guide/orm`, database is in `modules/database/guide/database`, etc.
 
 Each module has an index page at `guide/<module>/index.md`.
 

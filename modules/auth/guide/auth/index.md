@@ -2,7 +2,7 @@
 
 User authentication and authorization is provided by the auth module.
 
-The auth module is included with KO7, but needs to be enabled before you can use it. To enable, open your `application/bootstrap.php` file and modify the call to [KO7::modules] by including the auth module like so:
+The auth module is included with Koseven, but needs to be enabled before you can use it. To enable, open your `application/bootstrap.php` file and modify the call to [KO7::modules] by including the auth module like so:
 
 ~~~
 KO7::modules(array(

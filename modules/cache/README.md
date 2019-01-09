@@ -1,26 +1,19 @@
-KO7 Cache library
+Koseven Cache library
 ====================
 
-The cache library for KO7 3 provides a simple interface to the most common cache solutions. Developers are free to add their own caching solutions that follow the cache design pattern defined within this module.
+The cache library for Koseven provides a simple interface to the most common cache solutions. Developers are free to add their own caching solutions that follow the cache design pattern defined within this module.
 
 Supported cache solutions
 -------------------------
 
 Currently this module supports the following cache methods.
 
-1. APC
-2. Memcache
-3. Memcached-tags (Supports tags)
-4. SQLite (Supports tags)
-5. File
+1. APCu
+2. File
+3. Memcached
+4. Redis
+5. SQLite
 6. Wincache
-
-Planned support
----------------
-
-In the near future, additional support for the following methods will be included.
-
-1. Memcached
 
 Introduction to caching
 -----------------------
@@ -32,12 +25,12 @@ There are many different caching methods available for PHP, from the very basic 
 Using Cache
 -----------
 
-To use KO7 Cache, download and extract the latest stable release of KO7 Cache from [Github](http://github.com/samsoir/koseven-cache). Place the module into your KO7 instances modules folder. Finally enable the module within the application bootstrap within the section entitled _modules_.
+To use Koseven Cache enable the module within the application bootstrap within the section entitled _modules_.
 
 Quick example
 -------------
 
-The following is a quick example of how to use KO7 Cache. The example is using the SQLite driver.
+The following is a quick example of how to use Koseven Cache. The example is using the SQLite driver.
 
 	<?php
 	// Get a Sqlite Cache instance  

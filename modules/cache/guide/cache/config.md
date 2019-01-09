@@ -1,12 +1,12 @@
-# KO7 Cache configuration
+# Koseven Cache configuration
 
-KO7 Cache uses configuration groups to create cache instances. A configuration group can
+Koseven Cache uses configuration groups to create cache instances. A configuration group can
 use any supported driver, with successive groups using multiple instances of the same driver type.
 
 The default cache group is loaded based on the `Cache::$default` setting. It is set to the `file` driver as standard, however this can be changed within the `/application/boostrap.php` file.
 
      // Change the default cache driver to memcache
-     Cache::$default = 'memcache';
+     Cache::$default = 'memcached';
 
      // Load the memcache cache driver using default setting
      $memcache = Cache::instance();
@@ -28,16 +28,8 @@ default_expire | __NO__   | (_string_) The driver type to use
 		'cache_dir'          => APPPATH.'cache/.ko7_cache',
 		'default_expire'     => 3600,
 	),
-
-## Memcache & Memcached-tag settings
-
-Name           | Required | Description
--------------- | -------- | ---------------------------------------------------------------
-driver         | __YES__  | (_string_) The driver type to use
-servers        | __YES__  | (_array_) Associative array of server details, must include a __host__ key. (see _Memcache server configuration_ below)
-compression    | __NO__   | (_boolean_) Use data compression when caching
-
-### Memcache server configuration
+	
+### Memcached/Redis server configuration
 
 Name             | Required | Description
 ---------------- | -------- | ---------------------------------------------------------------
@@ -50,9 +42,9 @@ retry_interval   | __NO__   | (_integer_) Controls how often a failed server wil
 status           | __NO__   | (_boolean_) Controls if the server should be flagged as online. Default __TRUE__
 failure_callback | __NO__   | (_[callback](http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback)_) Allows the user to specify a callback function to run upon encountering an error. The callback is run before failover is attempted. The function takes two parameters, the hostname and port of the failed server. Default __NULL__
 
-	'memcache' => array
+	'memcached' => array
 	(
-		'driver'             => 'memcache',
+		'driver'             => 'memcached',
 		'default_expire'     => 3600,
 		'compression'        => FALSE,              // Use Zlib compression 
 		                                            // (can cause issues with integers)
@@ -65,31 +57,7 @@ failure_callback | __NO__   | (_[callback](http://www.php.net/manual/en/language
 				'persistent'       => FALSE,        // Persistent connection
 			),
 		),
-	),
-	'memcachetag' => array
-	(
-		'driver'             => 'memcachetag',
-		'default_expire'     => 3600,
-		'compression'        => FALSE,              // Use Zlib compression 
-		                                            // (can cause issues with integers)
-		'servers'            => array
-		(
-			'local' => array
-			(
-				'host'             => 'localhost',  // Memcache Server
-				'port'             => 11211,        // Memcache port number
-				'persistent'       => FALSE,        // Persistent connection
-			),
-		),
-	),
-
-## APC settings
-
-	'apc'      => array
-	(
-		'driver'             => 'apc',
-		'default_expire'     => 3600,
-	),
+	)
 	
 ## APCu settings
 
@@ -136,9 +104,9 @@ The following example demonstrates how to override an existing configuration set
 	return array
 	(
 		// Override the default configuration
-		'memcache'   => array
+		'memcached'   => array
 		(
-			'driver'         => 'memcache',  // Use Memcached as the default driver
+			'driver'         => 'memcached',  // Use Memcached as the default driver
 			'default_expire' => 8000,        // Overide default expiry
 			'servers'        => array
 			(
@@ -164,7 +132,7 @@ The following example demonstrates how to add a new configuration setting, using
 		// Override the default configuration
 		'fastkv'   => array
 		(
-			'driver'         => 'apc',  // Use Memcached as the default driver
+			'driver'         => 'apcu',  // Use apcu as the default driver
 			'default_expire' => 1000,   // Overide default expiry
 		)
 	);

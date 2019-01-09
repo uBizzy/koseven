@@ -14,47 +14,30 @@ Please read the following before working with this code:
 
 First, you will need to tell git about the remote repository:
 
-    > git remote add kohana git://github.com/kohana/kohana.git
+    > git remote add koseven git://github.com/koseven/koseven.git
 
-This tells git about the ko7 repository and gives it a name which we can use to refer to it when
+This tells git about the koseven repository and gives it a name which we can use to refer to it when
 fetching changes from the repository.
 
 ## Developing locally
 
-There are 3 branches in all the ko7 repositories:
+There are 2 branches in the koseven repositories:
 
 * **master** This branch always points to the latest release tag. In essence it points to the last stable edition of the codebase
-* **3.0.x**  This is a release branch for development of the 3.0.x series, i.e. 3.0, 3.0.3, 3.0.8 etc.
-* **3.1.x**  This is a release branch for development of the 3.1.x series, i.e. 3.1, 3.1.4, 3.1.14 etc.
+* **devel**  This is a release branch for development
 
 To work on a specific release branch you need to check it out then check out the appropriate branches.
-Release branch names follow the same convention in both ko7/ko7 and ko7/core.
 
-To work on 3.0.x you'd do the following:
+To work ondevel you'd do the following:
 
-	> git clone git://github.com/kohana/kohana.git
+	> git clone git://github.com/koseven/koseven.git
 	....
 	
-	> cd kohana
-	> git submodule update --init
+	> cd koseven
 	....
 
-	> git checkout 3.0.x
-	Switched to branch '3.0.x'
-	> git submodule update 
-
-	> cd system
-	> git checkout 3.0.x
-	# Switched to branch 3.0.x
-
-It's important that you follow the last step, because unlike svn, git submodules point at a
-specific commit rather than the tip of a branch.  If you cd into the system folder after
-a `git submodule update` and run `git status` you'll be told:
-
-	# Not currently on any branch.
-	nothing to commit (working directory clean)
-
-Similarly, if you want to work on modules, make sure you checkout the correct branch before you start working.
+	> git checkout devel
+	Switched to branch devel
 
 **IMPORTANT:** It is highly recommended that you run the unit tests whilst developing to
 ensure that any changes you make do not break the api. *See TESTING.md for more info*
@@ -104,15 +87,15 @@ branch is perfectly acceptable.
 
 ## Merging Changes from Remote Repositories
 
-Now that you have a remote repository, you can pull changes in the remote "ko7" repository
+Now that you have a remote repository, you can pull changes in the remote "koseven" repository
 into your local repository:
 
-    > git pull kohana master
+    > git pull koseven master
 
 **Note:** Before you pull changes you should make sure that any modifications you've made locally
 have been committed.
 
-Sometimes a commit you've made locally will conflict with one made in the "ko7" one.
+Sometimes a commit you've made locally will conflict with one made in the "koseven" one.
 
 There are a couple of scenarios where this might happen:
 
@@ -127,7 +110,7 @@ The simplest way to fix this is to remove all the changes that you've made local
 
 You can do this using 
 
-    > git reset --hard kohana
+    > git reset --hard koseven
 
 ### You've fixed something locally which someone else has already fixed but you also have separate commits you'd like to keep
 
