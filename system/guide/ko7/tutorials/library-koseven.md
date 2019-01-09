@@ -1,13 +1,11 @@
-# Importing KO7 as a Library
+# Importing Koseven as a Library
 
 If you're working with an existing codebase it's often difficult to modernise the code as it would mean a complete rewrite and there's rarely the time. An alternative is to improve the codebase incrementally as best you can, gradually outsourcing code to external libraries to reduce the amount of old code there is to maintain.
 
-This tutorial describes how to include the KO7 PHP framework into existing PHP applications, without having to use the routing and HMVC request handling features.
+This tutorial describes how to include the Koseven PHP framework into existing PHP applications, without having to use the routing and HMVC request handling features.
 
-[!!] The code modified in this tutorial was copied from KO7 version 3.1.x. You may need to update it to work with future releases.
-
-In normal usage of the KO7 framework, the `index.php` file acts as the request handler; it sets up the environment, loads the system configuration, and then handles the request (see [Request Flow](flow)).
-We'll walk you through the steps required to create a file we'll call `include.php` which will allow you to include KO7 from exiting PHP applications.
+In normal usage of the Koseven framework, the `index.php` file acts as the request handler; it sets up the environment, loads the system configuration, and then handles the request (see [Request Flow](flow)).
+We'll walk you through the steps required to create a file we'll call `include.php` which will allow you to include Koseven from exiting PHP applications.
 
 ## Demo application
 
@@ -29,9 +27,9 @@ The following file will serve as our (insultingly simple) demo application for t
 	</html>
 ~~~
 
-## Install KO7
+## Install Koseven
 
-[Download and install the KO7 framework](install); from this point on, we'll be referring to the location of the KO7 libraries as the `ko7` directory.
+[Download and install the Koseven framework](install); from this point on, we'll be referring to the location of the Koseven libraries as the `ko7` directory.
 
 ## Create a common setup file
 
@@ -92,7 +90,7 @@ The new file creates the initial request object, rather than fully executing the
 
 	/**
 	 * End of standard configuration! Changing any of the code below should only be
-	 * attempted by those with a working knowledge of Kohana internals.
+	 * attempted by those with a working knowledge of Koseven internals.
 	 *
 	 * @link http://koseven.ga/guide/using.configuration
 	 */
@@ -153,9 +151,9 @@ The new file creates the initial request object, rather than fully executing the
 	Request::factory(); // Changes were made here
 ~~~
 
-## Alter KO7's `index.php`
+## Alter Koseven's `index.php`
 
-Having moved most of the code from KO7's `index.php` to `common.php` the new `ko7/index.php` contains only this:
+Having moved most of the code from Koseven's `index.php` to `common.php` the new `ko7/index.php` contains only this:
 
 ### File: `ko7/index.php`
 
@@ -173,7 +171,7 @@ Having moved most of the code from KO7's `index.php` to `common.php` the new `ko
 
 ## Create the include file
 
-Our `include.php` file is also pretty simple. The try-catch clause is needed because if the request matches no routes KO7 will throw an `HTTP_Exception_404` exception.
+Our `include.php` file is also pretty simple. The try-catch clause is needed because if the request matches no routes Koseven will throw an `HTTP_Exception_404` exception.
 
 ### File: `ko7/include.php`
 
@@ -189,11 +187,11 @@ Our `include.php` file is also pretty simple. The try-catch clause is needed bec
 	}
 ~~~
 
-**NB:** Due to the way KO7's routing  works, if the request matches no routes it will fail to instantiate an object, and `Request::$current` and `Request::$initial` will not be available.
+**NB:** Due to the way Koseven's routing  works, if the request matches no routes it will fail to instantiate an object, and `Request::$current` and `Request::$initial` will not be available.
 
 ## Integration
 
-Now that we're set up, we can add KO7 into our application using a single include, and then we're good to go.
+Now that we're set up, we can add Koseven into our application using a single include, and then we're good to go.
 
 ### File: `demo.php`
 

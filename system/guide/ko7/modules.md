@@ -1,14 +1,10 @@
 # Modules
 
-Modules are simply an addition to the [Cascading Filesystem](files).  A module can add any kind of file (controllers, views, classes, config files, etc.) to the filesystem available to KO7 (via [KO7::find_file]).  This is useful to make any part of your application more transportable or shareable between different apps.  For example, creating a new modeling system, a search engine, a css/js manager, etc.
+Modules are simply an addition to the [Cascading Filesystem](files).  A module can add any kind of file (controllers, views, classes, config files, etc.) to the filesystem available to Koseven (via [KO7::find_file]).  This is useful to make any part of your application more transportable or shareable between different apps.  For example, creating a new modeling system, a search engine, a css/js manager, etc.
 
 ## Where to find modules
 
-Kolanos has created [ko7-universe](http://github.com/kolanos/ko7-universe/tree/master/modules/), a fairly comprehensive list of modules that are available on Github. To get your module listed there, send him a message via Github.
-
-Mon Geslani created a [very nice site](http://ko7.mongeslani.com/) that allows you to sort Github modules by activity, watchers, forks, etc.  It seems to not be as comprehensive as ko7-universe.
-
-Andrew Hutchings has created [ko7-modules](http://www.ko7-modules.com) which is similar to the above sites.
+You can find them on our [Website](https://koseven.ga/modules.html) or our [GithHub](https://github.com/koseven/koseven.ga/blob/master/modules.md)
 
 ## Enabling modules
 
@@ -37,4 +33,4 @@ A file in an enabled module is virtually the same as having that exact file in t
 
 ## Creating your own module
 
-To create a module simply create a folder (usually in `DOCROOT/modules`) and place the files you want to be in the module there, and activate that module in your bootstrap.  To share your module, you can upload it to [Github](http://github.com).  You can look at examples of modules made by [KO7](http://github.com/ko7koseven) or [other users](#where-to-find-modules).
+To create a module simply create a folder (usually in `DOCROOT/modules`) and place the files you want to be in the module there, and activate that module in your bootstrap.  To share your module, you can upload it to [Github](http://github.com).  You can look at examples of modules made by [Koseven](https://github.com/koseven/koseven/tree/master/modules) or [other users](#where-to-find-modules).

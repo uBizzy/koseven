@@ -4,15 +4,15 @@ This is a collection of tips and common mistakes or errors you may encounter.
 
 ## Never edit the `system` folder!
 
-You should (almost) never edit the system folder.  Any change you want to make to files in system and modules can be made via the [cascading filesystem](files) and [transparent extension](extension) and won't break when you try to update your KO7 version.  
+You should (almost) never edit the system folder.  Any change you want to make to files in system and modules can be made via the [cascading filesystem](files) and [transparent extension](extension) and won't break when you try to update your Koseven version.  
 
 ## Don't try and use one route for everything
 
-KO7 3 [routes](routing) are very powerful and flexible, don't be afraid to use as many as you need to make your app function the way you want!
+Koseven [routes](routing) are very powerful and flexible, don't be afraid to use as many as you need to make your app function the way you want!
 
 ## Files not found on some systems
 
-As of KO7 3.3, classes are autoloaded using the case-sensitive PSR-0 autoloader. This means that using the class Foo {} with a file in classes/foo.php will work on case-insensitive file systems (such as the default HFS+ FS used in Mac OS X) but will fail when used on a case-sensitive FS (typical on many production Linux servers).
+As of Koseven, classes are autoloaded using the case-sensitive PSR-0 autoloader. This means that using the class Foo {} with a file in classes/foo.php will work on case-insensitive file systems (such as the default HFS+ FS used in Mac OS X) but will fail when used on a case-sensitive FS (typical on many production Linux servers).
 
 ## Handling lots of routes
 
@@ -38,4 +38,4 @@ There is a bug in php which can corrupt your session after a fatal error.  A pro
 
 ### Solution   {#orm-session-sleep-solution}
 
-To fix this, clear your cookies for that domain to reset your session.  This should never happen on a production server, so you won't have to explain to your clients how to clear their cookies.  You can see the [discussion on this issue](http://dev.koseven.ga/issues/3242) for more details.
+To fix this, clear your cookies for that domain to reset your session.  This should never happen on a production server, so you won't have to explain to your clients how to clear their cookies.

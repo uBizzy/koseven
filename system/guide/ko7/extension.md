@@ -2,17 +2,17 @@
 
 The [cascading filesystem](files) allows transparent class extension. For instance, the class [Cookie] is defined in `SYSPATH/classes/Cookie.php` as:
 
-    class Cookie extends Kohana_Cookie {}
+    class Cookie extends KO7_Cookie {}
 
-The default KO7 classes, and many extensions, use this definition so that almost all classes can be extended. You extend any class transparently, by defining your own class in `APPPATH/classes/Cookie.php` to add your own methods.
+The default Koseven classes, and many extensions, use this definition so that almost all classes can be extended. You extend any class transparently, by defining your own class in `APPPATH/classes/Cookie.php` to add your own methods.
 
-[!!] You should **never** modify any of the files that are distributed with KO7. Always make modifications to classes using transparent extension to prevent upgrade issues.
+[!!] You should **never** modify any of the files that are distributed with Koseven. Always make modifications to classes using transparent extension to prevent upgrade issues.
 
 For instance, if you wanted to create method that sets encrypted cookies using the [Encrypt] class, you would create a file at `APPPATH/classes/Cookie.php` that extends KO7_Cookie, and adds your functions:
 
     <?php
 
-    class Cookie extends Kohana_Cookie {
+    class Cookie extends KO7_Cookie {
 
         /**
          * @var  mixed  default encryption instance
@@ -60,9 +60,9 @@ When you add your transparently extended cookie class at `application/classes/Co
 
 ## Example: changing [Cookie] settings
 
-If you are using the [Cookie](cookies) class, and want to change a setting, you should do so using transparent extension, rather than editing the file in the system folder.  If you edit it directly, and in the future you upgrade your KO7 version by replacing the system folder, your changes will be reverted and your cookies will probably be invalid.  Instead, create a Cookie.php file either in `application/classes/Cookie.php` or a module (`MODPATH/<modulename>/classes/Cookie.php`).
+If you are using the [Cookie](cookies) class, and want to change a setting, you should do so using transparent extension, rather than editing the file in the system folder.  If you edit it directly, and in the future you upgrade your Koseven version by replacing the system folder, your changes will be reverted and your cookies will probably be invalid.  Instead, create a Cookie.php file either in `application/classes/Cookie.php` or a module (`MODPATH/<modulename>/classes/Cookie.php`).
 
-	class Cookie extends Kohana_Cookie {
+	class Cookie extends KO7_Cookie {
 	
 		// Set a new salt
 		public $salt = "some new better random salt phrase";
@@ -72,21 +72,10 @@ If you are using the [Cookie](cookies) class, and want to change a setting, you 
 		
 	}
 
-## Example: TODO: an example
-
-Just post the code and brief description of what function it adds, you don't have to do the "How it works" like above.
-
-## Example: TODO: something else
-
-Just post the code and brief description of what function it adds, you don't have to do the "How it works" like above.
-
-## More examples
-
-TODO: Provide some links to modules on github, etc that have examples of transparent extension in use.
 
 ## Multiple Levels of Extension
 
-If you are extending a KO7 class in a module, you should maintain transparent extensions. In other words, do not include any variables or function in the "base" class (eg. Cookie). Instead make your own namespaced class, and have the "base" class extend that one. With our Encrypted cookie example we can create `MODPATH/mymod/Encrypted/Cookie.php`:
+If you are extending a Koseven class in a module, you should maintain transparent extensions. In other words, do not include any variables or function in the "base" class (eg. Cookie). Instead make your own namespaced class, and have the "base" class extend that one. With our Encrypted cookie example we can create `MODPATH/mymod/Encrypted/Cookie.php`:
 
 	class Encrypted_Cookie extends Kohana_Cookie {
 

@@ -1,6 +1,6 @@
 # Cascading Filesystem
 
-The KO7 filesystem is a hierarchy of similar directory structures that cascade. The hierarchy in KO7 (used when a file is loaded by [KO7::find_file]) is in the following order:
+The Koseven filesystem is a hierarchy of similar directory structures that cascade. The hierarchy in Koseven (used when a file is loaded by [KO7::find_file]) is in the following order:
 
 1. **Application Path**  
    Defined as `APPPATH` in `index.php`. The default value is `application`.
@@ -17,7 +17,7 @@ Files that are in directories higher up the include path order take precedence o
 
 This image is only shows certain files, but we can use it to illustrate some examples of the cascading filesystem:
 
-* If KO7 catches an error, it would display the `ko7/error.php` view, So it would call `KO7::find_file('views', 'ko7/error')`.  This would return `application/views/ko7/error.php` because it takes precidence over `system/views/ko7/error.php`.  By doing this we can change the error view without editing the system folder.
+* If Koseven catches an error, it would display the `ko7/error.php` view, So it would call `KO7::find_file('views', 'ko7/error')`.  This would return `application/views/ko7/error.php` because it takes precidence over `system/views/ko7/error.php`.  By doing this we can change the error view without editing the system folder.
 
 * If we used `View::factory('welcome')` it would call `KO7::find_file('views','welcome')` which would return `application/views/welcome.php` because it takes precidence over `modules/common/views/welcome.php`.  By doing this, you can overwrite things in a module without editing the modules files.
 
@@ -71,7 +71,7 @@ If the file doesn't have a `.php` extension, pass the extension as the third par
 
 ## Vendor Extensions
 
-We call extensions or external libraries that are not specific to KO7 "vendor" extensions, and they go in the vendor folder, either in application or in a module.  Because these libraries do not follow KO7's file naming conventions, they cannot be autoloaded by KO7, so you will have to manually included them. Some examples of vendor libraries are [Markdown](http://daringfireball.net/projects/markdown/), [DOMPDF](http://code.google.com/p/dompdf),  [Mustache](http://github.com/bobthecow/mustache.php) and [Swiftmailer](http://swiftmailer.org/).
+We call extensions or external libraries that are not specific to Koseven "vendor" extensions, and they go in the vendor folder, either in application or in a module.  Because these libraries do not follow Koseven's file naming conventions, they cannot be autoloaded by Koseven, so you will have to manually included them. Some examples of vendor libraries are [Markdown](http://daringfireball.net/projects/markdown/), [DOMPDF](http://code.google.com/p/dompdf),  [Mustache](http://github.com/bobthecow/mustache.php) and [Swiftmailer](http://swiftmailer.org/).
 
 For example, if you wanted to use [DOMPDF](http://code.google.com/p/dompdf), you would copy it to `application/vendor/dompdf` and include the DOMPDF autoloading class.  It can be useful to do this in a controller's before method, as part of a module's init.php, or the contstructor of a singleton class.
 

@@ -39,7 +39,7 @@ Controllers can extend other controllers.
 	// classes/Controller/Api.php
 	class Controller_Api extends Controller_REST
 	
-[!!] [Controller_Template] is an example controller provided in KO7.
+[!!] [Controller_Template] is an example controller provided in Koseven.
 
 You can also have a controller extend another controller to share common things, such as requiring you to be logged in to use all of those controllers.
 

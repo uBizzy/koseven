@@ -1,12 +1,10 @@
 # Bootstrap
 
-The bootstrap is located at `application/bootstrap.php`.  It is responsible for setting up the KO7 environment and executing the main response. It is included by `index.php` (see [Request flow](flow))
-
-[!!] The bootstrap is responsible for the flow of your application.  In previous versions of KO7 the bootstrap was in `system` and was somewhat of an unseen, uneditible force.  In KO7 3 the bootstrap takes on a much more integral and versatile role.  Do not be afraid to edit and change your bootstrap however you see fit.
+The bootstrap is located at `application/bootstrap.php`.  It is responsible for setting up the Koseven environment and executing the main response. It is included by `index.php` (see [Request flow](flow))
 
 ## Environment setup
 
-The bootstrap first sets the timezone and locale, and then adds KO7's autoloader so the [cascading filesystem](files) works.  You could add any other settings that all your application needed here.
+The bootstrap first sets the timezone and locale, and then adds Koseven's autoloader so the [cascading filesystem](files) works.  You could add any other settings that all your application needed here.
 
 ~~~
 // Sample excerpt from bootstrap.php with comments trimmed down
@@ -18,7 +16,7 @@ date_default_timezone_set('America/Chicago');
 setlocale(LC_ALL, 'en_US.utf-8');
 
 // Enable the Kohana auto-loader.
-spl_autoload_register(array('Kohana', 'auto_load'));
+spl_autoload_register(array('KO7', 'auto_load'));
 
 // Enable the Kohana auto-loader for unserialization.
 ini_set('unserialize_callback_func', 'spl_autoload_call');
@@ -26,27 +24,27 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 
 ## Initialization and Configuration
 
-KO7 is then initialized by calling [KO7::init], and the log and [config](files/config) reader/writers are enabled.
+Koseven is then initialized by calling [KO7::init], and the log and [config](files/config) reader/writers are enabled.
 
 ~~~
 // Sample excerpt from bootstrap.php with comments trimmed down
 
-Kohana::init(array('
+KO7::init(array('
     base_url' => '/ko7/',
 	index_file => false,
 ));
 
 // Attach the file writer to logging. Multiple writers are supported.
-Kohana::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
+KO7::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
 
 // Attach a file reader to config. Multiple readers are supported.
-Kohana::$config->attach(new Kohana_Config_File);
+KO7::$config->attach(new Kohana_Config_File);
 ~~~
 
 You can add conditional statements to make the bootstrap have different values based on certain settings.  For example, detect whether we are live by checking `$_SERVER['HTTP_HOST']` and set caching, profiling, etc. accordingly.  This is just an example, there are many different ways to accomplish the same thing.
 
 ~~~
-// Excerpt from http://github.com/isaiahdw/koseven.ga/blob/f2afe8e28b/application/bootstrap.php
+// example bootstrap.php
 ... [trimmed]
 
 /**
@@ -55,7 +53,7 @@ You can add conditional statements to make the bootstrap have different values b
 if (strpos($_SERVER['HTTP_HOST'], 'koseven.ga') !== FALSE)
 {
 	// We are live!
-	Kohana::$environment = Kohana::PRODUCTION;
+	KO7::$environment = KO7::PRODUCTION;
 
 	// Turn off notices
 	error_reporting(E_ALL & ~E_NOTICE);
@@ -65,10 +63,10 @@ if (strpos($_SERVER['HTTP_HOST'], 'koseven.ga') !== FALSE)
  * Initialize Kohana, setting the default options.
  ... [trimmed]
  */
-Kohana::init(array(
-	'base_url'   => Kohana::$environment === Kohana::PRODUCTION ? '/' : '/koseven.ga/',
-	'caching'    => Kohana::$environment === Kohana::PRODUCTION,
-	'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
+KO7::init(array(
+	'base_url'   => KO7::$environment === KO7::PRODUCTION ? '/' : '/koseven.ga/',
+	'caching'    => KO7::$environment === KO7::PRODUCTION,
+	'profile'    => KO7::$environment !== KO7::PRODUCTION,
 	'index_file' => FALSE,
 ));
 
@@ -88,7 +86,7 @@ Each key in the array should be the name of the module, and the value is the pat
 ~~~
 // Example excerpt from bootstrap.php
 
-Kohana::modules(array(
+KO7::modules(array(
 	'database'   => MODPATH.'database',
 	'orm'        => MODPATH.'orm',
 	'userguide'  => MODPATH.'userguide',
@@ -102,7 +100,7 @@ Kohana::modules(array(
 [Routes](routing) are then defined via [Route::set()].
 
 ~~~
-// The default route that comes with Kohana 3
+// The default route that comes with Koseven
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'Welcome',

@@ -1,6 +1,6 @@
 # Helpers
 
-KO7 comes with many static "helper" functions to make certain tasks easier.
+Koseven comes with many static "helper" functions to make certain tasks easier.
 
 You can make your own helpers by simply making a class and putting it in the `classes` directory, and you can also extend any helper to modify or add new functions using transparent extension.
 
@@ -12,7 +12,7 @@ You can make your own helpers by simply making a class and putting it in the `cl
 
  - **[Date]** - Useful date functions and constants. Time between two dates, convert between am/pm and military, date offset, etc.
  
- - **[Encrypt]** - Covered in more detail on the [Security](security) page.
+ - **[Encrypt]** - Covered in more detail on the [Security](security/encryption) page.
  
  - **[Feed]** - Parse and create RSS feeds.
  

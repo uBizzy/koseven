@@ -2,22 +2,16 @@
 
 [!!] Before continuing, make sure you have a web server (like Apache) configured with the following requirements.
 
- - PHP 7.0.21 or newer.
- - [PHP Short open tag Enabled](http://php.net/manual/en/ini.core.php#ini.short-open-tag)
- - [Iconv Extension](http://php.net/iconv)
- - [Character Type (CTYPE) Extension](http://php.net/ctype)
- - [PCRE Extension](http://php.net/pcre)
- - [SPL Enabled](http://php.net/spl)
- - [Reflections Enabled](http://php.net/reflection)
- - [Filters Enabled](http://php.net/filter)
+ - PHP 7.0.21 or newer (with default extenions).
+ - [Multibyte String Extension](http://php.net/manual/de/book.mbstring.php)
 
 # Download
 
-You can get the latest **stable** release on the [Koseven website](https://koseven.ga/). This will give you a fully functional application with an `application`, `modules`, and `system` directory.
+You can get the latest **stable** release on GitHub [Koseven website](https://github.com/koseven/koseven/releases). This will give you a fully functional application with an `application`, `modules`, and `system` directory.
 
 [!!] You can find information about the file structure on the [Cascading Filesystem](files) page.
 
-Once downloaded, you should extract the KO7 application to a directory where the web server can access it. Going forward, we are going to assume you've extracted the application to a `ko7` directory such that `http://localhost/ko7/index.php` is pointing to the `index.php` file in the KO7 release.
+Once downloaded, you should extract the Koseven application to a directory where the web server can access it. Going forward, we are going to assume you've extracted the application to the root directory of your webserver such that `http://localhost/index.php` is pointing to the `index.php` file of Koseven.
 
 # Configure
 
@@ -28,7 +22,7 @@ Before the application can be run, you will need to make a few changes to the `a
 // Example of changing timezone to Sao Paulo, Brazil
 date_default_timezone_set('America/Sao_Paulo');
 ~~~
- - Set the `base_url` in the [KO7::init] call to reflect the location of the ko7 folder on your server relative to the document root.
+ - Set the `base_url` in the [KO7::init] call to reflect the location of the koseven folder on your server relative to the document root.
 ~~~
 /**
  * Example of ko7's installation at /var/www/ko7 and
@@ -62,7 +56,7 @@ sudo chmod -R a+rwx application/cache
 sudo chmod -R a+rwx application/logs
 ~~~
 
-[!!] Make sure to use a unique salt for your application and never to share it. Take a look at the [Cookies](cookies) page for more information on how cookies work in KO7. If you do not define a `Cookie::$salt` value, KO7 will throw an exception when it encounters any cookie on your domain.
+[!!] Make sure to use a unique salt for your application and never to share it. Take a look at the [Cookies](cookies) page for more information on how cookies work in Koseven. If you do not define a `Cookie::$salt` value, Koseven will throw an exception when it encounters any cookie on your domain.
 
  - Test your installation by opening [http://localhost/](http://localhost/).
 
@@ -70,17 +64,17 @@ You should see the installation page. If it reports any errors, you will need to
 
 ![Install Page](install.png "Example of install page")
 
-Once your install page reports that your environment is set up correctly you need to either rename or delete `install.php`. KO7 is now installed and you should see the output of the welcome controller:
+Once your install page reports that your environment is set up correctly you need to either rename or delete `install.php`. Koseven is now installed and you should see the output of the welcome controller:
 
 ![Welcome Page](welcome.png "Example of welcome page")
 
-## Installing KO7 From GitHub
+## Installing Koseven From GitHub
 
-The [source code](https://github.com/koseven/koseven) for KO7 is hosted with [GitHub](http://github.com). To install KO7 using the github source code first you need to install [git](http://git-scm.com/). Visit [http://help.github.com](http://help.github.com) for details on how to install git on your platform.
+The [source code](https://github.com/koseven/koseven) for Koseven is hosted with [GitHub](http://github.com). To install Koseven using the github source code first you need to install [git](http://git-scm.com/). Visit [http://help.github.com](http://help.github.com) for details on how to install git on your platform.
 
-Use the following command to install KO7 from GitHub:
+Use the following command to install Koseven from GitHub:
 ~~~
 git clone git@github.com:koseven/koseven.git .
 ~~~
 
-[!!] For more information on installing KO7 using git, see the [Working with Git](tutorials/git) tutorial.
+[!!] For more information on installing Koseven using git, see the [Working with Git](tutorials/git) tutorial.

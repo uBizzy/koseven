@@ -1,9 +1,9 @@
-## [KO7]()
+## [Koseven]()
 
 - [Installation](install)
 - Getting Started
    - [Conventions and Style](conventions)
-   - [Model View Controller](mvc)
+   - Model View Controller
       - [Controllers](mvc/controllers)
       - [Models](mvc/models)
       - [Views](mvc/views)
@@ -19,7 +19,7 @@
    - [Routing](routing)
    - [Error Handling](errors)
    - [Tips & Common Mistakes](tips)
-   - [Upgrading from Kohana](upgrading-from-ko7)
+   - [Upgrading from Kohana](upgrading-from-kohana)
 - Basic Usage
    - [Debugging](debugging)
    - [Loading Classes](autoloading)
@@ -43,6 +43,6 @@
    - [Simple MVC](tutorials/simple-mvc)
    - [Custom Error Pages](tutorials/error-pages)
    - [Clean URLs](tutorials/clean-urls)
-   - [Sharing KO7](tutorials/sharing-koseven)
-   - [KO7 as a Library](tutorials/library-koseven)
+   - [Sharing Koseven](tutorials/sharing-koseven)
+   - [Koseven as a Library](tutorials/library-koseven)
    - [Working with Git](tutorials/git)

@@ -1,7 +1,5 @@
 # Validation
 
-*This page needs to be reviewed for accuracy by the development team. Better examples would be helpful.*
-
 Validation can be performed on any array using the [Validation] class. Labels and rules can be attached to a Validation object by the array key, called a "field name".
 
 labels
@@ -22,7 +20,7 @@ Creating a validation object is done using the [Validation::factory] method:
 
 ## Provided Rules
 
-KO7 provides a set of useful rules in the [Valid] class:
+Koseven provides a set of useful rules in the [Valid] class:
 
 Rule name                 | Function
 ------------------------- |-------------------------------------------------
@@ -133,7 +131,7 @@ Rules added to empty fields will run, but returning `FALSE` will not automatical
 
 To start our example, we will perform validation on the HTTP POST data of the current request that contains user registration information:
 
-[!!] In KO7 controllers, we access `$this->request->post()` instead of `$_POST` for better request isolation.
+[!!] In Koseven controllers, we access `$this->request->post()` instead of `$_POST` for better request isolation.
 
     $object = Validation::factory($this->request->post());
 

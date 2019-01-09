@@ -1,10 +1,10 @@
 # Conventions and Coding Style
 
-It is encouraged that you follow KO7's coding style. This makes code more readable and allows for easier code sharing and contributing. 
+It is encouraged that you follow Koseven's coding style. This makes code more readable and allows for easier code sharing and contributing. 
 
 ## Class Names and File Location
 
-Class names in KO7 follow a strict convention to facilitate [autoloading](autoloading). Class names should have uppercase first letters with underscores to separate words. Underscores are significant as they directly reflect the file location in the filesystem.
+Class names in Koseven follow a strict convention to facilitate [autoloading](autoloading). Class names should have uppercase first letters with underscores to separate words. Underscores are significant as they directly reflect the file location in the filesystem.
 
 The following conventions apply:
 
@@ -145,7 +145,7 @@ As noted at the start of the array bracket section, single line syntax is also v
 
 ### Naming Conventions
 
-KO7 uses under_score naming, not camelCase naming.
+Koseven uses under_score naming, not camelCase naming.
 
 #### Classes
 

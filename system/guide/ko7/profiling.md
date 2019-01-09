@@ -1,6 +1,6 @@
 # Profiling
 
-KO7 provides a very simple way to display statistics about your application:
+Koseven provides a very simple way to display statistics about your application:
 
 1. Common [KO7] method calls, such as [KO7::find_file()].
 2. Requests. Including the main request, as well as any sub-requests.
@@ -46,9 +46,3 @@ At the very end is a group called "Application Execution".  This keeps track of 
 You can display or collect the current [profiler] statistics at any time:
 
     <?php echo View::factory('profiler/stats') ?>
-
-## Preview
-
-(This is the actual profiler stats for this page.)
-
-{{profiler/stats}}

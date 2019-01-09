@@ -1,12 +1,12 @@
 # Messages
 
-KO7 has a robust key based lookup system so you can define system messages.
+Koseven has a robust key based lookup system so you can define system messages.
 
 ## Getting a message
 
-Use the KO7::message() method to get a message key:
+Use the Koseven::message() method to get a message key:
 
-	Kohana::message('forms', 'foobar');
+	KO7::message('forms', 'foobar');
 
 This will look in the `messages/forms.php` file for the `foobar` key:
 
@@ -18,7 +18,7 @@ This will look in the `messages/forms.php` file for the `foobar` key:
 
 You can also look in subfolders and sub-keys:
 
-	Kohana::message('forms/contact', 'foobar.bar');
+	KO7::message('forms/contact', 'foobar.bar');
 
 This will look in the `messages/forms/contact.php` for the `[foobar][bar]` key:
 

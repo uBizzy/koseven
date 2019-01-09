@@ -6,7 +6,7 @@ We'll start out by creating a very very basic hello world, and then we'll expand
 
 ## Bare bones
 
-First off we have to make a controller that KO7 can use to handle a request.
+First off we have to make a controller that Koseven can use to handle a request.
 
 Create the file `application/classes/Controller/Hello.php` in your application folder and fill it out like so:
 
@@ -23,14 +23,14 @@ Create the file `application/classes/Controller/Hello.php` in your application f
 Lets see what's going on here:
 
 `<?php`
-:	You should recognize the first tag as an opening php tag (if you don't you should probably [learn php](http://php.net)).  What follows is a small check that makes sure that this file is being included by KO7.  It stops people from accessing files directly from the url.
+:	You should recognize the first tag as an opening php tag (if you don't you should probably [learn php](http://php.net)).  What follows is a small check that makes sure that this file is being included by Koseven.  It stops people from accessing files directly from the url.
 
 `Class Controller_Hello extends Controller`
 :	This line declares our controller,  each controller class has to be prefixed with `Controller_` and an underscore delimited path to the folder the controller is in (see [Conventions and styles](about.conventions) for more info).  Each controller should also extend the base `Controller` class which provides a standard structure for controllers.
 
 
 `public function action_index()`
-:	This defines the "index" action of our controller.  KO7 will attempt to call this action if the user hasn't specified an action. (See [Routes, URLs and Links](tutorials.urls))
+:	This defines the "index" action of our controller.  Koseven will attempt to call this action if the user hasn't specified an action. (See [Routes, URLs and Links](tutorials.urls))
 
 `echo 'hello, world!';`
 :	And this is the line which outputs the customary phrase!
@@ -41,7 +41,7 @@ Now if you open your browser and go to http://localhost/index.php/hello you shou
 
 ## That was good, but we can do better
 
-What we did in the previous section was a good example of how easy it to create an *extremely* basic KO7 app. (In fact it's so basic, that you should never make it again!)
+What we did in the previous section was a good example of how easy it to create an *extremely* basic Koseven app. (In fact it's so basic, that you should never make it again!)
 
 If you've ever heard anything about MVC you'll probably have realised that echoing content out in a controller is strictly against the principles of MVC.
 
@@ -74,7 +74,7 @@ Now lets try running our code...
 
 ![Hello, World!](hello_world_2_error.png "Hello, World!")
 
-For some reason KO7's thrown a wobbly and isn't showing our amazing message.
+For some reason Koseven's thrown a wobbly and isn't showing our amazing message.
 
 If we look at the error message we can see that the View library wasn't able to find our site template, probably because we haven't made it yet – *doh*!
 
@@ -103,4 +103,4 @@ If we refresh the page then we can see the fruits of our labour:
 
 In this tutorial you've learnt how to create a controller and use a view to separate your logic from your display.
 
-This is obviously a very basic introduction to working with KO7 and doesn't even scrape the potential you have when developing applications with it.
+This is obviously a very basic introduction to working with Koseven and doesn't even scrape the potential you have when developing applications with it.

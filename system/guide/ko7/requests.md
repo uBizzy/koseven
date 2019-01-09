@@ -1,10 +1,10 @@
 # Requests
 
-KO7 includes a flexible HMVC request system. It supports out of the box support for internal requests and external requests.
+Koseven includes a flexible HMVC request system. It supports out of the box support for internal requests and external requests.
 
 HMVC stands for `Hierarchical Model View Controller` and basically means requests can each have MVC triads called from inside each other.
 
-The Request object in KO7 is HTTP/1.1 compliant.
+The Request object in Koseven is HTTP/1.1 compliant.
 
 ## Creating Requests
 
@@ -20,7 +20,7 @@ In this example, the URI is 'welcome'.
 
 #### The initial request
 
-Since KO7 uses HMVC, you can call many requests inside each other. The first request (usually called from `index.php`) is called the "initial request". You can access this request via:
+Since Koseven uses HMVC, you can call many requests inside each other. The first request (usually called from `index.php`) is called the "initial request". You can access this request via:
 
 	Request::initial();
 
@@ -143,8 +143,6 @@ You can easily alter this behaviour by configuring your own 'Location' header ca
 
 ## Request Cache Control
 
-You can cache requests for fast execution by passing a cache instance in as the second parameter of factory:
+You can also cache requests for fast execution by passing a cache instance in as the second parameter of factory:
 
 	$request = Request::factory('welcome', array('cache'=>Cache::instance()));
-
-TODO
