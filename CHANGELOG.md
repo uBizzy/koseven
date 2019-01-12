@@ -1,6 +1,7 @@
 # Changelog 4.0
 ## General
  * Bug Fixes and Performance / Security Improvments.
+ * Error handlers strict compliance with PHP7+ (Replaced `Exception` with `Throwable`)
 ## Encryption
  * Deprecated Mcrypt Class (deprecated since PHP 7.1 - removed in PHP 7.2).
  * Add Support for Libsodium.
