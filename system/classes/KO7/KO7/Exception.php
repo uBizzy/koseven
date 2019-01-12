@@ -77,22 +77,13 @@ class KO7_KO7_Exception extends Exception {
      * Inline exception handler, displays the error message, source of the
      * exception, and the stack trace of the error.
      *
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::response
-     * @param   Exception  $e
-=======
-     * @uses    Kohana_Exception::response
      * @param   Throwable  $t
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @return  void
      */
     public static function handler(Throwable $t)
     {
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
-        $response = KO7_Exception::_handler($e);
-=======
-        $response = Kohana_Exception::_handler($t);
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
+        $response = KO7_Exception::_handler($t);
 
         // Send the response to the browser
         echo $response->send_headers()->body();
@@ -104,13 +95,8 @@ class KO7_KO7_Exception extends Exception {
      * Exception handler, logs the exception and generates a Response object
      * for display.
      *
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::response
-     * @param   Exception  $e
-=======
-     * @uses    Kohana_Exception::response
      * @param   Throwable  $t
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @return  Response
      */
     public static function _handler(Throwable $t)
@@ -118,17 +104,10 @@ class KO7_KO7_Exception extends Exception {
         try
         {
             // Log the exception
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
-            KO7_Exception::log($e);
+            KO7_Exception::log($t);
 
             // Generate the response
-            $response = KO7_Exception::response($e);
-=======
-            Kohana_Exception::log($t);
-
-            // Generate the response
-            $response = Kohana_Exception::response($t);
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
+            $response = KO7_Exception::response($t);
 
             return $response;
         }
@@ -153,13 +132,8 @@ class KO7_KO7_Exception extends Exception {
     /**
      * Logs an exception.
      *
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::text
-     * @param   Exception  $e
-=======
-     * @uses    Kohana_Exception::text
      * @param   Throwable  $t
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @param   int        $level
      * @return  void
      */
@@ -168,17 +142,10 @@ class KO7_KO7_Exception extends Exception {
         if (is_object(KO7::$log))
         {
             // Create a text version of the exception
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
-            $error = KO7_Exception::text($e);
+            $error = KO7_Exception::text($t);
 
             // Add this exception to the log
-            KO7::$log->add($level, $error, NULL, ['exception' => $e]);
-=======
-            $error = Kohana_Exception::text($t);
-
-            // Add this exception to the log
-            Kohana::$log->add($level, $error, NULL, ['exception' => $t]);
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
+            KO7::$log->add($level, $error, NULL, ['exception' => $t]);
 
             // Make sure the logs are written
             KO7::$log->write();
@@ -202,13 +169,8 @@ class KO7_KO7_Exception extends Exception {
     /**
      * Get a Response object representing the exception
      *
-<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::text
-     * @param   Exception  $e
-=======
-     * @uses    Kohana_Exception::text
      * @param   Throwable  $t
->>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @return  Response
      */
     public static function response(Throwable $t)
