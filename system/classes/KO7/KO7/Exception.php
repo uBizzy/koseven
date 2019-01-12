@@ -44,10 +44,10 @@ class KO7_KO7_Exception extends Exception {
      * @param   string          $message    error message
      * @param   array           $variables  translation variables
      * @param   integer|string  $code       the exception code
-     * @param   Exception       $previous   Previous exception
+     * @param   Throwable       $previous   Previous throwable
      * @return  void
      */
-    public function __construct($message = "", array $variables = NULL, $code = 0, Exception $previous = NULL)
+    public function __construct($message = "", array $variables = NULL, $code = 0, Throwable $previous = NULL)
     {
         // Set the message
         $message = __($message, $variables);
@@ -77,13 +77,22 @@ class KO7_KO7_Exception extends Exception {
      * Inline exception handler, displays the error message, source of the
      * exception, and the stack trace of the error.
      *
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::response
      * @param   Exception  $e
+=======
+     * @uses    Kohana_Exception::response
+     * @param   Throwable  $t
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @return  void
      */
-    public static function handler($e)
+    public static function handler(Throwable $t)
     {
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
         $response = KO7_Exception::_handler($e);
+=======
+        $response = Kohana_Exception::_handler($t);
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
 
         // Send the response to the browser
         echo $response->send_headers()->body();
@@ -95,19 +104,31 @@ class KO7_KO7_Exception extends Exception {
      * Exception handler, logs the exception and generates a Response object
      * for display.
      *
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::response
      * @param   Exception  $e
+=======
+     * @uses    Kohana_Exception::response
+     * @param   Throwable  $t
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @return  Response
      */
-    public static function _handler($e)
+    public static function _handler(Throwable $t)
     {
         try
         {
             // Log the exception
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
             KO7_Exception::log($e);
 
             // Generate the response
             $response = KO7_Exception::response($e);
+=======
+            Kohana_Exception::log($t);
+
+            // Generate the response
+            $response = Kohana_Exception::response($t);
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
 
             return $response;
         }
@@ -132,20 +153,32 @@ class KO7_KO7_Exception extends Exception {
     /**
      * Logs an exception.
      *
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::text
      * @param   Exception  $e
+=======
+     * @uses    Kohana_Exception::text
+     * @param   Throwable  $t
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @param   int        $level
      * @return  void
      */
-    public static function log($e, $level = Log::EMERGENCY)
+    public static function log(Throwable $t, $level = Log::EMERGENCY)
     {
         if (is_object(KO7::$log))
         {
             // Create a text version of the exception
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
             $error = KO7_Exception::text($e);
 
             // Add this exception to the log
             KO7::$log->add($level, $error, NULL, ['exception' => $e]);
+=======
+            $error = Kohana_Exception::text($t);
+
+            // Add this exception to the log
+            Kohana::$log->add($level, $error, NULL, ['exception' => $t]);
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
 
             // Make sure the logs are written
             KO7::$log->write();
@@ -157,52 +190,51 @@ class KO7_KO7_Exception extends Exception {
      *
      * Error [ Code ]: Message ~ File [ Line ]
      *
-     * @param   Exception  $e
+     * @param   Throwable  $t
      * @return  string
      */
-    public static function text($e)
+    public static function text(Throwable $t)
     {
-        if ( ! $e instanceof Exception AND ! $e instanceof Throwable )
-            throw InvalidArgumentException;
-
         return sprintf('%s [ %s ]: %s ~ %s [ %d ]',
-            get_class($e), $e->getCode(), strip_tags($e->getMessage()), Debug::path($e->getFile()), $e->getLine());
+            get_class($t), $t->getCode(), strip_tags($t->getMessage()), Debug::path($t->getFile()), $t->getLine());
     }
 
     /**
      * Get a Response object representing the exception
      *
+<<<<<<< HEAD:system/classes/KO7/KO7/Exception.php
      * @uses    KO7_Exception::text
      * @param   Exception  $e
+=======
+     * @uses    Kohana_Exception::text
+     * @param   Throwable  $t
+>>>>>>> upstream/devel:system/classes/Kohana/Kohana/Exception.php
      * @return  Response
      */
-    public static function response($e)
+    public static function response(Throwable $t)
     {
-        if ( ! $e instanceof Exception AND ! $e instanceof Throwable )
-            throw InvalidArgumentException;
-
         try
         {
             // Get the exception information
-            $class   = get_class($e);
-            $code    = $e->getCode();
-            $message = $e->getMessage();
-            $file    = $e->getFile();
-            $line    = $e->getLine();
-            $trace   = $e->getTrace();
+            $class   = get_class($t);
+            $code    = $t->getCode();
+            $message = $t->getMessage();
+            $file    = $t->getFile();
+            $line    = $t->getLine();
+            $trace   = $t->getTrace();
 
             /**
              * HTTP_Exceptions are constructed in the HTTP_Exception::factory()
              * method. We need to remove that entry from the trace and overwrite
              * the variables from above.
              */
-            if ($e instanceof HTTP_Exception AND $trace[0]['function'] == 'factory')
+            if ($t instanceof HTTP_Exception AND $trace[0]['function'] == 'factory')
             {
                 extract(array_shift($trace));
             }
 
 
-            if ($e instanceof ErrorException)
+            if ($t instanceof ErrorException)
             {
                 /**
                  * If XDebug is installed, and this is a fatal error,
@@ -272,7 +304,7 @@ class KO7_KO7_Exception extends Exception {
             $response = Response::factory();
 
             // Set the response status
-            $response->status(($e instanceof HTTP_Exception) ? $e->getCode() : 500);
+            $response->status(($t instanceof HTTP_Exception) ? $t->getCode() : 500);
 
             // Set the response headers
             $response->headers('Content-Type', KO7_Exception::$error_view_content_type.'; charset='.KO7::$charset);

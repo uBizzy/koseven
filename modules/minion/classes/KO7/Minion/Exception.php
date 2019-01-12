@@ -14,26 +14,26 @@ class KO7_Minion_Exception extends KO7_Exception {
 	 * Should this display a stack trace? It's useful.
 	 *
 	 * @uses    KO7_Exception::text
-	 * @param   Exception   $e
+	 * @param   Throwable  $t
 	 * @return  boolean
 	 */
-	public static function handler($e)
+	public static function handler(Throwable $t)
 	{
 		try
 		{
 			// Log the exception
-			KO7_Exception::log($e);
+			KO7_Exception::log($t);
 
-			if ($e instanceof Minion_Exception)
+			if ($t instanceof Minion_Exception)
 			{
-				echo $e->format_for_cli();
+				echo $t->format_for_cli();
 			}
 			else
 			{
-				echo KO7_Exception::text($e);
+				echo KO7_Exception::text($t);
 			}
 
-			$exit_code = $e->getCode();
+			$exit_code = $t->getCode();
 
 			// Never exit "0" after an exception.
 			if ($exit_code == 0)

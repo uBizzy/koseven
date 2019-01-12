@@ -8,7 +8,7 @@
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/koseven/koseven/pulls.svg)](https://github.com/koseven/koseven/pulls)
 [![Forum](https://img.shields.io/badge/Discourse-Join%20Forum-ff9c08.svg?logo=discourse)](https://koseven.discourse.group)
 
-## [Download 3.3.8](https://github.com/koseven/koseven/releases/tag/3.3.8)
+## [Download 3.3.9](https://github.com/koseven/koseven/releases/tag/3.3.9)
 
 ## [Join our Forum](https://koseven.discourse.group/)
 
