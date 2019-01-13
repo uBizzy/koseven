@@ -82,7 +82,9 @@ class Kohana_Config_File_Reader implements Kohana_Config_Reader {
 			}
 
 			// Merge config
-			$config = $value !== FALSE ? $config = Arr::merge($config, $value) : [];
+			if ($value !== FALSE) {
+				$config = Arr::merge($config, $value);
+			}
 		}
 
 		if (Kohana::$caching === TRUE)
