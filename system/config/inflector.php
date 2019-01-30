@@ -68,6 +68,7 @@ return [
 		'is'          => 'are',
 		'knife'       => 'knives',
 		'leaf'        => 'leaves',
+		'license'     => 'licenses',
 		'life'        => 'lives',
 		'loaf'        => 'loaves',
 		'man'         => 'men',
