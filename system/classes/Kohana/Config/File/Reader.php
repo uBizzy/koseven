@@ -47,13 +47,15 @@ class Kohana_Config_File_Reader implements Kohana_Config_Reader {
 	public function load($group) : array
 	{
 		// Check caches and start Profiling
-		if (Kohana::$caching === TRUE && isset(self::$_cache[$group]))
+		if (Kohana::$caching && isset(self::$_cache[$group]))
 		{
 			// This group has been cached
+			// @codeCoverageIgnoreStart
 			return self::$_cache[$group];
+			// @codeCoverageIgnoreEnd
 		}
 
-		if (Kohana::$profiling === TRUE && class_exists('Profiler', FALSE))
+		if (Kohana::$profiling && class_exists('Profiler', FALSE))
 		{
 			// Start a new benchmark
 			$benchmark = Profiler::start('Config', __FUNCTION__);
@@ -76,7 +78,9 @@ class Kohana_Config_File_Reader implements Kohana_Config_Reader {
 				$value = json_decode($this->read_from_ob($path), true);
 			} elseif (file_exists($path = $file.'.yaml')) {
 				if ( ! extension_loaded('yaml')) {
+					// @codeCoverageIgnoreStart
 					throw new Kohana_Exception('PECL Yaml Extension is required in order to parse YAML Config');
+					// @codeCoverageIgnoreEnd
 				}
 				$value = yaml_parse($this->read_from_ob($path));
 			}
@@ -87,9 +91,11 @@ class Kohana_Config_File_Reader implements Kohana_Config_Reader {
 			}
 		}
 
-		if (Kohana::$caching === TRUE)
+		if (Kohana::$caching)
 		{
+			// @codeCoverageIgnoreStart
 			self::$_cache[$group] = $config;
+			// @codeCoverageIgnoreEnd
 		}
 
 		if (isset($benchmark))
@@ -108,6 +114,7 @@ class Kohana_Config_File_Reader implements Kohana_Config_Reader {
 	 * @param  string $path Path to File
 	 *
 	 * @return false|string
+	 * @codeCoverageIgnore
 	 */
 	protected function read_from_ob($path)
 	{
