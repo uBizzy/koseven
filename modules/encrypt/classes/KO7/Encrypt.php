@@ -55,7 +55,7 @@ class KO7_Encrypt {
 	 *
 	 * @throws KO7_Exception
 	 */
-	private function __construct(string $name, array $config)
+	public function __construct(string $name, array $config)
 	{
 		// Get Driver Type
 		$config['type'] = $config['type'] ?? self::$default_engine;
