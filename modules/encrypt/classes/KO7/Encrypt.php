@@ -93,10 +93,10 @@ class KO7_Encrypt {
 	 * @param  string     $name   Configuration group name
 	 * @param  array|null $config Configuration
 	 *
-	 * @return self
+	 * @return KO7_Encrypt
 	 * @throws KO7_Exception
 	 */
-	public static function instance(string $name = NULL, array $config = NULL): self
+	public static function instance(string $name = NULL, array $config = NULL)
 	{
 		if ($name === NULL) {
 			// Use the default instance name
