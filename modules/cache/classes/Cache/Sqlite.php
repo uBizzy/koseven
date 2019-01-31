@@ -1,3 +1,3 @@
 <?php
 
-class Cache_Sqlite extends Kohana_Cache_Sqlite {}
+class Cache_Sqlite extends KO7_Cache_Sqlite {}

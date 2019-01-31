@@ -1,3 +1,3 @@
 <?php
 
-abstract class Database extends Kohana_Database {}
+abstract class Database extends KO7_Database {}

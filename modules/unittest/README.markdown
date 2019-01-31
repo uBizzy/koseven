@@ -1,8 +1,8 @@
-# Kohana-PHPUnit integration
+# KO7-PHPUnit integration
 
-This module integrates PHPUnit with Kohana and is used to run all the core Kohana tests. In most cases you will not
+This module integrates PHPUnit with KO7 and is used to run all the core KO7 tests. In most cases you will not
 need to use this module for testing your own projects. If there are particular helpers provided here that you rely on,
-that may be a sign that your own code is too closely coupled to the behaviour of the Kohana core classes.
+that may be a sign that your own code is too closely coupled to the behaviour of the KO7 core classes.
 
 If you look through any of the tests provided in this module you'll probably notice all theHorribleCamelCase.
 I've chosen to do this because it's part of the PHPUnit coding conventions and is required for certain features such as auto documentation.
@@ -15,7 +15,7 @@ Note that more usually you will add this module to your own module's composer.js
 ```json
 {
   "require-dev": {
-    "kohana/unittest": "3.3.*@dev"
+    "ko7/unittest": "3.3.*@dev"
   }
 }
 ```

@@ -1,3 +1,3 @@
 <?php
 
-class Image_Imagick extends Kohana_Image_Imagick {}
+class Image_Imagick extends KO7_Image_Imagick {}

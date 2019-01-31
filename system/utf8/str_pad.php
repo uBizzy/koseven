@@ -2,7 +2,7 @@
 /**
  * UTF8::str_pad
  *
- * @package    Kohana
+ * @package    KO7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks

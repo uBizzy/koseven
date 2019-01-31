@@ -2,7 +2,7 @@
 /**
  * Default auth user
  *
- * @package    Kohana/Auth
+ * @package    KO7/Auth
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md

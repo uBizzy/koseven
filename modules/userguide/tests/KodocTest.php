@@ -1,14 +1,14 @@
 <?php
 /**
- * @group kohana
- * @group kohana.userguide
+ * @group ko7
+ * @group ko7.userguide
  *
- * @package    Kohana/Userguide
+ * @package    KO7/Userguide
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_KodocTest extends Unittest_TestCase
+class KO7_KodocTest extends Unittest_TestCase
 {
 	public function provider_parse_basic()
 	{
@@ -123,7 +123,7 @@ COMMENT
 	}
 
 	/**
-	 * @covers  Kohana_Kodoc::parse
+	 * @covers  KO7_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_basic
 	 *
@@ -170,38 +170,38 @@ COMMENT
 			[
 <<<'COMMENT'
 /**
- * @license Kohana
+ * @license KO7
  */
 COMMENT
 ,
-				['', ['license' => ['Kohana']]],
+				['', ['license' => ['KO7']]],
 			],
 			[
 <<<'COMMENT'
 /**
- * @license http://kohanaframework.org/license
+ * @license http://koseven.ga/license
  */
 COMMENT
 ,
-				['', ['license' => ['<a href="http://kohanaframework.org/license">http://kohanaframework.org/license</a>']]],
+				['', ['license' => ['<a href="http://koseven.ga/license">http://koseven.ga/license</a>']]],
 			],
 			[
 <<<'COMMENT'
 /**
- * @link http://kohanaframework.org
+ * @link http://koseven.ga
  */
 COMMENT
 ,
-				['', ['link' => ['<a href="http://kohanaframework.org">http://kohanaframework.org</a>']]],
+				['', ['link' => ['<a href="http://koseven.ga">http://koseven.ga</a>']]],
 			],
 			[
 <<<'COMMENT'
 /**
- * @link http://kohanaframework.org Description
+ * @link http://koseven.ga Description
  */
 COMMENT
 ,
-				['', ['link' => ['<a href="http://kohanaframework.org">Description</a>']]],
+				['', ['link' => ['<a href="http://koseven.ga">Description</a>']]],
 			],
 			[
 <<<'COMMENT'
@@ -315,8 +315,8 @@ COMMENT
 	}
 
 	/**
-	 * @covers  Kohana_Kodoc::format_tag
-	 * @covers  Kohana_Kodoc::parse
+	 * @covers  KO7_Kodoc::format_tag
+	 * @covers  KO7_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_tags
 	 *
@@ -335,15 +335,15 @@ COMMENT
 	public function provider_transparent_classes()
 	{
 		return [
-			// Kohana_Core is a special case
-			['Kohana','Kohana_Core',NULL],
-			['Controller_Template','Kohana_Controller_Template',NULL],
-			['Controller_Template','Kohana_Controller_Template',
-				['Kohana_Controller_Template'=>'Kohana_Controller_Template',
+			// KO7_Core is a special case
+			['KO7','KO7_Core',NULL],
+			['Controller_Template','KO7_Controller_Template',NULL],
+			['Controller_Template','KO7_Controller_Template',
+				['KO7_Controller_Template'=>'KO7_Controller_Template',
 					'Controller_Template'=>'Controller_Template']
 			],
-			[FALSE,'Kohana_Controller_Template',
-				['Kohana_Controller_Template'=>'Kohana_Controller_Template']],
+			[FALSE,'KO7_Controller_Template',
+				['KO7_Controller_Template'=>'KO7_Controller_Template']],
 			[FALSE,'Controller_Template',NULL],
 		];
 	}
@@ -353,7 +353,7 @@ COMMENT
 	 *
 	 * Checks that a selection of transparent and non-transparent classes give expected results
 	 *
-	 * @group kohana.userguide.3529-configurable-transparent-classes
+	 * @group ko7.userguide.3529-configurable-transparent-classes
 	 * @dataProvider provider_transparent_classes
 	 * @param mixed $expected
 	 * @param string $class

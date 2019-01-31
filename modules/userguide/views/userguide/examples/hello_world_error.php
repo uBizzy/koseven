@@ -1,23 +1,23 @@
 <style type="text/css">
-#kohana_error { background: #ddd; font-size: 1em; font-family:sans-serif; text-align: left; color: #111; }
-#kohana_error h1,
-#kohana_error h2 { margin: 0; padding: 1em; font-size: 1em; font-weight: normal; background: #911; color: #fff; }
-	#kohana_error h1 a,
-	#kohana_error h2 a { color: #fff; }
-#kohana_error h2 { background: #222; }
-#kohana_error h3 { margin: 0; padding: 0.4em 0 0; font-size: 1em; font-weight: normal; }
-#kohana_error p { margin: 0; padding: 0.2em 0; }
-#kohana_error a { color: #1b323b; }
-#kohana_error pre { overflow: auto; white-space: pre-wrap; }
-#kohana_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
-	#kohana_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
-#kohana_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
-#kohana_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
-	#kohana_error pre.source span.line { display: block; }
-	#kohana_error pre.source span.highlight { background: #f0eb96; }
-		#kohana_error pre.source span.line span.number { color: #666; }
-#kohana_error ol.trace { display: block; margin: 0 0 0 2em; padding: 0; list-style: decimal; }
-	#kohana_error ol.trace li { margin: 0; padding: 0; }
+#koseven_error { background: #ddd; font-size: 1em; font-family:sans-serif; text-align: left; color: #111; }
+#koseven_error h1,
+#koseven_error h2 { margin: 0; padding: 1em; font-size: 1em; font-weight: normal; background: #911; color: #fff; }
+	#koseven_error h1 a,
+	#koseven_error h2 a { color: #fff; }
+#koseven_error h2 { background: #222; }
+#koseven_error h3 { margin: 0; padding: 0.4em 0 0; font-size: 1em; font-weight: normal; }
+#koseven_error p { margin: 0; padding: 0.2em 0; }
+#koseven_error a { color: #1b323b; }
+#koseven_error pre { overflow: auto; white-space: pre-wrap; }
+#koseven_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
+	#koseven_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
+#koseven_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
+#koseven_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
+	#koseven_error pre.source span.line { display: block; }
+	#koseven_error pre.source span.highlight { background: #f0eb96; }
+		#koseven_error pre.source span.line span.number { color: #666; }
+#koseven_error ol.trace { display: block; margin: 0 0 0 2em; padding: 0; list-style: decimal; }
+	#koseven_error ol.trace li { margin: 0; padding: 0; }
 </style>
 <script type="text/javascript">
 document.write('<style type="text/css"> .collapsed { display: none; } </style>');
@@ -40,32 +40,32 @@ function koggle(elem)
 	return false;
 }
 </script>
-<div id="kohana_error">
-	<h1><span class="type">Kohana_View_Exception [ 0 ]:</span> <span class="message">The requested view site could not be found</span></h1>
+<div id="koseven_error">
+	<h1><span class="type">KO7_View_Exception [ 0 ]:</span> <span class="message">The requested view site could not be found</span></h1>
 	<div id="error4ac2453378034" class="content">
-		<p><span class="file">SYSPATH/classes/kohana/view.php [ 215 ]</span></p>
+		<p><span class="file">SYSPATH/classes/ko7/view.php [ 215 ]</span></p>
 		<pre class="source"><code><span class="line"><span class="number">210</span> 	 */
 
 </span><span class="line"><span class="number">211</span> 	public function set_filename($file)
 </span><span class="line"><span class="number">212</span> 	{
-</span><span class="line"><span class="number">213</span> 		if (($path = Kohana::find_file('views', $file)) === FALSE)
+</span><span class="line"><span class="number">213</span> 		if (($path = KO7::find_file('views', $file)) === FALSE)
 </span><span class="line"><span class="number">214</span> 		{
-</span><span class="line highlight"><span class="number">215</span> 			throw new Kohana_View_Exception('The requested view :file could not be found', array(
+</span><span class="line highlight"><span class="number">215</span> 			throw new KO7_View_Exception('The requested view :file could not be found', array(
 </span><span class="line"><span class="number">216</span> 				':file' =&gt; $file,
 
 </span><span class="line"><span class="number">217</span> 			));
 </span><span class="line"><span class="number">218</span> 		}
-</span><span class="line"><span class="number">219</span> 
+</span><span class="line"><span class="number">219</span>
 </span><span class="line"><span class="number">220</span> 		// Store the file path locally
 </span></code></pre>		<ol class="trace">
 					<li>
 				<p>
 
 					<span class="file">
-													<a href="#error4ac2453378034source0" onclick="return koggle('error4ac2453378034source0')">SYSPATH/classes/kohana/view.php [ 115 ]</a>
+													<a href="#error4ac2453378034source0" onclick="return koggle('error4ac2453378034source0')">SYSPATH/classes/ko7/view.php [ 115 ]</a>
 											</span>
 					&raquo;
-					Kohana_View->set_filename(<a href="#error4ac2453378034args0" onclick="return koggle('error4ac2453378034args0')">arguments</a>)
+					KO7_View->set_filename(<a href="#error4ac2453378034args0" onclick="return koggle('error4ac2453378034args0')">arguments</a>)
 				</p>
 								<div id="error4ac2453378034args0" class="collapsed">
 					<table cellspacing="0">
@@ -85,7 +85,7 @@ function koggle(elem)
 </span><span class="line highlight"><span class="number">115</span> 			$this-&gt;set_filename($file);
 
 </span><span class="line"><span class="number">116</span> 		}
-</span><span class="line"><span class="number">117</span> 
+</span><span class="line"><span class="number">117</span>
 </span><span class="line"><span class="number">118</span> 		if ( $data !== NULL)
 </span><span class="line"><span class="number">119</span> 		{
 </span><span class="line"><span class="number">120</span> 			// Add the values to the current data
@@ -95,10 +95,10 @@ function koggle(elem)
 								<li>
 				<p>
 					<span class="file">
-													<a href="#error4ac2453378034source1" onclick="return koggle('error4ac2453378034source1')">SYSPATH/classes/kohana/view.php [ 26 ]</a>
+													<a href="#error4ac2453378034source1" onclick="return koggle('error4ac2453378034source1')">SYSPATH/classes/ko7/view.php [ 26 ]</a>
 											</span>
 					&raquo;
-					Kohana_View->__construct(<a href="#error4ac2453378034args1" onclick="return koggle('error4ac2453378034args1')">arguments</a>)
+					KO7_View->__construct(<a href="#error4ac2453378034args1" onclick="return koggle('error4ac2453378034args1')">arguments</a>)
 				</p>
 
 								<div id="error4ac2453378034args1" class="collapsed">
@@ -123,7 +123,7 @@ function koggle(elem)
 </span><span class="line highlight"><span class="number">26</span> 		return new View($file, $data);
 </span><span class="line"><span class="number">27</span> 	}
 
-</span><span class="line"><span class="number">28</span> 
+</span><span class="line"><span class="number">28</span>
 </span><span class="line"><span class="number">29</span> 	/**
 </span><span class="line"><span class="number">30</span> 	 * Captures the output that is generated when a view is included.
 </span><span class="line"><span class="number">31</span> 	 * The view data will be extracted to make local variables. This method
@@ -133,10 +133,10 @@ function koggle(elem)
 				<p>
 
 					<span class="file">
-													<a href="#error4ac2453378034source2" onclick="return koggle('error4ac2453378034source2')">SYSPATH/classes/kohana/controller/template.php [ 32 ]</a>
+													<a href="#error4ac2453378034source2" onclick="return koggle('error4ac2453378034source2')">SYSPATH/classes/ko7/controller/template.php [ 32 ]</a>
 											</span>
 					&raquo;
-					Kohana_View::factory(<a href="#error4ac2453378034args2" onclick="return koggle('error4ac2453378034args2')">arguments</a>)
+					KO7_View::factory(<a href="#error4ac2453378034args2" onclick="return koggle('error4ac2453378034args2')">arguments</a>)
 				</p>
 								<div id="error4ac2453378034args2" class="collapsed">
 					<table cellspacing="0">
@@ -157,7 +157,7 @@ function koggle(elem)
 </span><span class="line highlight"><span class="number">32</span> 			$this-&gt;template = View::factory($this-&gt;template);
 </span><span class="line"><span class="number">33</span> 		}
 </span><span class="line"><span class="number">34</span> 	}
-</span><span class="line"><span class="number">35</span> 
+</span><span class="line"><span class="number">35</span>
 </span><span class="line"><span class="number">36</span> 	/**
 </span><span class="line"><span class="number">37</span> 	 * Assigns the template as the request response.
 
@@ -169,14 +169,14 @@ function koggle(elem)
 													{PHP internal call}
 											</span>
 					&raquo;
-					Kohana_Controller_Template->before()
+					KO7_Controller_Template->before()
 				</p>
 
 											</li>
 								<li>
 				<p>
 					<span class="file">
-													<a href="#error4ac2453378034source4" onclick="return koggle('error4ac2453378034source4')">SYSPATH/classes/kohana/request.php [ 840 ]</a>
+													<a href="#error4ac2453378034source4" onclick="return koggle('error4ac2453378034source4')">SYSPATH/classes/ko7/request.php [ 840 ]</a>
 											</span>
 					&raquo;
 					ReflectionMethod->invoke(<a href="#error4ac2453378034args4" onclick="return koggle('error4ac2453378034args4')">arguments</a>)
@@ -192,7 +192,7 @@ function koggle(elem)
     <small>public</small> request => <small>object</small> <span>Request(9)</span> <code>{
         <small>public</small> route => <small>object</small> <span>Route(4)</span> <code>{
             <small>protected</small> _uri => <small>string</small><span>(32)</span> "(&lt;controller&gt;(/&lt;action&gt;(/&lt;id&gt;)))"
-            <small>protected</small> _regex => <small>array</small><span>(0)</span> 
+            <small>protected</small> _regex => <small>array</small><span>(0)</span>
             <small>protected</small> _defaults => <small>array</small><span>(2)</span> <span>(
                 "controller" => <small>string</small><span>(7)</span> "welcome"
                 "action" => <small>string</small><span>(5)</span> "index"
@@ -210,25 +210,25 @@ function koggle(elem)
         <small>public</small> controller => <small>string</small><span>(5)</span> "hello"
         <small>public</small> action => <small>string</small><span>(5)</span> "index"
         <small>public</small> uri => <small>string</small><span>(5)</span> "hello"
-        <small>protected</small> _params => <small>array</small><span>(0)</span> 
+        <small>protected</small> _params => <small>array</small><span>(0)</span>
     }</code>
 
 }</code></pre></td>
 						</tr>
 										</table>
 				</div>
-													<pre id="error4ac2453378034source4" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">835</span> 
+													<pre id="error4ac2453378034source4" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">835</span>
 </span><span class="line"><span class="number">836</span> 			// Create a new instance of the controller
 </span><span class="line"><span class="number">837</span> 			$controller = $class-&gt;newInstance($this);
 
-</span><span class="line"><span class="number">838</span> 
+</span><span class="line"><span class="number">838</span>
 </span><span class="line"><span class="number">839</span> 			// Execute the "before action" method
 </span><span class="line highlight"><span class="number">840</span> 			$class-&gt;getMethod('before')-&gt;invoke($controller);
-</span><span class="line"><span class="number">841</span> 
+</span><span class="line"><span class="number">841</span>
 </span><span class="line"><span class="number">842</span> 			// Determine the action to use
 </span><span class="line"><span class="number">843</span> 			$action = empty($this-&gt;action) ? Route::$default_action : $this-&gt;action;
 
-</span><span class="line"><span class="number">844</span> 
+</span><span class="line"><span class="number">844</span>
 </span><span class="line"><span class="number">845</span> 			// Execute the main action with the parameters
 </span></code></pre></code></pre>
 							</li>
@@ -239,7 +239,7 @@ function koggle(elem)
 
 											</span>
 					&raquo;
-					Kohana_Request->execute()
+					KO7_Request->execute()
 				</p>
 													<pre id="error4ac2453378034source5" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">71</span> /**
 </span><span class="line"><span class="number">72</span>  * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
@@ -266,15 +266,15 @@ function koggle(elem)
 					<table cellspacing="0">
 											<tr>
 							<td><code>0</code></td>
-							<td><pre><small>string</small><span>(49)</span> "/var/www/kohana/testing/application/bootstrap.php"</pre></td>
+							<td><pre><small>string</small><span>(49)</span> "/var/www/ko7/testing/application/bootstrap.php"</pre></td>
 						</tr>
 
 										</table>
 				</div>
 													<pre id="error4ac2453378034source6" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">101</span> 	// Load empty core extension
-</span><span class="line"><span class="number">102</span> 	require SYSPATH.'classes/kohana'.EXT;
+</span><span class="line"><span class="number">102</span> 	require SYSPATH.'classes/ko7'.EXT;
 </span><span class="line"><span class="number">103</span> }
-</span><span class="line"><span class="number">104</span> 
+</span><span class="line"><span class="number">104</span>
 </span><span class="line"><span class="number">105</span> // Bootstrap the application
 
 </span><span class="line highlight"><span class="number">106</span> require APPPATH.'bootstrap'.EXT;
@@ -296,10 +296,10 @@ function koggle(elem)
 				</tr>
 
 								<tr>
-					<td><code>SYSPATH/classes/kohana/core.php</code></td>
+					<td><code>SYSPATH/classes/ko7/core.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana.php</code></td>
+					<td><code>SYSPATH/classes/ko7.php</code></td>
 				</tr>
 								<tr>
 					<td><code>APPPATH/bootstrap.php</code></td>
@@ -309,28 +309,28 @@ function koggle(elem)
 					<td><code>SYSPATH/classes/profiler.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/profiler.php</code></td>
+					<td><code>SYSPATH/classes/ko7/profiler.php</code></td>
 				</tr>
 								<tr>
 
-					<td><code>SYSPATH/classes/kohana/log.php</code></td>
+					<td><code>SYSPATH/classes/ko7/log.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/config.php</code></td>
+					<td><code>SYSPATH/classes/ko7/config.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/log/file.php</code></td>
+					<td><code>SYSPATH/classes/ko7/log/file.php</code></td>
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/log/writer.php</code></td>
+					<td><code>SYSPATH/classes/ko7/log/writer.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/config/file.php</code></td>
+					<td><code>SYSPATH/classes/ko7/config/file.php</code></td>
 				</tr>
 								<tr>
 
-					<td><code>SYSPATH/classes/kohana/config/reader.php</code></td>
+					<td><code>SYSPATH/classes/ko7/config/reader.php</code></td>
 				</tr>
 								<tr>
 					<td><code>MODPATH/codebench/init.php</code></td>
@@ -340,17 +340,17 @@ function koggle(elem)
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/route.php</code></td>
+					<td><code>SYSPATH/classes/ko7/route.php</code></td>
 				</tr>
 								<tr>
-					<td><code>/var/www/kohana/userguide/init.php</code></td>
+					<td><code>/var/www/ko7/userguide/init.php</code></td>
 				</tr>
 								<tr>
 
 					<td><code>SYSPATH/classes/request.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/request.php</code></td>
+					<td><code>SYSPATH/classes/ko7/request.php</code></td>
 				</tr>
 								<tr>
 					<td><code>APPPATH/classes/controller/hello.php</code></td>
@@ -360,38 +360,38 @@ function koggle(elem)
 					<td><code>SYSPATH/classes/controller/template.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/controller/template.php</code></td>
+					<td><code>SYSPATH/classes/ko7/controller/template.php</code></td>
 				</tr>
 								<tr>
 
 					<td><code>SYSPATH/classes/controller.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/controller.php</code></td>
+					<td><code>SYSPATH/classes/ko7/controller.php</code></td>
 				</tr>
 								<tr>
 					<td><code>SYSPATH/classes/view.php</code></td>
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/view.php</code></td>
+					<td><code>SYSPATH/classes/ko7/view.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/view/exception.php</code></td>
+					<td><code>SYSPATH/classes/ko7/view/exception.php</code></td>
 				</tr>
 								<tr>
 
-					<td><code>SYSPATH/classes/kohana/exception.php</code></td>
+					<td><code>SYSPATH/classes/ko7/exception.php</code></td>
 				</tr>
 								<tr>
 					<td><code>SYSPATH/classes/i18n.php</code></td>
 				</tr>
 								<tr>
-					<td><code>SYSPATH/classes/kohana/i18n.php</code></td>
+					<td><code>SYSPATH/classes/ko7/i18n.php</code></td>
 
 				</tr>
 								<tr>
-					<td><code>SYSPATH/views/kohana/error.php</code></td>
+					<td><code>SYSPATH/views/ko7/error.php</code></td>
 				</tr>
 							</table>
 		</div>
@@ -627,7 +627,7 @@ function koggle(elem)
 								<tr>
 
 					<td><code>SCRIPT_FILENAME</code></td>
-					<td><pre><small>string</small><span>(33)</span> "/var/www/kohana/testing/index.php"</pre></td>
+					<td><pre><small>string</small><span>(33)</span> "/var/www/ko7/testing/index.php"</pre></td>
 				</tr>
 								<tr>
 					<td><code>REMOTE_PORT</code></td>
@@ -655,11 +655,11 @@ function koggle(elem)
 								<tr>
 
 					<td><code>REQUEST_URI</code></td>
-					<td><pre><small>string</small><span>(31)</span> "/kohana/testing/index.php/hello"</pre></td>
+					<td><pre><small>string</small><span>(31)</span> "/ko7/testing/index.php/hello"</pre></td>
 				</tr>
 								<tr>
 					<td><code>SCRIPT_NAME</code></td>
-					<td><pre><small>string</small><span>(25)</span> "/kohana/testing/index.php"</pre></td>
+					<td><pre><small>string</small><span>(25)</span> "/ko7/testing/index.php"</pre></td>
 
 				</tr>
 								<tr>
@@ -673,7 +673,7 @@ function koggle(elem)
 				</tr>
 								<tr>
 					<td><code>PHP_SELF</code></td>
-					<td><pre><small>string</small><span>(31)</span> "/kohana/testing/index.php/hello"</pre></td>
+					<td><pre><small>string</small><span>(31)</span> "/ko7/testing/index.php/hello"</pre></td>
 
 				</tr>
 								<tr>

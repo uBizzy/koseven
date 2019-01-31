@@ -1,6 +1,6 @@
 # Image
 
-Kohana 3.x provides a simple yet powerful image manipulation module. The [Image] module provides features that allows your application to resize images, crop, rotate, flip and many more.
+Koseven provides a simple yet powerful image manipulation module. The [Image] module provides features that allows your application to resize images, crop, rotate, flip and many more.
 
 ## Drivers
 
@@ -17,18 +17,14 @@ The [Image_GD] driver is the default. You can change this by providing an `image
 return array(
     'default_driver' => 'Imagick'
 );
-~~~
-
-[!!] Older versions of Kohana allowed you to configure the driver with the `Image::$default_driver` static variable in
-the bootstrap, an extension class, or elsewhere. That variable is now deprecated and will be ignored if you set a 
-config value. 
+~~~ 
 
 ## Getting Started
 
 Before using the image module, we must enable it first on `APPPATH/bootstrap.php`:
 
 ~~~
-Kohana::modules(array(
+KO7::modules(array(
     ...
     'image' => MODPATH.'image',  // Image manipulation
     ...

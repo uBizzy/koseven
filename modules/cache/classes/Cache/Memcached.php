@@ -13,13 +13,13 @@
  * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE
  * IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  *
- * @package   Kohana/Cache
+ * @package   KO7/Cache
  * @author    gimpe <gimpehub@intljaywalkers.com>
  * @copyright 2011 International Jaywalkers
  * @copyright (c) 2018 Koseven Team
  * @license   http://creativecommons.org/licenses/by/3.0/ CC BY 3.0
- * @link      http://github.com/gimpe/kohana-memcached
+ * @link      http://github.com/gimpe/ko7-memcached
  */
-class Cache_Memcached extends Kohana_Cache_Memcached
+class Cache_Memcached extends KO7_Cache_Memcached
 {
 }

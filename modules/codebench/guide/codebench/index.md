@@ -26,7 +26,7 @@ Throwing valuable benchmark data away every time I needed to optimize another re
 
 Obviously providing a visual representation of the benchmark results, via simple graphs, would make interpreting them easier. Having not to think about Internet Explorer for once, made writing CSS a whole lot more easy and fun. It resulted in some fine graphs which are fully resizable.
 
-Below are two screenshots of Codebench in action. `Valid_Color` is a class made for benchmarking different ways to validate hexadecimal HTML color values, e.g. `#FFF`. If you are interested in the story behind the actual regular expressions, take a look at [this topic in the Kohana forums](http://forum.kohanaframework.org/discussion/2192).
+Below are two screenshots of Codebench in action. `Valid_Color` is a class made for benchmarking different ways to validate hexadecimal HTML color values, e.g. `#FFF`. If you are interested in the story behind the actual regular expressions.
 
 ![Benchmarking several ways to validate HTML color values](codebench_screenshot1.png)
 **Benchmarking seven ways to validate HTML color values**
@@ -36,7 +36,7 @@ Below are two screenshots of Codebench in action. `Valid_Color` is a class made 
 
 ## Working with Codebench
 
-Codebench is included in Kohana 3, but if you need you [can download it](http://github.com/kohana/codebench/) from GitHub. Be sure Codebench is activated in your `application/bootstrap.php`.
+Codebench is included in Koseven. Be sure Codebench is activated in your `application/bootstrap.php`.
 
 Creating your own benchmarks is just a matter of creating a class that extends the Codebench class.  The class should go in `classes/bench` and the class name should have the `Bench_` prefix.  Put the code parts you want to compare into separate methods. Be sure to prefix those methods with `bench_`, other methods will not be benchmarked. Glance at the files in `modules/codebench/classes/bench/` for more examples.
 

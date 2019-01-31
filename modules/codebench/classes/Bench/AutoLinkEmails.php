@@ -1,13 +1,13 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
 class Bench_AutoLinkEmails extends Codebench {
 
 	public $description =
-		'Fixing <a href="http://dev.kohanaphp.com/issues/2772">#2772</a>, and comparing some possibilities.';
+		'Fixing <a href="http://github.com/koseven/koseven/issues/2772">#2772</a>, and comparing some possibilities.';
 
 	public $loops = 1000;
 
