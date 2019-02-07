@@ -1,10 +1,9 @@
 <?php
-
 /**
- * @package    KO7/ORM
- * @author     Koseven Team
+ * @package        KO7/ORM
+ * @author         Koseven Team
  * @copyright  (c) 2016-2018 Koseven Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license        https://koseven.ga/LICENSE.md
  */
 class ORM_Behavior_Guid extends ORM_Behavior {
 
@@ -15,105 +14,109 @@ class ORM_Behavior_Guid extends ORM_Behavior {
 	protected $_guid_column = 'guid';
 
 	/**
-	 * Allow model creaton on guid key only
+	 * Allow model creat on on guid key only
 	 * @var boolean
 	 */
 	protected $_guid_only = TRUE;
+
+	/**
+	 * Verify GUID
+	 * @var boolean
+	 */
+	protected $_guid_verify = FALSE;
 
 	/**
 	 * Constructs a behavior object
 	 *
 	 * @param   array $config Configuration parameters
 	 */
-  protected function __construct($config)
-  {
-    parent::__construct($config);
+	protected function __construct($config)
+	{
+		parent::__construct($config);
 
-    $this->_guid_column = Arr::get($config, 'column', $this->_guid_column);
-    $this->_guid_only = Arr::get($config, 'guid_only', $this->_guid_only);
-  }
+		$this->_guid_column = Arr::get($config, 'column', $this->_guid_column);
+		$this->_guid_only = Arr::get($config, 'guid_only', $this->_guid_only);
+		$this->_guid_verify = Arr::get($config, 'verify', $this->_guid_verify);
+	}
 
 	/**
 	 * Constructs a new model and loads a record if given
 	 *
-   * @param   ORM   $model The model
+	 * @param   ORM   $model The model
 	 * @param   mixed $id    Parameter for find or object to load
+	 *
+	 * @return bool
+	 * @throws KO7_Exception
 	 */
-	public function on_construct($model, $id)
+	public function on_construct($model, $id) : bool
 	{
-		if (($id !== NULL) AND ! is_array($id) AND ! ctype_digit($id))
-    {
-      if (UUID::valid($id))
-      {
-        $model->where($this->_guid_column, '=', $id)->find();
+		if (($id !== NULL) && ! is_array($id) && ! ctype_digit($id)) {
+			if (UUID::valid($id)) {
+				$model->where($this->_guid_column, '=', $id)->find();
 
-        // Prevent further record loading
-        return FALSE;
-      }
-    }
+				// Prevent further record loading
+				return FALSE;
+			}
+		}
 
-    return TRUE;
+		return TRUE;
 	}
 
-  /**
-   * The model is updated, add a guid value if empty
-   *
-   * @param   ORM   $model The model
-   */
-  public function on_update($model)
-  {
-    $this->create_guid($model);
-  }
+	/**
+	 * The model is updated, add a guid value if empty
+	 *
+	 * @param   ORM $model The model
+	 *
+	 * @throws Exception
+	 */
+	public function on_update($model)
+	{
+		$this->create_guid($model);
+	}
 
-  /**
-   * A new model is created, add a guid value
-   *
-   * @param   ORM   $model The model
-   */
-  public function on_create($model)
-  {
-    $this->create_guid($model);
-  }
+	/**
+	 * Create GUUID
+	 *
+	 * @param $model	Model to generate GUID for
+	 *
+	 * @throws Exception
+	 */
+	private function create_guid($model)
+	{
+		if ($this->_guid_verify === FALSE)
+		{
+			$model->set($this->_guid_column, UUID::v4());
+			return;
+		}
 
-  private function create_guid($model)
-  {
-    $current_guid = $model->get($this->_guid_column);
+		$current_guid = $model->get($this->_guid_column);
 
-    // Try to create a new GUID
-    $query = DB::select()->from($model->table_name())
-      ->where($this->_guid_column, '=', ':guid')
-      ->limit(1);
+		// Try to create a new GUID
+		$query = DB::select()->from($model->table_name())
+			->where($this->_guid_column, '=', ':guid')
+			->limit(1);
 
-    while (empty($current_guid))
-    {
-      $current_guid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        // 32 bits for "time_low"
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+		while (empty($current_guid)) {
+			$current_guid = UUID::v4();
 
-        // 16 bits for "time_mid"
-        mt_rand(0, 0xffff),
+			$query->param(':guid', $current_guid);
+			if ($query->execute()->get($model->primary_key(), FALSE) !== FALSE) {
+				Log::instance()->add(Log::NOTICE, 'Duplicate GUID created for '.$model->table_name());
+				$current_guid = '';
+			}
+		}
 
-        // 16 bits for "time_hi_and_version",
-        // four most significant bits holds version number 4
-        mt_rand(0, 0x0fff) | 0x4000,
+		$model->set($this->_guid_column, $current_guid);
+	}
 
-        // 16 bits, 8 bits for "clk_seq_hi_res",
-        // 8 bits for "clk_seq_low",
-        // two most significant bits holds zero and one for variant DCE1.1
-        mt_rand(0, 0x3fff) | 0x8000,
-
-        // 48 bits for "node"
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-      );
-
-      $query->param(':guid', $current_guid);
-      if ($query->execute()->get($model->primary_key(), FALSE) !== FALSE)
-      {
-        Log::instance()->add(Log::NOTICE, 'Duplicate GUID created for '.$model->table_name());
-        $current_guid = '';
-      }
-    }
-
-    $model->set($this->_guid_column, $current_guid);
-  }
+	/**
+	 * A new model is created, add a guid value
+	 *
+	 * @param   ORM $model The model
+	 * @throws	Exception
+	 */
+	public function on_create($model)
+	{
+		$this->create_guid($model);
+	}
 }
