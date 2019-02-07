@@ -2,7 +2,7 @@
 /**
  * UTF8::stristr
  *
- * @package    Kohana
+ * @package    KO7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks

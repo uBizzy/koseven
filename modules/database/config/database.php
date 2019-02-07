@@ -24,7 +24,7 @@ return [
 			 *
 			 */
 			'hostname'   => 'localhost',
-			'database'   => 'kohana',
+			'database'   => 'koseven',
 			'username'   => FALSE,
 			'password'   => FALSE,
 			'persistent' => FALSE,
@@ -45,7 +45,7 @@ return [
 			 * string   password    database password
 			 * boolean  persistent  use persistent connections?
 			 */
-			'dsn'        => 'mysql:host=localhost;dbname=kohana',
+			'dsn'        => 'mysql:host=localhost;dbname=koseven',
 			'username'   => 'root',
 			'password'   => 'r00tdb',
 			'persistent' => FALSE,

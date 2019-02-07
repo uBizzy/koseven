@@ -2,7 +2,7 @@
 /**
  * UTF8::substr_replace
  *
- * @package    Kohana
+ * @package    KO7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks

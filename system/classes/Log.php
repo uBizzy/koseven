@@ -1,3 +1,3 @@
 <?php
 
-class Log extends Kohana_Log {}
+class Log extends KO7_Log {}

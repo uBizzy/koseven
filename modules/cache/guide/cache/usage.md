@@ -1,46 +1,46 @@
-# Kohana Cache usage
+# Koseven Cache usage
 
-[Kohana_Cache] provides a simple interface allowing getting, setting and deleting of cached values. Two interfaces included in _Kohana Cache_ additionally provide _tagging_ and _garbage collection_ where they are supported by the respective drivers.
+[KO7_Cache] provides a simple interface allowing getting, setting and deleting of cached values. Two interfaces included in _Koseven Cache_ additionally provide _tagging_ and _garbage collection_ where they are supported by the respective drivers.
 
 ## Getting a new cache instance
 
-Creating a new _Kohana Cache_ instance is simple, however it must be done using the [Cache::instance] method, rather than the traditional `new` constructor.
+Creating a new _Koseven Cache_ instance is simple, however it must be done using the [Cache::instance] method, rather than the traditional `new` constructor.
 
      // Create a new instance of cache using the default group
      $cache = Cache::instance();
 
-The default group will use whatever is set to [Cache::$default] and must have a corresponding [configuration](config) definition for that group.
+The default group will use whatever is set to [Cache::$default] and must have a corresponding [configuration](cache.config) definition for that group.
 
 To create a cache instance using a group other than the _default_, simply provide the group name as an argument.
 
      // Create a new instance of the memcache group
-     $memcache = Cache::instance('memcache');
+     $memcache = Cache::instance('memcached');
 
 If there is a cache instance already instantiated then you can get it directly from the class member.
 
-[!!] Beware that this can cause issues if you do not test for the instance before trying to access it.
+ [!!] Beware that this can cause issues if you do not test for the instance before trying to access it.
 
      // Check for the existance of the cache driver
-     if (isset(Cache::$instances['memcache']))
+     if (isset(Cache::$instances['memcached']))
      {
           // Get the existing cache instance directly (faster)
-          $memcache = Cache::$instances['memcache'];
+          $memcache = Cache::$instances['memcached'];
      }
      else
      {
           // Get the cache driver instance (slower)
-          $memcache = Cache::instance('memcache');
+          $memcache = Cache::instance('memcached');
      }
 
 ## Setting and getting variables to and from cache
 
 The cache library supports scalar and object values, utilising object serialization where required (or not supported by the caching engine). This means that the majority or objects can be cached without any modification.
 
-[!!] Serialisation does not work with resource handles, such as filesystem, curl or socket resources.
+ [!!] Serialisation does not work with resource handles, such as filesystem, curl or socket resources.
 
 ### Setting a value to cache
 
-Setting a value to cache using the [Cache::set] method can be done in one of two ways: either using the Cache instance interface, which is good for atomic operations, or getting an instance and using that for multiple operations.
+Setting a value to cache using the [Cache::set] method can be done in one of two ways; either using the Cache instance interface, which is good for atomic operations; or getting an instance and using that for multiple operations.
 
 The first example demonstrates how to quickly load and set a value to the default cache instance.
 
@@ -56,7 +56,7 @@ The first example demonstrates how to quickly load and set a value to the defaul
 If multiple cache operations are required, it is best to assign an instance of Cache to a variable and use that as below.
 
      // Set the object using a defined group for a defined time period (30 seconds)
-     $memcache = Cache::instance('memcache');
+     $memcache = Cache::instance('memcached');
      $memcache->set('foo', $object, 30);
 
 #### Setting a value with tags
@@ -64,7 +64,7 @@ If multiple cache operations are required, it is best to assign an instance of C
 Certain cache drivers support setting values with tags. To set a value to cache with tags using the following interface.
 
      // Get a cache instance that supports tags
-     $memcache = Cache::instance('memcachetag');
+     $memcache = Cache::instance('redis');
 
      // Test for tagging interface
      if ($memcache instanceof Cache_Tagging)
@@ -79,7 +79,7 @@ Certain cache drivers support setting values with tags. To set a value to cache 
           $memcache->set('foo', $object, 30);
      }
 
-It is possible to implement custom tagging solutions onto existing or new cache drivers by implementing the [Cache_Tagging] interface. Kohana_Cache only applies the interface to drivers that support tagging natively as standard.
+It is possible to implement custom tagging solutions onto existing or new cache drivers by implementing the [Cache_Tagging] interface. KO7_Cache only applies the interface to drivers that support tagging natively as standard.
 
 ### Getting a value from cache
 
@@ -104,10 +104,8 @@ In cases where the requested key is not available or the entry has expired, a de
 
 It is possible to retrieve values from cache grouped by tag, using the [Cache::find] method with drivers that support tagging.
 
-[!!] The __Memcachetag__ driver does not support the `Cache::find($tag)` interface and will throw an exception.
-
      // Get an instance of cache
-     $cache = Cache::instance('memcachetag');
+     $cache = Cache::instance('redis');
 
      // Wrap in a try/catch statement to gracefully handle memcachetag
      try
@@ -197,10 +195,10 @@ When not automated, garbage collection is the responsibility of the developer. I
 
 # Interfaces
 
-Kohana Cache comes with two interfaces that are implemented where the drivers support them:
+Koseven Cache comes with two interfaces that are implemented where the drivers support them:
 
  - __[Cache_Tagging] for tagging support on cache entries__
-    - [Cache_MemcacheTag]
+    - [Cache_Redis]
     - [Cache_Sqlite]
  - __[Cache_GarbageCollect] for garbage collection with drivers without native support__
     - [Cache_File]

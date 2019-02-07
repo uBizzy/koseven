@@ -2,13 +2,13 @@
 /**
  * Codebench — A benchmarking module.
  *
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Controllers
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Controller_Codebench extends Kohana_Controller_Template {
+class Controller_Codebench extends KO7_Controller_Template {
 
 	// The codebench view
 	public $template = 'codebench';
@@ -27,7 +27,7 @@ class Controller_Codebench extends Kohana_Controller_Template {
 		$this->template->class = (string) $class;
 
 		// Try to load the class, then run it
-		if (Kohana::auto_load($class) === TRUE)
+		if (KO7::auto_load($class) === TRUE)
 		{
 			$codebench = new $class;
 			$this->template->codebench = $codebench->run();

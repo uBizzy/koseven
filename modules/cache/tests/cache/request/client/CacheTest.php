@@ -2,18 +2,18 @@
 /**
  * Unit tests for request client cache logic
  *
- * @group kohana
- * @group kohana.request
- * @group kohana.request.client
- * @group kohana.request.client.cache
+ * @group ko7
+ * @group ko7.request
+ * @group ko7.request.client
+ * @group ko7.request.client.cache
  *
- * @package    Kohana
+ * @package    KO7
  * @category   Tests
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_Request_Client_CacheTest extends Unittest_TestCase {
+class KO7_Request_Client_CacheTest extends Unittest_TestCase {
 
 	/**
 	 * Sets up a test route for caching
@@ -64,7 +64,7 @@ class Kohana_Request_Client_CacheTest extends Unittest_TestCase {
 	{
 		$route = new Route('welcome/index');
 		$route->defaults([
-			'controller' => 'Kohana_Request_CacheTest_Dummy',
+			'controller' => 'KO7_Request_CacheTest_Dummy',
 			'action'     => 'index',
 		]);
 
@@ -80,7 +80,7 @@ class Kohana_Request_Client_CacheTest extends Unittest_TestCase {
 
 		$response = $request->client()->execute($request);
 
-		$this->assertSame(HTTP_Cache::CACHE_STATUS_MISS, 
+		$this->assertSame(HTTP_Cache::CACHE_STATUS_MISS,
 			$response->headers(HTTP_Cache::CACHE_STATUS_KEY));
 	}
 
@@ -119,7 +119,7 @@ class Kohana_Request_Client_CacheTest extends Unittest_TestCase {
 				->cache_response($key, $request, $response)
 		);
 
-		$this->assertSame(HTTP_Cache::CACHE_STATUS_SAVED, 
+		$this->assertSame(HTTP_Cache::CACHE_STATUS_SAVED,
 			$response->headers(HTTP_Cache::CACHE_STATUS_KEY));
 	}
 
@@ -143,7 +143,7 @@ class Kohana_Request_Client_CacheTest extends Unittest_TestCase {
 
 		$response->headers([
 			'cache-control'                  => 'max-age='.$lifetime,
-			HTTP_Cache::CACHE_STATUS_KEY => 
+			HTTP_Cache::CACHE_STATUS_KEY =>
 				HTTP_Cache::CACHE_STATUS_HIT
 		]);
 
@@ -254,12 +254,12 @@ class Kohana_Request_Client_CacheTest extends Unittest_TestCase {
 	{
 		return $this->createMock('Cache_File');
 	}
-} // End Kohana_Request_Client_CacheTest
+} // End KO7_Request_Client_CacheTest
 
-class Controller_Kohana_Request_CacheTest_Dummy extends Controller 
+class Controller_KO7_Request_CacheTest_Dummy extends Controller
 {
 	public function action_index()
 	{
-	
+
 	}
 }

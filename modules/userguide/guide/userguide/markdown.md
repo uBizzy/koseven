@@ -42,13 +42,13 @@ end of a line.
 
 ## Links
 ~~~
-This is a normal link: [Kohana](http://kohanaframework.org).
+This is a normal link: [Koseven](http://koseven.ga).
 
-This link has a title: [Kohana](http://kohanaframework.org "The swift PHP framework")
+This link has a title: [Koseven](http://koseven.ga "The swift PHP framework")
 ~~~
-This is a normal link: [Kohana](http://kohanaframework.org)
+This is a normal link: [KO7](http://koseven.ga)
 
-This link has a title: [Kohana](http://kohanaframework.org "The swift PHP framework")
+This link has a title: [KO7](http://koseven.ga "The swift PHP framework")
 
 ## Code blocks
 
@@ -184,15 +184,15 @@ In addition to the features and syntax of [Markdown](http://daringfireball.net/p
 
 ## Namespacing
 
-The first thing to note is that all links are "namespaced" to the current module.  For example, from anywhere within the Kohana core docs you do not need to include `kohana` at the beginning of a link url.  For example: `[Hello World Tutorial](tutorials/hello-world)` rather than `(kohana/tutorials/hello-world)`.
+The first thing to note is that all links are "namespaced" to the current module.  For example, from anywhere within the KO7 core docs you do not need to include `ko7` at the beginning of a link url.  For example: `[Hello World Tutorial](tutorials/hello-world)` rather than `(ko7/tutorials/hello-world)`.
 
-To link to a modules index page, have an empty url like: `[Kohana]()`.
+To link to a modules index page, have an empty url like: `[Koseven]()`.
 
-To link to page in a different module, prefix your url with `../` and the module name.  For example: `[Kohana Routes](../kohana/routing)`
+To link to page in a different module, prefix your url with `../` and the module name.  For example: `[Koseven Routes](../ko7/routing)`
 
 **Images are also namespaced**, using `![Alt Text](imagename.jpg)` would look for `media/guide/<modulename>/imagename.jpg`.
 
-[!!] If you want your userguide pages to be browsable on github or similar sites outside Kohana's own userguide module, specify the optional .md file extension in your links
+[!!] If you want your userguide pages to be browsable on github or similar sites outside Koseven's own userguide module, specify the optional .md file extension in your links
 
 ## API Links
 
@@ -210,9 +210,9 @@ You can make links to the api browser by wrapping any class name in brackets.  Y
 
 If you want to have parameters and have the function be clickable, only put the brackets around the class and function (not the params), and put a backslash in front of the opening parenthesis.
 
-	[Kohana::$config]\('foobar','baz')
+	[KO7::$config]\('foobar','baz')
 	
-[Kohana::$config]\('foobar','baz')
+[KO7::$config]\('foobar','baz')
 
 ## Notes
 
@@ -232,6 +232,6 @@ Headers are automatically assigned an id, based on the content of the header, so
 
 ## Including Views
 
-If you need you may include a regular Kohana View file by placing the name of the view in double curly brackets.  **If the view is not found, no error or exception will be shown, the curly brackets and view name will simply remain there!**
+If you need you may include a regular Koseven View file by placing the name of the view in double curly brackets.  **If the view is not found, no error or exception will be shown, the curly brackets and view name will simply remain there!**
 
 	{{some/view/file}}
