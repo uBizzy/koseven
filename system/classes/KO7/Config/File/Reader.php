@@ -18,6 +18,12 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	protected $_directory = '';
 
 	/**
+	 * Cached Configurations
+	 * @var array
+	 */
+	protected static $_cache;
+
+	/**
 	 * Creates a new file reader using the given directory as a config source
 	 *
 	 * @param string    $directory  Configuration directory to search
@@ -34,23 +40,95 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 *     $config->load($name);
 	 *
 	 * @param   string  $group  configuration group name
-	 * @return  $this   current object
-	 * @uses    KO7::load
+	 *
+	 * @return  array   Configuration
+	 * @throws KO7_Exception
 	 */
-	public function load($group)
+	public function load($group) : array
 	{
+		// Check caches and start Profiling
+		if (KO7::$caching && isset(self::$_cache[$group]))
+		{
+			// This group has been cached
+			// @codeCoverageIgnoreStart
+			return self::$_cache[$group];
+			// @codeCoverageIgnoreEnd
+		}
+
+		if (KO7::$profiling && class_exists('Profiler', FALSE))
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Config', __FUNCTION__);
+		}
+
+		// Init
 		$config = [];
 
-		if ($files = KO7::find_file($this->_directory, $group, NULL, TRUE))
-		{
-			foreach ($files as $file)
-			{
-				// Merge each file to the configuration array
-				$config = Arr::merge($config, KO7::load($file));
+		// Loop through paths. Notice: array_reverse, so system files get overwritten by app files
+		foreach (array_reverse(KO7::include_paths()) as $path) {
+
+			// Build path
+			$file = $path.'config'. DIRECTORY_SEPARATOR . $group;
+			$value = FALSE;
+
+			// Try .php .json and .yaml extensions and parse contents with PHP support
+			if (file_exists($path = $file.'.php')) {
+				$value = KO7::load($path);
+			} elseif (file_exists($path = $file.'.json')) {
+				$value = json_decode($this->read_from_ob($path), true);
+			} elseif (file_exists($path = $file.'.yaml')) {
+				if ( ! extension_loaded('yaml')) {
+					// @codeCoverageIgnoreStart
+					throw new KO7_Exception('PECL Yaml Extension is required in order to parse YAML Config');
+					// @codeCoverageIgnoreEnd
+				}
+				$value = yaml_parse($this->read_from_ob($path));
 			}
+
+			// Merge config
+			if ($value !== FALSE) {
+				$config = Arr::merge($config, $value);
+			}
+		}
+
+		if (KO7::$caching)
+		{
+			// @codeCoverageIgnoreStart
+			self::$_cache[$group] = $config;
+			// @codeCoverageIgnoreEnd
+		}
+
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
 		}
 
 		return $config;
 	}
 
+	/**
+	 * Read Contents from file with output buffering.
+	 * Used to support <?php ?> tags and code inside Configurations
+	 *
+	 * @param  string $path Path to File
+	 *
+	 * @return false|string
+	 * @codeCoverageIgnore
+	 */
+	protected function read_from_ob($path)
+	{
+		// Start output buffer
+		ob_start();
+
+		include_once $path;
+
+		// Get contents of buffer
+		$content = ob_get_contents();
+
+		// Clear Buffer
+		ob_end_clean();
+
+		return $content;
+	}
 }
