@@ -79,6 +79,8 @@ class KO7_UUIDTest extends KO7_Unittest_TestCase {
 	 *
 	 * @param  string  $value 		Value to generate UUID from
 	 * @param  string  $expected  	UUID
+	 *
+	 * @throws KO7_Exception
 	 */
 	public function test_v3_md5(string $value, string $expected)
 	{
@@ -108,6 +110,8 @@ class KO7_UUIDTest extends KO7_Unittest_TestCase {
 	 *
 	 * @param  string  $value 		Value to generate UUID from
 	 * @param  string  $expected  	UUID
+	 *
+	 * @throws KO7_Exception
 	 */
 	public function test_v5_sha1(string $value, string $expected)
 	{
@@ -124,8 +128,7 @@ class KO7_UUIDTest extends KO7_Unittest_TestCase {
 		return [
 			['3afb8d83-6af4-48f3-91f2-febbdc46e7a2', '3afb8d836af448f391f2febbdc46e7a2'],
 			['f74bd7e3-ec3c-5c8a-aaeb-1b3c0dc16ea3', 'f74bd7e3ec3c5c8aaaeb1b3c0dc16ea3'],
-			['6ba7b810-9dad-11d1-80b4-00c04fd430c8', '6ba7b8109dad11d180b400c04fd430c8'],
-			['invalid', FALSE]
+			['6ba7b810-9dad-11d1-80b4-00c04fd430c8', '6ba7b8109dad11d180b400c04fd430c8']
 		];
 	}
 
@@ -138,6 +141,8 @@ class KO7_UUIDTest extends KO7_Unittest_TestCase {
 	 *
 	 * @param string $value		Value to convert to binary and back to string
 	 * @param mixed  $expected  Expected binary result in hex
+	 *
+	 * @throws KO7_Exception
 	 */
 	public function test_bin_str(string $value, $expected)
 	{
@@ -150,10 +155,26 @@ class KO7_UUIDTest extends KO7_Unittest_TestCase {
 	}
 
 	/**
-	 * Tests passing invalid namespaces
+	 * Tests passing invalid namespace v3
+	 * @expectedException KO7_Exception
 	 */
-	public function test_invalid_namespaces() {
-		self::assertFalse(UUID::v3('invalid', 'koseven'));
-		self::assertFalse(UUID::v5('invalid', 'koseven'));
+	public function test_invalid_namespace_v3() {
+		UUID::v3('invalid', 'koseven');
+	}
+
+	/**
+	 * Tests passing invalid namespace v5
+	 * @expectedException KO7_Exception
+	 */
+	public function test_invalid_namespace_v5() {
+		UUID::v5('invalid', 'koseven');
+	}
+
+	/**
+	 * Tests passing invalid uuid bin
+	 * @expectedException KO7_Exception
+	 */
+	public function test_invalid_uuid_bin() {
+		UUID::bin('invalid');
 	}
 }
