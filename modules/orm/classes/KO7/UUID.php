@@ -54,6 +54,7 @@ class KO7_UUID {
 	 * Checks if a UUID has a valid format.
 	 *
 	 * @param   string  UUID
+	 *
 	 * @return  bool
 	 */
 	public static function valid(string $uuid) : bool
@@ -65,13 +66,15 @@ class KO7_UUID {
 	 * Convert a string UUID to binary format.
 	 *
 	 * @param   string  uuid
+	 *
 	 * @return  string|bool
+	 * @throws  KO7_Exception
 	 */
 	public static function bin(string $uuid)
 	{
 		if ( ! UUID::valid($uuid))
 		{
-			return FALSE;
+			throw new KO7_Exception('Could not convert to UUID to string. :uuid is no valid UUID', [':uuid' => $uuid]);
 		}
 
 		// Get hexadecimal components of uuid
@@ -93,6 +96,7 @@ class KO7_UUID {
 	 * Convert a binary UUID to string format.
 	 *
 	 * @param   string  uuid
+	 *
 	 * @return  string
 	 */
 	public static function str(string $uuid) : string
@@ -122,14 +126,16 @@ class KO7_UUID {
 	 *
 	 * @param   string  namespace
 	 * @param   string  key name
+	 *
 	 * @return  string|bool
+	 * @throws  KO7_Exception
 	 */
 	public static function v3(string $namespace, string $name)
 	{
 		if ( ! UUID::valid($namespace))
 		{
 			// All namespaces must be valid UUIDs
-			return FALSE;
+			throw new KO7_Exception('Could not generate v3 UUID. :namespace is no valid UUID', [':namespace' => $namespace]);
 		}
 
 		// Get namespace in binary format
@@ -195,14 +201,16 @@ class KO7_UUID {
 	 *
 	 * @param   string   namespace
 	 * @param   string   key name
+	 *
 	 * @return  string
+	 * @throws  KO7_Exception
 	 */
 	public static function v5(string $namespace, string $name)
 	{
 		if ( ! UUID::valid($namespace))
 		{
 			// All namespaces must be valid UUIDs
-			return FALSE;
+			throw new KO7_Exception('Could not generate v5 UUID. :namespace is no valid UUID', [':namespace' => $namespace]);
 		}
 
 		// Get namespace in binary format

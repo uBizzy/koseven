@@ -50,7 +50,10 @@ class ORM_Behavior_Guid extends ORM_Behavior {
 	 */
 	public function on_construct($model, $id) : bool
 	{
-		if (($id !== NULL) && ! is_array($id) && ! ctype_digit($id) && UUID::valid($id)) {
+		if (($id !== NULL) && ! is_array($id) && ! ctype_digit($id)) {
+			if ( ! UUID:: valid($id)) {
+				throw new KO7_Exception('Invalid UUID: :id', [':id' => $id]);
+			}
 			$model->where($this->_guid_column, '=', $id)->find();
 
 			// Prevent further record loading
