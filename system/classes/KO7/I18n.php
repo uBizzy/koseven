@@ -79,7 +79,7 @@ class KO7_I18n {
 	 * @param   string		  $source Source Language
 	 * @return  string
 	 */
-	public static function get($string, string $lang = NULL, string $source = NULL) : string
+	public static function get($string, string $lang = NULL, string $source = NULL)
 	{
 		$values = [];
 
