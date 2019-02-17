@@ -182,9 +182,9 @@ if ( ! function_exists('__'))
 	 *
 	 * @uses    I18n::get
 	 *
-	 * @param   string  $string text to translate
-	 * @param   array   $values values to replace in the translated text
-	 * @param   string  $lang   source language
+	 * @param   string  $string  Text to translate
+	 * @param   array   $values  Values to replace in the translated text
+	 * @param   string  $lang    Source language
 	 *
 	 * @return  string
 	 */
