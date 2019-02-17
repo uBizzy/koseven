@@ -215,7 +215,7 @@ class KO7_Upload {
 				// Get the width and height from the uploaded image
 				list($width, $height) = getimagesize($file['tmp_name']);
 			}
-			catch (ErrorException $e)
+			catch (Error_Exception $e)
 			{
 				// Ignore read errors
 			}

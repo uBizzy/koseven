@@ -1,6 +1,6 @@
 # Error/Exception Handling
 
-Koseven provides both an exception handler and an error handler that transforms errors into exceptions using PHP's [ErrorException](http://php.net/errorexception) class. Many details of the error and the internal state of the application is displayed by the handler:
+Koseven provides both an exception handler and an error handler that transforms errors into Error_Exceptions using PHP's [ErrorException](http://php.net/errorexception) class. Many details of the error and the internal state of the application is displayed by the handler:
 
 1. Exception class
 2. Error level
