@@ -33,6 +33,12 @@ class KO7_I18n {
 	public static $lang = 'en-us';
 
 	/**
+	 * Source language: en-us, es-es, zh-cb, etc
+	 * @var string
+	 */
+	public static $source = 'en-us';
+
+	/**
 	 * Cache of loaded languages
 	 * @var array
 	 */
@@ -68,23 +74,50 @@ class KO7_I18n {
 	 *
 	 *     $hello = I18n::get('Hello friends, my name is :name');
 	 *
-	 * @param   string  $string text to translate
-	 * @param   string  $lang   target language
+	 * @param   string|array  $string Text to translate or array [text, values]
+	 * @param   string  	  $lang   Target Language
+	 * @param   string		  $source Source Language
 	 * @return  string
 	 */
-	public static function get(string $string, string $lang = NULL) : string
+	public static function get($string, string $lang = NULL, string $source = NULL) : string
 	{
+		$values = [];
+
+		// Check if $string is array [text, values]
+		if (Arr::is_array($string))
+		{
+			if (isset($string[1]) && Arr::is_array($string[1]))
+			{
+				$values = $string[1];
+			}
+			$string = $string[0];
+		}
+
+		// Set Target Language if not set
 		if ( ! $lang)
 		{
 			// Use the global target language
 			$lang = I18n::$lang;
 		}
 
-		// Load the translation table for this language
-		$table = I18n::load($lang);
+		// Set source Language if not set
+		if ( ! $source)
+		{
+			// Use the global source language
+			$source = I18n::$source;
+		}
 
-		// Return the translated string if it exists
-		return $table[$string] ?? $string;
+		// Load Table only if Source language does not match target language
+		if ($source !== $lang)
+		{
+			// Load the translation table for this language
+			$table = I18n::load($lang);
+
+			// Return the translated string if it exists
+			$string = $table[$string] ?? $string;
+		}
+
+		return empty($values) ? $string : strtr($string, $values);
 	}
 
 	/**
@@ -155,15 +188,8 @@ if ( ! function_exists('__'))
 	 *
 	 * @return  string
 	 */
-	function __(string $string, array $values = NULL, $lang = 'en-us')
+	function __(string $string, array $values = NULL, $lang = NULL)
 	{
-		if ($lang !== I18n::$lang)
-		{
-			// The message and target languages are different
-			// Get the translation for this message
-			$string = I18n::get($string);
-		}
-
-		return empty($values) ? $string : strtr($string, $values);
+		return I18n::get($values ? [$string, $values] : $string, NULL, $lang);
 	}
 }
