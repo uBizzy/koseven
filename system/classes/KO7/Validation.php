@@ -505,12 +505,12 @@ class KO7_Validation implements ArrayAccess {
 				if (is_string($translate))
 				{
 					// Translate the label using the specified language
-					$label = __($label, NULL, $translate);
+					$label = I18n::get($label, NULL, $translate);
 				}
 				else
 				{
 					// Translate the label
-					$label = __($label);
+					$label = I18n::get($label);
 				}
 			}
 
@@ -552,12 +552,12 @@ class KO7_Validation implements ArrayAccess {
 							if (is_string($translate))
 							{
 								// Translate the value using the specified language
-								$value = __($value, NULL, $translate);
+								$value = I18n::get($value, NULL, $translate);
 							}
 							else
 							{
 								// Translate the value
-								$value = __($value);
+								$value = I18n::get($value);
 							}
 						}
 					}
@@ -594,12 +594,12 @@ class KO7_Validation implements ArrayAccess {
 				if (is_string($translate))
 				{
 					// Translate the message using specified language
-					$message = __($message, $values, $translate);
+					$message = I18n::get([$message, $values], NULL, $translate);
 				}
 				else
 				{
 					// Translate the message using the default language
-					$message = __($message, $values);
+					$message = I18n::get([$message, $values]);
 				}
 			}
 			else
