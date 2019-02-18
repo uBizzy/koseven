@@ -15,7 +15,7 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 * The directory where config files are located
 	 * @var string
 	 */
-	protected $_directory = 'config';
+	protected $_directory = '';
 
 	/**
 	 * Cached Configurations
@@ -28,12 +28,9 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 *
 	 * @param string    $directory  Configuration directory to search
 	 */
-	public function __construct($directory = NULL)
+	public function __construct($directory = 'config')
 	{
-		if ($directory) {
-			// Set the configuration directory name
-			$this->_directory = trim($directory, '/');
-		}
+		$this->_directory = trim($directory, '/');
 	}
 
 	/**

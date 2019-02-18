@@ -374,7 +374,7 @@ class KO7_UTF8 {
 			UTF8::$called[__FUNCTION__] = TRUE;
 		}
 
-		return mb_convert_case(mb_substr($str, 0, 1), MB_CASE_TITLE) . mb_substr($str, 1);
+		return _ucfirst($str);
 	}
 
 	/**
