@@ -57,7 +57,7 @@ class KO7_Config_File_ReaderTest extends KO7_Unittest_TestCase {
 	{
 		if ( ! extension_loaded('yaml'))
 		{
-			self::markTestSkipped('PHP YAML required to execute this test.Text');
+			self::markTestSkipped('PHP YAML required to execute this test.');
 		}
 
 		$config = new KO7_Config_File_Reader;
