@@ -1,14 +1,4 @@
 <?php
-//when exceptions where thrown we where getting a ErrorException [ Fatal Error ]: Call to undefined function __()
-//since i18n was not loaded yet. nasty but works...
-if (!function_exists('__'))
-{
-    function __($message,$variables = NULL)
-    {
-	return is_array($variables) ? strtr($message, $variables):$message;
-    }
-}
-
 // Unique error identifier
 $error_id = uniqid('error', false);
 
@@ -85,14 +75,14 @@ $error_id = uniqid('error', false);
                                         <?php echo Debug::path($step['file']) ?> [ <?php echo $step['line'] ?> ]
                                     </a>
                                 <?php else: ?>
-                                    {<?php echo __('PHP internal call') ?>}
+                                    {<?php echo I18n::get('PHP internal call') ?>}
                                 <?php endif ?>
                             </span>
                             &raquo;
                             <?php echo $step['function'] ?>(
                                 <?php if ($step['args']): $args_id = $error_id.'args'.$i; ?>
                                     <a href="#<?php echo $args_id ?>" onclick="return toggle('<?php echo $args_id ?>')">
-                                        <?php echo __('arguments') ?>
+                                        <?php echo I18n::get('arguments') ?>
                                     </a>
                                 <?php endif ?>
                             )
@@ -121,13 +111,13 @@ $error_id = uniqid('error', false);
             </div>
             <h2>
                 <a href="#<?php echo $env_id = $error_id.'environment' ?>" onclick="return toggle('<?php echo $env_id ?>')">
-                    <?php echo __('Environment') ?>
+                    <?php echo I18n::get('Environment') ?>
                 </a>
             </h2>
             <div id="<?php echo $env_id ?>" class="content collapsed">
                 <?php $included = get_included_files() ?>
                 <h3>
-                    <a href="#<?php echo $env_id = $error_id.'environment_included' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Included files') ?></a>
+                    <a href="#<?php echo $env_id = $error_id.'environment_included' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo I18n::get('Included files') ?></a>
                     (<?php echo count($included) ?>)
                 </h3>
                 <div id="<?php echo $env_id ?>" class="collapsed">
@@ -141,7 +131,7 @@ $error_id = uniqid('error', false);
                 </div>
                 <?php $included = get_loaded_extensions() ?>
                 <h3>
-                    <a href="#<?php echo $env_id = $error_id.'environment_loaded' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Loaded extensions') ?></a>
+                    <a href="#<?php echo $env_id = $error_id.'environment_loaded' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo I18n::get('Loaded extensions') ?></a>
                     (<?php echo count($included) ?>)
                 </h3>
                 <div id="<?php echo $env_id ?>" class="collapsed">

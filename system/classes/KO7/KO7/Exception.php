@@ -50,7 +50,7 @@ class KO7_KO7_Exception extends Exception {
     public function __construct($message = "", array $variables = NULL, $code = 0, Throwable $previous = NULL)
     {
         // Set the message
-        $message = __($message, $variables);
+        $message = I18n::get([$message, $variables]);
 
         // Pass the message and integer code to the parent
         parent::__construct($message, (int) $code, $previous);

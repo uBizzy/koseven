@@ -952,10 +952,10 @@ class KO7_Core {
 	}
 
 	/**
-	 * PHP error handler, converts all errors into ErrorExceptions. This handler
+	 * PHP error handler, converts all errors into Error_Exceptions. This handler
 	 * respects error_reporting settings.
 	 *
-	 * @throws  ErrorException
+	 * @throws  Error_Exception
 	 * @return  TRUE
 	 */
 	public static function error_handler($code, $error, $file = NULL, $line = NULL)
@@ -963,8 +963,8 @@ class KO7_Core {
 		if (error_reporting() & $code)
 		{
 			// This error is not suppressed by current error reporting settings
-			// Convert the error into an ErrorException
-			throw new ErrorException($error, $code, 0, $file, $line);
+			// Convert the error into an Error_Exception
+			throw new Error_Exception($error, NULL, $code, 0, $file, $line);
 		}
 
 		// Do not execute the PHP error handler
@@ -1005,7 +1005,7 @@ class KO7_Core {
 			ob_get_level() AND ob_clean();
 
 			// Fake an exception for nice debugging
-			KO7_Exception::handler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
+			KO7_Exception::handler(new Error_Exception($error['message'], NULL, $error['type'], 0, $error['file'], $error['line']));
 
 			// Shutdown now to avoid a "death loop"
 			exit(1);
