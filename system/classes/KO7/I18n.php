@@ -20,7 +20,7 @@
  * @package    KO7
  * @category   Base
  * @author     Koseven Team
- * @copyright  (c) 2008´- 2016 Kohana Team
+ * @copyright  (c) 2008 - 2016 Kohana Team
  * @copyright  (c) since  2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
@@ -123,7 +123,7 @@ class KO7_I18n {
 	/**
 	 * Returns the translation table for a given language.
 	 *
-	 *     // Get all defined Spanish messages.
+	 *     // Get all defined English messages.
 	 *     // This will look for translation inside 'i18n/en/us.php'
 	 * 	   // and overwrite the ones in 'i18n/en.php'
 	 *     $messages = I18n::load('en-us');
