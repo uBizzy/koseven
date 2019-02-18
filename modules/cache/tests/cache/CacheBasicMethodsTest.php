@@ -27,7 +27,7 @@ abstract class KO7_CacheBasicMethodsTest extends Unittest_TestCase {
 	 *
 	 * @return  void
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 	}
@@ -87,7 +87,7 @@ TESTTEXT;
 					'value'   => 101010,
 					'ttl'     => 0,
 					'wait'    => FALSE,
-					'type'    => 'integer',
+					'type'    => 'int',
                     'tags'    => ['tag_int'],
 					'default' => NULL
 				],
@@ -129,7 +129,7 @@ TESTTEXT;
 					'value'   => TRUE,
 					'ttl'     => 0,
 					'wait'    => FALSE,
-					'type'    => 'boolean',
+					'type'    => 'bool',
                     'tags'    => ['tag_bool'],
 					'default' => NULL
 				],
@@ -275,7 +275,10 @@ TESTTEXT;
 
 		$result = $cache->get($id, $default);
 		$this->assertEquals($expected, $result);
-		$this->assertInternalType($type, $result);
+
+		$assertIsType = 'assertIs'.ucfirst($type);
+		$assertIsType = $assertIsType === 'assertIsNull' ? 'assertNull' : $assertIsType;
+		$this->$assertIsType($result);
 
 		unset($id, $value, $ttl, $wait, $type, $default);
 	}

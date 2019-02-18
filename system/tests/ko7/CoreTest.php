@@ -26,7 +26,7 @@ class KO7_CoreTest extends Unittest_TestCase
 	 * @return null
 	 */
 	// @codingStandardsIgnoreStart
-	public function setUp()
+	public function setUp(): void
 	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
@@ -39,7 +39,7 @@ class KO7_CoreTest extends Unittest_TestCase
 	 * @return null
 	 */
 	// @codingStandardsIgnoreStart
-	public function tearDown()
+	public function tearDown(): void
 	// @codingStandardsIgnoreEnd
 	{
 		KO7::modules($this->old_modules);
@@ -86,7 +86,7 @@ class KO7_CoreTest extends Unittest_TestCase
 		// EXT is manually appened to the _file name_, not passed as the extension
 		$path = KO7::find_file('classes', $file = 'KO7/Core'.EXT, FALSE);
 
-		$this->assertInternalType('string', $path);
+		$this->assertIsString($path);
 
 		$this->assertStringEndsWith($file, $path);
 	}
@@ -116,7 +116,7 @@ class KO7_CoreTest extends Unittest_TestCase
 	{
 		$files = KO7::list_files('config');
 
-		$this->assertInternalType('array', $files);
+		$this->assertIsArray($files);
 		$this->assertGreaterThan(3, count($files));
 
 		$this->assertSame([], KO7::list_files('geshmuck'));
@@ -171,7 +171,7 @@ class KO7_CoreTest extends Unittest_TestCase
 		// trigger shutdown so ko7 write to file cache
 		KO7::shutdown_handler();
 
-		$this->assertInternalType('array', KO7::file_cache('KO7::find_file()'));
+		$this->assertIsArray(KO7::file_cache('KO7::find_file()'));
 
 		KO7::$caching = $old_caching;
 		KO7::$errors  = $old_errors;
@@ -275,14 +275,15 @@ class KO7_CoreTest extends Unittest_TestCase
 	/**
 	 * Tests KO7::modules()
 	 *
-	 * @test
 	 * @dataProvider provider_modules_detects_invalid_modules
-	 * @expectedException KO7_Exception
 	 * @param boolean $source   Input for KO7::modules
 	 *
+	 * @throws KO7_Exception
 	 */
 	public function test_modules_detects_invalid_modules($source)
 	{
+		$this->expectException(KO7_Exception::class);
+
 		$modules = KO7::modules();
 
 		try
@@ -352,7 +353,7 @@ class KO7_CoreTest extends Unittest_TestCase
 	{
 		$modules = KO7::modules();
 
-		$this->assertInternalType('array', $modules);
+		$this->assertIsArray($modules);
 
 		$this->assertArrayHasKey('unittest', $modules);
 	}
@@ -369,7 +370,7 @@ class KO7_CoreTest extends Unittest_TestCase
 		$include_paths = KO7::include_paths();
 		$modules       = KO7::modules();
 
-		$this->assertInternalType('array', $include_paths);
+		$this->assertIsArray($include_paths);
 
 		// We must have at least 2 items in include paths (APP / SYS)
 		$this->assertGreaterThan(2, count($include_paths));

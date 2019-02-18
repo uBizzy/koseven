@@ -58,35 +58,13 @@ class KO7_ValidationTest extends Unittest_TestCase
 
 		$copy_data = ['foo' => 'no', 'fud' => 'maybe', 'num' => 42];
 
+
+
 		$copy = $validation->copy($copy_data);
 
 		$this->assertNotSame($validation, $copy);
 
-		foreach (['_rules', '_bound', '_labels', '_empty_rules', '_errors'] as $attribute)
-		{
-			// This is just an easy way to check that the attributes are identical
-			// Without hardcoding the expected values
-			$this->assertAttributeSame(
-				self::readAttribute($validation, $attribute),
-				$attribute,
-				$copy
-			);
-		}
-
 		$this->assertSame($copy_data, $copy->data());
-	}
-
-	/**
-	 * When the validation object is initially created there should be no labels
-	 * specified
-	 *
-	 * @test
-	 */
-	public function test_initially_there_are_no_labels()
-	{
-		$validation = new Validation([]);
-
-		$this->assertAttributeSame([], '_labels', $validation);
 	}
 
 	/**
@@ -104,17 +82,9 @@ class KO7_ValidationTest extends Unittest_TestCase
 
 		$this->assertSame($validation, $validation->label('email', 'Email Address'));
 
-		$this->assertAttributeSame(['email' => 'Email Address'], '_labels', $validation);
-
 		$this->assertSame($validation, $validation->label('email', 'Your Email'));
 
 		$validation->label('name', 'Your Name');
-
-		$this->assertAttributeSame(
-			['email' => 'Your Email', 'name' => 'Your Name'],
-			'_labels',
-			$validation
-		);
 	}
 
 	/**
@@ -132,15 +102,7 @@ class KO7_ValidationTest extends Unittest_TestCase
 
 		$this->assertSame($validation, $validation->labels($initial_data));
 
-		$this->assertAttributeSame($initial_data, '_labels', $validation);
-
 		$this->assertSame($validation, $validation->labels(['fast' => 'lightning']));
-
-		$this->assertAttributeSame(
-			['fast' => 'lightning', 'kung fu' => 'fighting'],
-			'_labels',
-			$validation
-		);
 	}
 
 	/**
@@ -159,11 +121,9 @@ class KO7_ValidationTest extends Unittest_TestCase
 
 		// Test binding an array of values
 		$this->assertSame($validation, $validation->bind($bound));
-		$this->assertAttributeSame($bound, '_bound', $validation);
 
 		// Test binding one value
 		$this->assertSame($validation, $validation->bind(':foo', 'some other value'));
-		$this->assertAttributeSame([':foo' => 'some other value'], '_bound', $validation);
 	}
 
 	/**
@@ -402,8 +362,6 @@ class KO7_ValidationTest extends Unittest_TestCase
 		$validation->check();
 
 		$this->assertSame($expected, $validation->errors('Validation', FALSE));
-		// Should be able to get raw errors array
-		$this->assertAttributeSame($validation->errors(NULL), '_errors', $validation);
 	}
 
 	/**

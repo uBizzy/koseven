@@ -156,25 +156,25 @@ class KO7_UUIDTest extends KO7_Unittest_TestCase {
 
 	/**
 	 * Tests passing invalid namespace v3
-	 * @expectedException KO7_Exception
 	 */
 	public function test_invalid_namespace_v3() {
+		$this->expectException(KO7_Exception::class);
 		UUID::v3('invalid', 'koseven');
 	}
 
 	/**
 	 * Tests passing invalid namespace v5
-	 * @expectedException KO7_Exception
 	 */
 	public function test_invalid_namespace_v5() {
+		$this->expectException(KO7_Exception::class);
 		UUID::v5('invalid', 'koseven');
 	}
 
 	/**
 	 * Tests passing invalid uuid bin
-	 * @expectedException KO7_Exception
 	 */
 	public function test_invalid_uuid_bin() {
+		$this->expectException(KO7_Exception::class);
 		UUID::bin('invalid');
 	}
 }

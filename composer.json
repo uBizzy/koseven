@@ -26,13 +26,12 @@
     "issues": "https://github.com/koseven/koseven/issues"
   },
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.0|^7.0",
-    "phpunit/dbunit":"^3.0",
-    "phpunit/phpcov": "^4.0",
-    "php-coveralls/php-coveralls": "^2.0"
+    "phpunit/phpunit": "^8",
+    "php-coveralls/php-coveralls": "^2.0",
+    "ext-curl": "*"
   },
   "conflict": {
     "kohana/core": "3.3.*"

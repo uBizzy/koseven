@@ -23,7 +23,7 @@ class KO7_ViewTest extends Unittest_TestCase
 	 * @return null
 	 */
 	// @codingStandardsIgnoreStart
-	public static function setupBeforeClass()
+	public static function setupBeforeClass() : void
 	// @codingStandardsIgnoreEnd
 	{
 		self::$old_modules = KO7::modules();
@@ -40,7 +40,7 @@ class KO7_ViewTest extends Unittest_TestCase
 	 * @return null
 	 */
 	// @codingStandardsIgnoreStart
-	public static function teardownAfterClass()
+	public static function teardownAfterClass() : void
 	// @codingStandardsIgnoreEnd
 	{
 		KO7::modules(self::$old_modules);

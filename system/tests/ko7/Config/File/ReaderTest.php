@@ -16,32 +16,6 @@
 class KO7_Config_File_ReaderTest extends KO7_Unittest_TestCase {
 
 	/**
-	 * If we don't pass a directory to the reader then it should assume
-	 * that we want to search the dir 'config' by default
-	 *
-	 * @covers KO7_Config_File_Reader
-	 */
-	public function test_default_search_dir_is_config()
-	{
-		$reader = new KO7_Config_File_Reader;
-
-		self::assertAttributeSame('config', '_directory', $reader);
-	}
-
-	/**
-	 * If we pass a directory to the constructor of the file reader it
-	 * should change the search directory
-	 *
-	 * @covers KO7_Config_File_Reader
-	 */
-	public function test_constructor_sets_search_dir_from_param()
-	{
-		$reader = new KO7_Config_File_Reader('gafloog');
-
-		self::assertAttributeSame('gafloog', '_directory', $reader);
-	}
-
-	/**
 	 * If the config dir does not exist then the function should just
 	 * return an empty array
 	 *
@@ -83,7 +57,7 @@ class KO7_Config_File_ReaderTest extends KO7_Unittest_TestCase {
 	{
 		if ( ! extension_loaded('yaml'))
 		{
-			self::markTestSkipped();
+			self::markTestSkipped('PHP YAML required to execute this test.');
 		}
 
 		$config = new KO7_Config_File_Reader;
@@ -132,7 +106,7 @@ class KO7_Config_File_ReaderTest extends KO7_Unittest_TestCase {
 		// actual output.  Therefore to increase compatability we just
 		// check that we've got an array and that it's not empty
 		self::assertNotSame([], $values);
-		self::assertInternalType('array',    $values);
+		self::assertIsArray($values);
 	}
 
 	/**

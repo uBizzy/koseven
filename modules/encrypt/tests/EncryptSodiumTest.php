@@ -19,7 +19,7 @@ class EncryptSodiumTest extends EncryptTestBase {
 	 * @return void
 	 * @throws KO7_Exception
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		if (!extension_loaded('sodium')) {
 			$this->markTestSkipped('The Sodium extension is not available.');
@@ -81,11 +81,12 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Test with invalid Key Length and expect exception
 	 *
-	 * @expectedException KO7_Exception
 	 * @throws KO7_Exception
 	 */
 	public function test_invalid_key_length()
 	{
+		$this->expectException(KO7_Exception::class);
+
 		// Init
 		$this->set_config([
 			'type' => 'sodium',
@@ -100,11 +101,12 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Test with invalid / not set key and expect exception
 	 *
-	 * @expectedException KO7_Exception
 	 * @throws KO7_Exception
 	 */
 	public function test_invalid_key()
 	{
+		$this->expectException(KO7_Exception::class);
+
 		// Init
 		$this->set_config([
 			'type' => 'sodium',
@@ -119,11 +121,12 @@ class EncryptSodiumTest extends EncryptTestBase {
 	/**
 	 * Test with non existent Engine Name and expect Exception
 	 *
-	 * @expectedException KO7_Exception
 	 * @throws KO7_Exception
 	 */
 	public function test_non_existent_engine()
 	{
+		$this->expectException(KO7_Exception::class);
+
 		// Init
 		$this->set_config([
 			'type' => 'doesnotexist',

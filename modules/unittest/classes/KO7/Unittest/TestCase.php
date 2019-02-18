@@ -41,7 +41,7 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		$this->_helpers = new Unittest_Helpers;
 
@@ -56,7 +56,7 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function tearDown()
+	public function tearDown(): void
 	{
 		$this->_helpers->restore_environment();
 	}

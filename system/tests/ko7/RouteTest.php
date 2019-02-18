@@ -24,7 +24,7 @@ class KO7_RouteTest extends Unittest_TestCase
      * @throws Cache_Exception
 	 */
 	// @codingStandardsIgnoreStart
-	public function setUp()
+	public function setUp(): void
 	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
@@ -49,7 +49,7 @@ class KO7_RouteTest extends Unittest_TestCase
 	 * Removes cache files created during tests
 	 */
 	// @codingStandardsIgnoreStart
-	public function tearDown()
+	public function tearDown(): void
 	// @codingStandardsIgnoreEnd
 	{
 		parent::tearDown();
@@ -61,29 +61,13 @@ class KO7_RouteTest extends Unittest_TestCase
 	 * If Route::get() is asked for a route that does not exist then
 	 * it should throw a KO7_Exception
 	 *
-	 * Note use of @expectedException
-	 *
-	 * @test
 	 * @covers Route::get
-	 * @expectedException KO7_Exception
 	 */
 	public function test_get_throws_exception_if_route_dnx()
 	{
+		$this->expectException(KO7_Exception::class);
+
 		Route::get('HAHAHAHAHAHAHAHAHA');
-	}
-
-	/**
-	 * Route::all() should return all routes defined via Route::set()
-	 * and not through new Route()
-	 *
-	 * @test
-	 * @covers Route::all
-	 */
-	public function test_all_returns_all_defined_routes()
-	{
-		$defined_routes = self::readAttribute('Route', '_routes');
-
-		$this->assertSame($defined_routes, Route::all());
 	}
 
 	/**
@@ -181,7 +165,6 @@ class KO7_RouteTest extends Unittest_TestCase
 	 * If the constructor is passed a NULL uri then it should assume it's
 	 * being loaded from the cache & therefore shouldn't override the cached attributes
 	 *
-	 * @test
 	 * @covers Route::__construct
 	 */
 	public function test_constructor_returns_if_uri_is_null()
@@ -193,68 +176,7 @@ class KO7_RouteTest extends Unittest_TestCase
 			->expects($this->never())
 			->method('compile');
 
-		$route->__construct(NULL,NULL);
-
-		$this->assertAttributeSame('', '_uri', $route);
-		$this->assertAttributeSame([], '_regex', $route);
-		$this->assertAttributeSame(['action' => 'index', 'host' => FALSE], '_defaults', $route);
-		$this->assertAttributeSame(NULL, '_route_regex', $route);
-	}
-
-	/**
-	 * Provider for test_constructor_only_changes_custom_regex_if_passed
-	 *
-	 * @return array
-	 */
-	public function provider_constructor_only_changes_custom_regex_if_passed()
-	{
-		return [
-			['<controller>/<action>', '<controller>/<action>'],
-		];
-	}
-
-	/**
-	 * The constructor should only use custom regex if passed a non-empty array
-	 *
-	 * Technically we can't "test" this as the default regex is an empty array, this
-	 * is purely for improving test coverage
-	 *
-	 * @dataProvider provider_constructor_only_changes_custom_regex_if_passed
-	 *
-	 * @test
-	 * @covers Route::__construct
-	 */
-	public function test_constructor_only_changes_custom_regex_if_passed($uri, $uri2)
-	{
-		$route = new Route($uri, []);
-
-		$this->assertAttributeSame([], '_regex', $route);
-
-		$route = new Route($uri2, NULL);
-
-		$this->assertAttributeSame([], '_regex', $route);
-	}
-
-	/**
-	 * When we pass custom regex to the route's constructor it should it
-	 * in leu of the default. This does not apply to callback/lambda routes
-	 *
-	 * @test
-	 * @covers Route::__construct
-	 * @covers Route::compile
-	 */
-	public function test_route_uses_custom_regex_passed_to_constructor()
-	{
-		$regex = ['id' => '[0-9]{1,2}'];
-
-		$route = new Route('<controller>(/<action>(/<id>))', $regex);
-
-		$this->assertAttributeSame($regex, '_regex', $route);
-		$this->assertAttributeContains(
-			$regex['id'],
-			'_route_regex',
-			$route
-		);
+		self::assertNull($route->__construct(NULL,NULL));
 	}
 
 	/**
@@ -322,7 +244,7 @@ class KO7_RouteTest extends Unittest_TestCase
 
 		$matches = $route->matches($request);
 
-		$this->assertInternalType('array', $matches);
+		$this->assertIsArray($matches);
 		$this->assertArrayHasKey('controller', $matches);
 		$this->assertArrayHasKey('action', $matches);
 		$this->assertArrayNotHasKey('id', $matches);
@@ -391,7 +313,7 @@ class KO7_RouteTest extends Unittest_TestCase
 
 		$matches = $route->matches($request);
 
-		$this->assertInternalType('array', $matches);
+		$this->assertIsArray($matches);
 		$this->assertArrayHasKey('controller', $matches);
 		$this->assertArrayHasKey('action', $matches);
 		$this->assertArrayNotHasKey('id', $matches);
@@ -562,14 +484,14 @@ class KO7_RouteTest extends Unittest_TestCase
 
 		$matches = $route->matches($request);
 
-		$this->assertInternalType('array', $matches);
+		$this->assertIsArray($matches);
 
 		// Mock a request class that will return route2 uri
 		$request = $this->get_request_mock($matches_route2);
 
 		$matches = $route->matches($request);
 
-		$this->assertInternalType('array', $matches);
+		$this->assertIsArray($matches);
 		// $this->assertSame(5, count($matches));
 		$this->assertArrayHasKey('controller', $matches);
 		$this->assertArrayHasKey('action', $matches);
