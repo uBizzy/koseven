@@ -2,6 +2,12 @@
 ## General
  * Bug Fixes and Performance / Security Improvments.
  * Error handlers strict compliance with PHP7+ (Replaced `Exception` with `Throwable`)
+ * New `KO7_Error_Exception` class which extends PHP internal `ErrorException`
+ * Translation, Inflector updates.
+## Core
+ * Class/Framework rename to `KO7`. Introducing the compatibility module which ensures all classes will still work.
+## Configuration
+ * Added support for multiple configuration files (`php`, `json`, `yaml`)
 ## Encryption
  * Deprecated Mcrypt Class (deprecated since PHP 7.1 - removed in PHP 7.2).
  * Add Support for Libsodium.
@@ -10,6 +16,9 @@
 ## ORM
  * `ORM->changed()` had unexpected behavior (returns value). Added function `ORM->has_changed()` which returns bool.
  * Added Support for non auto-increment Primary Keys
+### UUID
+ * Added `UUID` class fot generating RFC 4122 v3, v4, v5 uuids
+ * Imporved Performanced by possibility to turn of uuid database checks
 ## Database
  * Added Support for `stdClass` attributes
  * Added JSON field type to `MySQLi` Driver
@@ -23,3 +32,6 @@
  * And of course: Added more Unittests to improve Framework Code Coverage
 ## Userguide
  * Added Support for namespaced classes
+## I18n
+ * Using `I18n::get()` in `SYSPATH` and `MODPATH`. Only using `__()` inside `APPATH`.
+
