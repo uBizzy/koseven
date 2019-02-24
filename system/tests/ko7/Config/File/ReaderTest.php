@@ -53,7 +53,7 @@ class KO7_Config_File_ReaderTest extends KO7_Unittest_TestCase {
 	 * @covers KO7_Config_File_Reader::read_from_ob
 	 * @throws KO7_Exception
 	 */
-	public function test_loads_config_from_files($configuration)
+	public function test_load_config_from_files($configuration)
 	{
 		if ( ! extension_loaded('yaml'))
 		{
@@ -68,7 +68,7 @@ class KO7_Config_File_ReaderTest extends KO7_Unittest_TestCase {
 		$yaml_file = $path.'test2.yaml';
 
 		// Generate Json
-		$json = json_encode($configuration['value'], JSON_PRETTY_PRINT);
+		$json = json_encode($configuration['value']);
 
 		// Check if files are writable
 		if ( ! touch($json_file) || ! touch($yaml_file))
