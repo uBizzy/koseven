@@ -20,7 +20,7 @@ class EncryptOpensslTest extends EncryptTestBase {
 	 * @return void
 	 * @throws KO7_Exception
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		if (!extension_loaded('openssl')) {
 			$this->markTestSkipped('The OpenSSL extension is not available.');

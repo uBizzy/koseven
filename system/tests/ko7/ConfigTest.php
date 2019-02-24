@@ -22,21 +22,21 @@ class KO7_ConfigTest extends Unittest_TestCase
 	 * When a config object is initially created there should be
 	 * no readers attached
 	 *
-	 * @test
 	 * @covers Config
 	 */
 	public function test_initially_there_are_no_sources()
 	{
-		$config = new Config;
+		$this->expectException(KO7_Exception::class);
+		$this->expectExceptionMessage('No configuration sources attached');
 
-		$this->assertAttributeSame([], '_sources', $config);
+		$config = new Config;
+		$config->load('invalid');
 	}
 
 	/**
 	 * Test that calling attach() on a ko7 config object
 	 * adds the specified reader to the config object
 	 *
-	 * @test
 	 * @covers Config::attach
 	 */
 	public function test_attach_adds_reader_and_returns_this()
@@ -46,56 +46,10 @@ class KO7_ConfigTest extends Unittest_TestCase
 
 		$this->assertSame($config, $config->attach($reader));
 
-		$this->assertAttributeContains($reader, '_sources', $config);
-	}
+		$this->expectException(KO7_Exception::class);
+		$this->expectExceptionMessage('Need to specify a config group');
 
-	/**
-	 * By default (or by passing TRUE as the second parameter) the config object
-	 * should prepend the reader to the front of the readers queue
-	 *
-	 * @test
-	 * @covers Config::attach
-	 */
-	public function test_attach_adds_reader_to_front_of_queue()
-	{
-		$config  = new Config;
-
-		$reader1 = $this->createMock('KO7_Config_Reader');
-		$reader2 = $this->createMock('KO7_Config_Reader');
-
-		$config->attach($reader1);
-		$config->attach($reader2);
-
-		// Rather than do two assertContains we'll do an assertSame to assert
-		// the order of the readers
-		$this->assertAttributeSame([$reader2, $reader1], '_sources', $config);
-
-		// Now we test using the second parameter
-		$config = new Config;
-
-		$config->attach($reader1);
-		$config->attach($reader2, TRUE);
-
-		$this->assertAttributeSame([$reader2, $reader1], '_sources', $config);
-	}
-
-	/**
-	 * Test that attaching a new reader (and passing FALSE as second param) causes
-	 * phpunit to append the reader rather than prepend
-	 *
-	 * @test
-	 * @covers Config::attach
-	 */
-	public function test_attach_can_add_reader_to_end_of_queue()
-	{
-		$config  = new Config;
-		$reader1 = $this->createMock('KO7_Config_Reader');
-		$reader2 = $this->createMock('KO7_Config_Reader');
-
-		$config->attach($reader1);
-		$config->attach($reader2, FALSE);
-
-		$this->assertAttributeSame([$reader1, $reader2], '_sources', $config);
+		$config->load(NULL);
 	}
 
 	/**
@@ -118,16 +72,14 @@ class KO7_ConfigTest extends Unittest_TestCase
 		$config->attach($reader1);
 		$config->attach($reader2);
 
-        $this->assertAttributeContains($reader1, '_sources', $config);
-		$this->assertAttributeContains($reader2, '_sources', $config);
-
         $this->assertSame($config, $config->detach($reader2));
-
-        $this->assertAttributeNotContains($reader2, '_sources', $config);
 
         $this->assertSame($config, $config->detach($reader1));
 
-		$this->assertAttributeNotContains($reader1, '_sources', $config);
+		$this->expectException(KO7_Exception::class);
+		$this->expectExceptionMessage('No configuration sources attached');
+
+		$config->load('invalid');
 	}
 
 	/**
@@ -199,14 +151,13 @@ class KO7_ConfigTest extends Unittest_TestCase
 	 * If load() is called and there are no readers present then it should throw
 	 * a ko7 exception
 	 *
-	 * @test
 	 * @covers Config::load
-	 * @expectedException KO7_Exception
 	 */
 	public function test_load_throws_exception_if_there_are_no_sources()
 	{
+		$this->expectException(KO7_Exception::class);
+
 		// The following code should throw an exception and phpunit will catch / handle it
-		// (see the @expectedException doccomment)
 		$config = new KO7_config;
 
 		$config->load('random');
@@ -233,13 +184,13 @@ class KO7_ConfigTest extends Unittest_TestCase
 	 *
 	 * Invalid means it's either a non-string value, or empty
 	 *
-	 * @test
 	 * @dataProvider provider_load_throws_exception_if_no_group_is_given
 	 * @covers Config::load
-	 * @expectedException KO7_Exception
 	 */
 	public function test_load_throws_exception_if_invalid_group($value)
 	{
+		$this->expectException(KO7_Exception::class);
+
 		$config = new KO7_Config;
 
 		$reader = $this->createMock('KO7_Config_Reader');

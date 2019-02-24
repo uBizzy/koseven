@@ -1,32 +1,39 @@
 <?php
-
 /**
+ * Helper Class for Unit Tests.
+ *
  * @package    KO7/UnitTest
- * @author     Kohana Team
+ *
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 class KO7_Unittest_Helpers {
+
 	/**
-	 * Static variable used to work out whether we have an internet
-	 * connection
-	 * @see has_internet
+	 * Static variable used to work out whether we have an internet connection
 	 * @var boolean
 	 */
-	static protected $_has_internet = NULL;
+	protected static $_has_internet;
+
+	/**
+	 * Backup of the environment variables
+	 * @var array
+	 */
+	protected $_environment_backup = [];
 
 	/**
 	 * Check for internet connectivity
 	 *
-	 * @return boolean Whether an internet connection is available
+	 * @return boolean  Whether an internet connection is available
 	 */
-	public static function has_internet()
+	public static function has_internet() : bool
 	{
 		if ( ! isset(self::$_has_internet))
 		{
 			// The @ operator is used here to avoid DNS errors when there is no connection.
-			$sock = @fsockopen("www.google.com", 80, $errno, $errstr, 1);
+			$sock = @fsockopen('www.google.com', 80, $errno, $errstr, 1);
 
 			self::$_has_internet = (bool) $sock ? TRUE : FALSE;
 		}
@@ -37,72 +44,54 @@ class KO7_Unittest_Helpers {
 	/**
 	 * Helper function which replaces the "/" to OS-specific delimiter
 	 *
-	 * @param string $path
+	 * @param  string $path
+	 *
 	 * @return string
 	 */
-	static public function dir_separator($path)
+	public static function dir_separator(string $path) : string
 	{
 		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
 
 	/**
-	 * Removes all cache files from the ko7 cache dir
-	 *
-	 * @return void
+	 * Removes all cache files from the kohana cache dir (except .gitignore)
 	 */
-	static public function clean_cache_dir()
+	public static function clean_cache_dir() : void
 	{
-		$cache_dir = opendir(KO7::$cache_dir);
+		$files = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator(KO7::$cache_dir, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
 
-		while ($dir = readdir($cache_dir))
-		{
-			// Cache files are split into directories based on first two characters of hash
-			if ($dir[0] !== '.' AND strlen($dir) === 2)
-			{
-				$dir = self::dir_separator(KO7::$cache_dir.'/'.$dir.'/');
-
-				$cache = opendir($dir);
-
-				while ($file = readdir($cache))
-				{
-					if ($file[0] !== '.')
-					{
-						unlink($dir.$file);
-					}
-				}
-
-				closedir($cache);
-
-				rmdir($dir);
+		foreach ($files as $file) {
+			if ($file->getExtension() === 'gitignore') {
+				continue;
 			}
+			$todo = ($file->isDir() ? 'rmdir' : 'unlink');
+			$todo($file->getRealPath());
 		}
-
-		closedir($cache_dir);
 	}
-
-	/**
-	 * Backup of the environment variables
-	 * @see set_environment
-	 * @var array
-	 */
-	protected $_environment_backup = [];
 
 	/**
 	 * Allows easy setting & backing up of enviroment config
 	 *
 	 * Option types are checked in the following order:
 	 *
-	 * * Server Var
-	 * * Static Variable
-	 * * Config option
+	 * - Server Var
+	 * - Static Variable
+	 * - Config option
 	 *
-	 * @codeCoverageIgnore
-	 * @param array $environment List of environment to set
+	 * @param  array $environment List of environment to set
+	 *
+	 * @return bool
+	 * @throws KO7_Exception
+	 * @throws ReflectionException
 	 */
-	public function set_environment(array $environment)
+	public function set_environment(array $environment) : bool
 	{
-		if ( ! count($environment))
+		if ( ! count($environment)) {
 			return FALSE;
+		}
 
 		foreach ($environment as $option => $value)
 		{
@@ -125,7 +114,7 @@ class KO7_Unittest_Helpers {
 			// If this is a static property i.e. Html::$windowed_urls
 			elseif (strpos($option, '::$') !== FALSE)
 			{
-				list($class, $var) = explode('::$', $option, 2);
+				[$class, $var] = explode('::$', $option, 2);
 
 				$class = new ReflectionClass($class);
 
@@ -137,11 +126,11 @@ class KO7_Unittest_Helpers {
 				$class->setStaticPropertyValue($var, $value);
 			}
 			// If this is an environment variable
-			elseif (preg_match('/^[A-Z_-]+$/', $option) OR isset($_SERVER[$option]))
+			elseif (isset($_SERVER[$option]) || preg_match('/^[A-Z_-]+$/', $option))
 			{
 				if ($backup_needed)
 				{
-					$this->_environment_backup[$option] = isset($_SERVER[$option]) ? $_SERVER[$option] : '';
+					$this->_environment_backup[$option] = $_SERVER[$option] ?? '';
 				}
 
 				$_SERVER[$option] = $value;
@@ -154,21 +143,21 @@ class KO7_Unittest_Helpers {
 					$this->_environment_backup[$option] = KO7::$config->load($option);
 				}
 
-				list($group, $var) = explode('.', $option, 2);
+				[$group, $var] = explode('.', $option, 2);
 
 				KO7::$config->load($group)->set($var, $value);
 			}
 		}
+		return TRUE;
 	}
 
 	/**
 	 * Restores the environment to the original state
 	 *
-	 * @codeCoverageIgnore
-	 * @chainable
-	 * @return KO7_Unittest_Helpers $this
+	 * @throws KO7_Exception
+	 * @throws ReflectionException
 	 */
-	public function restore_environment()
+	public function restore_environment() : void
 	{
 		$this->set_environment($this->_environment_backup);
 	}

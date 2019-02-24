@@ -45,7 +45,7 @@ class KO7_Security {
 		// Get the current token
 		$token = $session->get(Security::$token_name);
 
-		if ($new === TRUE OR ! $token)
+		if ($new || ! $token)
 		{
 			$token = Security::_generate_token();
 

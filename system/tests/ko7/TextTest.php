@@ -17,7 +17,7 @@ class KO7_TextTest extends Unittest_TestCase
 	 * Sets up the test enviroment
 	 */
 	// @codingStandardsIgnoreStart
-	function setUp()
+	function setUp(): void
 	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
@@ -53,27 +53,6 @@ class KO7_TextTest extends Unittest_TestCase
 				'<div id="awesome">Tangas</div>',
 			],
 		];
-	}
-
-	/**
-	 * This test makes sure that auto_p doesn't enclose HTML tags
-	 * in paragraphs
-	 *
-	 * @test
-	 * @covers Text::auto_p
-	 * @dataProvider provider_auto_para_does_not_enclose_html_tags_in_paragraphs
-	 */
-	function test_auto_para_does_not_enclose_html_tags_in_paragraphs(array $tags, $text)
-	{
-		$output = Text::auto_p($text);
-
-		foreach ($tags as $tag)
-		{
-			$this->assertNotTag(
-				['tag' => $tag, 'ancestor' => ['tag' => 'p']],
-				$output
-			);
-		}
 	}
 
 	/**
@@ -719,20 +698,20 @@ class KO7_TextTest extends Unittest_TestCase
 
 		if ($urls === FALSE)
 		{
-			$this->assertNotContains('http://', $linked_text);
+			self::assertStringNotContainsString('http://', $linked_text);
 		}
 		elseif (count($urls))
 		{
 			foreach ($urls as $url)
 			{
 				// Assert that all the urls have been caught by text auto_link_urls()
-				$this->assertContains(Text::auto_link_urls($url), $linked_text);
+				self::assertStringContainsString(Text::auto_link_urls($url), $linked_text);
 			}
 		}
 
 		foreach ($emails as $email)
 		{
-			$this->assertContains('&#109;&#097;&#105;&#108;&#116;&#111;&#058;'.$email, $linked_text);
+			self::assertStringContainsString('&#109;&#097;&#105;&#108;&#116;&#111;&#058;'.$email, $linked_text);
 		}
 
 	}

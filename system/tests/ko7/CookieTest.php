@@ -24,7 +24,7 @@ class KO7_CookieTest extends Unittest_TestCase
 	 * Sets up the environment
 	 */
 	// @codingStandardsIgnoreStart
-	public function setUp()
+	public function setUp(): void
 	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
@@ -174,10 +174,10 @@ class KO7_CookieTest extends Unittest_TestCase
 
 	/**
 	 * @covers Cookie::salt
-	 * @expectedException KO7_Exception
 	 */
 	public function test_salt_throws_with_no_configured_salt()
 	{
+		$this->expectException(KO7_Exception::class);
 		Cookie::$salt = NULL;
 		Cookie::salt('key', 'value');
 	}

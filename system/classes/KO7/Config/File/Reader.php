@@ -30,7 +30,6 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 */
 	public function __construct($directory = 'config')
 	{
-		// Set the configuration directory name
 		$this->_directory = trim($directory, '/');
 	}
 
@@ -121,7 +120,7 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 		// Start output buffer
 		ob_start();
 
-		include_once $path;
+		KO7::load($path);
 
 		// Get contents of buffer
 		$content = ob_get_contents();

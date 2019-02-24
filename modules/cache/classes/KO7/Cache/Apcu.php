@@ -145,11 +145,11 @@ class KO7_Cache_Apcu extends Cache implements Cache_Arithmetic {
 	 */
 	public function increment($id, $step = 1)
 	{
+		$id = $this->_sanitize_id($id);
 		if (apcu_exists($id)) {
 			return apcu_inc($id, $step);
-		} else {
-			return FALSE;
 		}
+		return FALSE;
 	}
 
 	/**
@@ -164,11 +164,11 @@ class KO7_Cache_Apcu extends Cache implements Cache_Arithmetic {
 	 */
 	public function decrement($id, $step = 1)
 	{
+		$id = $this->_sanitize_id($id);
 		if (apcu_exists($id)) {
 			return apcu_dec($id, $step);
-		} else {
-			return FALSE;
 		}
+		return FALSE;
 	}
 
 } // End KO7_Cache_Apcu

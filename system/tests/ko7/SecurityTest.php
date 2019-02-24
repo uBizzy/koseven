@@ -70,8 +70,9 @@ class KO7_SecurityTest extends Unittest_TestCase
 		$array = [];
 		for ($i = 0; $i <= 4; $i++)
 		{
-			Security::$token_name = 'token_'.$i;
-			$array[] = [Security::token(TRUE), Security::check(Security::token(FALSE)), $i];
+			$id = uniqid('', FALSE);
+			Security::$token_name = 'token_'.$id;
+			$array[] = [Security::token(TRUE), Security::check(Security::token()), $id];
 		}
 		return $array;
 	}
@@ -79,7 +80,6 @@ class KO7_SecurityTest extends Unittest_TestCase
 	/**
 	 * Tests Security::token()
 	 *
-	 * @test
 	 * @dataProvider provider_csrf_token
 	 * @covers Security::token
 	 */
@@ -87,8 +87,8 @@ class KO7_SecurityTest extends Unittest_TestCase
 	{
 		//@todo: the Security::token tests need to be reviewed to check how much of the logic they're actually covering
 		Security::$token_name = 'token_'.$iteration;
-		$this->assertSame(TRUE, $input);
-		$this->assertSame($expected, Security::token(FALSE));
+		self::assertTrue($input);
+		self::assertSame($expected, Security::token());
 		Session::instance()->delete(Security::$token_name);
 	}
 }

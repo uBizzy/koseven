@@ -70,12 +70,10 @@ class KO7_CacheTest extends Unittest_TestCase {
 
 	/**
 	 * Tests that `clone($cache)` will be prevented to maintain singleton
-	 *
-	 * @return  void
-	 * @expectedException Cache_Exception
 	 */
 	public function test_cloning_fails()
 	{
+		$this->expectException(Cache_Exception::class);
 		$cache = $this->getMockBuilder('Cache')
 			->disableOriginalConstructor()
 			->getMockForAbstractClass();

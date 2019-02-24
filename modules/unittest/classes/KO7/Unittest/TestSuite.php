@@ -4,35 +4,45 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\TestResult;
 
 /**
- * A version of the stock PHPUnit testsuite that supports whitelisting
+ * A version of the stock PHPUnit Test Suite that supports whitelisting
  * for code coverage filter.
  *
  * @package    KO7/UnitTest
- * @author     Kohana Team
+ *
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
+ *
+ * @codeCoverageIgnore Basic PhpUnit Test Suite. Unit Tests for this File can be ignored safely. If you change
+ *                     this class, removing this may be necessary
  */
 abstract class KO7_Unittest_TestSuite extends TestSuite
 {
-    /**
-     * Holds the details of files that should be whitelisted for
-     * code coverage
-     * @var array
-     */
-    protected $_filter_calls = [
-        'addFileToWhitelist' => []
-    ];
 
-    /**
-     * Runs the tests and collects their result in a TestResult.
-     * @param TestResult|NULL $result
-     * @return TestResult
-     */
-    public function run(TestResult $result = NULL): TestResult
-    {
+	/**
+	 * Holds the details of files that should be whitelisted for code coverage
+	 * @var array
+	 */
+	protected $_filter_calls = [
+		'addFileToWhitelist' => []
+	];
+
+	/**
+	 * Runs the tests and collects their result in a TestResult.
+	 *
+	 * @param  TestResult|NULL $result
+	 *
+	 * @return TestResult
+	 * @throws ReflectionException
+	 */
+	public function run(TestResult $result = NULL): TestResult
+	{
 		// Get the code coverage filter from the suite's result object
-		$coverage = $result->getCodeCoverage();
+		$coverage = FALSE;
+		if ($result !== NULL) {
+			$coverage = $result->getCodeCoverage();
+		}
 
 		if ($coverage)
 		{
@@ -51,12 +61,13 @@ abstract class KO7_Unittest_TestSuite extends TestSuite
 		return parent::run($result);
 	}
 
-    /**
-     * Queues a file to be added to the code coverage whitelist when the suite runs
-     * @param string $file
-     */
-    public function addFileToWhitelist($file)
-    {
-    	$this->_filter_calls['addFileToWhitelist'][] = $file;
-    }
+	/**
+	 * Queues a file to be added to the code coverage whitelist when the suite runs
+	 *
+	 * @param string $file
+	 */
+	public function addFileToWhitelist(string $file) : void
+	{
+		$this->_filter_calls['addFileToWhitelist'][] = $file;
+	}
 }

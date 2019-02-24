@@ -21,7 +21,7 @@ class KO7_RedisTest extends KO7_CacheBasicMethodsTest {
      * @throws Cache_Exception
      * @throws KO7_Exception
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Check if Redis extension is loaded
         if ( ! extension_loaded('redis'))

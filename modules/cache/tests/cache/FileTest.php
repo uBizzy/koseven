@@ -24,7 +24,7 @@ class KO7_Cache_FileTest extends KO7_CacheBasicMethodsTest {
 	 *
 	 * @return  void
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 

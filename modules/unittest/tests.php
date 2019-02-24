@@ -11,8 +11,7 @@ if ($file = KO7::find_file('classes', 'Unittest/Tests'))
 
 	// PHPUnit requires a test suite class to be in this file,
 	// so we create a faux one that uses the ko7 base
-	class TestSuite extends Unittest_Tests
-	{}
+	class TestSuite extends Unittest_Tests {}
 }
 else
 {

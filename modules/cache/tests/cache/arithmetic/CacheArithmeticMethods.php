@@ -12,7 +12,7 @@ include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
  */
 abstract class KO7_CacheArithmeticMethodsTest extends KO7_CacheBasicMethodsTest {
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 
@@ -86,7 +86,7 @@ abstract class KO7_CacheArithmeticMethodsTest extends KO7_CacheBasicMethodsTest 
 
 		if ($start_state !== NULL)
 		{
-			$cache->set($inc_args['id'], $start_state, 0);
+			$cache->set($inc_args['id'], (int)$start_state, 0);
 		}
 
 		$this->assertSame(

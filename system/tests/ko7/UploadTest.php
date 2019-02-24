@@ -91,12 +91,11 @@ class KO7_UploadTest extends Unittest_TestCase
 	/**
 	 * size() should throw an exception of the supplied max size is invalid
 	 *
-	 * @test
 	 * @covers upload::size
-	 * @expectedException KO7_Exception
 	 */
 	public function test_size_throws_exception_for_invalid_size()
 	{
+		$this->expectException(KO7_Exception::class);
 		$this->setEnvironment([
 			'_FILES' => [
 				'unit_test' => [

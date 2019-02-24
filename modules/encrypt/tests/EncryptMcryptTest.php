@@ -20,7 +20,7 @@ class EncryptMcryptTest extends EncryptTestBase {
 	 * @return void
 	 * @throws KO7_Exception
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		if (!extension_loaded('mcrypt')) {
 			$this->markTestSkipped('The Mcrypt extension is not available.');
@@ -29,8 +29,8 @@ class EncryptMcryptTest extends EncryptTestBase {
 		$this->set_config([
 			'type' => 'mcrypt',
 			'key' => EncryptTestBase::KEY32,
-			'cipher' => MCRYPT_RIJNDAEL_128,
-			'mode' => MCRYPT_MODE_CBC,
+			'cipher' => constant('MCRYPT_RIJNDAEL_128'),
+			'mode' => constant('MCRYPT_MODE_CBC'),
 		]);
 
 		parent::setUp();
@@ -54,8 +54,8 @@ class EncryptMcryptTest extends EncryptTestBase {
 		$this->set_config([
 			'type' => 'mcrypt',
 			'key' => $key,
-			'cipher' => $cipher,
-			'mode' => $mode,
+			'cipher' => constant($cipher),
+			'mode' => constant($mode),
 		]);
 
 		// Test encryption with known answers
@@ -90,9 +90,9 @@ class EncryptMcryptTest extends EncryptTestBase {
 					'iv' => '0000000000000000',
 					'ciphertext' => 'MDAwMDAwMDAwMDAwMDAwMOzjS0qd+IDZxiED7C1haC0=',
 					'plaintext' => 'test',
-					'cipher' => MCRYPT_RIJNDAEL_128,
+					'cipher' => 'MCRYPT_RIJNDAEL_128',
 					'key' => EncryptTestBase::KEY32,
-					'mode' => MCRYPT_MODE_CBC
+					'mode' => 'MCRYPT_MODE_CBC'
 				]
 			],
 			[
@@ -102,7 +102,7 @@ class EncryptMcryptTest extends EncryptTestBase {
 					'plaintext' => 'test2',
 					'cipher' => NULL,
 					'key' => EncryptTestBase::KEY32,
-					'mode' => MCRYPT_MODE_CFB
+					'mode' => 'MCRYPT_MODE_CFB'
 				]
 			],
 			[
@@ -110,9 +110,9 @@ class EncryptMcryptTest extends EncryptTestBase {
 					'iv' => '2222222222222222',
 					'ciphertext' => 'MjIyMjIyMjIyMjIyMjIyMi3rgfz1csVLEu+1LQD2+8c=',
 					'plaintext' => 'test3',
-					'cipher' => MCRYPT_RIJNDAEL_128,
+					'cipher' => 'MCRYPT_RIJNDAEL_128',
 					'key' => EncryptTestBase::KEY16,
-					'mode' => MCRYPT_MODE_ECB
+					'mode' => 'MCRYPT_MODE_ECB'
 				]
 			],
 			[
@@ -120,7 +120,7 @@ class EncryptMcryptTest extends EncryptTestBase {
 					'iv' => '3333333333333333',
 					'ciphertext' => 'MzMzMzMzMzMzMzMzMzMzM9NUlFYkvOEiSXWSYhwjkxg=',
 					'plaintext' => 'test4',
-					'cipher' => MCRYPT_RIJNDAEL_128,
+					'cipher' => 'MCRYPT_RIJNDAEL_128',
 					'key' => EncryptTestBase::KEY16,
 					'mode' => NULL
 				]
