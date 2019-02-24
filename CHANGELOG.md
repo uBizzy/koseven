@@ -26,6 +26,8 @@
  * Removed `memcache` and `apc` driver since both are removed wit PHP 7.0 (use `memcached` and `apcu` instead).
  * Also removed `MemcacheTag` Class as it depended on `memcache`
 ## Unittests
+ * Removed `phpunit/dbunit` as it is no longer maintained and not compatible with phpunit 8
+ * Updated package `phpunit` to version 8 (released Feb. 2019)
  * Added Enviroment variable `TRAVIS_TEST` which can be used to overwrite configurations for automated tests.
  * Added the following services which can be used for unittesting: redis, memcached, mysql
  * Added the following PHP-Extensions which can be used for unittesting: memcached, redis, imagick, apcu
