@@ -16,12 +16,6 @@ use PHPUnit\Framework\TestCase;
 abstract class KO7_Unittest_TestCase extends TestCase {
 
 	/**
-	 * Make sure PHPUnit does not back up globals
-	 * @var boolean
-	 */
-	protected $backupGlobals = FALSE;
-
-	/**
 	 * A set of Unittest helpers that are shared between normal / database testcases
 	 * @var Kohana_Unittest_Helpers
 	 */
@@ -45,6 +39,9 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	public function setUp() : void
 	{
 		$this->_helpers = new Unittest_Helpers;
+
+		// Make sure PHPUnit does not backup globals
+		$this->setBackupGlobals(FALSE);
 
 		$this->setEnvironment($this->environmentDefault);
 
