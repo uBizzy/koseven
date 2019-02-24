@@ -4,6 +4,7 @@ nbproject
 *.iml
 out
 gen
+.phpunit.result.cache
 
 # Kohana template
 application/cache/*
