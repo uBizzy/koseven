@@ -4,7 +4,10 @@ nbproject
 *.iml
 out
 gen
+
+# Unit tests
 .phpunit.result.cache
+modules/unittest/memory
 
 # Kohana template
 application/cache/*
