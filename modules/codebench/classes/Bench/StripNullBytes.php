@@ -1,13 +1,13 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
 class Bench_StripNullBytes extends Codebench {
 
 	public $description =
-		'String replacement comparisons related to <a href="http://dev.kohanaphp.com/issues/2676">#2676</a>.';
+		'String replacement comparisons related to <a href="http://github.com/koseven/koseven/issues/2676">#2676</a>.';
 
 	public $loops = 1000;
 

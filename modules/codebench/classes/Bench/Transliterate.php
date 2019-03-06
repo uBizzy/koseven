@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
@@ -8,7 +8,7 @@ class Bench_Transliterate extends Codebench {
 
 	public $description =
 		'Inspired by:
-		 http://forum.kohanaframework.org/comments.php?DiscussionID=6113';
+		 http://koseven.discourse.group/comments.php?DiscussionID=6113';
 
 	public $loops = 10;
 

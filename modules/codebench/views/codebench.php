@@ -2,7 +2,7 @@
 /**
  * Codebench — A benchmarking module.
  *
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
@@ -111,7 +111,7 @@
 				}
 			});
 
-			<?php if (Kohana::$config->load('codebench')->expand_all) { ?>
+			<?php if (KO7::$config->load('codebench')->expand_all) { ?>
 				// Expand all benchmark details by default
 				$toggle_all.click();
 			<?php } ?>
@@ -250,9 +250,9 @@
 	<?php } ?>
 
 	<p id="footer">
-		Page executed in <strong><?php echo round(microtime(TRUE) - KOHANA_START_TIME, 2) ?>&nbsp;s</strong>
+		Page executed in <strong><?php echo round(microtime(TRUE) - KO7_START_TIME, 2) ?>&nbsp;s</strong>
 		using <strong><?php echo Text::widont(Text::bytes(memory_get_usage(), 'MB')) ?></strong> of memory.<br />
-		<a href="http://github.com/kohana/codebench">Codebench</a>, a <a href="http://kohanaframework.org/">Kohana</a> module
+		<a href="http://github.com/kohana/codebench">Codebench</a>, a <a href="http://koseven.ga/">KO7</a> module
 		by <a href="http://www.geertdedeckere.be/article/introducing-codebench">Geert De Deckere</a>.
 	</p>
 

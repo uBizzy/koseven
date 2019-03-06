@@ -1,3 +1,3 @@
 <?php
 
-class Session_Database extends Kohana_Session_Database {}
+class Session_Database extends KO7_Session_Database {}

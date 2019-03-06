@@ -1,3 +1,3 @@
 <?php
 
-class Auth_Bcrypt extends Kohana_Auth_Bcrypt {}
+class Auth_Bcrypt extends KO7_Auth_Bcrypt {}

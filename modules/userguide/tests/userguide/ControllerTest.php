@@ -3,11 +3,11 @@
 /**
  * Unit tests for internal methods of userguide controller
  *
- * @group kohana
- * @group kohana.userguide
- * @group kohana.userguide.controller
+ * @group ko7
+ * @group ko7.userguide
+ * @group ko7.userguide.controller
  *
- * @package    Kohana/Userguide
+ * @package    KO7/Userguide
  * @category   Tests
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
@@ -19,10 +19,10 @@ class Userguide_ControllerTest extends Unittest_TestCase
 	public function provider_file_finds_markdown_files()
 	{
 		return [
-			['userguide/adding', 'guide/userguide/adding.md'],
-			['userguide/adding.md', 'guide/userguide/adding.md'],
-			['userguide/adding.markdown', 'guide/userguide/adding.md'],
-			['userguide/does_not_exist.md', FALSE]
+			['userguide'.DIRECTORY_SEPARATOR.'adding', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'adding.md', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'adding.markdown', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'does_not_exist.md', FALSE]
 		];
 	}
 

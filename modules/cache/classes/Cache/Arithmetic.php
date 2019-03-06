@@ -1,3 +1,3 @@
 <?php
 
-interface Cache_Arithmetic extends Kohana_Cache_Arithmetic {}
+interface Cache_Arithmetic extends KO7_Cache_Arithmetic {}

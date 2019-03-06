@@ -1,13 +1,8 @@
 # Developing locally
-
-Clone the repo and develop on the Devel branch. Each release will have its own Tag.
-
-I know its simple but for now will work ;)
-
+Clone the repo and develop on the "develop" branch for new features and version branches (eg. v3.3) for bug fixes.
 
 # Contributing to the project
-
-All features and bugfixes must be fully tested and reference an issue in  [GitHub](https://github.com/koseven/koseven/issues), **there are absolutely no exceptions**.
+All features and bugfixes must be fully tested and must have a reference to an issue in [GitHub](https://github.com/koseven/koseven/issues), **there are absolutely no exceptions**.
 
 It's highly recommended that you write/run unit tests during development as it can help you pick up on issues early on.  See the Unit Testing section below.
 
@@ -41,9 +36,7 @@ git add -u # will add all the tracked files even the deleted ones
 git commit -a -m 'working closed etc  #725' # this will commit and mention an issue in the repo
 ```
 
-
 ## Pull Requests
-
 Now you have new code at your fork ex https://github.com/neo22s/koseven. To move them to the original https://github.com/koseven/koseven repo you need to go to https://github.com/neo22s/koseven, and click on Pull Request (next to compare). This will create a pull request to the original code and the responsible will decide to merge it or not.
 
 Notes:
@@ -65,27 +58,39 @@ git merge upstream/devel
 
 Remember to be at you devel branch!
 
-
-
 ## Bug fixing 
-
 Make a PR with the fix, explain as in detail as possiblle.
 
 ## Tagging releases
-
 Tag names should be prefixed with a `v`, this helps to separate tag references from branch references in Git.
 
 For example, if you were creating a tag for the `3.1.0` release the tag name would be `v3.1.0`
 
-
 # Unit Testing
-
 Koseven currently uses PHPUnit for unit testing. This is installed with composer.
 
 ## How to run the tests
-
  * Install [Composer](http://getcomposer.org)
  * Run `php composer.phar install` from the root of this repository
  * Finally, run `vendor/bin/phpunit --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php`
 
 This will run the unit tests for core and all the modules and tell you if anything failed. If you haven't changed anything and you get failures, please create a new issue on  and paste the output (including the error) in the issue. Please note that a few tests only pass on linux systems.
+
+## Automated Unit Tests
+Automated Unit Testing is done via [Travis CI](https://travis-ci.org/).
+Tests which took place in Travis will also determine the Coverage Status of the project.
+There are currently the following services (with their default configurations) loaded, which can be used for Unit Testing:
+
+* redis
+* memcached
+* mysql (with database: 'unittest')
+
+Following PHP Extensions are loaded:
+* redis
+* imagick
+* apcu
+* and of course all default php extensions
+
+If you need additional extensions or services for Unit Testing, please feel free to open an issue.
+If you need to test - for example: a redis server - you can set a default configuration for travis tests by
+checking the enviroment variable `TRAVIS_TEST`. If it is set AND is true, unit tests are performed by travis ci

@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    Kohana/Cache
- * @group      kohana
- * @group      kohana.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_CacheTest extends Unittest_TestCase {
+class KO7_CacheTest extends Unittest_TestCase {
 
 	const BAD_GROUP_DEFINITION  = 1010;
 	const EXPECT_SELF           = 1001;
@@ -20,11 +20,9 @@ class Kohana_CacheTest extends Unittest_TestCase {
 	 */
 	public function provider_instance()
 	{
-		$tmp = realpath(sys_get_temp_dir());
-
 		$base = [];
 
-		if (Kohana::$config->load('cache.file'))
+		if (KO7::$config->load('cache.file'))
 		{
 			$base = [
 				// Test default group
@@ -40,16 +38,16 @@ class Kohana_CacheTest extends Unittest_TestCase {
 			];
 		}
 
-		return $base + [
+		return $base + [[
 			// Test bad group definition
-			Kohana_CacheTest::BAD_GROUP_DEFINITION,
-			'Failed to load Kohana Cache group: 1010'
-		];
+			KO7_CacheTest::BAD_GROUP_DEFINITION,
+			'Failed to load KO7 Cache group: 1010'
+		]];
 	}
 
 	/**
 	 * Tests the [Cache::factory()] method behaves as expected
-	 * 
+	 *
 	 * @dataProvider provider_instance
 	 *
 	 * @return  void
@@ -63,7 +61,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		catch (Cache_Exception $e)
 		{
 			$this->assertSame($expected, $e->getMessage());
-			throw $e;
+			return;
 		}
 
 		$this->assertInstanceOf(get_class($expected), $cache);
@@ -72,12 +70,10 @@ class Kohana_CacheTest extends Unittest_TestCase {
 
 	/**
 	 * Tests that `clone($cache)` will be prevented to maintain singleton
-	 *
-	 * @return  void
-	 * @expectedException Cache_Exception
 	 */
 	public function test_cloning_fails()
 	{
+		$this->expectException(Cache_Exception::class);
 		$cache = $this->getMockBuilder('Cache')
 			->disableOriginalConstructor()
 			->getMockForAbstractClass();
@@ -88,7 +84,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		}
 		catch (Cache_Exception $e)
 		{
-			$this->assertSame('Cloning of Kohana_Cache objects is forbidden', 
+			$this->assertSame('Cloning of KO7_Cache objects is forbidden',
 				$e->getMessage());
 			throw $e;
 		}
@@ -109,7 +105,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 					'persistent' => TRUE,
 				],
 				NULL,
-				Kohana_CacheTest::EXPECT_SELF,
+				KO7_CacheTest::EXPECT_SELF,
 				[
 					'server'     => 'otherhost',
 					'port'       => 5555,
@@ -119,7 +115,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 			[
 				'foo',
 				'bar',
-				Kohana_CacheTest::EXPECT_SELF,
+				KO7_CacheTest::EXPECT_SELF,
 				[
 					'foo'        => 'bar'
 				]
@@ -141,7 +137,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 
 	/**
 	 * Tests the config method behaviour
-	 * 
+	 *
 	 * @dataProvider provider_config
 	 *
 	 * @param   mixed    key value to set or get
@@ -157,7 +153,7 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		$cache_reflection = new ReflectionClass('Cache_File');
 		$config = $cache_reflection->getMethod('config');
 
-		if ($expected_result === Kohana_CacheTest::EXPECT_SELF)
+		if ($expected_result === KO7_CacheTest::EXPECT_SELF)
 		{
 			$expected_result = $cache;
 		}
@@ -185,11 +181,11 @@ class Kohana_CacheTest extends Unittest_TestCase {
 	 * Tests the [Cache::_sanitize_id()] method works as expected.
 	 * This uses some nasty reflection techniques to access a protected
 	 * method.
-	 * 
+	 *
 	 * @dataProvider provider_sanitize_id
 	 *
-	 * @param   string    id 
-	 * @param   string    expected 
+	 * @param   string    id
+	 * @param   string    expected
 	 * @return  void
 	 */
 	public function test_sanitize_id($id, $expected)
@@ -200,6 +196,11 @@ class Kohana_CacheTest extends Unittest_TestCase {
 		$sanitize_id = $cache_reflection->getMethod('_sanitize_id');
 		$sanitize_id->setAccessible(TRUE);
 
-		$this->assertSame($expected, $sanitize_id->invoke($cache, $id));
+		// Get Prefix if set
+        if ( ! $prefix = KO7::$config->load('cache')->get('prefix', false)) {
+            $prefix = '';
+        }
+
+		$this->assertSame($prefix.$expected, $sanitize_id->invoke($cache, $id));
 	}
-} // End Kohana_CacheTest
+} // End KO7_CacheTest

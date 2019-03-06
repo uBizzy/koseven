@@ -4,22 +4,22 @@
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
  *
- * @link http://kohanaframework.org/guide/about.install#application
+ * @link http://koseven.ga/guide/about.install#application
  */
 $application = 'application';
 
 /**
  * The directory in which your modules are located.
  *
- * @link http://kohanaframework.org/guide/about.install#modules
+ * @link http://koseven.ga/guide/about.install#modules
  */
 $modules = 'modules';
 
 /**
- * The directory in which the Kohana resources are located. The system
- * directory must contain the classes/kohana.php file.
+ * The directory in which the KO7 resources are located. The system
+ * directory must contain the classes/ko7.php file.
  *
- * @link http://kohanaframework.org/guide/about.install#system
+ * @link http://koseven.ga/guide/about.install#system
  */
 $system = 'system';
 
@@ -27,15 +27,15 @@ $system = 'system';
  * The default extension of resource files. If you change this, all resources
  * must be renamed to use the new extension.
  *
- * @link http://kohanaframework.org/guide/about.install#ext
+ * @link http://koseven.ga/guide/about.install#ext
  */
 define('EXT', '.php');
 
 /**
  * Set the path to the document root
  *
- * This assumes that this file is stored 2 levels below the DOCROOT, if you move 
- * this bootstrap file somewhere else then you'll need to modify this value to 
+ * This assumes that this file is stored 2 levels below the DOCROOT, if you move
+ * this bootstrap file somewhere else then you'll need to modify this value to
  * compensate.
  */
 define('DOCROOT', realpath(__DIR__.'/../../').DIRECTORY_SEPARATOR);
@@ -57,9 +57,9 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 
 /**
  * End of standard configuration! Changing any of the code below should only be
- * attempted by those with a working knowledge of Kohana internals.
+ * attempted by those with a working knowledge of KO7 internals.
  *
- * @link http://kohanaframework.org/guide/using.configuration
+ * @link http://koseven.ga/guide/using.configuration
  */
 
 // Make the application relative to the docroot
@@ -91,17 +91,17 @@ unset($application, $modules, $system);
 /**
  * Define the start time of the application, used for profiling.
  */
-if ( ! defined('KOHANA_START_TIME'))
+if ( ! defined('KO7_START_TIME'))
 {
-	define('KOHANA_START_TIME', microtime(TRUE));
+	define('KO7_START_TIME', microtime(TRUE));
 }
 
 /**
  * Define the memory usage at the start of the application, used for profiling.
  */
-if ( ! defined('KOHANA_START_MEMORY'))
+if ( ! defined('KO7_START_MEMORY'))
 {
-	define('KOHANA_START_MEMORY', memory_get_usage());
+	define('KO7_START_MEMORY', memory_get_usage());
 }
 
 // Bootstrap the application
@@ -121,28 +121,6 @@ if (($ob_len = ob_get_length()) !== FALSE)
 	}
 }
 
-// Preset cache config if not set
-$cache_config = Kohana::$config->load('cache');
-
-if (($cache_config->get('default') === NULL AND $cache_config->get('file') === NULL) OR
-	($cache_config->get('default') === 'file' AND $cache_config->get('file') === NULL))
-{
-	$cache_config->set(
-		'file',
-		[
-			'driver' => 'file',
-			'cache_dir' => APPPATH.'cache',
-			'default_expire' => 3600,
-			'ignore_on_delete' => [
-				'file_we_want_to_keep.cache',
-				'.gitignore',
-				'.git',
-				'.svn'
-			]
-		]
-	);
-}
-
 // Enable all modules we can find
 $modules_iterator = new DirectoryIterator(MODPATH);
 
@@ -156,6 +134,6 @@ foreach ($modules_iterator as $module)
 	}
 }
 
-Kohana::modules($modules);
+KO7::modules($modules);
 
-unset($cache_config, $modules_iterator, $modules, $module);
+unset($modules_iterator, $modules, $module);

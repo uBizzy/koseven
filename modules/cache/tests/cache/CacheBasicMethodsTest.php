@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    Kohana/Cache
- * @group      kohana
- * @group      kohana.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_CacheBasicMethodsTest extends Unittest_TestCase {
+abstract class KO7_CacheBasicMethodsTest extends Unittest_TestCase {
 
 	/**
 	 * @var     Cache driver for this test
@@ -18,22 +18,22 @@ abstract class Kohana_CacheBasicMethodsTest extends Unittest_TestCase {
 	/**
 	 * This method MUST be implemented by each driver to setup the `Cache`
 	 * instance for each test.
-	 * 
+	 *
 	 * This method should do the following tasks for each driver test:
-	 * 
+	 *
 	 *  - Test the Cache instance driver is available, skip test otherwise
 	 *  - Setup the Cache instance
 	 *  - Call the parent setup method, `parent::setUp()`
 	 *
 	 * @return  void
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 	}
 
 	/**
-	 * Accessor method to `$_cache_driver`. 
+	 * Accessor method to `$_cache_driver`.
 	 *
 	 * @return  Cache
 	 * @return  self
@@ -76,6 +76,7 @@ TESTTEXT;
 					'ttl'     => 0,           // Time to live
 					'wait'    => FALSE,       // Test wait time to let cache expire
 					'type'    => 'string',    // Type test
+                    'tags'    => ['tag_str'],   // Tag for item
 					'default' => NULL         // Default value get should return
 				],
 				'foobar'
@@ -86,7 +87,8 @@ TESTTEXT;
 					'value'   => 101010,
 					'ttl'     => 0,
 					'wait'    => FALSE,
-					'type'    => 'integer',
+					'type'    => 'int',
+                    'tags'    => ['tag_int'],
 					'default' => NULL
 				],
 				101010
@@ -98,6 +100,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'float',
+                    'tags'    => ['tag_float'],
 					'default' => NULL
 				],
 				10.00
@@ -112,6 +115,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'array',
+                    'tags'    => ['tag_arr'],
 					'default' => NULL
 				],
 				[
@@ -125,7 +129,8 @@ TESTTEXT;
 					'value'   => TRUE,
 					'ttl'     => 0,
 					'wait'    => FALSE,
-					'type'    => 'boolean',
+					'type'    => 'bool',
+                    'tags'    => ['tag_bool'],
 					'default' => NULL
 				],
 				TRUE
@@ -137,7 +142,8 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'null',
-					'default' => NULL
+                    'tags'    => ['tag_null'],
+					'default' => NULL,
 				],
 				NULL
 			],
@@ -145,9 +151,10 @@ TESTTEXT;
 				[
 					'id'      => 'object',
 					'value'   => $object,
-					'ttl'     => 0,
+					'ttl'     => NULL,
 					'wait'    => FALSE,
 					'type'    => 'object',
+                    'tags'    => ['tag_obj'],
 					'default' => NULL
 				],
 				$object
@@ -159,6 +166,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_mult', 'tag_mult2'],
 					'default' => NULL
 				],
 				'foo bar snafu'
@@ -170,6 +178,7 @@ TESTTEXT;
 					'ttl'     => 0,
 					'wait'    => 1,
 					'type'    => 'string',
+                    'tags'    => ['tag_ttl'],
 					'default' => NULL
 				],
 				'cache value that should last'
@@ -181,6 +190,7 @@ TESTTEXT;
 					'ttl'     => 3,
 					'wait'    => 5,
 					'type'    => 'null',
+                    'tags'    => ['tag_bar'],
 					'default' => NULL
 				],
 				NULL
@@ -192,6 +202,7 @@ TESTTEXT;
 					'ttl'     => 3,
 					'wait'    => 5,
 					'type'    => 'string',
+                    'tags'    => ['tag_snafu'],
 					'default' => 'something completely different!'
 				],
 				'something completely different!'
@@ -203,6 +214,7 @@ TESTTEXT;
 					'ttl'     => 10,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_html', 'tag_code'],
 					'default' => NULL,
 				],
 				$html_text
@@ -214,6 +226,7 @@ TESTTEXT;
 					'ttl'     => 60*5,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_ttl'],
 					'default' => NULL,
 				],
 				'blabla'
@@ -225,6 +238,7 @@ TESTTEXT;
 					'ttl'     => 60*50,
 					'wait'    => FALSE,
 					'type'    => 'string',
+                    'tags'    => ['tag_ttl'],
 					'default' => NULL,
 				],
 				'bla bla'
@@ -234,16 +248,16 @@ TESTTEXT;
 
 	/**
 	 * Tests the [Cache::set()] method, testing;
-	 * 
+	 *
 	 *  - The value is cached
 	 *  - The lifetime is respected
 	 *  - The returned value type is as expected
 	 *  - The default not-found value is respected
-	 * 
+	 *
 	 * @dataProvider provider_set_get
 	 *
-	 * @param   array    data 
-	 * @param   mixed    expected 
+	 * @param   array    data
+	 * @param   mixed    expected
 	 * @return  void
 	 */
 	public function test_set_get(array $data, $expected)
@@ -261,45 +275,53 @@ TESTTEXT;
 
 		$result = $cache->get($id, $default);
 		$this->assertEquals($expected, $result);
-		$this->assertInternalType($type, $result);
+
+		$assertIsType = 'assertIs'.ucfirst($type);
+		$assertIsType = $assertIsType === 'assertIsNull' ? 'assertNull' : $assertIsType;
+		$this->$assertIsType($result);
 
 		unset($id, $value, $ttl, $wait, $type, $default);
 	}
 
 	/**
 	 * Tests the [Cache::delete()] method, testing;
-	 * 
+	 *
 	 *  - The a cached value is deleted from cache
 	 *  - The cache returns a TRUE value upon deletion
 	 *  - The cache returns a FALSE value if no value exists to delete
+     *
+     * @depends test_set_get
+     *
+     * @dataProvider provider_set_get
 	 *
+     * @param   array   $data
+     * @param   mixed   $expected
+     * @throws  Cache_Exception
 	 * @return  void
 	 */
-	public function test_delete()
+	public function test_delete(array $data, $expected)
 	{
 		// Init
 		$cache = $this->cache();
 		$cache->delete_all();
+		extract($data);
 
-		// Test deletion if real cached value
-		if ( ! $cache->set('test_delete_1', 'This should not be here!', 0))
-		{
-			$this->fail('Unable to set cache value to delete!');
-		}
+		// Test deletion of real cached value
+        $cache->set($id, $value, 3600);
 
 		// Test delete returns TRUE and check the value is gone
-		$this->assertTrue($cache->delete('test_delete_1'));
-		$this->assertNull($cache->get('test_delete_1'));
+		$this->assertTrue($cache->delete($id));
+		$this->assertNull($cache->get($id));
 
-		// Test non-existant cache value returns FALSE if no error
-		$this->assertFalse($cache->delete('test_delete_1'));
+		// Test non-existent cache value returns FALSE if no error
+		$this->assertFalse($cache->delete($id));
 	}
 
 	/**
 	 * Tests [Cache::delete_all()] works as specified
 	 *
 	 * @return  void
-	 * @uses    Kohana_CacheBasicMethodsTest::provider_set_get()
+	 * @uses    KO7_CacheBasicMethodsTest::provider_set_get()
 	 */
 	public function test_delete_all()
 	{
@@ -323,9 +345,9 @@ TESTTEXT;
 		foreach ($data as $key => $values)
 		{
 			// Verify data has been purged
-			$this->assertSame('Cache Deleted!', $cache->get($values[0]['id'], 
+			$this->assertSame('Cache Deleted!', $cache->get($values[0]['id'],
 				'Cache Deleted!'));
 		}
 	}
 
-} // End Kohana_CacheBasicMethodsTest
+} // End KO7_CacheBasicMethodsTest

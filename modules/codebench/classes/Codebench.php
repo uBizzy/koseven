@@ -1,3 +1,3 @@
 <?php
 
-class Codebench extends Kohana_Codebench {}
+class Codebench extends KO7_Codebench {}
