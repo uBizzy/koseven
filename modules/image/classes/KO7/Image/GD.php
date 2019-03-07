@@ -102,7 +102,7 @@ class KO7_Image_GD extends Image {
 			case IMAGETYPE_PNG:
 				$create = 'imagecreatefrompng';
 			break;
-			case self::IMAGETYPE_WEBP:
+			case IMAGETYPE_WEBP:
 				$create = 'imagecreatefromwebp';
 			break;
 		}
@@ -638,7 +638,7 @@ class KO7_Image_GD extends Image {
 			case 'webp':
 				// Save a WEBP file
 				$save = 'imagewebp';
-				$type = self::IMAGETYPE_WEBP;
+				$type = IMAGETYPE_WEBP;
 
 				$quality = 80;
 			break;

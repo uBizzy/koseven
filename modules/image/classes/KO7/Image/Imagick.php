@@ -321,7 +321,7 @@ class KO7_Image_Imagick extends Image {
 				$type = IMAGETYPE_PNG;
 			break;
 			case 'webp':
-				$type = SELF::IMAGETYPE_WEBP;
+				$type = IMAGETYPE_WEBP;
 			break;
 			default:
 				throw new KO7_Exception('Installed ImageMagick does not support :type images',

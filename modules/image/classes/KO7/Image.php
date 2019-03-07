@@ -22,9 +22,6 @@ abstract class KO7_Image {
 	const HORIZONTAL = 0x11;
 	const VERTICAL   = 0x12;
 
-	// PHP image_type_to_mime_type doesn't know WEBP yet
-	const IMAGETYPE_WEBP = -1;
-
 	/**
 	 * @deprecated - provide an image.default_driver value in your configuration instead
 	 * @var  string  default driver: GD, ImageMagick, etc
@@ -678,7 +675,7 @@ abstract class KO7_Image {
 	 */
 	protected function image_type_to_mime_type($type)
 	{
-		if ($type === self::IMAGETYPE_WEBP)
+		if ($type === IMAGETYPE_WEBP)
 			return 'image/webp';
 
 		return image_type_to_mime_type($type);
