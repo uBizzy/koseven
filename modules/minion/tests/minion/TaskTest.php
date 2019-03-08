@@ -18,6 +18,15 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	protected static $base_url;
 
 	/**
+	 * Default values for the environment, see setEnvironment
+	 * @var array
+	 */
+	protected $environmentDefault =	[
+		'url.trusted_hosts' => ['www\.example\.com', 'www\.example2\.com'],
+    'site.minion_domain_name' => 'http://www.example2.com'
+	];
+
+	/**
 	 * Sets up the environment
 	 */
 	// @codingStandardsIgnoreStart
@@ -26,17 +35,9 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	{
 		parent::setUp();
 
-		KO7::$config->load('url')->set(
-			'trusted_hosts',
-			['www\.example\.com', 'www\.example2\.com']
-		);
-
-		KO7::$config->load('site')->set(
-			'minion_domain_name',
-			'http://www.example2.com'
-		);
-
-		// Keep the old request object
+		// Keep the old request object and base_url
+    // These are changed in set_domain_name and will cause other tests to
+    // fail, so they need to be stored and restored in the tearDown method.
 		static::$initial_request = Request::$initial;
 		Request::$initial = NULL;
 

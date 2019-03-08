@@ -378,10 +378,13 @@ abstract class KO7_Minion_Task {
 			// Add trailing slash
 			KO7::$base_url = preg_replace('~^https?://[^/]+$~', '$0/', $domain_name);
 
-			// Set HTTPS for https based urls
-			$_SERVER['HTTPS'] = (preg_match_all('#(https)://#i', KO7::$base_url, $result) === 1);
+			// Initialize Request Class
+			$request = Request::factory();
 
-			Request::$initial = Request::factory();
+			// Set HTTPS for https based urls
+			$request->secure(preg_match_all('#(https)://#i', KO7::$base_url, $result) === 1);
+
+			Request::$initial = $request;
 		}
 	}
 }
