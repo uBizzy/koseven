@@ -15,13 +15,17 @@
 class Minion_TaskTest extends KO7_Unittest_TestCase
 {
 	protected static $initial_request;
+	protected static $base_url;
 
 	/**
 	 * Sets up the environment
 	 */
+	// @codingStandardsIgnoreStart
 	public function setUp() : void
+	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
+
 		KO7::$config->load('url')->set(
 			'trusted_hosts',
 			['www\.example\.com', 'www\.example2\.com']
@@ -31,18 +35,23 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 			'minion_domain_name',
 			'http://www.example2.com'
 		);
-		
+
 		// Keep the old request object
-		self::$initial_request = Request::$initial;
+		static::$initial_request = Request::$initial;
 		Request::$initial = NULL;
+
+		static::$base_url = KO7::$base_url;
 	}
 
 	/**
 	 * Restores the environment
 	 */
+	// @codingStandardsIgnoreStart
 	public function tearDown() : void
+	// @codingStandardsIgnoreEnd
 	{
-		Request::$initial = self::$initial_request;
+		Request::$initial = static::$initial_request;
+		KO7::$base_url = static::$base_url;
 
 		parent::tearDown();
 	}
