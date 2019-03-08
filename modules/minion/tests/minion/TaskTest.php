@@ -22,12 +22,12 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	public function setUp() : void
 	{
 		parent::setUp();
-		Kohana::$config->load('url')->set(
+		KO7_Config::$config->load('url')->set(
 			'trusted_hosts',
 			['www\.example\.com', 'www\.example2\.com']
 		);
 
-		Kohana::$config->load('site')->set(
+		KO7_Config::$config->load('site')->set(
 			'minion_domain_name',
 			'http://www.example2.com'
 		);
