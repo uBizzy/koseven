@@ -19,9 +19,7 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	/**
 	 * Sets up the environment
 	 */
-	// @codingStandardsIgnoreStart
-	public function setUp()
-	// @codingStandardsIgnoreEnd
+	public function setUp() : void
 	{
 		parent::setUp();
 		Kohana::$config->load('url')->set(
@@ -42,9 +40,7 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	/**
 	 * Restores the environment
 	 */
-	// @codingStandardsIgnoreStart
-	public function tearDown()
-	// @codingStandardsIgnoreEnd
+	public function tearDown() : void
 	{
 		Request::$initial = self::$initial_request;
 
