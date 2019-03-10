@@ -681,11 +681,13 @@ class KO7_Core {
 	 *     // Find all view files.
 	 *     $views = KO7::list_files('views');
 	 *
-	 * @param   string  $directory  directory name
-	 * @param   array   $paths      list of paths to search
+	 * @param   string  		$directory   directory name
+	 * @param   array   		$paths       list of paths to search
+	 * @param	string|array	$ext		 only list files with this extension
+	 *
 	 * @return  array
 	 */
-	public static function list_files($directory = NULL, array $paths = NULL)
+	public static function list_files($directory = NULL, array $paths = NULL, $ext = NULL)
 	{
 		if ($directory !== NULL)
 		{
@@ -725,7 +727,7 @@ class KO7_Core {
 
 					if ($file->isDir())
 					{
-						if ($sub_dir = KO7::list_files($key, $paths))
+						if ($sub_dir = KO7::list_files($key, $paths, $ext))
 						{
 							if (isset($found[$key]))
 							{
@@ -739,7 +741,7 @@ class KO7_Core {
 							}
 						}
 					}
-					else
+					elseif ($ext === NULL || $ext === '.'.$file->getExtension())
 					{
 						if ( ! isset($found[$key]))
 						{
