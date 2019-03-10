@@ -684,10 +684,11 @@ class KO7_Core {
 	 * @param   string  		$directory   directory name
 	 * @param   array   		$paths       list of paths to search
 	 * @param   string|array	$ext		 only list files with this extension
+	 * @param   bool			$sort		 sort alphabetically
 	 *
 	 * @return  array
 	 */
-	public static function list_files($directory = NULL, array $paths = NULL, $ext = NULL)
+	public static function list_files($directory = NULL, array $paths = NULL, $ext = NULL, $sort = NULL)
 	{
 		if ($directory !== NULL)
 		{
@@ -705,6 +706,12 @@ class KO7_Core {
 		{
 			// convert string extension to array
 			$ext = [$ext];
+		}
+
+		if ($sort === NULL)
+		{
+			// sort results by default
+			$sort = TRUE;
 		}
 
 		// Create an array for the files
@@ -759,8 +766,11 @@ class KO7_Core {
 			}
 		}
 
-		// Sort the results alphabetically
-		ksort($found);
+		if ($sort)
+		{
+			// Sort the results alphabetically
+			ksort($found);
+		}
 
 		return $found;
 	}
