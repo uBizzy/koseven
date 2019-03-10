@@ -701,6 +701,12 @@ class KO7_Core {
 			$paths = KO7::$_paths;
 		}
 
+		if (is_string($ext))
+		{
+			// convert string extension to array
+			$ext = [$ext];
+		}
+
 		// Create an array for the files
 		$found = [];
 
@@ -741,7 +747,7 @@ class KO7_Core {
 							}
 						}
 					}
-					elseif ($ext === NULL || $ext === '.'.$file->getExtension())
+					elseif ($ext === NULL || in_array('.'.$file->getExtension(), $ext, TRUE))
 					{
 						if ( ! isset($found[$key]))
 						{
