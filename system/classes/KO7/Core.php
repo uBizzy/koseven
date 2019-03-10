@@ -683,7 +683,7 @@ class KO7_Core {
 	 *
 	 * @param   string  		$directory   directory name
 	 * @param   array   		$paths       list of paths to search
-	 * @param	string|array	$ext		 only list files with this extension
+	 * @param   string|array	$ext		 only list files with this extension
 	 *
 	 * @return  array
 	 */
