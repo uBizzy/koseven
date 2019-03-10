@@ -1,7 +1,6 @@
 # Changelog 4.0
 ## General
  * Bug Fixes and Performance / Security Improvments.
- * New pre-defined constant `PUBPATH` which points to the Koseven `public` directory
  * Error handlers strict compliance with PHP7+ (Replaced `Exception` with `Throwable`)
  * New `KO7_Error_Exception` class which extends PHP internal `ErrorException`
  * Translation, Inflector updates.
