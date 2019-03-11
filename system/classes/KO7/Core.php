@@ -681,11 +681,14 @@ class KO7_Core {
 	 *     // Find all view files.
 	 *     $views = KO7::list_files('views');
 	 *
-	 * @param   string  $directory  directory name
-	 * @param   array   $paths      list of paths to search
+	 * @param   string  		$directory   directory name
+	 * @param   array   		$paths       list of paths to search
+	 * @param   string|array	$ext		 only list files with this extension
+	 * @param   bool			$sort		 sort alphabetically
+	 *
 	 * @return  array
 	 */
-	public static function list_files($directory = NULL, array $paths = NULL)
+	public static function list_files($directory = NULL, array $paths = NULL, $ext = NULL, $sort = NULL)
 	{
 		if ($directory !== NULL)
 		{
@@ -697,6 +700,18 @@ class KO7_Core {
 		{
 			// Use the default paths
 			$paths = KO7::$_paths;
+		}
+
+		if (is_string($ext))
+		{
+			// convert string extension to array
+			$ext = [$ext];
+		}
+
+		if ($sort === NULL)
+		{
+			// sort results by default
+			$sort = TRUE;
 		}
 
 		// Create an array for the files
@@ -725,7 +740,7 @@ class KO7_Core {
 
 					if ($file->isDir())
 					{
-						if ($sub_dir = KO7::list_files($key, $paths))
+						if ($sub_dir = KO7::list_files($key, $paths, $ext, $sort))
 						{
 							if (isset($found[$key]))
 							{
@@ -739,7 +754,7 @@ class KO7_Core {
 							}
 						}
 					}
-					else
+					elseif ($ext === NULL || in_array('.'.$file->getExtension(), $ext, TRUE))
 					{
 						if ( ! isset($found[$key]))
 						{
@@ -751,8 +766,11 @@ class KO7_Core {
 			}
 		}
 
-		// Sort the results alphabetically
-		ksort($found);
+		if ($sort)
+		{
+			// Sort the results alphabetically
+			ksort($found);
+		}
 
 		return $found;
 	}
