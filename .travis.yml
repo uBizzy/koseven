@@ -36,12 +36,11 @@ services:
 before_install:
   - composer self-update
   - composer validate
-  - composer require phwoolcon/ci-pecl-cacher -n
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
 
 # Install dependencies
 install:
-  - composer install -n
+  - composer require phwoolcon/ci-pecl-cacher -n
   - pecl list-files redis | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install redis
   - pecl list-files imagick | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install imagick
   - pecl list-files apcu | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install apcu
