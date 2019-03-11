@@ -740,7 +740,7 @@ class KO7_Core {
 
 					if ($file->isDir())
 					{
-						if ($sub_dir = KO7::list_files($key, $paths, $ext))
+						if ($sub_dir = KO7::list_files($key, $paths, $ext, $sort))
 						{
 							if (isset($found[$key]))
 							{
