@@ -16,6 +16,7 @@ php:
 cache:
   directories:
     - $HOME/.composer/cache/files
+    - $HOME/pecl_cache
 
 # Also Test on Trusty (14.04 LTS)
 matrix:
@@ -39,15 +40,19 @@ before_install:
 
 # Install dependencies
 install:
-  - composer install
-  - printf "\n" | pecl install -f redis
-  - printf "\n" | pecl install -f imagick
-  - printf "\n" | pecl install -f apcu
-  - printf "\n" | pecl install -f yaml
+  - composer require phwoolcon/ci-pecl-cacher -n
+  - pecl list-files redis | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install redis
+  - pecl list-files imagick | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install imagick
+  - pecl list-files apcu | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install apcu
+  - pecl list-files yaml | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install yaml
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
   - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = imagick.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 # Execute commands which should make the build pass or fail
 script:
