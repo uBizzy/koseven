@@ -16,6 +16,7 @@ php:
 cache:
   directories:
     - $HOME/.composer/cache/files
+    - $HOME/pecl_cache
 
 # Also Test on Trusty (14.04 LTS)
 matrix:
@@ -35,15 +36,16 @@ services:
 before_install:
   - composer self-update
   - composer validate
+  - composer require phwoolcon/ci-pecl-cacher -n
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
 
 # Install dependencies
 install:
-  - composer install
-  - printf "\n" | pecl install -f redis
-  - printf "\n" | pecl install -f imagick
-  - printf "\n" | pecl install -f apcu
-  - printf "\n" | pecl install -f yaml
+  - composer install -n
+  - vendor/bin/ci-pecl-install redis
+  - vendor/bin/ci-pecl-install imagick
+  - vendor/bin/ci-pecl-install apcu
+  - vendor/bin/ci-pecl-install yaml
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
