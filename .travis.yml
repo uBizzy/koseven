@@ -37,15 +37,15 @@ before_install:
   - composer self-update
   - composer validate
   - composer require phwoolcon/ci-pecl-cacher -n
-  - vendor/bin/ci-pecl-install redis
-  - vendor/bin/ci-pecl-install imagick
-  - vendor/bin/ci-pecl-install apcu
-  - vendor/bin/ci-pecl-install yaml
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
 
 # Install dependencies
 install:
   - composer install -n
+  - pecl list-files redis | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install redis
+  - pecl list-files imagick | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install imagick
+  - pecl list-files apcu | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install apcu
+  - pecl list-files yaml | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install yaml
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
