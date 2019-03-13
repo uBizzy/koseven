@@ -3,7 +3,7 @@
 - [Installation](install)
 - Getting Started
    - [Conventions and Style](conventions)
-   - Model View Controller
+   - [Model View Controller](mvc)
       - [Controllers](mvc/controllers)
       - [Models](mvc/models)
       - [Views](mvc/views)
@@ -34,8 +34,6 @@
    - [XSS](security/xss)
    - [Validation](security/validation)
    - [Cookies](security/cookies)
-   - [Database](security/database)
-   - [Encryption](security/encryption)
    - [Deploying](security/deploying)
 - Tutorials
    - [Hello World](tutorials/hello-world)
