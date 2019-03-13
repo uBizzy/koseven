@@ -14,48 +14,20 @@
 
 class Minion_TaskTest extends KO7_Unittest_TestCase
 {
-	protected static $initial_request;
-	protected static $base_url;
-
 	/**
 	 * Default values for the environment, see setEnvironment
 	 * @var array
 	 */
 	protected $environmentDefault =	[
 		'url.trusted_hosts' => ['www\.example\.com', 'www\.example2\.com'],
-    'site.minion_domain_name' => 'http://www.example2.com'
-	];
-
-	/**
-	 * Sets up the environment
-	 */
-	// @codingStandardsIgnoreStart
-	public function setUp() : void
-	// @codingStandardsIgnoreEnd
-	{
-		parent::setUp();
+		'site.minion_domain_name' => 'http://www.example2.com',
 
 		// Keep the old request object and base_url
-    // These are changed in set_domain_name and will cause other tests to
-    // fail, so they need to be stored and restored in the tearDown method.
-		static::$initial_request = Request::$initial;
-		Request::$initial = NULL;
-
-		static::$base_url = KO7::$base_url;
-	}
-
-	/**
-	 * Restores the environment
-	 */
-	// @codingStandardsIgnoreStart
-	public function tearDown() : void
-	// @codingStandardsIgnoreEnd
-	{
-		Request::$initial = static::$initial_request;
-		KO7::$base_url = static::$base_url;
-
-		parent::tearDown();
-	}
+		// These are changed in set_domain_name and will cause other tests to
+		// fail, so they need to be stored and restored in the tearDown method.
+		'Request::$initial' => NULL,
+		'Kohana::$base_url' => ''
+	];
 
 	/**
 	 * Provides test data for test_convert_task_to_class_name()
