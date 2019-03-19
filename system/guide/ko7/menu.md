@@ -36,11 +36,11 @@
    - [Cookies](security/cookies)
    - [Deploying](security/deploying)
 - Tutorials
+   - [Get started using Git](tutorials/git)
    - [Hello World](tutorials/hello-world)
-   - [Base controller for application](tutorials/basic-controller)
+   - [Controller Template](tutorials/controller-template)
    - [Simple MVC](tutorials/simple-mvc)
    - [Custom Error Pages](tutorials/error-pages)
    - [Clean URLs](tutorials/clean-urls)
    - [Sharing Koseven](tutorials/sharing-koseven)
    - [Koseven as a Library](tutorials/library-koseven)
-   - [Working with Git](tutorials/git)
