@@ -1,7 +1,7 @@
 # Classes
 
 Classes are blueprints for objects.
-Koseven makes use of the PHP autoloading capability, it uses the `__autoload()` magic method along with the 
+Koseven makes use of the PHP autoloading capability, it uses the `spl_autoload()` magic function along with the 
 [Cascading Filesystem](files) to create an easy means for loading classes. You can find more about this in
 the [Autoloading](autoloading) section of this Documentation.
 
@@ -25,7 +25,8 @@ To create a new class, simply place a file in the `classes/` directory at any po
 	// classes/Foobar.php
 	
 	class Foobar {
-		static function magic() {
+		public static function magic()
+		{
 			// Does something
 		}
 	}
@@ -37,7 +38,8 @@ We can also put classes in subdirectories.
 	// classes/Professor/Baxter.php
 	
 	class Professor_Baxter {
-		static function teach() {
+		public static function teach()
+		{
 			// Does something
 		}
 	}
@@ -70,8 +72,8 @@ Here is an example of a Namespaced class
     namespace Helpers;
     
     class Arrays extends \Arr {
-    
-        static function combine() {
+        public static function combine()
+	{
                 // Does something
         }
     }
