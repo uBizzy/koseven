@@ -6,14 +6,13 @@
  * @category   Security
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.ga/LICENSE.md
  */
 class KO7_Valid {
 
 	/**
 	 * Checks if a field is not empty.
 	 *
-	 * @param   mixed $value
 	 * @return  boolean
 	 */
 	public static function not_empty($value)

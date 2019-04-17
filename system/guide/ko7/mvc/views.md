@@ -38,15 +38,6 @@ When a view is assigned as the [Response::body], as in the example above, it wil
         $this->response->body($about_page);
     }
 
-## View filename
-
-Gets by [View::get_filename] and sets by [View::set_filename], [View::factory] or [View::render] methods.
-
-    if ( ! $view->get_filename())
-    {
-    	$view->set_filename('pages/home');
-    }
-
 ## Variables in Views
 
 Once view has been loaded, variables can be assigned to it using the [View::set] and [View::bind] methods.
@@ -54,7 +45,7 @@ Once view has been loaded, variables can be assigned to it using the [View::set]
     public function action_roadtrip()
     {
         $view = View::factory('user/roadtrip')
-            ->set('places', ['Rome', 'Paris', 'London', 'New York', 'Tokyo'])
+            ->set('places', array('Rome', 'Paris', 'London', 'New York', 'Tokyo'));
             ->bind('user', $this->user);
 
         // The view will have $places and $user variables
@@ -63,18 +54,18 @@ Once view has been loaded, variables can be assigned to it using the [View::set]
 
 [!!] The only difference between `set()` and `bind()` is that `bind()` assigns the variable by reference. If you `bind()` a variable before it has been defined, the variable will be created with a value of `NULL`.  
 
-You can also assign variables directly to the View object. This is identical to calling `set()`;
-    
-    public function action_roadtrip()
-    {
-        $view = View::factory('user/roadtrip');
-        
-        $view->places = ['Rome', 'Paris', 'London', 'New York', 'Tokyo'];
+You can also assign variables directly to the View object.  This is identical to calling `set()`;
+
+	public function action_roadtrip()
+	{
+		$view = View::factory('user/roadtrip');
+            
+		$view->places = array('Rome', 'Paris', 'London', 'New York', 'Tokyo');
         $view->user = $this->user;
-        
+
         // The view will have $places and $user variables
         $this->response->body($view);
-    }
+	}
 
 ### Global Variables
 
@@ -109,6 +100,7 @@ Next, the home controller will extend `Controller_Website`:
         public function action_index()
         {
             $this->page_title = 'Home';
+
             $this->template->content = View::factory('pages/home');
         }
 
@@ -130,13 +122,14 @@ The other option is to include the view directly, which makes all of the current
     // Any variable defined in this view will be included in "views/message.php"
     <?php include Kohana::find_file('views', 'user/login') ?>
 
-You can also assign a variable of your parent view to be the child view from within your controller. For example:
+You can also assign a variable of your parent view to be the child view from within your controller.  For example:
 
 	// In your controller:
 
 	public function action_index()
 	{
 		$view = View::factory('common/template');
+		
 		$view->title = "Some title";
 		$view->body = View::factory('pages/foobar');
 	}
@@ -145,11 +138,11 @@ You can also assign a variable of your parent view to be the child view from wit
 	
 	<html>
 	<head>
-		<title><?=$title?></title>
+		<title><?php echo $title></title>
 	</head>
 	
 	<body>
-		<?=$body?>
+		<?php echo $body ?>
 	</body>
 	</html>
 

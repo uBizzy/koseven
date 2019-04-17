@@ -4,14 +4,17 @@ Behaviors allow to set and/or modify model field data by attaching the behavior 
 
 A good example is a slug for a page, this is based on a title and needs to be updated during the commit. This slug can then be used in the URL to retrieve the model.
 
-	public function behaviors()
+	public function behavior()
 	{
-		return [
+		return array(
+			// Guid generation
 			// Generate a guid and store in in the guid column
-			'Guid' => ['column' => 'guid'],
+			'Guid' => array('column' => 'guid'),
+			
+			// Slug generation
 			// Generate a slug from the title column and store in in the slug column
-			'Slug' => ['column' => 'slug', 'source' => 'title'],
-		];
+			'Slug' => array('source'=>'title', column' => 'slug'),
+		);
 	}
 
 ## Behaviors types
@@ -19,76 +22,75 @@ A good example is a slug for a page, this is based on a title and needs to be up
 
 This behavior will generate a GUID and store it in the specified column.
 
-If the `column` key is ommited the `guid` column will be used to store the generated GUID.
+If the `column` key is ommited the '`guid`' column will be used to store the generated GUID.
 
-	public function behaviors()
+	public function behavior()
 	{
-		return [
+		return array(
 			...
-			'Guid' => [
-				'column' => '[column name]'
-			],
+			'Guid' => array(
+				'column'      => '[column name]'
+			),
 			...
-		];
+		);
 	}
 
 ### Slug
 
 This behavior will generate a slug from the `source` field and store it in the specified column. 
 
-If the `source` key is ommited the `name` column will be used to create the slug. If the `column` key is ommited the `slug` column will be used to create the slug.
+If the `source` key is ommited the '`name`' column will be used to create the slug. If the `column` key is ommited the '`slug`' column will be used to create the slug.
 
-	public function behaviors()
+	public function behavior()
 	{
-		return [
+		return array(
 			...
-			'Slug' => [
-				'source' => '[column name]',
-				'column' => '[column name]'
-			],
+			'Slug' => array(
+				'source'      => '[column name]',
+				'column'      => '[column name]'
+			),
 			...
-		];
+		);
 	}
 
 ### LocalBehavior
 
 Allows the creation of a local behavior that is model specific.
-The function takes up to two arguments; the first argument contains the type of operation on the model and can be either `construct` during construction of the model class, `update` when the model is updated or `create` when the model is created.
+The function takes up to two arguments; the first argument contains the type of operation on the model and can be either '`construct`' during construction of the model class, '`update`' when the model is updated or '`create`' when the model is created.
 
-	public function behaviors()
+	public function behavior()
 	{
-		return [
+		return array(
 			...
 			// Callback static method
-			TRUE => ['MyClass::static_method'],
+			TRUE => array('MyClass::static_method'),
 			// Callback method
-			TRUE => [$this, 'custom_behavior'],
+			TRUE => array($this, 'custom_behavior')),
 			// Function as the callback (PHP 5.3+)
-			TRUE => function($action)
-			{
+			TRUE => function($action) {
 				// Do something to $value and return it.
 				return some_function($action);
 			},
+
 			...
-		];
+		);
 	}
 
 ## Writing new behaviors
 
 It is possible to create custom behaviors that can be reused in different models.
 
-Create a class extended the `ORM_Behavior` and implement the `on_construct`, `on_update` and `on_create` functions.
+Create a subclass of the `ORM_Behavior` class and implement the `on_construct`, `on_update` and `on_create` functions.
 
-	class ORM_Behavior_Foo extends ORM_Behavior {
+	class ORM_Behavior_MyBehavior extends ORM_Behavior {
 
 		/**
 		 * Constructs a new model and loads a record if given
 		 *
 		 * @param   ORM   $model The model
 		 * @param   mixed $id    Parameter for find or object to load
-		 * @return  boolean
 		 */
-		public function on_construct(ORM $model, $id)
+		public function on_construct($model, $id)
 		{
 			// return FALSE if the model is loaded from this function.
 			return TRUE;
@@ -99,7 +101,7 @@ Create a class extended the `ORM_Behavior` and implement the `on_construct`, `on
 		 *
 		 * @param   ORM   $model The model
 		 */
-		public function on_update(ORM $model)
+		public function on_update($model)
 		{
 			// Modify or update the appropriate fields
 		}
@@ -109,7 +111,7 @@ Create a class extended the `ORM_Behavior` and implement the `on_construct`, `on
 		 *
 		 * @param   ORM   $model The model
 		 */
-		public function on_create(ORM $model)
+		public function on_create($model)
 		{
 			// Modify or update the appropriate fields
 		}

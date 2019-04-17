@@ -145,14 +145,12 @@ class KO7_Image_GD extends Image {
 		{
 			// Gets create function
 			$create = $this->_create_function;
+
 			// Open the temporary image
 			$this->_image = $create($this->file);
-			// Do not apply alpha blending
-			imagealphablending($this->_image, FALSE);
+
 			// Preserve transparency when saving
 			imagesavealpha($this->_image, TRUE);
-			// Enable interlace
-			imageinterlace($this->_image, TRUE);
 		}
 	}
 
@@ -664,12 +662,13 @@ class KO7_Image_GD extends Image {
 	{
 		// Create an empty image
 		$image = imagecreatetruecolor($width, $height);
+
 		// Do not apply alpha blending
 		imagealphablending($image, FALSE);
+
 		// Save alpha levels
 		imagesavealpha($image, TRUE);
-		// Enable interlace
-		imageinterlace($image, TRUE);
+
 		return $image;
 	}
 

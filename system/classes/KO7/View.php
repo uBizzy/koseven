@@ -8,13 +8,11 @@
  * @category   Base
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.ga/LICENSE.md
  */
 class KO7_View {
-	
-	/**
-	 * @var array Global variables
-	 */
+
+	// Array of global variables
 	protected static $_global_data = [];
 
 	/**
@@ -27,7 +25,7 @@ class KO7_View {
 	 * @param   array   $data   array of values
 	 * @return  View
 	 */
-	public static function factory($file = NULL, array $data = [])
+	public static function factory($file = NULL, array $data = NULL)
 	{
 		return new View($file, $data);
 	}
@@ -63,7 +61,7 @@ class KO7_View {
 			// Load the view within the current scope
 			include $ko7_view_filename;
 		}
-		catch (Throwable $e)
+		catch (Exception $e)
 		{
 			// Delete the output buffer
 			ob_end_clean();
@@ -85,7 +83,7 @@ class KO7_View {
 	 * You can also use an array or Traversable object to set several values at once:
 	 *
 	 *     // Create the values $food and $beverage in the view
-	 *     View::set_global(['food' => 'bread', 'beverage' => 'water']);
+	 *     View::set_global(array('food' => 'bread', 'beverage' => 'water'));
 	 *
 	 * [!!] Note: When setting with using Traversable object we're not attaching the whole object to the view,
 	 * i.e. the object's standard properties will not be available in the view context.
@@ -124,14 +122,10 @@ class KO7_View {
 		View::$_global_data[$key] =& $value;
 	}
 
-	/**
-	 * @var string View filename
-	 */
+	// View filename
 	protected $_file;
-	
-	/**
-	 * @var array View local variables
-	 */
+
+	// Array of local variables
 	protected $_data = [];
 
 	/**
@@ -144,14 +138,14 @@ class KO7_View {
 	 * @param   array   $data   array of values
 	 * @uses    View::set_filename
 	 */
-	public function __construct($file = NULL, array $data = [])
+	public function __construct($file = NULL, array $data = NULL)
 	{
 		if ($file !== NULL)
 		{
 			$this->set_filename($file);
 		}
 
-		if ($data)
+		if ($data !== NULL)
 		{
 			// Add the values to the current data
 			$this->_data = $data + $this->_data;
@@ -168,7 +162,7 @@ class KO7_View {
 	 *
 	 * @param   string  $key    variable name
 	 * @return  mixed
-	 * @throws  View_Exception
+	 * @throws  KO7_Exception
 	 */
 	public function & __get($key)
 	{
@@ -176,11 +170,15 @@ class KO7_View {
 		{
 			return $this->_data[$key];
 		}
-		if (array_key_exists($key, View::$_global_data))
+		elseif (array_key_exists($key, View::$_global_data))
 		{
 			return View::$_global_data[$key];
 		}
-		throw new View_Exception('View variable ":var" is not set', [':var' => $key]);
+		else
+		{
+			throw new KO7_Exception('View variable is not set: :var',
+				[':var' => $key]);
+		}
 	}
 
 	/**
@@ -237,7 +235,7 @@ class KO7_View {
 		{
 			return $this->render();
 		}
-		catch (Throwable $e)
+		catch (Exception $e)
 		{
 			/**
 			 * Display the exception message and halt script execution.
@@ -245,7 +243,7 @@ class KO7_View {
 			 * We use this method here because it's impossible to throw an
 			 * exception from __toString().
 			 */
-			View_Exception::handler($e);
+			KO7_Exception::handler($e);
 
 			// This line will never ne reached
 			return '';
@@ -275,16 +273,6 @@ class KO7_View {
 
 		return $this;
 	}
-	
-	/**
-	 * Gets the view filename.
-	 *
-	 * @return  string
-	 */
-	public function get_filename()
-	{
-		return $this->_file;
-	}
 
 	/**
 	 * Assigns a variable by name. Assigned values will be available as a
@@ -296,7 +284,7 @@ class KO7_View {
 	 * You can also use an array or Traversable object to set several values at once:
 	 *
 	 *     // Create the values $food and $beverage in the view
-	 *     $view->set(['food' => 'bread', 'beverage' => 'water']);
+	 *     $view->set(array('food' => 'bread', 'beverage' => 'water'));
 	 *
 	 * [!!] Note: When setting with using Traversable object we're not attaching the whole object to the view,
 	 * i.e. the object's standard properties will not be available in the view context.
@@ -371,4 +359,5 @@ class KO7_View {
 		// Combine local and global data and capture the output
 		return View::capture($this->_file, $this->_data);
 	}
+
 }
