@@ -11,7 +11,7 @@
  * @category   Base
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Core {
 
@@ -417,9 +417,8 @@ class KO7_Core {
 	public static function auto_load($class, $directory = 'classes')
 	{
 		// Transform the class name according to PSR-0
-		$class     = ltrim($class, '\\');
-		$file      = '';
-		$namespace = '';
+		$class = ltrim($class, '\\');
+		$file = $namespace = '';
 
 		if ($last_namespace_position = strripos($class, '\\'))
 		{
@@ -573,20 +572,14 @@ class KO7_Core {
 	 */
 	public static function find_file($dir, $file, $ext = NULL, $array = FALSE)
 	{
-		if ($ext === NULL)
-		{
-			// Use the default extension
-			$ext = EXT;
-		}
-		elseif ($ext)
+		if ($ext AND substr($ext, 0, 1) != '.')
 		{
 			// Prefix the extension with a period
-			$ext = ".{$ext}";
+			$ext = '.'.$ext;
 		}
-		else
+		elseif ($ext === NULL)
 		{
-			// Use no extension
-			$ext = '';
+			$ext = EXT;
 		}
 
 		// Create a partial path of the filename
@@ -634,13 +627,14 @@ class KO7_Core {
 			if (!KO7::$_init && KO7::$compatibility && strpos($path, 'kohana') !== FALSE)
 			{
 				$found = MODPATH.'kohana'.DIRECTORY_SEPARATOR.$path;
-				if (!is_file($found)) {
+				if ( ! is_file($found))
+				{
 					$found = FALSE;
 				}
 			}
 
 			// If still not found. Search through $_paths
-			if (! $found)
+			if ( ! $found)
 			{
 				foreach (KO7::$_paths as $dir)
 				{
@@ -676,19 +670,16 @@ class KO7_Core {
 	/**
 	 * Recursively finds all of the files in the specified directory at any
 	 * location in the [Cascading Filesystem](ko7/files), and returns an
-	 * array of all the files found, sorted alphabetically.
+	 * array of all the files found, sorted alphabetically (optional).
 	 *
-	 *     // Find all view files.
-	 *     $views = KO7::list_files('views');
-	 *
-	 * @param   string  		$directory   directory name
-	 * @param   array   		$paths       list of paths to search
-	 * @param   string|array	$ext		 only list files with this extension
-	 * @param   bool			$sort		 sort alphabetically
+	 * @param   string|NULL         $directory   directory name
+	 * @param   array|NULL	        $paths       list of paths to search
+	 * @param   string|array|NULL   $ext         only list files with this extension(s)
+	 * @param   boolean             $sort        sort alphabetically
 	 *
 	 * @return  array
 	 */
-	public static function list_files($directory = NULL, array $paths = NULL, $ext = NULL, $sort = NULL)
+	public static function list_files($directory = NULL, array $paths = NULL, $ext = NULL, $sort = TRUE)
 	{
 		if ($directory !== NULL)
 		{
@@ -704,14 +695,8 @@ class KO7_Core {
 
 		if (is_string($ext))
 		{
-			// convert string extension to array
+			// Convert string extension to array
 			$ext = [$ext];
-		}
-
-		if ($sort === NULL)
-		{
-			// sort results by default
-			$sort = TRUE;
 		}
 
 		// Create an array for the files
@@ -719,48 +704,49 @@ class KO7_Core {
 
 		foreach ($paths as $path)
 		{
-			if (is_dir($path.$directory))
+			if ( ! is_dir($path.$directory))
 			{
-				// Create a new directory iterator
-				$dir = new DirectoryIterator($path.$directory);
+				continue;
+			}
+			// Create a new directory iterator
+			$dir = new DirectoryIterator($path.$directory);
 
-				foreach ($dir as $file)
+			foreach ($dir as $file)
+			{
+				// Get the file name
+				$filename = $file->getFilename();
+
+				if ($filename[0] == '.' OR $filename[strlen($filename)-1] == '~')
 				{
-					// Get the file name
-					$filename = $file->getFilename();
+					// Skip all hidden files and UNIX backup files
+					continue;
+				}
 
-					if ($filename[0] === '.' OR $filename[strlen($filename)-1] === '~')
+				// Relative filename is the array key
+				$key = $directory.$filename;
+
+				if ($file->isDir())
+				{
+					if ($sub_dir = KO7::list_files($key, $paths, $ext, $sort))
 					{
-						// Skip all hidden files and UNIX backup files
-						continue;
-					}
-
-					// Relative filename is the array key
-					$key = $directory.$filename;
-
-					if ($file->isDir())
-					{
-						if ($sub_dir = KO7::list_files($key, $paths, $ext, $sort))
+						if (isset($found[$key]))
 						{
-							if (isset($found[$key]))
-							{
-								// Append the sub-directory list
-								$found[$key] += $sub_dir;
-							}
-							else
-							{
-								// Create a new sub-directory list
-								$found[$key] = $sub_dir;
-							}
+							// Append the sub-directory list
+							$found[$key] += $sub_dir;
+						}
+						else
+						{
+							// Create a new sub-directory list
+							$found[$key] = $sub_dir;
 						}
 					}
-					elseif ($ext === NULL || in_array('.'.$file->getExtension(), $ext, TRUE))
+				}
+				elseif ($ext === NULL OR in_array('.'.$file->getExtension(), $ext))
+				{
+					if ( ! isset($found[$key]))
 					{
-						if ( ! isset($found[$key]))
-						{
-							// Add new files to the list
-							$found[$key] = realpath($file->getPathname());
-						}
+						// Add new files to the list
+						$found[$key] = realpath($file->getPathname());
 					}
 				}
 			}
@@ -789,7 +775,7 @@ class KO7_Core {
 	}
 
     /**
-     * Cache variables using current cache module if enabled, if not uses KO7::file_cache
+     * Cache variables using current cache module if enabled, if not uses `KO7::file_cache`
      *
      *     // Set the "foo" cache
      *     KO7::cache('foo', 'hello, world');
@@ -806,22 +792,28 @@ class KO7_Core {
      */
     public static function cache($name, $data = NULL, $lifetime = NULL)
     {
-        //in case the KO7_Cache is not yet loaded we need to use the normal cache...sucks but happens onload
+        // in case the cache module is not yet loaded we need to use the normal cache...sucks but happens onload
         if (class_exists('KO7_Cache'))
         {
-            //deletes the cache
-            if ($lifetime===0)
+            if ($lifetime === NULL)
+            {
+                // Use the default lifetime
+                $lifetime = KO7::$cache_life;
+            }
+            // deletes the cache
+            if ($lifetime <= 0)
+	    {
                 return Cache::instance()->delete($name);
-
-            //no data provided we read
-            if ($data===NULL)
+	    }
+	    // no data provided we read
+            if ($data === NULL)
+	    {
                 return Cache::instance()->get($name);
-            //saves data
-            else
-                return Cache::instance()->set($name,$data, $lifetime);
+	    }
+	    // saves data
+	    return Cache::instance()->set($name, $data, $lifetime);
         }
-        else
-            return self::file_cache($name, $data, $lifetime);
+    	return KO7::file_cache($name, $data, $lifetime);
     }
 
     /**
@@ -873,7 +865,7 @@ class KO7_Core {
                     {
                         return unserialize(file_get_contents($dir.$file));
                     }
-                    catch (Exception $e)
+                    catch (Throwable $e)
                     {
                         // Cache is corrupt, let return happen normally.
                     }
@@ -885,7 +877,7 @@ class KO7_Core {
                         // Cache has expired
                         unlink($dir.$file);
                     }
-                    catch (Exception $e)
+                    catch (Throwable $e)
                     {
                         // Cache has mostly likely already been deleted,
                         // let return happen normally.
@@ -914,7 +906,7 @@ class KO7_Core {
             // Write the cache
             return (bool) file_put_contents($dir.$file, $data, LOCK_EX);
         }
-        catch (Exception $e)
+        catch (Throwable $e)
         {
             // Failed to write cache
             return FALSE;
@@ -970,21 +962,23 @@ class KO7_Core {
 	}
 
 	/**
-	 * PHP error handler, converts all errors into Error_Exceptions. This handler
+	 * PHP error handler, converts all errors into `Error_Exception`. This handler
 	 * respects error_reporting settings.
 	 *
+	 * @param   integer  $severity  The severity level of the error
+	 * @param   string   $message   Error message
+	 * @param   string   $file 	The filename where the error is thrown
+	 * @param   integer  $line	The line number where the error is thrown
 	 * @throws  Error_Exception
 	 * @return  TRUE
 	 */
-	public static function error_handler($code, $error, $file = NULL, $line = NULL)
+	public static function error_handler($severity, $message, $file = NULL, $line = NULL)
 	{
-		if (error_reporting() & $code)
+		if (error_reporting() & $severity)
 		{
 			// This error is not suppressed by current error reporting settings
-			// Convert the error into an Error_Exception
-			throw new Error_Exception($error, NULL, $code, 0, $file, $line);
+			throw new Error_Exception($message, 0, $severity, $file, $line);
 		}
-
 		// Do not execute the PHP error handler
 		return TRUE;
 	}
@@ -1011,7 +1005,7 @@ class KO7_Core {
 				KO7::cache('KO7::find_file()', KO7::$_files);
 			}
 		}
-		catch (Exception $e)
+		catch (Throwable $e)
 		{
 			// Pass the exception to the handler
 			KO7_Exception::handler($e);
@@ -1023,7 +1017,7 @@ class KO7_Core {
 			ob_get_level() AND ob_clean();
 
 			// Fake an exception for nice debugging
-			KO7_Exception::handler(new Error_Exception($error['message'], NULL, $error['type'], 0, $error['file'], $error['line']));
+			KO7_Exception::handler(new Error_Exception($error['message'], 0, $error['type'], $error['file'], $error['line']));
 
 			// Shutdown now to avoid a "death loop"
 			exit(1);
@@ -1037,7 +1031,7 @@ class KO7_Core {
 	 */
 	public static function version()
 	{
-		return 'Koseven '.KO7::VERSION.' ('.KO7::CODENAME.')';
+		return 'KO7 '.KO7::VERSION.' ('.KO7::CODENAME.')';
 	}
 
 }

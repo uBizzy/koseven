@@ -1,31 +1,33 @@
 <?php
 /**
- * KO7 Error Exception Class
+ * KO7 error exception class.
+ * 
+ * @package    KO7
+ * @category   Exceptions
+ * @author     Kohana Team
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Error_Exception extends ErrorException {
 
 	/**
 	 * Creates a new translated exception.
 	 *
-	 *     throw new KO7_Error_Exception('Something went terrible wrong, :user',
-	 *         array(':user' => $user));
-	 *
-	 * @param   string          $message    Error message
-	 * @param   array           $variables  Translation variables
-	 * @param   int             $code       The error code
-	 * @param   int             $severity   The severity level of the exception.
-	 * @param   string			$file 		The filename where the exception is thrown.
-	 * @param   int 			$line		The line number where the exception is thrown.
-	 * @param   Throwable       $previous   Previous throwable
+	 * @param   string    $message    Error message
+	 * @param   integer   $code       The error code
+	 * @param   integer   $severity   The severity level of the error.
+	 * @param   string    $file 	  The filename where the error is thrown
+	 * @param   integer   $line	  The line number where the error is thrown
 	 * @return  void
 	 */
-	public function __construct(string $message = '', array $variables = NULL, int $code = 0, int $severity = 1, string $file = __FILE__, int $line = __LINE__, $previous = NULL)
+	public function __construct($message, $code, $severity, $file, $line)
 	{
-		// Set the message
-		$message = I18n::get([$message, $variables]);
-
-		// Pass the message and integer code to the parent
-		parent::__construct($message, $code, $severity, $file, $line, $previous);
+		if ($message)
+		{
+			// Translate the message
+			$message = I18n::get($message);
+		}
+		// Init parent construct
+		parent::__construct($message, $code, $severity, $file, $line);
 	}
-
 }
