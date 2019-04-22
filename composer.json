@@ -1,6 +1,6 @@
 {
   "name": "koseven/koseven",
-  "description": "Koseven Framework - PHP-7 compatible replacement for Kohana",
+  "description": "Koseven Framework - Successor of the Kohana Framework - fully compatible with PHP7+",
   "license": "BSD-3-Clause",
   "keywords": [
     "kohana",
@@ -22,11 +22,11 @@
     }
   ],
   "support": {
-    "forum": "https://telegram.me/koseven",
+    "forum": "https://koseven.discourse.group/",
     "issues": "https://github.com/koseven/koseven/issues"
   },
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "ext-dom": "*"
   },
   "require-dev": {
