@@ -9,7 +9,6 @@ dist: xenial
 
 # Supported PHP-Versions
 php:
-  - 7.2
   - 7.3
 
 # Cache Composer's cache
@@ -21,8 +20,6 @@ cache:
 # Also Test on Trusty (14.04 LTS)
 matrix:
   include:
-    - dist: trusty
-      php: 7.2
     - dist: trusty
       php: 7.3
 
