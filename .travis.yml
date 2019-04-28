@@ -17,12 +17,6 @@ cache:
     - $HOME/.composer/cache/files
     - $HOME/pecl_cache
 
-# Also Test on Trusty (14.04 LTS)
-matrix:
-  include:
-    - dist: trusty
-      php: 7.3
-
 # Services to start (with their default configuration)
 services:
   - redis-server
