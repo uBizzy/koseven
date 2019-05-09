@@ -444,7 +444,7 @@ class KO7_Valid {
 		list($decimal) = array_values(localeconv());
 
 		// A lookahead is used to make sure the string contains at least one digit (before or after the decimal point)
-		return (bool) preg_match('/^-?+(?=.*[0-9])[0-9]*+'.preg_quote($decimal).'?+[0-9]*+$/D', (string) $str);
+		return (bool) preg_match('/^-?+(?=.*[0-9])[0-9]*+'.preg_quote($decimal , '/').'?+[0-9]*+$/D', (string) $str);
 	}
 
 	/**
