@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @package    KO7/ORM
+ * @author     Koseven Team
+ * @copyright  (c) 2016-2018 Koseven Team
+ * @license    https://koseven.ga/LICENSE.md
+ */
 class ORM_Behavior_Slug extends ORM_Behavior {
 
 	/**
@@ -18,7 +24,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
 	 * Constructs a behavior object
 	 *
 	 * @param   array $config Configuration parameters
-	 */  
+	 */
   protected function __construct($config)
   {
     parent::__construct($config);
@@ -26,7 +32,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
     $this->_slug_source_column = Arr::get($config, 'source', $this->_slug_source_column);
     $this->_slug_column = Arr::get($config, 'column', $this->_slug_column);
   }
-  
+
 	/**
 	 * Constructs a new model and loads a record if given
 	 *
@@ -42,7 +48,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
       // Prevent further record loading
       return FALSE;
     }
-    
+
     return TRUE;
 	}
 
@@ -55,7 +61,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
   {
     $this->create_slug($model);
   }
-  
+
   /**
    * A new model is created, add a slug value
    *
@@ -65,12 +71,12 @@ class ORM_Behavior_Slug extends ORM_Behavior {
   {
     $this->create_slug($model);
   }
-   
+
   private function create_slug($model)
   {
     $index = 0;
     $current_slug = $model->get($this->_slug_column);
- 
+
     // Create a valid slug name
     $source = $model->get($this->_slug_source_column);
     if (empty($source))
@@ -111,19 +117,19 @@ class ORM_Behavior_Slug extends ORM_Behavior {
         }
         while (empty($current_slug));
       }
-    
+
       $model->set($this->_slug_column, $current_slug);
     }
   }
-  
-  
+
+
   /**
    * Create a safe pathname
    */
   protected function slugify($text, $strict=TRUE)
   {
     $text = $this->remove_accents($text);
-    
+
     // replace non letter or digits by -
     $text = preg_replace('~[^\\pL\d.]+~u', '-', $text);
 
@@ -178,7 +184,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
       return $string;
 
     if ($this->seems_utf8($string)) {
-      $chars = array(
+      $chars = [
       // Decompositions for Latin-1 Supplement
       chr(195).chr(128) => 'A', chr(195).chr(129) => 'A',
       chr(195).chr(130) => 'A', chr(195).chr(131) => 'A',
@@ -282,7 +288,7 @@ class ORM_Behavior_Slug extends ORM_Behavior {
       // Euro Sign
       chr(226).chr(130).chr(172) => 'E',
       // GBP (Pound) Sign
-      chr(194).chr(163) => '');
+      chr(194).chr(163) => ''];
 
       $string = strtr($string, $chars);
     } else {
@@ -301,8 +307,8 @@ class ORM_Behavior_Slug extends ORM_Behavior {
       $chars['out'] = "EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy";
 
       $string = strtr($string, $chars['in'], $chars['out']);
-      $double_chars['in'] = array(chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254));
-      $double_chars['out'] = array('OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th');
+      $double_chars['in'] = [chr(140), chr(156), chr(198), chr(208), chr(222), chr(223), chr(230), chr(240), chr(254)];
+      $double_chars['out'] = ['OE', 'oe', 'AE', 'DH', 'TH', 'ss', 'ae', 'dh', 'th'];
       $string = str_replace($double_chars['in'], $double_chars['out'], $string);
     }
 

@@ -1,18 +1,18 @@
 <?php
-include_once(Kohana::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    Kohana/Cache/Memcache
- * @group      kohana
- * @group      kohana.cache
+ * @package    KO7/Cache/Memcache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethodsTest {
+abstract class KO7_CacheArithmeticMethodsTest extends KO7_CacheBasicMethodsTest {
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		parent::tearDown();
 
@@ -32,45 +32,45 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 	 */
 	public function provider_increment()
 	{
-		return array(
-			array(
+		return [
+			[
 				0,
-				array(
+				[
 					'id'    => 'increment_test_1',
 					'step'  => 1
-				),
+				],
 				1
-			),
-			array(
+			],
+			[
 				1,
-				array(
+				[
 					'id'    => 'increment_test_2',
 					'step'  => 1
-				),
+				],
 				2
-			),
-			array(
+			],
+			[
 				5,
-				array(
+				[
 					'id'    => 'increment_test_3',
 					'step'  => 5
-				),
+				],
 				10
-			),
-			array(
+			],
+			[
 				NULL,
-				array(
+				[
 					'id'    => 'increment_test_4',
 					'step'  => 1
-				),
+				],
 				FALSE
-			),
-		);
+			],
+		];
 	}
 
 	/**
 	 * Test for [Cache_Arithmetic::increment()]
-	 * 
+	 *
 	 * @dataProvider provider_increment
 	 *
 	 * @param   integer  start state
@@ -86,7 +86,7 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 
 		if ($start_state !== NULL)
 		{
-			$cache->set($inc_args['id'], $start_state, 0);
+			$cache->set($inc_args['id'], (int)$start_state, 0);
 		}
 
 		$this->assertSame(
@@ -105,44 +105,44 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 	 */
 	public function provider_decrement()
 	{
-		return array(
-			array(
+		return [
+			[
 				10,
-				array(
+				[
 					'id'    => 'decrement_test_1',
 					'step'  => 1
-				),
+				],
 				9
-			),
-			array(
+			],
+			[
 				10,
-				array(
+				[
 					'id'    => 'decrement_test_2',
 					'step'  => 2
-				),
+				],
 				8
-			),
-			array(
+			],
+			[
 				50,
-				array(
+				[
 					'id'    => 'decrement_test_3',
 					'step'  => 5
-				),
+				],
 				45
-			),
-			array(
+			],
+			[
 				NULL,
-				array(
+				[
 					'id'    => 'decrement_test_4',
 					'step'  => 1
-				),
+				],
 				FALSE
-			),
-		);	}
+			],
+		];	}
 
 	/**
 	 * Test for [Cache_Arithmetic::decrement()]
-	 * 
+	 *
 	 * @dataProvider provider_decrement
 	 *
 	 * @param   integer  start state
@@ -170,4 +170,4 @@ abstract class Kohana_CacheArithmeticMethodsTest extends Kohana_CacheBasicMethod
 		);
 	}
 
-} // End Kohana_CacheArithmeticMethodsTest
+} // End KO7_CacheArithmeticMethodsTest

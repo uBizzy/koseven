@@ -1,18 +1,16 @@
 # Regeln
 
-Es wird dazu ermutigt, dem Kohana [Programmierstil](http://dev.kohanaframework.org/wiki/kohana2/CodingStyle) zu folgen. Dieser benutzt den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungsstil#Allman_.2F_BSD_.2F_.E2.80.9EEast_Coast.E2.80.9C_.2F_Horstmann)-Stil.
+Es wird dazu ermutigt, dem Koseven Programmierstil zu folgen. Dieser benutzt den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungsstil#Allman_.2F_BSD_.2F_.E2.80.9EEast_Coast.E2.80.9C_.2F_Horstmann)-Stil.
 
 ## Klassennamen und Dateilage {#classes}
 
-Das automatische Laden von Klassen wird durch ihre strengen Namensregeln ermöglicht. Die Klassen beginnen mit einem Großbuchstaben und ihre Wšrter werden durch Unterstriche getrennt. Diese sind entscheidend, an welcher Stelle die Klasse im Dateisystem gefunden wird. 
+Das automatische Laden von Klassen wird durch ihre strengen Namensregeln ermÃ¶glicht. Die Klassen beginnen mit einem GroÃŸbuchstaben und ihre WÅ¡rter werden durch Unterstriche getrennt. Diese sind entscheidend, an welcher Stelle die Klasse im Dateisystem gefunden wird. 
 
 Folgende Regeln gelten:
 
-1. Binnenversalien (camelCase) sollten nicht benutzt werden, außer wenn eine weitere Ordner-Ebene unerwünscht ist
+1. Binnenversalien (camelCase) sollten nicht benutzt werden, auÃŸer wenn eine weitere Ordner-Ebene unerwÃ¼nscht ist
 2. alle Datei- und Verzeichnisnamen in Kleinbuchstaben
 3. alle Klassen werden im `classes`-Verzeichnis in jeder Ebene des [Kaskaden-Dateisystem](about.filesystem) zusammengefasst
-
-[!!] Im Gegensatz zu Kohana v2.x besteht keine Unterteilung zwischen "Controllern", "Models", "Bibliotheken" und "Helfern". Alle Klassen befinden sich im "classes/"-Verzeichnis, unabhängig ob es statische "Helfer" oder Objekt-"Bibliotheken" sind. Man kann irgendeinen Klassen-Aufbau (statische Klasse, Singleton, Adapter) verwenden, den man mag.
 
 ## Beispiele
 
@@ -28,7 +26,7 @@ Form                  | classes/form.php
 
 ## Programmierstil {#coding_standards}
 
-Um einen sehr konsistenten Quelltext zu produzieren, bitten wir jeden den folgenden Programmierstil so genau wie möglich umzusetzen.
+Um einen sehr konsistenten Quelltext zu produzieren, bitten wir jeden den folgenden Programmierstil so genau wie mÃ¶glich umzusetzen.
 
 ### Klammerung
 
@@ -36,7 +34,7 @@ Bitte benutze den den [Allman/BSD](http://de.wikipedia.org/wiki/Einr%C3%BCckungs
 
 ### Namensregeln
 
-Kohana benutzt für Namen Unter_striche, keine BinnenVersalien (camelCase).
+Koseven benutzt fÃ¼r Namen Unter_striche, keine BinnenVersalien (camelCase).
 
 #### Klassen
 
@@ -55,7 +53,7 @@ Kohana benutzt für Namen Unter_striche, keine BinnenVersalien (camelCase).
 	// Helper class, cf. libary
 	class peanut {
 
-Benutze keine Klammern, wenn eine Klasseninstanz erstellt, aber keine Parameter übergibt:
+Benutze keine Klammern, wenn eine Klasseninstanz erstellt, aber keine Parameter Ã¼bergibt:
 
 	// Correct:
 	$db = new Database;
@@ -81,11 +79,11 @@ Alle Variablen sollten ebenfalls kleingeschrieben sein und Unter_striche benutze
 	// Incorrect:
 	$weDontWantThis = 'understood?';
 
-### Einrückung
+### EinrÃ¼ckung
 
-Du musst zur Einrückung deines Quelltextes Tabulatoren benutzen. Leerzeichen für Tabellarisierung zu verwenden, ist strengstens verboten.
+Du musst zur EinrÃ¼ckung deines Quelltextes Tabulatoren benutzen. Leerzeichen fÃ¼r Tabellarisierung zu verwenden, ist strengstens verboten.
 
-Vertikaler Abstand (bei Mehrzeiligkeit) wird mit Leerzeichen gemacht. Tabulatoren sind schlecht für die vertikale Ausrichtung, weil verschiedene Leute unterschiedliche Tabulatoren-Breiten haben.
+Vertikaler Abstand (bei Mehrzeiligkeit) wird mit Leerzeichen gemacht. Tabulatoren sind schlecht fÃ¼r die vertikale Ausrichtung, weil verschiedene Leute unterschiedliche Tabulatoren-Breiten haben.
 
 	$text = 'this is a long text block that is wrapped. Normally, we aim for '
 		  . 'wrapping at 80 chars. Vertical alignment is very important for '
@@ -93,9 +91,9 @@ Vertikaler Abstand (bei Mehrzeiligkeit) wird mit Leerzeichen gemacht. Tabulatore
 		  . 'but vertical alignment should be completed with spaces, after '
 		  . 'indenting with tabs.';
 
-### Zeichenkettenverknüpfung
+### ZeichenkettenverknÃ¼pfung
 
-Setze keine Leerzeichen um den Verknüpfungsoperator:
+Setze keine Leerzeichen um den VerknÃ¼pfungsoperator:
 
 	// Correct:
 	$str = 'one'.$var.'two';
@@ -104,7 +102,7 @@ Setze keine Leerzeichen um den Verknüpfungsoperator:
 	$str = 'one'. $var .'two';
 	$str = 'one' . $var . 'two';
 
-### Einzeilige Ausdrücke
+### Einzeilige AusdrÃ¼cke
 
 Einzeilige IF-Bedingungen sollten nur bei Anweisungen benutzt werden, die die normale Verarbeitung unterbrechen (z.B. return oder continue):
 
@@ -127,13 +125,13 @@ Einzeilige IF-Bedingungen sollten nur bei Anweisungen benutzt werden, die die no
 
 ### Vergleichsoperatoren
 
-Bitte benutze OR and AND:
+Bitte benutze || und &&:
 
 	// Correct:
-	if (($foo AND $bar) OR ($b AND $c))
+	if (($foo && $bar) || ($b && $c))
 
 	// Incorrect:
-	if (($foo && $bar) || ($b && $c))
+	if (($foo AND $bar) OR ($b AND $c))
 	
 Bitte benutze elseif, nicht else if:
 

@@ -30,10 +30,10 @@ $n6 = (int) (($n5 + $n7) / 2);
 $use_n6 = ($use_middle && (($n7 - $n5) > 1));
 
 // Links to display as array(page => content)
-$links = array();
+$links = [];
 
 // Generate links data in accordance with calculated numbers
-for ($i = $n1; $i <= $n2; $i++)
+for ($i = $n1; $i <= $n2; ++$i)
 {
 	$links[$i] = $i;
 }
@@ -41,7 +41,7 @@ if ($use_n3)
 {
 	$links[$n3] = '&hellip;';
 }
-for ($i = $n4; $i <= $n5; $i++)
+for ($i = $n4; $i <= $n5; ++$i)
 {
 	$links[$i] = $i;
 }
@@ -49,7 +49,7 @@ if ($use_n6)
 {
 	$links[$n6] = '&hellip;';
 }
-for ($i = $n7; $i <= $n8; $i++)
+for ($i = $n7; $i <= $n8; ++$i)
 {
 	$links[$i] = $i;
 }
@@ -58,15 +58,15 @@ for ($i = $n7; $i <= $n8; $i++)
 <p class="pagination">
 
 	<?php if ($first_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo __('First') ?></a>
+		<a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo I18n::get('First') ?></a>
 	<?php else: ?>
-		<?php echo __('First') ?>
+		<?php echo I18n::get('First') ?>
 	<?php endif ?>
 
 	<?php if ($previous_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo __('Previous') ?></a>
+		<a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo I18n::get('Previous') ?></a>
 	<?php else: ?>
-		<?php echo __('Previous') ?>
+		<?php echo I18n::get('Previous') ?>
 	<?php endif ?>
 
 	<?php foreach ($links as $number => $content): ?>
@@ -80,15 +80,15 @@ for ($i = $n7; $i <= $n8; $i++)
 	<?php endforeach ?>
 
 	<?php if ($next_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo __('Next') ?></a>
+		<a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo I18n::get('Next') ?></a>
 	<?php else: ?>
-		<?php echo __('Next') ?>
+		<?php echo I18n::get('Next') ?>
 	<?php endif ?>
 
 	<?php if ($last_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo __('Last') ?></a>
+		<a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo I18n::get('Last') ?></a>
 	<?php else: ?>
-		<?php echo __('Last') ?>
+		<?php echo I18n::get('Last') ?>
 	<?php endif ?>
 
 </p><!-- .pagination -->

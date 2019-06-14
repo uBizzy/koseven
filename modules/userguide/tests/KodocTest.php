@@ -1,29 +1,28 @@
 <?php
-
 /**
- * @group kohana
- * @group kohana.userguide
+ * @group ko7
+ * @group ko7.userguide
  *
- * @package    Kohana/Userguide
+ * @package    KO7/Userguide
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_KodocTest extends PHPUnit_Framework_TestCase
+class KO7_KodocTest extends Unittest_TestCase
 {
 	public function provider_parse_basic()
 	{
-		return array(
-			array(
+		return [
+			[
 <<<'COMMENT'
 /**
  * Description
  */
 COMMENT
 ,
-				array("<p>Description</p>\n", array()),
-			),
-			array(
+				["<p>Description</p>\n", []],
+			],
+			[
 <<<'COMMENT'
 /**
  * Description spanning
@@ -31,9 +30,9 @@ COMMENT
  */
 COMMENT
 ,
-				array("<p>Description spanning\nmultiple lines</p>\n", array()),
-			),
-			array(
+				["<p>Description spanning\nmultiple lines</p>\n", []],
+			],
+			[
 <<<'COMMENT'
 /**
  * Description including
@@ -42,27 +41,27 @@ COMMENT
  */
 COMMENT
 ,
-				array("<p>Description including</p>\n\n<pre><code>a code block\n</code></pre>\n", array()),
-			),
-			array(
+				["<p>Description including</p>\n\n<pre><code>a code block\n</code></pre>\n", []],
+			],
+			[
 <<<'COMMENT'
 	/**
 	 * Indented
 	 */
 COMMENT
 ,
-				array("<p>Indented</p>\n", array()),
-			),
-			array(
+				["<p>Indented</p>\n", []],
+			],
+			[
 <<<'COMMENT'
 /**
  * @tag Content
  */
 COMMENT
 ,
-				array('', array('tag' => array('Content'))),
-			),
-			array(
+				['', ['tag' => ['Content']]],
+			],
+			[
 <<<'COMMENT'
 /**
  * @tag Multiple
@@ -70,9 +69,9 @@ COMMENT
  */
 COMMENT
 ,
-				array('', array('tag' => array('Multiple', 'Tags'))),
-			),
-			array(
+				['', ['tag' => ['Multiple', 'Tags']]],
+			],
+			[
 <<<'COMMENT'
 /**
  * Description with tag
@@ -80,21 +79,21 @@ COMMENT
  */
 COMMENT
 ,
-				array(
+				[
 					"<p>Description with tag</p>\n",
-					array('tag' => array('Content')),
-				),
-			),
-			array(
+					['tag' => ['Content']],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @trailingspace
  */
 COMMENT
 ,
-				array('', array('trailingspace' => array(''))),
-			),
-			array(
+				['', ['trailingspace' => ['']]],
+			],
+			[
 <<<'COMMENT'
 /**
  * @tag Content that spans
@@ -102,12 +101,12 @@ COMMENT
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array('tag' => array("Content that spans\nmultiple lines")),
-				),
-			),
-			array(
+					['tag' => ["Content that spans\nmultiple lines"]],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @tag Content that spans
@@ -115,16 +114,16 @@ COMMENT
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array('tag' => array("Content that spans\n   multiple lines indented")),
-				),
-			),
-		);
+					['tag' => ["Content that spans\n   multiple lines indented"]],
+				],
+			],
+		];
 	}
 
 	/**
-	 * @covers  Kohana_Kodoc::parse
+	 * @covers  KO7_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_basic
 	 *
@@ -140,184 +139,184 @@ COMMENT
 	{
 		$route_api = Route::get('docs/api');
 
-		return array(
-			array(
+		return [
+			[
 <<<'COMMENT'
 /**
  * @access public
  */
 COMMENT
 ,
-				array('', array()),
-			),
-			array(
+				['', []],
+			],
+			[
 <<<'COMMENT'
 /**
  * @copyright Some plain text
  */
 COMMENT
 ,
-				array('', array('copyright' => array('Some plain text'))),
-			),
-			array(
+				['', ['copyright' => ['Some plain text']]],
+			],
+			[
 <<<'COMMENT'
 /**
  * @copyright (c) 2008-2017 Kohana Team
  */
 COMMENT
 ,
-				array('', array('copyright' => array('&copy; 2008-2017 Kohana Team'))),
-			),
-			array(
+				['', ['copyright' => ['&copy; 2008-2017 Kohana Team']]],
+			],
+			[
 <<<'COMMENT'
 /**
- * @license Kohana
+ * @license KO7
  */
 COMMENT
 ,
-				array('', array('license' => array('Kohana'))),
-			),
-			array(
+				['', ['license' => ['KO7']]],
+			],
+			[
 <<<'COMMENT'
 /**
- * @license http://kohanaframework.org/license
+ * @license http://koseven.ga/license
  */
 COMMENT
 ,
-				array('', array('license' => array('<a href="http://kohanaframework.org/license">http://kohanaframework.org/license</a>'))),
-			),
-			array(
+				['', ['license' => ['<a href="http://koseven.ga/license">http://koseven.ga/license</a>']]],
+			],
+			[
 <<<'COMMENT'
 /**
- * @link http://kohanaframework.org
+ * @link http://koseven.ga
  */
 COMMENT
 ,
-				array('', array('link' => array('<a href="http://kohanaframework.org">http://kohanaframework.org</a>'))),
-			),
-			array(
+				['', ['link' => ['<a href="http://koseven.ga">http://koseven.ga</a>']]],
+			],
+			[
 <<<'COMMENT'
 /**
- * @link http://kohanaframework.org Description
+ * @link http://koseven.ga Description
  */
 COMMENT
 ,
-				array('', array('link' => array('<a href="http://kohanaframework.org">Description</a>'))),
-			),
-			array(
+				['', ['link' => ['<a href="http://koseven.ga">Description</a>']]],
+			],
+			[
 <<<'COMMENT'
 /**
  * @see MyClass
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array(
-						'see' => array(
+					[
+						'see' => [
 							'<a href="'.URL::site(
-								$route_api->uri(array('class' => 'MyClass'))
+								$route_api->uri(['class' => 'MyClass'])
 							).'">MyClass</a>',
-						),
-					),
-				),
-			),
-			array(
+						],
+					],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @see MyClass::method()
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array(
-						'see' => array(
+					[
+						'see' => [
 							'<a href="'.URL::site(
-								$route_api->uri(array('class' => 'MyClass')).'#method'
+								$route_api->uri(['class' => 'MyClass']).'#method'
 							).'">MyClass::method()</a>',
-						),
-					),
-				),
-			),
-			array(
+						],
+					],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @throws Exception
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array(
-						'throws' => array(
+					[
+						'throws' => [
 							'<a href="'.URL::site(
-								$route_api->uri(array('class' => 'Exception'))
+								$route_api->uri(['class' => 'Exception'])
 							).'">Exception</a>',
-						),
-					),
-				),
-			),
-			array(
+						],
+					],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @throws Exception During failure
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array(
-						'throws' => array(
+					[
+						'throws' => [
 							'<a href="'.URL::site(
-								$route_api->uri(array('class' => 'Exception'))
+								$route_api->uri(['class' => 'Exception'])
 							).'">Exception</a> During failure',
-						),
-					),
-				),
-			),
-			array(
+						],
+					],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @uses MyClass
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array(
-						'uses' => array(
+					[
+						'uses' => [
 							'<a href="'.URL::site(
-								$route_api->uri(array('class' => 'MyClass'))
+								$route_api->uri(['class' => 'MyClass'])
 							).'">MyClass</a>',
-						),
-					),
-				),
-			),
-			array(
+						],
+					],
+				],
+			],
+			[
 <<<'COMMENT'
 /**
  * @uses MyClass::method()
  */
 COMMENT
 ,
-				array(
+				[
 					'',
-					array(
-						'uses' => array(
+					[
+						'uses' => [
 							'<a href="'.URL::site(
-								$route_api->uri(array('class' => 'MyClass')).'#method'
+								$route_api->uri(['class' => 'MyClass']).'#method'
 							).'">MyClass::method()</a>',
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 	}
 
 	/**
-	 * @covers  Kohana_Kodoc::format_tag
-	 * @covers  Kohana_Kodoc::parse
+	 * @covers  KO7_Kodoc::format_tag
+	 * @covers  KO7_Kodoc::parse
 	 *
 	 * @dataProvider    provider_parse_tags
 	 *
@@ -335,18 +334,18 @@ COMMENT
 	 */
 	public function provider_transparent_classes()
 	{
-		return array(
-			// Kohana_Core is a special case
-			array('Kohana','Kohana_Core',NULL),
-			array('Controller_Template','Kohana_Controller_Template',NULL),
-			array('Controller_Template','Kohana_Controller_Template',
-				array('Kohana_Controller_Template'=>'Kohana_Controller_Template',
-					'Controller_Template'=>'Controller_Template')
-			),
-			array(FALSE,'Kohana_Controller_Template',
-				array('Kohana_Controller_Template'=>'Kohana_Controller_Template')),
-			array(FALSE,'Controller_Template',NULL),
-		);
+		return [
+			// KO7_Core is a special case
+			['KO7','KO7_Core',NULL],
+			['Controller_Template','KO7_Controller_Template',NULL],
+			['Controller_Template','KO7_Controller_Template',
+				['KO7_Controller_Template'=>'KO7_Controller_Template',
+					'Controller_Template'=>'Controller_Template']
+			],
+			[FALSE,'KO7_Controller_Template',
+				['KO7_Controller_Template'=>'KO7_Controller_Template']],
+			[FALSE,'Controller_Template',NULL],
+		];
 	}
 
 	/**
@@ -354,7 +353,7 @@ COMMENT
 	 *
 	 * Checks that a selection of transparent and non-transparent classes give expected results
 	 *
-	 * @group kohana.userguide.3529-configurable-transparent-classes
+	 * @group ko7.userguide.3529-configurable-transparent-classes
 	 * @dataProvider provider_transparent_classes
 	 * @param mixed $expected
 	 * @param string $class

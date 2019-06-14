@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
@@ -10,11 +10,10 @@ class Bench_LtrimDigits extends Codebench {
 
 	public $loops = 100000;
 
-	public $subjects = array
-	(
+	public $subjects = [
 		'123digits',
 		'no-digits',
-	);
+	];
 
 	public function bench_regex($subject)
 	{

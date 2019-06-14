@@ -1,3 +1,3 @@
 <?php
 
-class Unittest_TestSuite extends Kohana_Unittest_TestSuite {}
+class Unittest_TestSuite extends KO7_Unittest_TestSuite {}

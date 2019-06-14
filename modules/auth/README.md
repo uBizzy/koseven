@@ -1,13 +1,9 @@
-Kohana auth module
+Koseven auth module
 ---
-| ver   | Stable                                                                                                                       | Develop                                                                                                                        |
-|-------|------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| 3.3.x | [![Build Status - 3.3/master](https://travis-ci.org/kohana/auth.svg?branch=3.3%2Fmaster)](https://travis-ci.org/kohana/auth) | [![Build Status - 3.3/develop](https://travis-ci.org/kohana/auth.svg?branch=3.3%2Fdevelop)](https://travis-ci.org/kohana/auth) |
-| 3.4.x | [![Build Status - 3.4/master](https://travis-ci.org/kohana/auth.svg?branch=3.4%2Fmaster)](https://travis-ci.org/kohana/auth) | [![Build Status - 3.4/develop](https://travis-ci.org/kohana/auth.svg?branch=3.4%2Fdevelop)](https://travis-ci.org/kohana/auth) |
 
 I've forked the main Auth module because there were some fundamental flaws with it:
 
- 1. It's trivial to [bruteforce](http://dev.kohanaframework.org/issues/3163) publicly hidden salt hashes.
+ 1. It's trivial to [bruteforce](http://github.com/koseven/koseven/issues/3163) publicly hidden salt hashes.
     - I've fixed this by switching the password hashing algorithm to the more secure secret-key based hash_hmac method.
  2. ORM drivers were included.
     - I've fixed this by simply removing them. They cause confusion with new users because they think that Auth requires ORM. The only driver currently provided by default is the file driver.

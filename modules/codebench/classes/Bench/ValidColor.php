@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
@@ -8,7 +8,7 @@ class Bench_ValidColor extends Codebench {
 
 	public $description =
 		'Optimization for <code>Validate::color()</code>.
-		 See: http://forum.kohanaphp.com/comments.php?DiscussionID=2192.
+		 See: http://koseven.discourse.group/comments.php?DiscussionID=2192.
 
 		 Note that the methods with an <em>_invalid</em> suffix contain flawed regexes and should be
 		 completely discarded. I left them in here for educational purposes, and to remind myself
@@ -17,8 +17,7 @@ class Bench_ValidColor extends Codebench {
 
 	public $loops = 10000;
 
-	public $subjects = array
-	(
+	public $subjects = [
 		// Valid colors
 		'aaA',
 		'123',
@@ -32,7 +31,7 @@ class Bench_ValidColor extends Codebench {
 		'#1234567',
 		"#000\n",
 		'}§è!çà%$z',
-	);
+	];
 
 	// Note that I added the D modifier to corey's regexes. We need to match exactly
 	// the same if we want the benchmarks to be of any value.

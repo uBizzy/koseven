@@ -5,6 +5,7 @@
 - [Validation](validation)
 - [Filters](filters)
 - [Behaviors](behaviors)
+- [UUID](uuid)
 - [Examples](examples)
     - [Simple](examples/simple)
     - [Validation](examples/validation)

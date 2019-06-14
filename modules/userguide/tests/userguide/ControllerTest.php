@@ -3,11 +3,11 @@
 /**
  * Unit tests for internal methods of userguide controller
  *
- * @group kohana
- * @group kohana.userguide
- * @group kohana.userguide.controller
+ * @group ko7
+ * @group ko7.userguide
+ * @group ko7.userguide.controller
  *
- * @package    Kohana/Userguide
+ * @package    KO7/Userguide
  * @category   Tests
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
@@ -18,12 +18,12 @@ class Userguide_ControllerTest extends Unittest_TestCase
 
 	public function provider_file_finds_markdown_files()
 	{
-		return array(
-			array('userguide/adding', 'guide/userguide/adding.md'),
-			array('userguide/adding.md', 'guide/userguide/adding.md'),
-			array('userguide/adding.markdown', 'guide/userguide/adding.md'),
-			array('userguide/does_not_exist.md', FALSE)
-		);
+		return [
+			['userguide'.DIRECTORY_SEPARATOR.'adding', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'adding.md', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'adding.markdown', 'guide'.DIRECTORY_SEPARATOR.'userguide'.DIRECTORY_SEPARATOR.'adding.md'],
+			['userguide'.DIRECTORY_SEPARATOR.'does_not_exist.md', FALSE]
+		];
 	}
 
 	/**
@@ -33,8 +33,12 @@ class Userguide_ControllerTest extends Unittest_TestCase
 	 */
 	public function test_file_finds_markdown_files($page, $expected_file)
 	{
-		$controller = $this->getMock('Controller_Userguide', array('__construct'), array(), '', FALSE);
-		$path = $controller->file($page);
+		$controller = $this->createMock('Controller_Userguide');
+
+		$cache_reflection = new ReflectionClass('Controller_Userguide');
+		$file_method = $cache_reflection->getMethod('file');
+
+		$path = $file_method->invoke($controller, $page);
 
 		// Only verify trailing segments to avoid problems if file overwritten in CFS
 		$expected_len = strlen($expected_file);

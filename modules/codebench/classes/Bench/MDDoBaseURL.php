@@ -1,19 +1,18 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
 class Bench_MDDoBaseURL extends Codebench {
 
 	public $description =
-		'Optimization for the <code>doBaseURL()</code> method of <code>Kohana_Kodoc_Markdown</code>
-		 for the Kohana Userguide.';
+		'Optimization for the <code>doBaseURL()</code> method of <code>KO7_Kodoc_Markdown</code>
+		 for the KO7 Userguide.';
 
 	public $loops = 10000;
 
-	public $subjects = array
-	(
+	public $subjects = [
 		// Valid matches
 		'[filesystem](about.filesystem)',
 		'[filesystem](about.filesystem "Optional title")',
@@ -23,13 +22,13 @@ class Bench_MDDoBaseURL extends Codebench {
 		// Invalid matches
 		'![this is image syntax](about.filesystem)',
 		'[filesystem](about.filesystem',
-	);
+	];
 
 	public function bench_original($subject)
 	{
 		// The original regex contained a bug, which is fixed here for benchmarking purposes.
 		// At the very start of the regex, (?!!) has been replace by (?<!!)
-		return preg_replace_callback('~(?<!!)\[(.+?)\]\(([^#]\S*(?:\s*".+?")?)\)~', array($this, '_add_base_url_original'), $subject);
+		return preg_replace_callback('~(?<!!)\[(.+?)\]\(([^#]\S*(?:\s*".+?")?)\)~', [$this, '_add_base_url_original'], $subject);
 	}
 	public function _add_base_url_original($matches)
 	{
@@ -45,7 +44,7 @@ class Bench_MDDoBaseURL extends Codebench {
 
 	public function bench_optimized_callback($subject)
 	{
-		return preg_replace_callback('~(?<!!)\[(.+?)\]\((?!\w++://)([^#]\S*(?:\s*+".+?")?)\)~', array($this, '_add_base_url_optimized'), $subject);
+		return preg_replace_callback('~(?<!!)\[(.+?)\]\((?!\w++://)([^#]\S*(?:\s*+".+?")?)\)~', [$this, '_add_base_url_optimized'], $subject);
 	}
 	public function _add_base_url_optimized($matches)
 	{

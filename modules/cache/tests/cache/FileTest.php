@@ -1,49 +1,49 @@
 <?php
-include_once(Kohana::find_file('tests/cache', 'CacheBasicMethodsTest'));
+include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
 
 /**
- * @package    Kohana/Cache
- * @group      kohana
- * @group      kohana.cache
+ * @package    KO7/Cache
+ * @group      ko7
+ * @group      ko7.cache
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
+class KO7_Cache_FileTest extends KO7_CacheBasicMethodsTest {
 
 	/**
 	 * This method MUST be implemented by each driver to setup the `Cache`
 	 * instance for each test.
-	 * 
+	 *
 	 * This method should do the following tasks for each driver test:
-	 * 
+	 *
 	 *  - Test the Cache instance driver is available, skip test otherwise
 	 *  - Setup the Cache instance
 	 *  - Call the parent setup method, `parent::setUp()`
 	 *
 	 * @return  void
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 
-		if ( ! Kohana::$config->load('cache.file'))
+		if ( ! KO7::$config->load('cache.file'))
 		{
-			Kohana::$config->load('cache')
+			KO7::$config->load('cache')
 				->set(
 					'file',
-					array(
+					[
 						'driver'             => 'file',
 						'cache_dir'          => APPPATH.'cache',
 						'default_expire'     => 3600,
-						'ignore_on_delete'   => array(
+						'ignore_on_delete'   => [
 							'file_we_want_to_keep.cache',
 							'.gitignore',
 							'.git',
 							'.svn'
-						)
-					)
+						]
+					]
 			    );
 		}
 
@@ -58,7 +58,7 @@ class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
 	public function test_ignore_delete_file()
 	{
 		$cache = $this->cache();
-		$config = Kohana::$config->load('cache')->file;
+		$config = KO7::$config->load('cache')->file;
 		$file = $config['cache_dir'].'/file_we_want_to_keep.cache';
 
 		// Lets pollute the cache folder
@@ -78,20 +78,20 @@ class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
 	 */
 	public function provider_utf8()
 	{
-		return array(
-			array(
+		return [
+			[
 				'This is â ütf-8 Ӝ☃ string',
 				'This is â ütf-8 Ӝ☃ string'
-			),
-			array(
+			],
+			[
 				'㆓㆕㆙㆛',
 				'㆓㆕㆙㆛'
-			),
-			array(
+			],
+			[
 				'அஆஇஈஊ',
 				'அஆஇஈஊ'
-			)
-		);
+			]
+		];
 	}
 
 	/**
@@ -160,4 +160,4 @@ class Kohana_Cache_FileTest extends Kohana_CacheBasicMethodsTest {
 		//var_dump($cache->_is_expired($file));
 		return $file->isFile();
 	}
-} // End Kohana_SqliteTest
+} // End KO7_SqliteTest

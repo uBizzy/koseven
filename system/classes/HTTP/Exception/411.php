@@ -1,3 +1,3 @@
 <?php
 
-class HTTP_Exception_411 extends Kohana_HTTP_Exception_411 {}
+class HTTP_Exception_411 extends KO7_HTTP_Exception_411 {}

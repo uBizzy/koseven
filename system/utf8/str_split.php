@@ -2,7 +2,7 @@
 /**
  * UTF8::str_split
  *
- * @package    Kohana
+ * @package    KO7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks
@@ -19,7 +19,7 @@ function _str_split($str, $split_length = 1)
 		return FALSE;
 
 	if (UTF8::strlen($str) <= $split_length)
-		return array($str);
+		return [$str];
 
 	preg_match_all('/.{'.$split_length.'}|[^\x00]{1,'.$split_length.'}$/us', $str, $matches);
 

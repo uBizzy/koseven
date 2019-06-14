@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Kohana/Codebench
+ * @package    koseven/Codebench
  * @category   Tests
  * @author     Geert De Deckere <geert@idoe.be>
  */
@@ -8,12 +8,11 @@ class Bench_ValidURL extends Codebench {
 
 	public $description =
 		'filter_var vs regex:
-		 http://dev.kohanaframework.org/issues/2847';
+		 http://koseven.ga/issues/2847';
 
 	public $loops = 1000;
 
-	public $subjects = array
-	(
+	public $subjects = [
 		// Valid
 		'http://google.com',
 		'http://google.com/',
@@ -42,7 +41,7 @@ class Bench_ValidURL extends Codebench {
 		'http://127.0.0.1.1',
 		'http://user:@127.0.0.1',
 		"http://finalnewline.com\n",
-	);
+	];
 
 	public function bench_filter_var($url)
 	{

@@ -2,7 +2,7 @@
 /**
  * UTF8::ord
  *
- * @package    Kohana
+ * @package    KO7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks
@@ -65,8 +65,8 @@ function _ord($chr)
 
 	if ($ord0 >= 254 AND $ord0 <= 255)
 	{
-		throw new UTF8_Exception("Invalid UTF-8 with surrogate ordinal ':ordinal'", array(
+		throw new UTF8_Exception("Invalid UTF-8 with surrogate ordinal ':ordinal'", [
 			':ordinal' => $ord0,
-		));
+		]);
 	}
 }

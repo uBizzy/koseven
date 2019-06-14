@@ -1,18 +1,16 @@
 <?php
-return array
-(
-    // @link http://github.com/gimpe/kohana-memcached
+return [
     /*
-    'memcached' => array(
+    'memcached' => [
         'driver' => 'memcached',
-        'servers' => array(
-            //array(
+        'servers' => [
+            //[
             //    'host' => 'localhost',
             //    'port' => 11211,
             //    'weight' => 1,
-            //    ),
-            ),
-        'options' => array(
+            //    ],
+            ],
+        'options' => [
             // see http://php.net/manual/en/memcached.setoption.php and http://www.php.net/manual/en/memcached.constants.php
 
             //Memcached::OPT_COMPRESSION => TRUE,
@@ -125,18 +123,16 @@ return array
             //Memcached::OPT_SERVER_FAILURE_LIMIT => 0,
             // Specifies the failure limit for server connection attempts. The server will be removed after this many continuous connection failures.
             // Type: integer, default: 0.
-            ),
-        ),
-    'apc' => array
-    (
+            ],
+        ],
+    'apc' => [
         'driver' => 'apc',
         'default_expire' => 3600,
-    ),
-    'file' => array
-    (
+    ],
+    'file' => [
         'driver' => 'file',
         'cache_dir' => APPPATH . 'cache',
         'default_expire' => 3600,
-    )
+    ]
 	*/
-);
+];

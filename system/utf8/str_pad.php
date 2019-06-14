@@ -2,7 +2,7 @@
 /**
  * UTF8::str_pad
  *
- * @package    Kohana
+ * @package    KO7
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
  * @copyright  (c) 2005 Harry Fuecks
@@ -46,7 +46,7 @@ function _str_pad($str, $final_str_length, $pad_str = ' ', $pad_type = STR_PAD_R
 		return $pad_left.$str.$pad_right;
 	}
 
-	throw new UTF8_Exception("UTF8::str_pad: Unknown padding type (:pad_type)", array(
+	throw new UTF8_Exception("UTF8::str_pad: Unknown padding type (:pad_type)", [
 			':pad_type' => $pad_type,
-		));
+		]);
 }

@@ -3,105 +3,112 @@
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
- *
- * @link http://kohanaframework.org/guide/about.install#application
  */
 $application = 'application';
 
 /**
  * The directory in which your modules are located.
- *
- * @link http://kohanaframework.org/guide/about.install#modules
  */
 $modules = 'modules';
 
 /**
- * The directory in which the Kohana resources are located. The system
- * directory must contain the classes/kohana.php file.
- *
- * @link http://kohanaframework.org/guide/about.install#system
+ * The directory in which the KO7 resources are located. The system
+ * directory must contain the classes/ko7.php file.
  */
 $system = 'system';
+
+/**
+ * The directory in which the KO7 public files are located. The public
+ * directory contains for example the index.php and .htaccess files.
+ */
+$public = 'public';
 
 /**
  * The default extension of resource files. If you change this, all resources
  * must be renamed to use the new extension.
  *
- * @link http://kohanaframework.org/guide/about.install#ext
+ * @link http://koseven.ga/guide/about.install#ext
  */
 define('EXT', '.php');
 
 /**
  * Set the path to the document root
  *
- * This assumes that this file is stored 2 levels below the DOCROOT, if you move 
- * this bootstrap file somewhere else then you'll need to modify this value to 
+ * This assumes that this file is stored 2 levels below the DOCROOT, if you move
+ * this bootstrap file somewhere else then you'll need to modify this value to
  * compensate.
  */
-define('DOCROOT', realpath(dirname(__FILE__).'/../../').DIRECTORY_SEPARATOR);
+define('DOCROOT', dirname(__DIR__, 2).DIRECTORY_SEPARATOR);
 
 /**
  * Set the PHP error reporting level. If you set this in php.ini, you remove this.
  * @link http://www.php.net/manual/errorfunc.configuration#ini.error-reporting
  *
  * When developing your application, it is highly recommended to enable notices
- * and strict warnings. Enable them by using: E_ALL | E_STRICT
+ * and warnings. Enable them by using: E_ALL
  *
- * In a production environment, it is safe to ignore notices and strict warnings.
- * Disable them by using: E_ALL ^ E_NOTICE
+ * In a production environment, it is safe to ignore notices. Disable them by
+ * using: E_ALL & ~E_NOTICE
  *
- * When using a legacy application with PHP >= 5.3, it is recommended to disable
- * deprecated notices. Disable with: E_ALL & ~E_DEPRECATED
+ * When using a legacy application, it is recommended to disable deprecated
+ * notices. Disable with: E_ALL & ~E_DEPRECATED
  */
 error_reporting(E_ALL & ~E_DEPRECATED);
 
 /**
  * End of standard configuration! Changing any of the code below should only be
- * attempted by those with a working knowledge of Kohana internals.
+ * attempted by those with a working knowledge of KO7 internals.
  *
- * @link http://kohanaframework.org/guide/using.configuration
+ * @link http://koseven.ga/guide/using.configuration
  */
 
 // Make the application relative to the docroot
-if ( ! is_dir($application) AND is_dir(DOCROOT.$application))
+if ( ! is_dir($application) && is_dir(DOCROOT.$application))
 {
 	$application = DOCROOT.$application;
 }
 
 // Make the modules relative to the docroot
-if ( ! is_dir($modules) AND is_dir(DOCROOT.$modules))
+if ( ! is_dir($modules) && is_dir(DOCROOT.$modules))
 {
 	$modules = DOCROOT.$modules;
 }
 
 // Make the system relative to the docroot
-if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
+if ( ! is_dir($system) && is_dir(DOCROOT.$system))
 {
 	$system = DOCROOT.$system;
+}
+
+// Make the public relative to the docroot
+if ( ! is_dir($public) && is_dir(DOCROOT.$public))
+{
+	$public = DOCROOT.$public;
 }
 
 // Define the absolute paths for configured directories
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
+define('PUBPATH', realpath($public).DIRECTORY_SEPARATOR);
 
 // Clean up the configuration vars
-unset($application, $modules, $system);
+unset($application, $modules, $system, $public);
 
 /**
  * Define the start time of the application, used for profiling.
  */
-if ( ! defined('KOHANA_START_TIME'))
+if ( ! defined('KO7_START_TIME'))
 {
-	define('KOHANA_START_TIME', microtime(TRUE));
+	define('KO7_START_TIME', microtime(TRUE));
 }
 
 /**
  * Define the memory usage at the start of the application, used for profiling.
  */
-if ( ! defined('KOHANA_START_MEMORY'))
+if ( ! defined('KO7_START_MEMORY'))
 {
-	define('KOHANA_START_MEMORY', memory_get_usage());
+	define('KO7_START_MEMORY', memory_get_usage());
 }
 
 // Bootstrap the application
@@ -121,17 +128,19 @@ if (($ob_len = ob_get_length()) !== FALSE)
 	}
 }
 
-// Enable the unittest module if it is not already loaded - use the absolute path
-$modules = Kohana::modules();
-$unittest_path = realpath(__DIR__).DIRECTORY_SEPARATOR;
-if ( ! in_array($unittest_path, $modules)) {
-	$modules['unittest'] = $unittest_path;
-	Kohana::modules($modules);
+// Enable all modules we can find
+$modules_iterator = new DirectoryIterator(MODPATH);
+
+$modules = [];
+
+foreach ($modules_iterator as $module)
+{
+	if ($module->isDir() AND ! $module->isDot())
+	{
+		$modules[$module->getFilename()] = MODPATH.$module->getFilename();
+	}
 }
 
-// Encryption is supported by a module, add it to the module list
-$encrypt_path = MODPATH.'encrypt';
-if ( ! in_array($encrypt_path, $modules)) {
-	$modules['encrypt'] = $encrypt_path;
-	Kohana::modules($modules);
-}
+KO7::modules($modules);
+
+unset($modules_iterator, $modules, $module);

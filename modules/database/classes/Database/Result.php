@@ -1,3 +1,3 @@
 <?php
 
-abstract class Database_Result extends Kohana_Database_Result {}
+abstract class Database_Result extends KO7_Database_Result {}

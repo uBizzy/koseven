@@ -3,29 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title><?php echo $title ?> | Kohana <?php echo 'User Guide'; ?></title>
+<title><?php echo $title ?> | Koseven <?php echo 'User Guide'; ?></title>
 
-<?php foreach ($styles as $style => $media) echo HTML::style($style, array('media' => $media), NULL, TRUE), "\n" ?>
+<?php foreach ($styles as $style => $media) echo HTML::style($style, ['media' => $media], NULL, TRUE), "\n" ?>
 
 <?php foreach ($scripts as $script) echo HTML::script($script, NULL, NULL, TRUE), "\n" ?>
 
-<!--[if lt IE 9]>
-<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-<![endif]-->
 </head>
 <body>
 
 	<div id="kodoc-header">
 		<div class="container">
-			<a href="http://kohanaframework.org/" id="kodoc-logo">
-				<img src="<?php echo Route::url('docs/media', array('file' => 'img/kohana.png')) ?>" />
-			</a>
+			<a id="kodoc-logo" href="https://koseven.ga/">koseven</a>
 			<div id="kodoc-menu">
 				<ul>
 					<li class="guide first">
 						<a href="<?php echo Route::url('docs/guide') ?>">User Guide</a>
 					</li>
-					<?php if (Kohana::$config->load('userguide.api_browser')): ?>
+					<?php if (KO7::$config->load('userguide.api_browser')): ?>
 					<li class="api">
 						<a href="<?php echo Route::url('docs/api') ?>">API Browser</a>
 					</li>
@@ -65,11 +60,11 @@
 						var disqus_identifier = '<?php echo HTML::chars(Request::current()->uri()) ?>';
 						(function() {
 							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-							dsq.src = 'http://kohana.disqus.com/embed.js';
+							dsq.src = 'http://koseven.disqus.com/embed.js';
 							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 							})();
 					</script>
-					<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=kohana">comments powered by Disqus.</a></noscript>
+					<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=koseven">comments powered by Disqus.</a></noscript>
 					<a href="http://disqus.com" class="dsq-brlink">Documentation comments powered by <span class="logo-disqus">Disqus</span></a>
 					<?php endif ?>
 				</div>
@@ -87,12 +82,12 @@
 			<?php endif ?>
 			</div>
 			<div class="span-12 last right">
-			<p>Powered by <?php echo HTML::anchor('http://kohanaframework.org/', 'Kohana') ?> v<?php echo Kohana::VERSION ?></p>
+			<p>Powered by <?php echo HTML::anchor('https://koseven.ga/', 'Koseven') ?> v<?php echo KO7::VERSION ?></p>
 			</div>
 		</div>
 	</div>
 
-<?php if (Kohana::$environment === Kohana::PRODUCTION): ?>
+<?php if (KO7::$environment === KO7::PRODUCTION): ?>
 <script type="text/javascript">
 //<![CDATA[
 (function() {
@@ -103,7 +98,7 @@
 		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
 	}
 	}
-	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/kohana/get_num_replies.js' + query + '"></' + 'script>');
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/koseven/get_num_replies.js' + query + '"></' + 'script>');
 })();
 //]]>
 </script>

@@ -5,6 +5,10 @@ nbproject
 out
 gen
 
+# Unit tests
+.phpunit.result.cache
+modules/unittest/memory
+
 # Kohana template
 application/cache/*
 application/logs/*
@@ -12,3 +16,6 @@ application/logs/*
 # Composer
 /vendor/
 composer.lock
+
+# Coverage reports
+/build/logs/

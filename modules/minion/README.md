@@ -1,13 +1,8 @@
 # Minion
 
-| ver   | Stable                                                                                                                           | Develop                                                                                                                            |
-|-------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| 3.3.x | [![Build Status - 3.3/master](https://travis-ci.org/kohana/minion.svg?branch=3.3%2Fmaster)](https://travis-ci.org/kohana/minion) | [![Build Status - 3.3/develop](https://travis-ci.org/kohana/minion.svg?branch=3.3%2Fdevelop)](https://travis-ci.org/kohana/minion) |
-| 3.4.x | [![Build Status - 3.4/master](https://travis-ci.org/kohana/minion.svg?branch=3.4%2Fmaster)](https://travis-ci.org/kohana/minion) | [![Build Status - 3.4/develop](https://travis-ci.org/kohana/minion.svg?branch=3.4%2Fdevelop)](https://travis-ci.org/kohana/minion) |
-
 Minion is a framework for running tasks via the CLI.
 
-The system is inspired by ruckusing, which had a nice system for defining tasks but lacked the desired flexibility for kohana integration.
+The system is inspired by ruckusing, which had a nice system for defining tasks but lacked the desired flexibility for ko7 integration.
 
 ## Getting Started
 
@@ -30,7 +25,7 @@ To view help for a specific minion task run
 	./minion {task} --help
 
 For security reasons Minion will only run from the cli.  Attempting to access it over http will cause
-a `Kohana_Exception` to be thrown.
+a `KO7_Exception` to be thrown.
 
 If you're unable to use the binary file for whatever reason then simply replace `./minion {task}` in the above
 examples with
@@ -53,7 +48,7 @@ as documentation on the cli.
 
 ## Testing
 
-This module is unittested using the [unittest module](http://github.com/kohana/unittest).
+This module is unittested using the [unittest module](http://github.com/koseven/koseven/unittest).
 You can use the `minion` group to only run minion tests.
 
 i.e.
@@ -64,4 +59,4 @@ Feel free to contribute tests(!), they can be found in the `tests/minion` direct
 
 ## License
 
-This is licensed under the [same license as Kohana](http://kohanaframework.org/license).
+This is licensed under the [same license as KO7](http://koseven.ga/license).
