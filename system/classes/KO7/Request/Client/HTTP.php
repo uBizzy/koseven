@@ -9,17 +9,18 @@
  *
  * before executing the request (ideally in your application bootstrap)
  *
- * @package    KO7\Request
+ * @package        KO7\Request
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license        https://koseven.ga/LICENSE
+ *
  */
 class KO7_Request_Client_HTTP extends Request_Client_External {
 
 	/**
-     * Curl options
-     *
+	 * Curl options
+	 *
 	 * @var  array
 	 * @link http://www.php.net/manual/function.curl-setopt
 	 */
@@ -29,25 +30,25 @@ class KO7_Request_Client_HTTP extends Request_Client_External {
 	 * Sends the HTTP message [Request] to a remote server and processes
 	 * the response.
 	 *
-	 * @param  Request   $request   request to send
-	 * @param  Response  $response  response to send
-     *
-     * @throws KO7_Exception
-     *
+	 * @param Request  $request  request to send
+	 * @param Response $response response to send
+	 *
+	 * @throws KO7_Exception
+	 *
 	 * @return Response
 	 */
 	public function _send_message(Request $request, Response $response)
 	{
 		// Instance a new Client
-        $client = new http\Client;
+		$client = new http\Client;
 
-        // Set cookies
-        $client->setCookies($request->cookie());
+		// Set cookies
+		$client->setCookies($request->cookie());
 
-        // Instance HTTP Request Object
-        $http_request = new \http\Client\Request($request->method(), $request->uri());
+		// Instance HTTP Request Object
+		$http_request = new \http\Client\Request($request->method(), $request->uri());
 
-        // Set custom cURL options
+		// Set custom cURL options
 		if ($this->_options)
 		{
 			$http_request->setOptions($this->_options);
@@ -60,19 +61,16 @@ class KO7_Request_Client_HTTP extends Request_Client_External {
 		$http_request->setQuery($request->query());
 
 		// Set the body
-        $http_request->getBody()->append($request->body());
+		$http_request->getBody()->append($request->body());
 
-        // Execute call
-        $client->enqueue($http_request)->send();
+		// Execute call
+		$client->enqueue($http_request)->send();
 
-        // Parse Response
-        $http_response = $client->getResponse();
+		// Parse Response
+		$http_response = $client->getResponse();
 
 		// Build the response
-		$response->status($http_response->getResponseCode())
-			->headers($http_response->getHeaders())
-			->cookie($http_response->getCookies())
-			->body($http_response->getBody());
+		$response->status($http_response->getResponseCode())->headers($http_response->getHeaders())->cookie($http_response->getCookies())->body($http_response->getBody());
 
 		return $response;
 	}
