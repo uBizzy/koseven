@@ -10,28 +10,28 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license        https://koseven.ga/LICENSE
  */
 abstract class KO7_HTTP_Exception_Redirect extends HTTP_Exception_Expected {
 
 	/**
 	 * Specifies the URI to redirect to.
 	 *
-	 * @param  string  $uri  URI of the proxy
-     *
-     * @return $this
+	 * @param string $uri URI of the proxy
+	 *
+	 * @return $this
 	 */
 	public function location($uri = NULL)
 	{
 		if ($uri === NULL)
 		{
-            return $this->headers('Location');
-        }
+			return $this->headers('Location');
+		}
 
 		if (strpos($uri, '://') === FALSE)
 		{
 			// Make the URI into a URL
-			$uri = URL::site($uri, TRUE, ! empty(KO7::$index_file));
+			$uri = URL::site($uri, TRUE, !empty(KO7::$index_file));
 		}
 
 		$this->headers('Location', $uri);
@@ -43,15 +43,15 @@ abstract class KO7_HTTP_Exception_Redirect extends HTTP_Exception_Expected {
 	 * Validate this exception contains everything needed to continue.
 	 *
 	 * @throws KO7_Exception
-     *
+	 *
 	 * @return bool
 	 */
 	public function check()
 	{
 		if ($this->headers('location') === NULL)
 		{
-            throw new KO7_Exception('A \'location\' must be specified for a redirect');
-        }
+			throw new KO7_Exception('A \'location\' must be specified for a redirect');
+		}
 
 		return TRUE;
 	}
