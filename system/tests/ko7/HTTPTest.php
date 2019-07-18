@@ -188,7 +188,6 @@ class KO7_HTTPTest extends Unittest_TestCase {
 					'cache' => NULL
 				],
 				[
-					'etag' 	=> '"753677eb565f94185c544be9adb945f31d44dd64"',
 					'cache' => 'must-revalidate',
 					'match' => FALSE
 				]
@@ -196,11 +195,10 @@ class KO7_HTTPTest extends Unittest_TestCase {
 			[
 				[
 					'body' 	=> 'Test',
-					'etag' 	=> '"4cc937daaf30bca60bf3c3d355d83aa416ad8a08"',
+					'etag' 	=> TRUE,
 					'cache' => 'test-cache'
 				],
 				[
-					'etag' 	=> '"4cc937daaf30bca60bf3c3d355d83aa416ad8a08"',
 					'cache' => 'test-cache, must-revalidate',
 					'match' => TRUE
 				]
@@ -208,11 +206,10 @@ class KO7_HTTPTest extends Unittest_TestCase {
 			[
 				[
 					'body' 	=> 'Test',
-					'etag' 	=> '"invalid-etag-sent"',
+					'etag' 	=> FALSE,
 					'cache' => 'test-cache'
 				],
 				[
-					'etag' 	=> '"4cc937daaf30bca60bf3c3d355d83aa416ad8a08"',
 					'cache' => 'test-cache, must-revalidate',
 					'match' => FALSE
 				]
@@ -235,12 +232,6 @@ class KO7_HTTPTest extends Unittest_TestCase {
 		// Initialize Request
 		$request = Request::initial();
 
-		// Request is sent with etag
-		if ($input['etag'] !== NULL)
-		{
-			$request->headers('if-none-match', $input['etag']);
-		}
-
 		// Get Current Response and set new body
 		$response = Response::factory()->body($input['body']);
 
@@ -248,6 +239,19 @@ class KO7_HTTPTest extends Unittest_TestCase {
 		if ($input['cache'] !== NULL)
 		{
 			$response->headers('cache-control', $input['cache']);
+		}
+
+		// Get Expected E-Tag
+		$expectedEtag = $response->generate_etag();
+
+		// Request is sent with etag
+		if ($input['etag'] === TRUE)
+		{
+			$request->headers('if-none-match', $expectedEtag);
+		}
+		elseif ($input['etag'] === FALSE)
+		{
+			$request->headers('if-none-match', 'wrong-etag');
 		}
 
 		// Check cache a 304 get's only thrown if e-tags match
@@ -264,7 +268,7 @@ class KO7_HTTPTest extends Unittest_TestCase {
 		$this->assertSame($expected['cache'], $response->headers('cache-control'));
 
 		// Check if E-Tag is the same as expected
-		$this->assertSame($expected['etag'], $response->headers('etag'));
+		$this->assertSame($expectedEtag, $response->headers('etag'));
 	}
 
 	/**
