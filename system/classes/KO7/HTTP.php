@@ -1,23 +1,24 @@
 <?php
 /**
- * Contains the most low-level helpers methods in KO7:
+ * This class only contains static functions which can do the following:
  *
- * - Environment initialization
- * - Locating files within the cascading filesystem
- * - Auto-loading and transparent extension of classes
- * - Variable and path debugging
+ *  - HTTP Redirection
+ *  - E-Tag Cache comparison
+ *  - HTTP Header Parsing
+ *  - URL-Formatting
  *
- * @package    KO7
- * @category   HTTP
- * @author     Kohana Team
+ * @package    KO7\HTTP
  * @since      3.1.0
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 abstract class KO7_HTTP {
 
 	/**
-	 * @var  The default protocol to use if it cannot be detected
+     * The default protocol to use if it cannot be detected
+	 * @var string
 	 */
 	public static $protocol = 'HTTP/1.1';
 
@@ -25,17 +26,22 @@ abstract class KO7_HTTP {
 	 * Issues a HTTP redirect.
 	 *
 	 * @param  string    $uri       URI to redirect to
-	 * @param  int       $code      HTTP Status code to use for the redirect
+	 * @param  int       $code      HTTP Status code to use for the redirect (RFC 7231)
+     *
 	 * @throws HTTP_Exception
 	 */
 	public static function redirect($uri = '', $code = 302)
 	{
-		$e = HTTP_Exception::factory($code);
 
-		if ( ! $e instanceof HTTP_Exception_Redirect)
-			throw new KO7_Exception('Invalid redirect code \':code\'', [
-				':code' => $code
-			]);
+	    // Check if Redirection code is valid according to RFC 7231
+	    if ($code < 300 || $code > 308)
+	    {
+            throw new HTTP_Exception('Invalid redirect code \':code\'', [
+                ':code' => $code
+            ]);
+        }
+
+		$e = HTTP_Exception::factory($code);
 
 		throw $e->location($uri);
 	}
@@ -48,13 +54,16 @@ abstract class KO7_HTTP {
 	 * @param  Request   $request   Request
 	 * @param  Response  $response  Response
 	 * @param  string    $etag      Resource ETag
+     *
 	 * @throws HTTP_Exception_304
+     * @throws Request_Exception
+     *
 	 * @return Response
 	 */
 	public static function check_cache(Request $request, Response $response, $etag = NULL)
 	{
 		// Generate an etag if necessary
-		if ($etag == NULL)
+		if ($etag === NULL)
 		{
 			$etag = $response->generate_etag();
 		}
@@ -74,7 +83,7 @@ abstract class KO7_HTTP {
 		}
 
 		// Check if we have a matching etag
-		if ($request->headers('if-none-match') AND (string) $request->headers('if-none-match') === $etag)
+		if ($request->headers('if-none-match') && (string) $request->headers('if-none-match') === $etag)
 		{
 			// No need to send data again
 			throw HTTP_Exception::factory(304)->headers('etag', $etag);
@@ -87,6 +96,7 @@ abstract class KO7_HTTP {
 	 * Parses a HTTP header string into an associative array
 	 *
 	 * @param   string   $header_string  Header string to parse
+     *
 	 * @return  HTTP_Header
 	 */
 	public static function parse_header_string($header_string)
@@ -95,10 +105,11 @@ abstract class KO7_HTTP {
 		if (extension_loaded('http'))
 		{
 			// Use the fast method to parse header string
-			$headers = version_compare(phpversion('http'), '2.0.0', '>=') ?
-				\http\Header::parse($header_string) :
-				http_parse_headers($header_string);
+            // Ignore Code Coverage in case pecl_http is not loaded
+            // @codeCoverageIgnoreStart
+            $headers = (new http\Header)->parse($header_string);
 			return new HTTP_Header($headers);
+            // @codeCoverageIgnoreEnd
 		}
 
 		// Otherwise we use the slower PHP parsing
@@ -146,30 +157,30 @@ abstract class KO7_HTTP {
 	 * key value pairs. This method is slow, but provides an accurate
 	 * representation of the HTTP request.
 	 *
-	 *      // Get http headers into the request
-	 *      $request->headers = HTTP::request_headers();
-	 *
 	 * @return  HTTP_Header
 	 */
 	public static function request_headers()
 	{
 		// If running on apache server
-		if (function_exists('apache_request_headers'))
-		{
-			// Return the much faster method
-			return new HTTP_Header(apache_request_headers());
-		}
-		// If the PECL HTTP tools are installed
-		elseif (extension_loaded('http'))
-		{
-			// Return the much faster method
-			$headers = version_compare(phpversion('http'), '2.0.0', '>=') ?
-				\http\Env::getRequestHeader() :
-				http_get_request_headers();
-			return new HTTP_Header($headers);
-		}
+        if (function_exists('apache_request_headers'))
+        {
+            // Return the much faster method
+            // Ignore Code Coverage....apache_request_headers will *never* be present with PHPUnit
+            return new HTTP_Header(apache_request_headers()); // @codeCoverageIgnore
+        }
 
-		// Setup the output
+        // If `pecl_http` extension is installed and loaded
+        if (extension_loaded('http'))
+        {
+            // Return the faster method
+            // Ignore Code Coverage in case pecl_http is not loaded
+            // @codeCoverageIgnoreStart
+            $headers = (new http\Env)->getRequestHeader();
+            return new HTTP_Header($headers);
+            // @codeCoverageIgnoreEnd
+        }
+
+        // Setup the output
 		$headers = [];
 
 		// Parse the content type
@@ -204,13 +215,11 @@ abstract class KO7_HTTP {
 	 * the values to meet RFC 3986
 	 *
 	 * @param   array   $params  Params
+     *
 	 * @return  string
 	 */
-	public static function www_form_urlencode(array $params = [])
+	public static function www_form_urlencode(array $params)
 	{
-		if ( ! $params)
-			return;
-
 		$encoded = [];
 
 		foreach ($params as $key => $value)

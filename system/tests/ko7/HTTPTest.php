@@ -1,65 +1,50 @@
 <?php
-
 /**
- * Tests HTTP
+ * Tests KO7_HTTP Class
  *
  * @group ko7
  * @group ko7.core
  * @group ko7.core.http
  *
- * @package    KO7
- * @category   Tests
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @package    KO7\Tests
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_HTTPTest extends Unittest_TestCase {
 
-	protected $_inital_request;
-
-	/**
+    /**
 	 * Sets up the environment
+     *
+     * @throws KO7_Exception
+     * @throws ReflectionException
+     * @throws Request_Exception
 	 */
-	// @codingStandardsIgnoreStart
 	public function setUp(): void
-	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
-		KO7::$config->load('url')->set('trusted_hosts', ['www\.example\.com']);
-		$this->_initial_request = Request::$initial;
 		Request::$initial = new Request('/');
 	}
-
-	/**
-	 * Tears down whatever is setUp
-	 */
-	// @codingStandardsIgnoreStart
-	public function tearDown(): void
-	// @codingStandardsIgnoreEnd
-	{
-		Request::$initial = $this->_initial_request;
-		parent::tearDown();
-	}
-	// @codingStandardsIgnoreStart
 
 	/**
 	 * Defaults for this test
 	 * @var array
 	 */
-	// @codingStandardsIgnoreStart
 	protected $environmentDefault = [
+	    'Request::$initial',
+        'url.trusted_hosts' => ['www\.example\.com'],
 		'KO7::$base_url'    => '/ko7/',
 		'KO7::$index_file'  => 'index.php',
-		'HTTP_HOST'	           => 'www.example.com',
+		'HTTP_HOST'	        => 'www.example.com',
 	];
-	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Provides test data for test_attributes()
 	 *
 	 * @return array
 	 */
-	public function provider_redirect()
+	public function provider_redirect() : array
 	{
 		return [
 			[
@@ -80,44 +65,51 @@ class KO7_HTTPTest extends Unittest_TestCase {
 				'HTTP_Exception_303',
 				'http://www.example.com/ko7/index.php/page_two'
 			],
+            [
+                NULL,
+                99999,
+                'HTTP_Exception',
+                NULL
+            ]
 		];
 	}
 
 	/**
 	 * Tests HTTP::redirect()
 	 *
-	 * @test
 	 * @dataProvider provider_redirect
+     *
 	 * @param array  $location            Location to redirect to
 	 * @param array  $code                HTTP Code to use for the redirect
-	 * @param string $expected_exception  Expected exception
-	 * @param string $expected_location   Expected exception
+	 * @param string $expected_exception  Expected Exception
+	 * @param string $expected_location   Expected Location
 	 */
-	public function test_redirect($location, $code, $expected_exception, $expected_location)
+	public function test_redirect($location, $code, $expected_exception, $expected_location) : void
 	{
 		try
 		{
 			HTTP::redirect($location, $code);
 		}
-		catch (HTTP_Exception_Redirect $e)
+		catch (HTTP_Exception $e)
 		{
 			$response = $e->get_response();
 
 			$this->assertInstanceOf($expected_exception, $e);
 			$this->assertEquals($expected_location, $response->headers('Location'));
-
-			return;
 		}
-
-		$this->fail('HTTP_Exception_Redirect not thrown');
 	}
 
 	/**
 	 * Provides test data for test_request_headers
+     *
+     * NOTE: Please don't add more Test Data because if you use
+     * pecl_http this test will fail (it caches the result for the current script exec)
+     *
+     * @see https://github.com/m6w6/ext-http/issues/90
 	 *
 	 * @return array
 	 */
-	public function provider_request_headers()
+	public function provider_request_headers() : array
 	{
 		return [
 			[
@@ -135,15 +127,7 @@ class KO7_HTTPTest extends Unittest_TestCase {
 					'accept-encoding'=>'gzip, deflate, sdch',
 					'accept-language'=>'en-US,en;q=0.8,fr;q=0.6,hy;q=0.4',
 				]
-			],
-			[
-				[
-					'HTTP_WEIRD_HTTP_HEADER' => 'A weird value for a weird header',
-				],
-				[
-					'weird-http-header' => 'A weird value for a weird header',
-				]
-			],
+			]
 		];
 	}
 
@@ -157,24 +141,231 @@ class KO7_HTTPTest extends Unittest_TestCase {
 	 * and then restores the $_SERVER superglobal so that it does not affect
 	 * other tests.
 	 *
-	 * @test
 	 * @dataProvider provider_request_headers
-	 * @param array  $server_globals      globals to feed $_SERVER
+     *
+	 * @param array  $server_globals      Globals to feed $_SERVER
 	 * @param array  $expected_headers    Expected, cleaned HTTP headers
 	 */
-	public function test_request_headers(array $server_globals, array $expected_headers)
+	public function test_request_headers(array $server_globals, array $expected_headers) : void
 	{
-		// save the $_SERVER super-global into temporary local var
+        // save the $_SERVER super-global into temporary local var
 		$tmp_server = $_SERVER;
 
-		$_SERVER = array_replace_recursive($_SERVER, $server_globals);
-		$headers = HTTP::request_headers();
+		// We need to clear the $_SERVER array first, other ways pecl_http does not accept it
+        // as HTTP request (since version 3.0.0 it would return "NULL" instead )
+        unset($_SERVER);
 
-		$actual_headers = array_intersect_key($headers->getArrayCopy(), $expected_headers);
+        // Set our globals
+        $_SERVER = $server_globals;
 
+        // Get Request Headers
+        $headers = HTTP::request_headers();
+
+        // Only get the keys we want
+        $actual_headers = array_intersect_key($headers->getArrayCopy(), $expected_headers);
+
+        // Compare Headers against the expected result to make sure they got parsed correctly
 		$this->assertSame($expected_headers, $actual_headers);
 
-		// revert the super-global to its previous state
+		// revert the $_SERVER super-global to its previous state
 		$_SERVER = $tmp_server;
 	}
+
+	/**
+     * Provides test data for test_check_cache
+     *
+     * @return array
+     */
+    public function provider_check_cache() : array
+    {
+	    return [
+	        [
+	            [
+	                'body'  => 'Test',
+                    'etag'  => NULL,
+                    'cache' => NULL
+                ],
+                [
+                    'etag'  => '"753677eb565f94185c544be9adb945f31d44dd64"',
+                    'cache' => 'must-revalidate',
+                    'match' => FALSE
+                ]
+            ],
+            [
+                [
+                    'body'  => 'Test',
+                    'etag'  => '"4cc937daaf30bca60bf3c3d355d83aa416ad8a08"',
+                    'cache' => 'test-cache'
+                ],
+                [
+                    'etag'  => '"4cc937daaf30bca60bf3c3d355d83aa416ad8a08"',
+                    'cache' => 'test-cache, must-revalidate',
+                    'match' => TRUE
+                ]
+            ],
+            [
+                [
+                    'body'  => 'Test',
+                    'etag'  => '"invalid-etag-sent"',
+                    'cache' => 'test-cache'
+                ],
+                [
+                    'etag'  => '"4cc937daaf30bca60bf3c3d355d83aa416ad8a08"',
+                    'cache' => 'test-cache, must-revalidate',
+                    'match' => FALSE
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Tests HTTP::check_cache()
+     *
+     * @dataProvider provider_check_cache
+     *
+     * @param array $input      Input variables
+     * @param array $expected   Expected results
+     *
+     * @throws Request_Exception
+     */
+    public function test_check_cache(array $input, array $expected) : void
+    {
+        // Initialize Request
+        $request = Request::initial();
+
+        // Request is sent with etag
+        if ($input['etag'] !== NULL)
+        {
+            $request->headers('if-none-match', $input['etag']);
+        }
+
+        // Get Current Response and set new body
+	    $response = Response::factory()->body($input['body']);
+
+        // Response has custom cache-control header
+        if ($input['cache'] !== NULL)
+        {
+            $response->headers('cache-control', $input['cache']);
+        }
+
+	    // Check cache a 304 get's only thrown if e-tags match
+	    try
+        {
+            $response = HTTP::check_cache($request, $response);
+        }
+        catch (HTTP_Exception_304 $e)
+        {
+            $this->assertTrue($expected['match']);
+        }
+
+        // Check if cache-control was set up correctly
+        $this->assertSame($expected['cache'], $response->headers('cache-control'));
+
+	    // Check if E-Tag is the same as expected
+        $this->assertSame($expected['etag'], $response->headers('etag'));
+    }
+
+    /**
+     * Provides test data for test_www_form_urlencode()
+     *
+     * @return array
+     */
+    public function provider_www_form_urlencode() : array
+    {
+        return [
+            [
+                [
+                    'test'  => '1',
+                    'test2' => '2'
+                ],
+                'test=1&test2=2'
+            ],
+            [
+                [
+                    'test3'  => 'spaces ',
+                    'test4'  => 'have to be encoded'
+                ],
+                'test3=spaces%20&test4=have%20to%20be%20encoded'
+            ],
+            [
+                [
+                    'test5'  => 'this is-allowed',
+                    'test6'  => 'also.allowed'
+                ],
+                'test5=this%20is-allowed&test6=also.allowed'
+            ],
+            [
+                [],
+                ''
+            ]
+        ];
+    }
+
+    /**
+     * Tests HTTP::www_form_urlencode()
+     *
+     * @dataProvider provider_www_form_urlencode
+     *
+     * @param array  $params      Parameter to encode
+     * @param string $expected    Expected url string
+     */
+    public function test_www_form_urlencode(array $params, string $expected) : void
+    {
+        $encoded = HTTP::www_form_urlencode($params);
+        $this->assertSame($expected, $encoded);
+    }
+
+    /**
+     * Provides test data for test_parse_header_string()
+     *
+     * @return array
+     */
+    public function provider_parse_header_string() : array
+    {
+        return [
+            [
+                'Host: net.tutsplus.com' . PHP_EOL .
+                'Accept: text/html,application/xhtml+xml' . PHP_EOL .
+                'Accept-Language: en-us,en;q=0.5' . PHP_EOL .
+                'Accept-Encoding: gzip,deflate' . PHP_EOL .
+                'Accept-Charset: ISO-8859-1,utf-8' . PHP_EOL .
+                'Array: number1' . PHP_EOL .
+                'Array: number2' . PHP_EOL .
+                'Array: number3' . PHP_EOL .
+                'Cache-Control: no-cache',
+                [
+                    'Host'            => 'net.tutsplus.com',
+                    'Accept'          => 'text/html,application/xhtml+xml',
+                    'Accept-Language' => 'en-us,en;q=0.5',
+                    'Accept-Encoding' => 'gzip,deflate',
+                    'Accept-Charset'  => 'ISO-8859-1,utf-8',
+                    'Array' => [
+                        0   => 'number1',
+                        1   => 'number2',
+                        2   => 'number3',
+                    ],
+                    'Cache-Control' => 'no-cache'
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Tests HTTP::parse_header_stringorm_urlencode()
+     *
+     * @dataProvider provider_parse_header_string
+     *
+     * @param string  $header       Header String
+     * @param array   $expected     Expected Result
+     */
+    public function test_parse_header_string(string $header, array $expected) : void
+    {
+        // Parse Header string
+        $parsed = HTTP::parse_header_string($header);
+
+        // Compare Expected HTTP_HEADER against parsed one
+        $expected = new HTTP_Header($expected);
+        $this->assertEquals($expected, $parsed);
+    }
+
 }
