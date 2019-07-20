@@ -349,14 +349,20 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 	}
 
 	/**
+	 * Tests Request_Client_External::setOptions
+	 *
 	 * @dataProvider provider_test_options
+	 *
+	 * @param  mixed    $key			The option to set/get
+	 * @param  array    $expected		Expected Result
+	 * @param  string	$value			The options value
 	 */
-	public function test_options($key, $expected, $value = NULL) : void
+	public function test_options($key, array $expected, $value = NULL) : void
 	{
 		// Initialize Client
 		try
 		{
-			$client = KO7_Request_Client_External::factory(NULL, 'Request_Client_Stream');
+			$client = KO7_Request_Client_External::factory([], 'Request_Client_Stream');
 		}
 		catch (Request_Exception $e)
 		{
