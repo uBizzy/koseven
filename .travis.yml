@@ -38,8 +38,6 @@ install:
   - pecl list-files imagick | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install imagick
   - pecl list-files apcu | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install apcu
   - pecl list-files yaml | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install yaml
-  - pecl list-files raphf | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install raphf
-  - pecl list-files propro | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install propro
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
