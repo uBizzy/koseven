@@ -40,10 +40,10 @@ install:
   - pecl list-files yaml | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install yaml
   - pecl list-files raphf | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install raphf
   - pecl list-files propro | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install propro
-  - echo "\n" | pecl install -f pecl_http
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
+  - pecl install -f pecl_http
   - echo "extension = pecl_http.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
