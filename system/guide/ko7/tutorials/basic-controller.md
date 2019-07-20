@@ -69,7 +69,7 @@ Example of `layout.php`:
       </aside>
       <main>
         <!-- Render action template -->
-        <?=$main_content->render()?>
+        <?php=$main_content->render()?>
       </main>
       <footer>
         ...
