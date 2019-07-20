@@ -224,8 +224,6 @@ class KO7_HTTPTest extends Unittest_TestCase {
 	 *
 	 * @param array $input    Input variables
 	 * @param array $expected Expected results
-	 *
-	 * @throws Request_Exception
 	 */
 	public function test_check_cache(array $input, array $expected): void
 	{
@@ -259,9 +257,16 @@ class KO7_HTTPTest extends Unittest_TestCase {
 		{
 			$response = HTTP::check_cache($request, $response);
 		}
-		catch (HTTP_Exception_304 $e)
+		catch (HTTP_Exception_304|Request_Exception $e)
 		{
-			$this->assertTrue($expected['match']);
+			if ($e instanceof HTTP_Exception_304)
+			{
+				$this->assertTrue($expected['match']);
+			}
+			else
+			{
+				$this->fail($e->getMessage());
+			}
 		}
 
 		// Check if cache-control was set up correctly

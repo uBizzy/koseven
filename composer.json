@@ -32,7 +32,8 @@
   "require-dev": {
     "phpunit/phpunit": "^8",
     "php-coveralls/php-coveralls": "^2.0",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "internations/http-mock": "^0.12"
   },
   "conflict": {
     "kohana/core": "3.3.*"

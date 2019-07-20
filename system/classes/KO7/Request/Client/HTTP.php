@@ -1,7 +1,7 @@
 <?php
 /**
  * HTTP driver performs external requests using the
- * pecl_http php extension.
+ * pecl_http extension.
  *
  * NOTE: This driver is not used by default. To use it as default call:
  *
@@ -19,31 +19,26 @@
 class KO7_Request_Client_HTTP extends Request_Client_External {
 
 	/**
-	 * Curl options
-	 *
-	 * @var  array
-	 * @link http://www.php.net/manual/function.curl-setopt
-	 */
-	protected $_options = [];
-
-	/**
 	 * Sends the HTTP message [Request] to a remote server and processes
 	 * the response.
 	 *
 	 * @param Request  $request  request to send
 	 * @param Response $response response to send
 	 *
-	 * @throws KO7_Exception
+	 * @throws Request_Exception
 	 *
 	 * @return Response
 	 */
-	public function _send_message(Request $request, Response $response)
+	public function _send_message(Request $request, Response $response) : Response
 	{
 		// Instance a new Client
 		$client = new http\Client;
 
-		// Set cookies
-		$client->setCookies($request->cookie());
+		// Process cookies
+		if ($cookies = $request->cookie())
+		{
+			$client->setCookies($cookies);
+		}
 
 		// Instance HTTP Request Object
 		$http_request = new \http\Client\Request($request->method(), $request->uri());
@@ -55,22 +50,43 @@ class KO7_Request_Client_HTTP extends Request_Client_External {
 		}
 
 		// Set headers
-		$http_request->setHeaders($request->headers()->getArrayCopy());
+		if ( ! empty($headers = $request->headers()->getArrayCopy()))
+		{
+			$http_request->setHeaders($headers);
+		}
 
 		// Set query (?foo=bar&bar=foo)
-		$http_request->setQuery($request->query());
+		if ($query = $request->query())
+		{
+			$http_request->setQuery($query);
+		}
 
 		// Set the body
-		$http_request->getBody()->append($request->body());
+		// This will also add a Content-Type: application/x-www-form-urlencoded header unless you override it
+		if ($body = $request->body())
+		{
+			$http_request->getBody()->append($body);
+		}
 
-		// Execute call
-		$client->enqueue($http_request)->send();
+		// Execute call, will throw an Runtime Exception if a stream is not available
+		try
+		{
+			$client->enqueue($http_request)->send();
+		}
+		catch (\http\Exception\RuntimeException $e)
+		{
+			throw new Request_Exception($e->getMessage());
+		}
 
 		// Parse Response
 		$http_response = $client->getResponse();
 
 		// Build the response
-		$response->status($http_response->getResponseCode())->headers($http_response->getHeaders())->cookie($http_response->getCookies())->body($http_response->getBody());
+		$response
+			->status($http_response->getResponseCode())
+			->headers($http_response->getHeaders())
+			->cookie($http_response->getCookies())
+			->body($http_response->getBody());
 
 		return $response;
 	}
