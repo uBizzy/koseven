@@ -43,7 +43,7 @@ install:
 
 # Execute commands before executing script (e.g Add extensions to php.ini)
 before_script:
-  - pecl install -f pecl_http
+  - echo "\n" | pecl install -f pecl_http
   - echo "extension = pecl_http.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
