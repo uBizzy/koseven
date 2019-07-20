@@ -2,7 +2,7 @@
 language: php
 
 # Use containerized infrastructure
-sudo: false
+sudo: required
 
 # Test on Ubuntu Xenial (16.04)
 dist: xenial
@@ -25,6 +25,8 @@ services:
 
 # Execute this commands before installing dependencies
 before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libgnutls28-dev libcurl4-openssl-dev
   - composer self-update
   - composer validate
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
