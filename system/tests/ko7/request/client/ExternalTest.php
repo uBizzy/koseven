@@ -389,4 +389,20 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 		}
 	}
 
+	/**
+	 * Test Request_Client_External::factory
+	 *
+	 * This test checks if Exception is thrown when we pass and Invalid client
+	 *
+	 */
+	public function test_invalid_request_class() : void
+	{
+		// Expect Exception
+		$this->expectException(Request_Exception::class);
+		// Any invalid Client
+		Request_Client_External::$client = 'Arr';
+		// Try to use it
+		Request::factory('https://example.com');
+	}
+
 }
