@@ -5,10 +5,6 @@
  *
  * NOTE: This driver is not used by default. To use it as default call:
  *
- *  Request_Client_External::$client = 'Request_Client_HTTP';
- *
- * before executing the request (ideally in your application bootstrap)
- *
  * @package        KO7\Request
  *
  * @copyright  (c) 2007-2016  Kohana Team
