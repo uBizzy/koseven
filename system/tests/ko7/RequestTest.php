@@ -870,7 +870,7 @@ class KO7_RequestTest_Header_Spying_Request_Client_External extends Request_Clie
 {
 	private $headers;
 
-	protected function _send_message(\Request $request, \Response $response)
+	protected function _send_message(\Request $request, \Response $response) : Response
 	{
 		$this->headers = $request->headers();
 
