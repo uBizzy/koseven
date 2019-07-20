@@ -73,7 +73,7 @@ abstract class KO7_Request_Client_External extends Request_Client {
 	 *
 	 * @return  Request_Client_External
 	 */
-	public static function factory(array $options = NULL, $client = NULL)
+	public static function factory($options = NULL, $client = NULL)
 	{
 		// If no client given determine which one to use (prefer the faster and mature ones)
 		//@codeCoverageIgnoreStart
