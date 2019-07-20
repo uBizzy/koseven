@@ -207,12 +207,6 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 	 */
 	public function test_external_requests(string $client, string $method, array $options, int $status = 200, $exception = false) : void
 	{
-		// Check if we expect the request to throw an exception
-		if ($exception)
-		{
-			$this->expectException(Request_Exception::class);
-		}
-
 		// Wee ned to increase our memory size for this test (we will reset this one at the end)
 		$initialLimit = ini_get('memory_limit');
 		ini_set('memory_limit','1024M');
@@ -305,8 +299,12 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 		{
 			$response = $request->execute();
 		}
-		catch (HTTP_Exception_404 $e)
+		catch (HTTP_Exception_404|Request_Exception $e)
 		{
+			if ($exception && $e instanceof Request_Exception)
+			{
+				return;
+			}
 			$this->fail($e->getMessage());
 		}
 
