@@ -104,7 +104,9 @@ abstract class KO7_Request_Client_External extends Request_Client {
 		// Check if client extends Request_Client_External
 		if ( ! $client instanceof Request_Client_External)
 		{
-			throw new Request_Exception('Selected client is not a valid Request Client.');
+			throw new Request_Exception(':client is not a valid external Request Client.', [
+				'client' => get_class($client)
+			]);
 		}
 
 		// Set Request Options
