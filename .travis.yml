@@ -37,7 +37,6 @@ install:
   - pecl list-files apcu | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install apcu
   - pecl list-files yaml | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install yaml
   - pecl list-files raphf | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install raphf
-  - echo "extension = raphf.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - pecl list-files propro | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install propro
   - echo "extension = propro.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - pecl list-files pecl_http | grep -v 'not installed' || echo "\n" | vendor/bin/ci-pecl-install pecl_http
