@@ -73,12 +73,12 @@ class KO7_Request_Client_Stream extends Request_Client_External {
 			$uri .= '?' . http_build_query($query, NULL, '&');
 		}
 
-		// Throws an Error Exception if you try to write smth. but requested stream is not write-able or unavailable
+		// Throws an Exception if you try to write smth. but requested stream is not write-able or unavailable
 		try
 		{
 			$stream = fopen($uri, $mode, FALSE, $context);
 		}
-		catch(Error_Exception $e)
+		catch(Exception $e)
 		{
 			throw new Request_Exception($e->getMessage());
 		}

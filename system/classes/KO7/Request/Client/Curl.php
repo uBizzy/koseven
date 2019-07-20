@@ -91,7 +91,7 @@ class KO7_Request_Client_Curl extends Request_Client_External {
 		{
 			curl_setopt_array($curl, $options);
 		}
-		catch (Error_Exception $e)
+		catch (Exception $e)
 		{
 			throw new Request_Exception($e->getMessage());
 		}

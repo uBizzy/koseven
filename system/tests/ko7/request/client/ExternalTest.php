@@ -299,7 +299,7 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 		{
 			$response = $request->execute();
 		}
-		catch (HTTP_Exception_404|Request_Exception $e)
+		catch (HTTP_Exception_404 | Request_Exception $e)
 		{
 			if ($exception && $e instanceof Request_Exception)
 			{
