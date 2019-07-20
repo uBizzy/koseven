@@ -39,6 +39,15 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 	public static $port = 7507;
 
 	/**
+	 * Environment Defaults
+	 *
+	 * @var array
+	 */
+	protected $environmentDefault = [
+		'Request_Client_External::$client'
+	];
+
+	/**
 	 * Setup fake HTTP Server
 	 */
 	public static function setUpBeforeClass() : void
@@ -399,8 +408,10 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 	{
 		// Expect Exception
 		$this->expectException(Request_Exception::class);
+
 		// Any invalid Client
 		Request_Client_External::$client = 'Arr';
+
 		// Try to use it
 		Request::factory('https://example.com');
 	}
