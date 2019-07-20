@@ -395,7 +395,7 @@ class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 		$this->expectException(Request_Exception::class);
 
 		// Any invalid Client
-		Request_Client_External::$client = 'Invalid_Client_Which_Does_Not_Exist';
+		Request_Client_External::$client = 'Arr';
 
 		// Try to use it
 		Request::factory('https://example.com');
