@@ -259,8 +259,15 @@ class KO7_Image_Imagick extends Image {
 		// Get the image format and type
 		list($format, $type) = $this->_get_imagetype(pathinfo($file, PATHINFO_EXTENSION));
 
-		// Set the output image type
-		$this->im->setFormat($format);
+		// Set the output image type - don't do this for webp files
+		if ($type !== IMAGETYPE_WEBP)
+		{
+			$this->im->setFormat($format);
+		}
+		else
+		{
+			$file = 'webp:' . $file;
+		}
 
 		// Set the output quality
 		$this->im->setImageCompressionQuality($quality);

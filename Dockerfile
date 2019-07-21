@@ -8,7 +8,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TRAVIS_TEST=1;
 
 # Install Required Packages
-RUN apt-get update && \
+RUN cp /etc/apt/sources.list /etc/apt/sources.list~ && \
+    sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get -qq upgrade && \
     apt-get -qq install --no-install-recommends \
     apt-utils \
     software-properties-common \
@@ -23,9 +26,13 @@ RUN apt-get update && \
     language-pack-en \
     libcurl4-openssl-dev \
     libmagic-dev \
-    imagemagick \
+    libwebp-dev \
+    libde265-dev \
     redis-server \
     git \
+    wget \
+    alien \
+    webp \
     php7.3 \
     php7.3-dev \
     php7.3-common \
@@ -52,6 +59,13 @@ RUN apt-get update && \
     #php-http \
     #php-pecl-http \
     php-redis && \
+    apt-get -qq build-dep imagemagick && \
+    wget https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-7.0.8-56.x86_64.rpm && \
+    wget https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-libs-7.0.8-56.x86_64.rpm && \
+    alien -d ImageMagick-7.0.8-56.x86_64.rpm && \
+    alien -d ImageMagick-libs-7.0.8-56.x86_64.rpm && \
+    dpkg -i imagemagick* && \
+    ldconfig /usr/lib64 && \
     curl -s https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     mkdir -p /tmp/koseven && \

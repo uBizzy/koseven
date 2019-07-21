@@ -123,7 +123,8 @@ class KO7_ImageTest extends Unittest_TestCase {
 		KO7::$config->load('image')->set('default_driver', $driver);
 
 		$image = Image::factory(MODPATH.'image/tests/test_data/test_image.gif');
-		$this->assertSame(file_get_contents(MODPATH.'image/tests/test_data/test_image.gif'), (string) $image);
+
+		$this->assertStringEqualsFile(MODPATH.'image/tests/test_data/test_image.gif', (string) $image);
 	}
 
 	/**
@@ -137,8 +138,7 @@ class KO7_ImageTest extends Unittest_TestCase {
 			['test_image.gif'],
 			['test_image.png'],
 			['test_image.jpg'],
-			// Not supported in Travis CI
-			// ['test.webp'],
+			['test.webp'],
 			['test_image.gif', 'Imagick'],
 			['test_image.png', 'Imagick'],
 			['test_image.jpg', 'Imagick'],
