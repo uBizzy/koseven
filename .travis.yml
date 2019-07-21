@@ -24,8 +24,10 @@ script:
   - docker exec koseven /bin/sh -c "cd /tmp/koseven; php vendor/bin/phpunit"
 
 # Execute commands which should run after successful build
+# We need to symbolic link to /tmp/koseven - dirty hack
 after_success:
-  - sudo chmod -R 775 'build'
+  - ln -s $(pwd) /tmp/koseven
+  - sudo chmod -R 755 builds
   - travis_retry vendor/bin/php-coveralls
 
 # Disable E-Mail notifications
