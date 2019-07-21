@@ -19,7 +19,6 @@ RUN apt-get update && \
     add-apt-repository ppa:ondrej/php && \
     apt-get update && \
     apt-get -qq install --no-install-recommends \
-    # Install english language pack
     language-pack-en \
     libcurl4-openssl-dev \
     libmagic-dev \
@@ -48,9 +47,8 @@ RUN apt-get update && \
     php-raphf-dev \
     php-propro \
     php-propro-dev \
-    # pecl_http not yet, as tests will fail
-    #php-http \
-    #php-pecl-http \
+    php-http \
+    php-pecl-http \
     php-redis && \
     curl -s https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
