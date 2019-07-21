@@ -27,7 +27,8 @@ script:
 # We need to symbolic link to /tmp/koseven - dirty hack
 after_success:
   - ln -s $(pwd) /tmp/koseven
-  - sudo chmod -R 755 builds
+  - sudo chmod -R 755 build
+  - sudo chmod -R 755 /tmp
   - travis_retry vendor/bin/php-coveralls
 
 # Disable E-Mail notifications
