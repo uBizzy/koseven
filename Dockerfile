@@ -4,6 +4,9 @@ MAINTAINER Tobias Oitzinger <to@dive-me-in.at>
 # Update packages and install apache + php7.0 + pecl
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Set ENV
+ENV TRAVIS_TEST=1;
+
 # Install Required Packages
 RUN apt-get update && \
     apt-get -qq install --no-install-recommends \
@@ -52,7 +55,5 @@ RUN apt-get update && \
     curl -s https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     mkdir -p /tmp/koseven && \
-    export TRAVIS_TEST=true && \
     echo "requirepass password" >> /etc/redis/redis.conf && \
-    sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf && \
-    service redis-server start
+    sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
