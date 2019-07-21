@@ -1,5 +1,12 @@
 # Minimal system required
-language: minimal
+language: php
+
+# Use containerized infrastructure
+sudo: false
+
+# Supported PHP-Versions
+php:
+  - 7.3
 
 # Run Docker Service
 services:
@@ -18,7 +25,7 @@ script:
 
 # Execute commands which should run after successful build
 after_success:
-  - docker exec koseven /bin/sh -c "cd /tmp/koseven; php vendor/bin/php-coveralls"
+  - travis_retry vendor/bin/php-coveralls
 
 # Disable E-Mail notifications
 notifications:
