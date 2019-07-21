@@ -29,7 +29,7 @@ after_success:
   - ln -s $(pwd) /tmp/koseven
   - sudo chmod -R 755 build
   - sudo chmod -R 755 /tmp
-  - travis_retry vendor/bin/php-coveralls
+  - travis_retry vendor/bin/php-coveralls -v
 
 # Disable E-Mail notifications
 notifications:
