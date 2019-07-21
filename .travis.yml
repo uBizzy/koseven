@@ -25,7 +25,7 @@ script:
 
 # Execute commands which should run after successful build
 after_success:
-  - chmod -R 775 'build'
+  - sudo chmod -R 775 'build'
   - travis_retry vendor/bin/php-coveralls
 
 # Disable E-Mail notifications
