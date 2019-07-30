@@ -54,8 +54,8 @@ class EncryptMcryptTest extends EncryptTestBase {
 		$this->set_config([
 			'type' => 'mcrypt',
 			'key' => $key,
-			'cipher' => constant($cipher),
-			'mode' => constant($mode),
+			'cipher' => constant("'" . $cipher . "'"),
+			'mode' => constant("'" . $mode . "'"),
 		]);
 
 		// Test encryption with known answers
