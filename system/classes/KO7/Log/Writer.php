@@ -6,7 +6,7 @@
  * @category   Logging
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 abstract class KO7_Log_Writer {
 

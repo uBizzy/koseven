@@ -20,7 +20,7 @@
  * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  * @deprecated since 4.0
  */
 class KO7_Encrypt_Engine_Mcrypt extends KO7_Encrypt_Engine {

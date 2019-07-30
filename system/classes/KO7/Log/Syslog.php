@@ -6,7 +6,7 @@
  * @category   Logging
  * @author     Jeremy Bush
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Log_Syslog extends Log_Writer {
 

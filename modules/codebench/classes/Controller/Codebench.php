@@ -6,7 +6,7 @@
  * @category   Controllers
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class Controller_Codebench extends KO7_Controller_Template {
 

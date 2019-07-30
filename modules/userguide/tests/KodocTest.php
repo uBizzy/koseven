@@ -6,7 +6,7 @@
  * @package    KO7/Userguide
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_KodocTest extends Unittest_TestCase
 {

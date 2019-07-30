@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @author     Matt Button <matthew@sigswitch.com>
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Config_GroupTest extends TestCase
 {

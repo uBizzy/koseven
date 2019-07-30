@@ -6,7 +6,7 @@
  * @package    KO7/Auth
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Auth_File extends Auth {
 

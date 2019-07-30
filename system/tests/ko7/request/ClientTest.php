@@ -12,7 +12,7 @@
  * @author     Kohana Team
  * @author	   Andrew Coulton
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Request_ClientTest extends Unittest_TestCase
 {

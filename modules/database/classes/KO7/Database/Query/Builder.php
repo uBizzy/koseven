@@ -6,7 +6,7 @@
  * @category   Query
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 abstract class KO7_Database_Query_Builder extends Database_Query {
 

@@ -8,7 +8,7 @@
  * @author     shadowhand <woody.gilk@kohanaframework.org>
  * @copyright (c) Koseven Team
  * @copyright (c) 2008-2017 Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_UUIDTest extends KO7_Unittest_TestCase {
 

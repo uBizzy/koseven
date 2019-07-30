@@ -7,7 +7,7 @@
  * @category   Base
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  * @since      3.2.0
  */
 interface KO7_Cache_Arithmetic {

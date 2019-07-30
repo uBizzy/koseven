@@ -8,7 +8,7 @@ include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_SqliteTest extends KO7_CacheBasicMethodsTest {
 

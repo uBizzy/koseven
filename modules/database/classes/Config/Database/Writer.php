@@ -7,7 +7,7 @@
  * @category   Configuration
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class Config_Database_Writer extends KO7_Config_Database_Writer
 {

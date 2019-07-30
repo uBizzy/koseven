@@ -11,7 +11,7 @@
  * @package    KO7/ORM
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_ORM extends Model implements serializable {
 

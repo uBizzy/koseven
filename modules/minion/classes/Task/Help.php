@@ -6,7 +6,7 @@
  * @category   Helpers
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class Task_Help extends Minion_Task {
 

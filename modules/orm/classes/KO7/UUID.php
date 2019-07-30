@@ -16,7 +16,7 @@
  * @author     Andrew Moore
  * @copyright (c) Koseven Team
  * @copyright (c) 2008-2017 Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_UUID {
 

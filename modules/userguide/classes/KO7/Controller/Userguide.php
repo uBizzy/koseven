@@ -6,7 +6,7 @@
  * @category   Controller
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 abstract class KO7_Controller_Userguide extends Controller_Template {
 

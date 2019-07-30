@@ -76,7 +76,7 @@
  * @version    2.0
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 abstract class KO7_Cache {
 

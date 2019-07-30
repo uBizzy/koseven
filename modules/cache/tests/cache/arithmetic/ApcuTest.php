@@ -8,7 +8,7 @@ include_once(KO7::find_file('tests/cache/arithmetic', 'CacheArithmeticMethods'))
  * @category   Test
  * @author     Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_ApcuTest extends KO7_CacheArithmeticMethodsTest {
 

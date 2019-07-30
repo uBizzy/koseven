@@ -8,7 +8,7 @@
  * @package KO7
  * @author  Kohana Team
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 interface KO7_Config_Writer extends KO7_Config_Source
 {

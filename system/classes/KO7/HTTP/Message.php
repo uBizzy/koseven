@@ -8,7 +8,7 @@
  * @author     Kohana Team
  * @since      3.1.0
  * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @license    https://koseven.ga/LICENSE
  */
 interface KO7_HTTP_Message {
 
