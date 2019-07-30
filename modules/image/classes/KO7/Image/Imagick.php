@@ -314,14 +314,14 @@ class KO7_Image_Imagick extends Image {
 		}
 		catch (ImagickException $e)
 		{
-			throw new Image_Exception($e->getMessage(), NULL, $e->getCode(), $e); //@codeCoverageIgnore
+			throw new Image_Exception($e->getMessage(), NULL, $e->getCode(), $e);
 		}
 		//@codeCoverageIgnoreEnd
 
 		// Imagick since version 7.0 uses different alpha channel constant
 		if (version_compare(static::$_version, '7.0', '<'))
 		{
-			$channel = constant('Imagick::ALPHACHANNEL_OPAQUE');
+			$channel = constant('Imagick::ALPHACHANNEL_OPAQUE'); //@codeCoverageIgnore
 		}
 		else
 		{
@@ -372,7 +372,7 @@ class KO7_Image_Imagick extends Image {
 		}
 		catch (ImagickException $e)
 		{
-			throw new Image_Exception($e->getMessage(), NULL, $e->getCode(), $e); //@codeCoverageIgnore
+			throw new Image_Exception($e->getMessage(), NULL, $e->getCode(), $e);
 		}
 		//@codeCoverageIgnoreEnd
 

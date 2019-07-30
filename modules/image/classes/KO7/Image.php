@@ -165,12 +165,14 @@ abstract class KO7_Image {
 		$this->mime = image_type_to_mime_type($this->type);
 
 		// Check if image type is supported by our driver
+		// @codeCoverageIgnoreStart
 		if ( ! $this->_is_supported_type($this->type)) {
 			throw new Image_Exception('Image extension ":ext", is unknown by driver ":driver".', [
 				':ext' => image_type_to_extension($this->type),
 				':driver' => get_class($this)
 			]);
 		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	/**
