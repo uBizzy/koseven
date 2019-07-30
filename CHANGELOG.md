@@ -49,3 +49,4 @@
  * The `check` method now got introduced as an abstract method and needs to be added to all custom image drivers. It is supposed to check if system/extension libraries met the required ones for your driver.
  * Driver `imagick` now requires imagemagick >= 6.9 installed, in order for all unittests to pass, it needs to be configured with bmp and webp support
  * Added correct support for negative offsets to `GD` driver
+ * No default driver, you have to explicit set one
