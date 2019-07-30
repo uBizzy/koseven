@@ -430,6 +430,9 @@ class KO7_Image_Imagick extends Image {
 		// Set the output quality
 		$this->im->setImageCompressionQuality($quality);
 
+		// Remove exif data
+		$this->im->stripImage();
+
 		if ($success = $this->im->writeImage($file))
 		{
 			// Reset the image type and mime type
