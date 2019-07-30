@@ -5,7 +5,7 @@
  *
  * @package    Koseven/Pagination
  * @category   Base
- * @author     Koseven Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

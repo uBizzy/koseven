@@ -16,7 +16,7 @@
  *
  * @package    KO7
  * @category   Controller
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

@@ -2,7 +2,7 @@
 /**
  * @package    KO7/Cache
  * @category   Test
- * @author     Koseven Team
+ *
  * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE
  */

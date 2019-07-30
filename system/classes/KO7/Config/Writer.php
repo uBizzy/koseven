@@ -6,7 +6,7 @@
  * Specifies the methods that a config writer must implement
  *
  * @package KO7
- * @author  Kohana Team
+ * ohana Team
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

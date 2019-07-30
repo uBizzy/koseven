@@ -4,7 +4,7 @@
  * [!!] this Auth driver does not support roles nor autologin.
  *
  * @package    KO7/Auth
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

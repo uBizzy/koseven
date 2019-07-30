@@ -4,7 +4,7 @@
  * Interface that all minion tasks must implement
  *
  * @package    KO7/Minion
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

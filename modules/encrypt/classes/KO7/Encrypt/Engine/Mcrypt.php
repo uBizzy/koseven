@@ -17,7 +17,7 @@
  *
  * @package    KO7/Encrypt
  * @category   Security
- * @author     Koseven Team
+ *
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE

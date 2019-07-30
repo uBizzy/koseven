@@ -12,7 +12,7 @@
  *
  * @package    KO7/Database
  * @category   Base
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
  * @group ko7.config
  *
  * @package    Unittest
- * @author     Kohana Team
+ * 
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @author     Matt Button <matthew@sigswitch.com>
  * @copyright  (c) Kohana Team

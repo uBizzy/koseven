@@ -7,7 +7,7 @@
  * @package    KO7/Cache
  * @category   Base
  * @version    2.0
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  * @since      3.0.8

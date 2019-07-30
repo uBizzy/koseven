@@ -32,7 +32,7 @@
  *
  * @package    KO7/Cache
  * @category   Base
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

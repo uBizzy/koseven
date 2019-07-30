@@ -9,7 +9,7 @@
  *
  * @package    Koseven
  * @category   Tests
- * @author     Koseven Team
+ *
  * @author     Piotr Gołasz <pgolasz@gmail.com>
  * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE

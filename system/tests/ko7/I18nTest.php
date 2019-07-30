@@ -9,7 +9,7 @@
  * @package    KO7
  * @category   Tests
  *
- * @author     Kohana Team, Jeremy Bush <contractfrombelow@gmail.com>
+ * , Jeremy Bush <contractfrombelow@gmail.com>
  * @copyright  (c) 2008´- 2016 Kohana Team
  * @copyright  (c) since  2018 Koseven Team
  * @license    https://koseven.ga/LICENSE

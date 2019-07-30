@@ -4,7 +4,7 @@
  *
  * @package    koseven/Codebench
  * @category   Base
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

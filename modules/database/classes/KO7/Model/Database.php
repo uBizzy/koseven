@@ -4,7 +4,7 @@
  *
  * @package    KO7/Database
  * @category   Models
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

@@ -7,7 +7,7 @@
  * @group      ko7
  * @group      ko7.minion
  * @category   Test
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

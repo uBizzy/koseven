@@ -4,7 +4,7 @@
  *
  * @package    KO7/Userguide
  * @category   Base
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

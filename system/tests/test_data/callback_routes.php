@@ -5,7 +5,7 @@
  * @group ko7
  *
  * @package    Unittest
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

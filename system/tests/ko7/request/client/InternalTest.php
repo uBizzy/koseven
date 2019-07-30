@@ -11,7 +11,7 @@
  *
  * @package    KO7
  * @category   Tests
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

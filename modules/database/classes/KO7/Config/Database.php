@@ -5,7 +5,7 @@
  *
  * @package    KO7/Database
  * @category   Configuration
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

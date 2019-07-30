@@ -12,7 +12,7 @@
  *
  * @package    KO7/Encrypt
  * @category   Security
- * @author     Koseven Team
+ *
  * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE
  */

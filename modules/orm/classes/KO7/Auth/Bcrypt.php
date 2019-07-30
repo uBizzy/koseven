@@ -3,7 +3,7 @@
 /**
  * Bcrypt Auth driver.
  * @package    KO7/Auth
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    http:/koseven.ga/license
  */

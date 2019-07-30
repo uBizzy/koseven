@@ -8,7 +8,7 @@
  * @group      koseven.unittest
  * @category   Test
  *
- * @author	   Koseven Team
+ * 	   Koseven Team
  * @copyright  (c) since 2018 Koseven Team
  * @license    https://koseven.ga/LICENSE
  */

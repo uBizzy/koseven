@@ -9,7 +9,7 @@
  *
  * @package    KO7\Cache
  * @category   Base
- * @author     Koseven Team
+ *
  * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE
  */

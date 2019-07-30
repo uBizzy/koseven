@@ -4,7 +4,7 @@
  * @group      ko7
  * @group      ko7.cache
  * @category   Test
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

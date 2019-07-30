@@ -8,7 +8,7 @@
  * @group ko7.core.num
  * @package    KO7
  * @category   Tests
- * @author     Kohana Team
+ * 
  * @author     BRMatt <matthew@sigswitch.com>
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE

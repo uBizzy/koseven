@@ -6,7 +6,7 @@
  *
  * @package    KO7
  * @category   Logging
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

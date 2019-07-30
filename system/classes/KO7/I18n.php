@@ -19,7 +19,7 @@
  *
  * @package    KO7
  * @category   Base
- * @author     Koseven Team
+ * 
  * @copyright  (c) 2008 - 2016 Kohana Team
  * @copyright  (c) since  2018 Koseven Team
  * @license    https://koseven.ga/LICENSE

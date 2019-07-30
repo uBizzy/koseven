@@ -2,7 +2,7 @@
 /**
  * @package    KO7
  * @category   Exceptions
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

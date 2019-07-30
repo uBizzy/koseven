@@ -14,7 +14,7 @@
  *
  * @package    KO7/Database
  * @category   Session
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

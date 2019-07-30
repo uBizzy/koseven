@@ -9,7 +9,7 @@
  * [ref-act]: http://wikipedia.org/wiki/Active_record
  *
  * @package    KO7/ORM
- * @author     Kohana Team
+ *
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */

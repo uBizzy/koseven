@@ -6,7 +6,7 @@ include_once(KO7::find_file('tests/cache/arithmetic', 'CacheArithmeticMethods'))
  * @group      ko7
  * @group      ko7.cache
  * @category   Test
- * @author     Kohana Team
+ * 
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE
  */
