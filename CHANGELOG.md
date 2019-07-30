@@ -1,5 +1,6 @@
 # Changelog 4.0
 ## General
+ * Code updated to work with PHP7.3+ which is now the required min version.
  * Bug Fixes and Performance / Security Improvments.
  * New pre-defined constant `PUBPATH` which points to the Koseven `public` directory
  * Error handlers strict compliance with PHP7+ (Replaced `Exception` with `Throwable`)
@@ -7,6 +8,9 @@
  * Translation, Inflector updates.
 ## Core
  * Class/Framework rename to `KO7`. Introducing the compatibility module which ensures all classes will still work.
+ * External Request Classes are updated to work with PHP7.3+
+ * External Requests using `pecl_http` are now updated to latest version and working.
+ * External Requests function `_send_message` now requires `Response` object as return type.
 ## Configuration
  * Added support for multiple configuration files (`php`, `json`, `yaml`)
 ## Encryption

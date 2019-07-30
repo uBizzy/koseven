@@ -204,7 +204,8 @@ class KO7_Response implements HTTP_Response {
 	 *      $status = $response->status();
 	 *
 	 * @param   integer  $status Status to set to this response
-	 * @return  mixed
+	 *
+	 * @return  KO7_Response|int|boolean	acting as setter \ acting as getter \ false on invalid status code
 	 */
 	public function status($status = NULL)
 	{
@@ -212,15 +213,12 @@ class KO7_Response implements HTTP_Response {
 		{
 			return $this->_status;
 		}
-		elseif (array_key_exists($status, Response::$messages))
+		if (array_key_exists($status, Response::$messages))
 		{
 			$this->_status = (int) $status;
 			return $this;
 		}
-		else
-		{
-			throw new KO7_Exception(__METHOD__.' unknown status value : :value', [':value' => $status]);
-		}
+		return false;
 	}
 
 	/**
