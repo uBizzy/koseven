@@ -9,17 +9,6 @@
  *  - Curl (default if loaded)
  *  - PECL HTTP (default if curl not loaded and pecl_http loaded)
  *
- * To select a specific external driver to use as the default driver, set the
- * following property within the Application bootstrap. Alternatively, the
- * client can be injected into the request object.
- *
- *   // In application bootstrap
- *   Request_Client_External::$client = 'Request_Client_Curl';
- *
- *   // Add client to request
- *   $request = Request::factory('http://example.com/foo/bar')
- *       ->client(Request_Client_External::factory('Request_Client_HTTP));
- *
  * @package        KO7\Base
  *
  * @copyright  (c) 2007-2016  Kohana Team
