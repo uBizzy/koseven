@@ -179,17 +179,6 @@ class KO7_Image_GD extends Image {
 		// Test if we can do a resize without re-sampling to speed up the final resize
 		if ($width > ($this->width / 2) && $height > ($this->height / 2))
 		{
-			// The maximum reduction is 10% greater than the final size
-			$reduction_width = round($width * 1.1);
-			$reduction_height = round($height * 1.1);
-
-			while ($pre_width / 2 > $reduction_width && $pre_height / 2 > $reduction_height)
-			{
-				// Reduce the size using an O(2n) algorithm, until it reaches the maximum reduction
-				$pre_width /= 2;
-				$pre_height /= 2;
-			}
-
 			// Create the temporary image to copy to
 			$image = $this->_create($pre_width, $pre_height);
 
@@ -205,7 +194,7 @@ class KO7_Image_GD extends Image {
 		$image = $this->_create($width, $height);
 
 		// Execute the resize
-		if (imagecopyresampled($image, $this->_image, 0, 0, 0, 0, $width, $height, $pre_width, $pre_height))
+		if ($success = imagecopyresampled($image, $this->_image, 0, 0, 0, 0, $width, $height, $pre_width, $pre_height))
 		{
 			// Swap the new image for the old one
 			imagedestroy($this->_image);
@@ -214,26 +203,24 @@ class KO7_Image_GD extends Image {
 			// Reset the width and height
 			$this->width = imagesx($image);
 			$this->height = imagesy($image);
-
-			return TRUE;
 		}
 
-		return FALSE;
+		return $success;
 	}
 
 	/**
-	 * Execute a crop.
+	 * Crop function for GD
 	 *
-	 * @param integer $width    new width
-	 * @param integer $height   new height
-	 * @param integer $offset_x offset from the left
-	 * @param integer $offset_y offset from the top
+	 * @param integer $width    New width
+	 * @param integer $height   New height
+	 * @param integer $offset_x Offset from the left
+	 * @param integer $offset_y Offset from the top
 	 *
 	 * @return  bool
 	 */
 	protected function _do_crop($width, $height, $offset_x, $offset_y): bool
 	{
-		// Add support for negative offsets
+		// Support for negative offsets
 		$dest_width = $width;
 		$dest_height = $height;
 		if ($offset_x < 0)
@@ -254,7 +241,7 @@ class KO7_Image_GD extends Image {
 		$this->_load_image();
 
 		// Execute the crop
-		if (imagecopyresampled($image, $this->_image, 0, 0, $offset_x, $offset_y, $width, $height, $width, $height))
+		if ($success = imagecopyresampled($image, $this->_image, 0, 0, $offset_x, $offset_y, $width, $height, $width, $height))
 		{
 			// Swap the new image for the old one
 			imagedestroy($this->_image);
@@ -263,25 +250,26 @@ class KO7_Image_GD extends Image {
 			// Reset the width and height
 			$this->width = imagesx($image);
 			$this->height = imagesy($image);
-
-			return TRUE;
 		}
 
-		return FALSE;
+		return $success;
 	}
 
 	/**
-	 * Execute a rotation.
+	 * Rotation function for GD
 	 *
-	 * @param integer $degrees degrees to rotate
+	 * @param int $degrees	Degrees to rotate
 	 *
-	 * @return  void
+	 * @throws Image_Exception
+	 *
+	 * @return bool
 	 */
 	protected function _do_rotate($degrees): bool
 	{
+		// Check if function is available in GD
 		if (empty(Image_GD::$_available_functions[Image_GD::IMAGEROTATE]))
 		{
-			throw new KO7_Exception('This method requires :function, which is only available in the bundled version of GD', [':function' => 'imagerotate']);
+			throw new Image_Exception('This method requires "imagerotate", which is only available in the bundled version of GD'); // @codeCoverageIgnore
 		}
 
 		// Loads image if not yet loaded
@@ -300,7 +288,7 @@ class KO7_Image_GD extends Image {
 		$width = imagesx($image);
 		$height = imagesy($image);
 
-		if (imagecopymerge($this->_image, $image, 0, 0, 0, 0, $width, $height, 100))
+		if ($success = imagecopymerge($this->_image, $image, 0, 0, 0, 0, $width, $height, 100))
 		{
 			// Swap the new image for the old one
 			imagedestroy($this->_image);
@@ -309,19 +297,17 @@ class KO7_Image_GD extends Image {
 			// Reset the width and height
 			$this->width = $width;
 			$this->height = $height;
-
-			return TRUE;
 		}
 
-		return FALSE;
+		return $success;
 	}
 
 	/**
-	 * Execute a flip.
+	 * Flip function for GD
 	 *
-	 * @param integer $direction direction to flip
+	 * @param int $direction Direction to flip
 	 *
-	 * @return  void
+	 * @return bool
 	 */
 	protected function _do_flip($direction): bool
 	{
@@ -363,17 +349,20 @@ class KO7_Image_GD extends Image {
 	}
 
 	/**
-	 * Execute a sharpen.
+	 * Sharpen function for GD
 	 *
-	 * @param integer $amount amount to sharpen
+	 * @param int $amount	Amount to sharpen the iamge
 	 *
-	 * @return  void
+	 * @throws Image_Exception
+	 *
+	 * @return bool
 	 */
 	protected function _do_sharpen($amount): bool
 	{
+		// Check if function is available in GD
 		if (empty(Image_GD::$_available_functions[Image_GD::IMAGECONVOLUTION]))
 		{
-			throw new KO7_Exception('This method requires :function, which is only available in the bundled version of GD', [':function' => 'imageconvolution']);
+			throw new Image_Exception('This method requires "imageconvolution", which is only available in the bundled version of GD'); // @codeCoverageIgnore
 		}
 
 		// Loads image if not yet loaded
@@ -386,32 +375,33 @@ class KO7_Image_GD extends Image {
 		$matrix = [[-1, -1, -1], [-1, $amount, -1], [-1, -1, -1],];
 
 		// Perform the sharpen
-		if (imageconvolution($this->_image, $matrix, $amount - 8, 0))
+		if ($success = imageconvolution($this->_image, $matrix, $amount - 8, 0))
 		{
 			// Reset the width and height
 			$this->width = imagesx($this->_image);
 			$this->height = imagesy($this->_image);
-
-			return TRUE;
 		}
 
-		return FALSE;
+		return $success;
 	}
 
 	/**
-	 * Execute a reflection.
+	 * Reflection function for GD
 	 *
-	 * @param integer $height  reflection height
-	 * @param integer $opacity reflection opacity
-	 * @param boolean $fade_in TRUE to fade out, FALSE to fade in
+	 * @param int  $height	 Reflection height
+	 * @param int  $opacity	 Reflection opacity
+	 * @param bool $fade_in	 TRUE to fade out, FALSE to fade in
 	 *
-	 * @return  void
+	 * @throws Image_Exception
+	 *
+	 * @return bool
 	 */
 	protected function _do_reflection($height, $opacity, $fade_in): bool
 	{
+		// Check if function is available in GD
 		if (empty(Image_GD::$_available_functions[Image_GD::IMAGEFILTER]))
 		{
-			throw new KO7_Exception('This method requires :function, which is only available in the bundled version of GD', [':function' => 'imagefilter']);
+			throw new Image_Exception('This method requires "imagefilter", which is only available in the bundled version of GD'); // @codeCoverageIgnore
 		}
 
 		// Loads image if not yet loaded
@@ -435,7 +425,7 @@ class KO7_Image_GD extends Image {
 		$reflection = $this->_create($this->width, $this->height + $height);
 
 		// Copy the image to the reflection
-		imagecopy($reflection, $this->_image, 0, 0, 0, 0, $this->width, $this->height);
+		$success = imagecopy($reflection, $this->_image, 0, 0, 0, 0, $this->width, $this->height);
 
 		for ($offset = 0; $height >= $offset; $offset++)
 		{
@@ -477,24 +467,27 @@ class KO7_Image_GD extends Image {
 		$this->width = imagesx($reflection);
 		$this->height = imagesy($reflection);
 
-		return TRUE;
+		return $success;
 	}
 
 	/**
-	 * Execute a watermarking.
+	 * Watermark function for GD
 	 *
-	 * @param Image   $image    watermarking Image
-	 * @param integer $offset_x offset from the left
-	 * @param integer $offset_y offset from the top
-	 * @param integer $opacity  opacity of watermark
+	 * @param Image $watermark	Watermark (Image)
+	 * @param int   $offset_x	Offset from the left
+	 * @param int   $offset_y	Offset from thr top
+	 * @param int   $opacity	Opacity of watermark
 	 *
-	 * @return  void
+	 * @throws Image_Exception
+	 *
+	 * @return bool
 	 */
 	protected function _do_watermark(Image $watermark, $offset_x, $offset_y, $opacity): bool
 	{
+		// Check if function is available in GD
 		if (empty(Image_GD::$_available_functions[Image_GD::IMAGELAYEREFFECT]))
 		{
-			throw new KO7_Exception('This method requires :function, which is only available in the bundled version of GD', [':function' => 'imagelayereffect']);
+			throw new Image_Exception('This method requires "imagelayereffect", which is only available in the bundled version of GD'); // @codeCoverageIgnore
 		}
 
 		// Loads image if not yet loaded
@@ -527,25 +520,24 @@ class KO7_Image_GD extends Image {
 		// Alpha blending must be enabled on the background!
 		imagealphablending($this->_image, TRUE);
 
-		if (imagecopy($this->_image, $overlay, $offset_x, $offset_y, 0, 0, $width, $height))
+		if ($success = imagecopy($this->_image, $overlay, $offset_x, $offset_y, 0, 0, $width, $height))
 		{
 			// Destroy the overlay image
 			imagedestroy($overlay);
-
-			return TRUE;
 		}
-		return FALSE;
+
+		return $success;
 	}
 
 	/**
-	 * Execute a background.
+	 * Background function for GD
 	 *
-	 * @param integer $r       red
-	 * @param integer $g       green
-	 * @param integer $b       blue
-	 * @param integer $opacity opacity
+	 * @param int $r			Red
+	 * @param int $g			Green
+	 * @param int $b			Blue
+	 * @param int $opacity		Opacity of background
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	protected function _do_background($r, $g, $b, $opacity): bool
 	{
@@ -568,22 +560,23 @@ class KO7_Image_GD extends Image {
 		imagealphablending($background, TRUE);
 
 		// Copy the image onto a white background to remove all transparency
-		if (imagecopy($background, $this->_image, 0, 0, 0, 0, $this->width, $this->height))
+		if ($success = imagecopy($background, $this->_image, 0, 0, 0, 0, $this->width, $this->height))
 		{
 			// Swap the new image for the old one
 			imagedestroy($this->_image);
 			$this->_image = $background;
-
-			return TRUE;
 		}
-		return FALSE;
+
+		return $success;
 	}
 
 	/**
 	 * Execute a save.
 	 *
-	 * @param string  $file    new image filename
-	 * @param integer $quality quality
+	 * @param string  $file    New image filename
+	 * @param integer $quality Image quality
+	 *
+	 * @throws Image_Exception
 	 *
 	 * @return  boolean
 	 */
@@ -596,7 +589,7 @@ class KO7_Image_GD extends Image {
 		$extension = pathinfo($file, PATHINFO_EXTENSION);
 
 		// Get the save function and IMAGETYPE
-		list($save, $type) = $this->_save_function($extension, $quality);
+		[$save, $type] = $this->_save_function($extension, $quality);
 
 		// Save the image to a file
 		$status = isset($quality) ? $save($this->_image, $file, $quality) : $save($this->_image, $file);
@@ -612,12 +605,14 @@ class KO7_Image_GD extends Image {
 	}
 
 	/**
-	 * Execute a render.
+	 * Render function for GD
 	 *
-	 * @param string  $type    image type: png, jpg, gif, etc
-	 * @param integer $quality quality
+	 * @param string $type		Image type: png, jpg, gif, etc
+	 * @param int    $quality	Image quality
 	 *
-	 * @return  string
+	 * @throws Image_Exception
+	 *
+	 * @return string
 	 */
 	protected function _do_render($type, $quality): string
 	{
@@ -625,7 +620,7 @@ class KO7_Image_GD extends Image {
 		$this->_load_image();
 
 		// Get the save function and IMAGETYPE
-		list($save, $type) = $this->_save_function($type, $quality);
+		[$save, $type] = $this->_save_function($type, $quality);
 
 		// Capture the output
 		ob_start();
@@ -633,7 +628,7 @@ class KO7_Image_GD extends Image {
 		// Render the image
 		$status = isset($quality) ? $save($this->_image, NULL, $quality) : $save($this->_image, NULL);
 
-		if ($status === TRUE AND $type !== $this->type)
+		if ($status === TRUE && $type !== $this->type)
 		{
 			// Reset the image type and mime type
 			$this->type = $type;
@@ -645,15 +640,16 @@ class KO7_Image_GD extends Image {
 
 	/**
 	 * Get the GD saving function and image type for this extension.
-	 * Also normalizes the quality setting
+	 * Also normalizes the quality setting.
 	 *
-	 * @param string  $extension image type: png, jpg, etc
-	 * @param integer $quality   image quality
+	 * @param string  $extension Image type: png, jpg, etc
+	 * @param integer $quality   Image quality
 	 *
-	 * @throws  KO7_Exception
-	 * @return  array    save function, IMAGETYPE_* constant
+	 * @throws  Image_Exception
+	 *
+	 * @return  array
 	 */
-	protected function _save_function($extension, & $quality)
+	protected function _save_function($extension, & $quality) : array
 	{
 		// Grep extension
 		if ( ! $extension)
@@ -694,6 +690,7 @@ class KO7_Image_GD extends Image {
 		{
 			$quality = NULL;
 		}
+
 		// Use a compression level of 9 (does not affect quality!)
 		elseif ($extension === 'png')
 		{
@@ -706,8 +703,8 @@ class KO7_Image_GD extends Image {
 	/**
 	 * Create an empty image with the given width and height.
 	 *
-	 * @param integer $width  image width
-	 * @param integer $height image height
+	 * @param integer $width  Image width
+	 * @param integer $height Image height
 	 *
 	 * @return  resource
 	 */
@@ -728,7 +725,7 @@ class KO7_Image_GD extends Image {
 	/**
 	 * Return if image type is supported by GD
 	 *
-	 * @param integer $type IMAGETYPE_* Constant
+	 * @param int $type IMAGETYPE_* Constant
 	 *
 	 * @return bool
 	 */

@@ -99,13 +99,11 @@ class KO7_Image_Imagick extends Image {
 		// We actually scale the image and don't resize it
 		try
 		{
-			if ($this->im->scaleImage($width, $height))
+			if ($success = $this->im->scaleImage($width, $height))
 			{
 				// Reset the width and height
 				$this->width = $this->im->getImageWidth();
 				$this->height = $this->im->getImageHeight();
-
-				return TRUE;
 			}
 		}
 		// @codeCoverageIgnoreStart
@@ -113,9 +111,9 @@ class KO7_Image_Imagick extends Image {
 		{
 			throw new Image_Exception($e->getMessage(), NULL, $e->getCode(), $e);
 		}
-
-		return FALSE;
 		// @codeCoverageIgnoreEnd
+
+		return $success;
 	}
 
 	/**
@@ -130,7 +128,7 @@ class KO7_Image_Imagick extends Image {
 	 */
 	protected function _do_crop($width, $height, $offset_x, $offset_y): bool
 	{
-		if ($this->im->cropImage($width, $height, $offset_x, $offset_y))
+		if ($success = $this->im->cropImage($width, $height, $offset_x, $offset_y))
 		{
 			// Reset the width and height
 			$this->width = $this->im->getImageWidth();
@@ -138,11 +136,9 @@ class KO7_Image_Imagick extends Image {
 
 			// Trim off hidden areas
 			$this->im->setImagePage($this->width, $this->height, 0, 0);
-
-			return TRUE;
 		}
 
-		return FALSE; //@codeCoverageIgnore
+		return $success;
 	}
 
 	/**
@@ -154,7 +150,7 @@ class KO7_Image_Imagick extends Image {
 	 */
 	protected function _do_rotate($degrees): bool
 	{
-		if ($this->im->rotateImage(new ImagickPixel('transparent'), $degrees))
+		if ($success = $this->im->rotateImage(new ImagickPixel('transparent'), $degrees))
 		{
 			// Reset the width and height
 			$this->width = $this->im->getImageWidth();
@@ -162,11 +158,9 @@ class KO7_Image_Imagick extends Image {
 
 			// Trim off hidden areas
 			$this->im->setImagePage($this->width, $this->height, 0, 0);
-
-			return TRUE;
 		}
 
-		return FALSE; //@codeCoverageIgnore
+		return $success;
 	}
 
 	/**
@@ -275,8 +269,8 @@ class KO7_Image_Imagick extends Image {
 
 		// Place the image and reflection into the container
 		if (
-			$image->compositeImage($this->im, Imagick::COMPOSITE_SRC, 0, 0) &&
-			$image->compositeImage($reflection, Imagick::COMPOSITE_OVER, 0, $this->height)
+		($success = $image->compositeImage($this->im, Imagick::COMPOSITE_SRC, 0, 0)) &&
+		($success = $image->compositeImage($reflection, Imagick::COMPOSITE_OVER, 0, $this->height))
 		)
 		{
 			// Replace the current image with the reflected image
@@ -285,11 +279,9 @@ class KO7_Image_Imagick extends Image {
 			// Reset the width and height
 			$this->width = $this->im->getImageWidth();
 			$this->height = $this->im->getImageHeight();
-
-			return TRUE;
 		}
 
-		return FALSE; //@codeCoverageIgnore
+		return $success;
 	}
 
 	/**
@@ -393,15 +385,13 @@ class KO7_Image_Imagick extends Image {
 		// Match the colorspace between the two images before compositing
 		$background->setColorspace($this->im->getColorspace());
 
-		if ($background->compositeImage($this->im, Imagick::COMPOSITE_DISSOLVE, 0, 0))
+		if ($success = $background->compositeImage($this->im, Imagick::COMPOSITE_DISSOLVE, 0, 0))
 		{
 			// Replace the current image with the new image
 			$this->im = $background;
-
-			return TRUE;
 		}
 
-		return FALSE; //@codeCoverageIgnore
+		return $success;
 	}
 
 	/**
@@ -440,16 +430,14 @@ class KO7_Image_Imagick extends Image {
 		// Set the output quality
 		$this->im->setImageCompressionQuality($quality);
 
-		if ($this->im->writeImage($file))
+		if ($success = $this->im->writeImage($file))
 		{
 			// Reset the image type and mime type
 			$this->type = $type;
 			$this->mime = image_type_to_mime_type($type);
-
-			return TRUE;
 		}
 
-		return FALSE; //@codeCoverageIgnore
+		return $success;
 	}
 
 	/**
