@@ -41,4 +41,12 @@
  * Added Support for namespaced classes
 ## I18n
  * Using `I18n::get()` in `SYSPATH` and `MODPATH`. Only using `__()` inside `APPATH`.
-
+## Image
+ * Image Driver now require return types for the following functions: `_do_resize, _do_crop, _do_rotate, _do_flip, _do_sharpen, _do_reflection, _do_watermark, _do_background, _do_save, _do_render` -
+ means if you have a custom image driver, make sure you declare those.
+ * The deprecated resize constants `WIDTH`, `HEIGHT` AND `PRECISE` got removed.
+ * New abstract method `_is_supported_type` needs to be created for all image drivers. It is supposed to return if a extension is supported by the driver.
+ * The `check` method now got introduced as an abstract method and needs to be added to all custom image drivers. It is supposed to check if system/extension libraries met the required ones for your driver.
+ * Driver `imagick` now requires imagemagick >= 6.9 installed, in order for all unittests to pass, it needs to be configured with bmp and webp support
+ * Added correct support for negative offsets to `GD` driver
+ * No default driver, you have to explicit set one

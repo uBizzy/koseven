@@ -12,7 +12,7 @@ php:
 services:
   - docker
 
-# Build Docker Machine from Dockerfile and connect GitHub files / init composer
+# Pull Docker Machine from DockerHub and mount project files / init composer
 before_install:
   - docker pull koseven/docker:travis-devel
   - docker run -dtP --name unittest -v $(pwd):/tmp/koseven/ koseven/docker:travis-devel
