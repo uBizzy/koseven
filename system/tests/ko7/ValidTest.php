@@ -9,9 +9,9 @@
  *
  * @package    KO7
  * @category   Tests
- * 
+ *
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) KO7 Team
+ * @copyright  (c) Koseven Team
  * @license    https://koseven.ga/LICENSE
  */
 class KO7_ValidTest extends Unittest_TestCase

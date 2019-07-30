@@ -6,7 +6,8 @@
  * @package    KO7
  * @category   Configuration
  *
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  */
 class KO7_Config_File_Reader implements KO7_Config_Reader {

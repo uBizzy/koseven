@@ -6,8 +6,9 @@
  *
  * @package    KO7
  * @category   Base
- * 
- * @copyright  (c) Kohana Team
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  * @since      3.1.0
  */

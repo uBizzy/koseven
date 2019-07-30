@@ -9,9 +9,10 @@
  *
  * @package    KO7
  * @category   Tests
- * 
+ *
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  */
 class KO7_RequestTest extends Unittest_TestCase
@@ -870,7 +871,7 @@ class KO7_RequestTest_Header_Spying_Request_Client_External extends Request_Clie
 {
 	private $headers;
 
-	protected function _send_message(\Request $request, \Response $response) : Response
+	protected function _send_message(Request $request, Response $response) : Response
 	{
 		$this->headers = $request->headers();
 

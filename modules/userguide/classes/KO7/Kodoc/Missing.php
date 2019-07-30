@@ -7,7 +7,8 @@
  * @package    KO7/Userguide
  * @category   Undocumented
  * 
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  * @since      3.0.7
  */

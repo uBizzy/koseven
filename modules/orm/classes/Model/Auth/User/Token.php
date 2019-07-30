@@ -4,7 +4,8 @@
  *
  * @package    KO7/Auth
  *
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  */
 class Model_Auth_User_Token extends ORM {

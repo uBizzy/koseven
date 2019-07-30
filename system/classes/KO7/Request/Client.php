@@ -7,7 +7,8 @@
  * @package    KO7
  * @category   Base
  *
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  * @since      3.1.0
  */
@@ -408,7 +409,7 @@ abstract class KO7_Request_Client {
 			// Prepare the additional request, copying any follow_headers that were present on the original request
 			$orig_headers = $request->headers()->getArrayCopy();
 			$follow_header_keys = array_intersect(array_keys($orig_headers), $client->follow_headers());
-			$follow_headers = \Arr::extract($orig_headers, $follow_header_keys);
+			$follow_headers = Arr::extract($orig_headers, $follow_header_keys);
 
 			$follow_request = Request::factory($response->headers('Location'))
 			                         ->method($follow_method)

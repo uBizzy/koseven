@@ -7,10 +7,11 @@ use PHPUnit\Framework\TestCase;
  * @group ko7.config
  *
  * @package    Unittest
- * 
+ *
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @author     Matt Button <matthew@sigswitch.com>
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  */
 class KO7_Config_GroupTest extends TestCase

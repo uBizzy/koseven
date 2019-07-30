@@ -7,7 +7,8 @@ include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
  * @group      ko7.cache
  * @category   Test
  *
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.ga/LICENSE
  */
 class KO7_Cache_FileTest extends KO7_CacheBasicMethodsTest {
