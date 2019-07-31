@@ -6,13 +6,19 @@
  * Error handlers strict compliance with PHP7+ (Replaced `Exception` with `Throwable`)
  * New `KO7_Error_Exception` class which extends PHP internal `ErrorException`
  * Translation, Inflector updates.
+ * Add support for deprecation...call `KO7::deprecated('since_version', '(optional) replacement');` for logging as deprecated.
 ## Core
  * Class/Framework rename to `KO7`. Introducing the compatibility module which ensures all classes will still work.
  * External Request Classes are updated to work with PHP7.3+
  * External Requests using `pecl_http` are now updated to latest version and working.
  * External Requests function `_send_message` now requires `Response` object as return type.
+ * `Security::strip_image_tags` was deprecated since 3.3.6 and got removed
+ * `Request::accept_type`, `Request:accept_lang`, `Request::accept_encoding` were deprecated since 3.3.0 and got removed
+ * `Validation->as_array()` was deprecated and got removed
 ## Configuration
  * Added support for multiple configuration files (`php`, `json`, `yaml`)
+## Auth
+ * `Auth->hash_password` was deprecated and got removed
 ## Encryption
  * Deprecated Mcrypt Class (deprecated since PHP 7.1 - removed in PHP 7.2).
  * Add Support for Libsodium.

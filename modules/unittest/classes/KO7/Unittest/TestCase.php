@@ -128,6 +128,7 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	 */
 	public static function assertTag(array $matcher, string $actual, $message = NULL, $isHtml = NULL) : void
 	{
+		KO7::deprecated('4.0');
 		$matched = static::tag_match($matcher, $actual, $isHtml ?? TRUE);
 		static::assertTrue($matched, $message ?? '');
 	}
@@ -145,6 +146,7 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	 */
 	protected static function tag_match(array $matcher, string $actual, $isHtml = NULL) : bool
 	{
+		KO7::deprecated('4.0');
 		$tags = PHPUnit\Util\Xml::load($actual, $isHtml ?? TRUE)->getElementsByTagName($matcher['tag']);
 
 		return count($tags) > 0 && $tags[0] instanceof DOMNode;

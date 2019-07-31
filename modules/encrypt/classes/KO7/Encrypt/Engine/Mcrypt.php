@@ -47,6 +47,8 @@ class KO7_Encrypt_Engine_Mcrypt extends KO7_Encrypt_Engine {
 			// @codeCoverageIgnoreEnd
 		}
 
+		KO7::deprecated('4.0');
+
 		parent::__construct($config);
 
 		$this->_mode = $config['mode'] ?? MCRYPT_MODE_CBC;
