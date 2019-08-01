@@ -510,24 +510,6 @@ class KO7_ValidationTest extends Unittest_TestCase
 		$this->assertSame($expected, $errors);
 	}
 
-	/**
-	 * Tests Validation::as_array()
-	 *
-	 * @test
-	 * @covers Validation::as_array
-	 */
-	public function test_as_array_returns_original_array()
-	{
-		$data = [
-			'one' => 'hello',
-			'two' => 'world',
-			'ten' => '',
-		];
-
-		$validation = Validation::factory($data);
-
-		$this->assertSame($data, $validation->as_array());
-	}
 
 	/**
 	 * Tests Validation::data()
