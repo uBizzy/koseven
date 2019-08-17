@@ -3,11 +3,10 @@
  * Abstract Controller class for REST controller mapping.
  * Supports GET, PUT, POST, and DELETE.
  *
- * @package        REST\Controller
+ * @package        KO7\REST
  *
- * @copyright  (c) 2007-2016  Kohana Team, Alon Pe'er, Adi Oz
  * @copyright  (c) since 2016 Koseven Team
- * @license        https://koseven.ga/LICENSE.md
+ * @license        https://koseven.ga/LICENSE
  */
 abstract class KO7_Controller_REST extends Controller {
 
@@ -18,45 +17,53 @@ abstract class KO7_Controller_REST extends Controller {
 	public static $default_output = 'json';
 
 	/**
-	 * REST types
-	 * @var array
-	 */
-	protected static $_action_map = [
-		HTTP_Request::GET => 'index',
-		HTTP_Request::PUT => 'update',
-		HTTP_Request::POST => 'create',
-		HTTP_Request::DELETE => 'delete'
-	];
-
-	/**
 	 * The output format to be used (JSON, XML etc.).
 	 * @var string
 	 */
 	public $output_format;
 
+    /**
+     * REST types
+     * @var array
+     */
+    protected static $_action_map = [
+        HTTP_Request::GET => 'index',
+        HTTP_Request::PUT => 'update',
+        HTTP_Request::POST => 'create',
+        HTTP_Request::DELETE => 'delete'
+    ];
+
+    /**
+     * Instance of body formatting class
+     * @var REST_Format
+     */
+    protected $_formatter;
+
+    /**
+     * Allows overwriting the content_type in the response header
+     * If this is null, content type will be evaluated from the output_format
+     * @var string
+     */
+	protected $_content_type;
+
 	/**
 	 * The request's parameters.
 	 * @var array
 	 */
-	protected $_params;
-
-	/**
-	 * Method to use for formatting the body.
-	 * @var string
-	 */
-	protected $_format_method;
+	protected $_params = [];
 
 	/**
 	 * KO7_Controller_REST constructor.
 	 *
 	 * We need to convert the "Response" object to a "Response_REST" object.
+     * This allows as passing arrays and objects as content body and not only strings
 	 *
 	 * @param Request  $request   Request that created the controller
 	 * @param Response $response  The request's response
 	 */
 	public function	__construct(Request $request, Response $response)
 	{
-		// Set status, body, cookies and protocol
+		// Copy class properties
 		$config = [
 			'_status'   => $response->status(),
 			'_body'     => $response->body(),
@@ -64,89 +71,80 @@ abstract class KO7_Controller_REST extends Controller {
 			'_protocol' => $response->protocol()
 		];
 
-		// Fetch http header and put them inside our configuration
+		// Copy all http header(s)
 		foreach ($response->headers()->getArrayCopy() as $header => $value)
 		{
 			$config[$header] = $value;
 		}
 
-		// Init rest response and pass to parent constructor
+		// Instance Response_REST and pass it to the constructor
 		parent::__construct($request, Response_REST::factory($config));
 	}
 
 	/**
-	 * Checks the requested method against the available methods. If the method
-	 * is supported, sets the request action from the map. If not supported,
-	 * and an alternative action wasn't set, the "invalid" action will be called.
-	 *
-	 * @throws HTTP_Exception
+     * Automatically executed before the controller action.
+     * Evaluate Request (method, action, parameter, format)
+     *
+     * @throws HTTP_Exception
 	 */
 	public function before() : void
 	{
-		// Call parent constructor
+		// Parent call
 		parent::before();
 
-		// Allow setting method as parameter if request is GET
-		$this->_overwrite_method();
+        // Try fetching method from HTTP_X_HTTP_METHOD_OVERRIDE, otherwise use the one sent with the request
+        $this->request->method($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] ?? $this->request->method());
 
-		// Get request method
-		$method = $this->request->method();
+		// Determine the request action from the request method, if the action/method is not allowed throw error
+        if ( ! isset(static::$_action_map[$this->request->method()]))
+        {
+            $this->response
+                ->status(405)
+                ->headers('Allow', implode(', ', array_keys(static::$_action_map)));
+        }
+        else
+        {
+            $this->request->action(static::$_action_map[$this->request->method()]);
+        }
 
-		// Set request action
-		if ($this->request->action())
-		{
-			if ( ! isset(static::$_action_map[$method]))
-			{
-				$this->request->action('invalid');
-			}
-			else
-			{
-				$this->request->action(static::$_action_map[$method]);
-			}
-		}
+		// Initialize request parameter
+        $this->_params = $this->_parse_params();
 
-		// Initialize request parameter / body
-		$this->_init_params();
-
-		// Get output format from route file extension.
+		// Get output format from route - use default if not available
 		$this->output_format = $this->request->param('format') ?: static::$default_output;
 
-		// Check if format method exists
-		$format_method = '_format_' . $this->output_format;
-
-		// Report an error if not
-		if ( ! is_callable([$this, $format_method]))
-		{
-			// Status 500 = Internal Server error
-			$this->response->status(500);
-
-			throw new HTTP_Exception('Unknown format ":format" for REST-API Controller.', [
-				':format'	=> $this->output_format
-			]);
-		}
-
-		$this->_format_method = $format_method;
+		// Try initializing the formatter
+		try
+        {
+            $this->_formatter = REST_Format::factory(strtoupper($this->output_format), $this->request);
+        }
+        catch (REST_Exception $e)
+        {
+            throw HTTP_Exception::factory(500, $e->getMessage(), NULL, $e);
+        }
 	}
 
 	/**
-	 * Adds a cache control header.
+     * Automatically executed after the controller action.
+     *
+	 * - Adds cache and content header(s).
+     * - Formats body with given formatting method
+     * - Adds attachment header if necessary
 	 */
 	public function after() : void
 	{
-		// Suppress response codes
-		if (isset($this->_params['suppressResponseCodes']) && $this->_params['suppressResponseCodes'] === 'true')
-		{
-			$this->response->status(200);
-		}
+        // Parent call
+        parent::after();
 
-		// Set cache-control header if required
-		if (in_array($this->request->method(), [HTTP_Request::PUT, HTTP_Request::POST, HTTP_Request::DELETE], TRUE))
-		{
-			$this->response->headers('cache-control', 'no-cache, no-store, max-age=0, must-revalidate');
-		}
+		// No cache / must-revalidate cache if method is not GET
+        if ( $this->request->method() !== HTTP_Request::GET)
+        {
+            $this->response->headers('cache-control', 'no-cache, no-store, max-age=0, must-revalidate');
+        }
 
-		// Check if body is array, else convert it to one
 		$body = $this->response->body();
+
+        // Check if body is array, else convert it to one by creating an array with "body" as index
 		if ( ! is_array($body))
 		{
 			$body = [
@@ -154,9 +152,11 @@ abstract class KO7_Controller_REST extends Controller {
 			];
 		}
 
+		// Format body
+        $body = $this->_formatter->format($body);
+
 		// Parse and set response headers
-		$body = $this->{$this->_format_method}($body);
-		$this->response->headers('content-type', File::mime_by_ext($this->output_format));
+		$this->response->headers('content-type', $this->_content_type ?? File::mime_by_ext($this->output_format));
 		$this->response->headers('content-length', (string) strlen($body));
 
 		// Support attachment header
@@ -167,70 +167,32 @@ abstract class KO7_Controller_REST extends Controller {
 
 		// Set response body
 		$this->response->body($body);
-
-		// Parent call
-		parent::after();
-	}
-
-	protected function _format_json(array $data = [])
-	{
-		return json_encode($data);
 	}
 
 	/**
 	 * Initializes the request params array based on the current request.
+     *
+     * @return array
 	 */
-	protected function _init_params() : void
+	protected function _parse_params() : array
 	{
-		$this->_params = [];
-		$method = $this->request->method();
+		// If method is GET, fetch params from query
+        if ($this->request->method() === HTTP_Request::GET)
+        {
+            return array_merge($this->request->query(), $this->_params);
+        }
 
-		if (in_array($method, [HTTP_Request::POST, HTTP_Request::PUT, HTTP_Request::DELETE], TRUE))
-		{
-			if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== FALSE)
-			{
-				$parsed_body = json_decode($this->request->body(), TRUE);
-			}
-			else
-			{
-				parse_str($this->request->body(), $parsed_body);
-			}
-			$this->_params = array_merge((array)$parsed_body, (array)$this->request->post());
-		}
-		elseif ($method === HTTP_Request::GET)
-		{
-			$this->_params = array_merge((array)$this->request->query(), $this->_params);
-		}
-	}
+        // Otherwise we have a PUT, POST, DELETE Method
+        // If content_type is JSON we need to decode the body first
+        if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== FALSE)
+        {
+            $parsed_body = json_decode($this->request->body(), TRUE);
+        }
+        else
+        {
+            parse_str($this->request->body(), $parsed_body);
+        }
 
-	/**
-	 * Implements support for setting the request method via a GET parameter.
-	 */
-	protected function _overwrite_method() : void
-	{
-		// Check if request is get and method is given as query parameter
-		if (
-			$this->request->method() === HTTP_Request::GET &&
-			($method = $this->request->query('method')) &&
-			in_array(strtoupper($method), [HTTP_Request::POST, HTTP_Request::PUT, HTTP_Request::DELETE], TRUE)
-		)
-		{
-			$this->request->method($method);
-		}
-		else
-		{
-			// Try fetching method from HTTP_X_HTTP_METHOD_OVERRIDE before falling back on the detected method.
-			$this->request->method(Arr::get($_SERVER, 'HTTP_X_HTTP_METHOD_OVERRIDE', $this->request->method()));
-		}
-	}
-
-	/**
-	 * Sends a 405 "Method Not Allowed" response and a list of allowed actions.
-	 */
-	public function action_invalid() : void
-	{
-		$this->response
-			->status(405)
-			->headers('Allow', implode(', ', array_keys(static::$_action_map)));
+        return array_merge((array)$parsed_body, (array)$this->request->post());
 	}
 }
