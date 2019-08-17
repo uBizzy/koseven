@@ -9,10 +9,11 @@
  *
  * @package    KO7
  * @category   Tests
- * @author     Kohana Team
+ *
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_ValidationTest extends Unittest_TestCase
 {
@@ -509,24 +510,6 @@ class KO7_ValidationTest extends Unittest_TestCase
 		$this->assertSame($expected, $errors);
 	}
 
-	/**
-	 * Tests Validation::as_array()
-	 *
-	 * @test
-	 * @covers Validation::as_array
-	 */
-	public function test_as_array_returns_original_array()
-	{
-		$data = [
-			'one' => 'hello',
-			'two' => 'world',
-			'ten' => '',
-		];
-
-		$validation = Validation::factory($data);
-
-		$this->assertSame($data, $validation->as_array());
-	}
 
 	/**
 	 * Tests Validation::data()

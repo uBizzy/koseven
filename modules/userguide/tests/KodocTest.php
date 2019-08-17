@@ -4,9 +4,10 @@
  * @group ko7.userguide
  *
  * @package    KO7/Userguide
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * 
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_KodocTest extends Unittest_TestCase
 {

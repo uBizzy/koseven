@@ -5,9 +5,10 @@
  *
  * @package    KO7
  * @category   Base
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_Request implements HTTP_Request {
 
@@ -332,104 +333,6 @@ class KO7_Request implements HTTP_Request {
 	public static function user_agent($value)
 	{
 		return Text::user_agent(Request::$user_agent, $value);
-	}
-
-	/**
-	 * Returns the accepted content types. If a specific type is defined,
-	 * the quality of that type will be returned.
-	 *
-	 *     $types = Request::accept_type();
-	 *
-	 * [!!] Deprecated in favor of using [HTTP_Header::accepts_at_quality].
-	 *
-	 * @deprecated  since version 3.3.0
-	 * @param   string  $type Content MIME type
-	 * @return  mixed   An array of all types or a specific type as a string
-	 * @uses    Request::_parse_accept
-	 */
-	public static function accept_type($type = NULL)
-	{
-		static $accepts;
-
-		if ($accepts === NULL)
-		{
-			// Parse the HTTP_ACCEPT header
-			$accepts = Request::_parse_accept($_SERVER['HTTP_ACCEPT'], ['*/*' => 1.0]);
-		}
-
-		if (isset($type))
-		{
-			// Return the quality setting for this type
-			return isset($accepts[$type]) ? $accepts[$type] : $accepts['*/*'];
-		}
-
-		return $accepts;
-	}
-
-	/**
-	 * Returns the accepted languages. If a specific language is defined,
-	 * the quality of that language will be returned. If the language is not
-	 * accepted, FALSE will be returned.
-	 *
-	 *     $langs = Request::accept_lang();
-	 *
-	 * [!!] Deprecated in favor of using [HTTP_Header::accepts_language_at_quality].
-	 *
-	 * @deprecated  since version 3.3.0
-	 * @param   string  $lang  Language code
-	 * @return  mixed   An array of all types or a specific type as a string
-	 * @uses    Request::_parse_accept
-	 */
-	public static function accept_lang($lang = NULL)
-	{
-		static $accepts;
-
-		if ($accepts === NULL)
-		{
-			// Parse the HTTP_ACCEPT_LANGUAGE header
-			$accepts = Request::_parse_accept($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-		}
-
-		if (isset($lang))
-		{
-			// Return the quality setting for this lang
-			return isset($accepts[$lang]) ? $accepts[$lang] : FALSE;
-		}
-
-		return $accepts;
-	}
-
-	/**
-	 * Returns the accepted encodings. If a specific encoding is defined,
-	 * the quality of that encoding will be returned. If the encoding is not
-	 * accepted, FALSE will be returned.
-	 *
-	 *     $encodings = Request::accept_encoding();
-	 *
-	 * [!!] Deprecated in favor of using [HTTP_Header::accepts_encoding_at_quality].
-	 *
-	 * @deprecated  since version 3.3.0
-	 * @param   string  $type Encoding type
-	 * @return  mixed   An array of all types or a specific type as a string
-	 * @uses    Request::_parse_accept
-	 */
-	public static function accept_encoding($type = NULL)
-	{
-		static $accepts;
-
-		if ($accepts === NULL)
-		{
-			// Parse the HTTP_ACCEPT_LANGUAGE header
-			$accepts = Request::_parse_accept($_SERVER['HTTP_ACCEPT_ENCODING']);
-		}
-
-		if (isset($type))
-		{
-			// Return the quality setting for this type
-			return isset($accepts[$type]) ? $accepts[$type] : FALSE;
-		}
-
-		return $accepts;
 	}
 
 	/**

@@ -9,10 +9,10 @@
  *
  * @package    KO7
  * @category   Tests
- * @author     Kohana Team
+ *
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) KO7 Team
- * @license    https://koseven.ga/LICENSE.md
+ * @copyright  (c) Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_ValidTest extends Unittest_TestCase
 {
