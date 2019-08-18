@@ -158,7 +158,6 @@ abstract class KO7_Controller_REST extends Controller {
 
         // Parse and set response headers
         $this->response->headers('content-type', $this->_content_type ?? File::mime_by_ext($this->output_format));
-        $this->response->headers('content-length', (string)strlen($body));
 
         // Support attachment header
         if (isset($this->_params['attachment']) && Valid::regex($this->_params['attachment'], '/^[-\pL\pN_, ]++$/uD'))
