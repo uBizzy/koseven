@@ -9,11 +9,12 @@
  *
  * @package    KO7
  * @category   Tests
- * @author     Kohana Team
+ *
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @author     Andrew Coulton <andrew@ingenerator.com>
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_CookieTest extends Unittest_TestCase
 {

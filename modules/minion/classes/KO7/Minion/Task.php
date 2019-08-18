@@ -4,9 +4,10 @@
  * Interface that all minion tasks must implement
  *
  * @package    KO7/Minion
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 abstract class KO7_Minion_Task {
 
@@ -362,4 +363,29 @@ abstract class KO7_Minion_Task {
 		return $output;
 	}
 
+	/**
+	 * Sets the domain name for minion tasks
+	 * Minion tasks have no $_SERVER variables; to use the base url functions
+	 * the domain name can be set in the site config file, or as argument.
+	 *
+	 * @param string $domain_name the url of the server: example https://www.example.com
+	 */
+	public static function set_domain_name($domain_name = '')
+	{
+		if (Request::$initial === NULL)
+		{
+			$domain_name = empty($domain_name) ? Arr::get(KO7::$config->load('site'), 'minion_domain_name', '') : $domain_name;
+
+			// Add trailing slash
+			KO7::$base_url = preg_replace('~^https?://[^/]+$~', '$0/', $domain_name);
+
+			// Initialize Request Class
+			$request = Request::factory();
+
+			// Set HTTPS for https based urls
+			$request->secure(preg_match_all('#(https)://#i', KO7::$base_url, $result) === 1);
+
+			Request::$initial = $request;
+		}
+	}
 }

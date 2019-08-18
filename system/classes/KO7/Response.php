@@ -6,9 +6,10 @@
  *
  * @package    KO7
  * @category   Base
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  * @since      3.1.0
  */
 class KO7_Response implements HTTP_Response {
@@ -204,7 +205,8 @@ class KO7_Response implements HTTP_Response {
 	 *      $status = $response->status();
 	 *
 	 * @param   integer  $status Status to set to this response
-	 * @return  mixed
+	 *
+	 * @return  KO7_Response|int|boolean	acting as setter \ acting as getter \ false on invalid status code
 	 */
 	public function status($status = NULL)
 	{
@@ -212,15 +214,12 @@ class KO7_Response implements HTTP_Response {
 		{
 			return $this->_status;
 		}
-		elseif (array_key_exists($status, Response::$messages))
+		if (array_key_exists($status, Response::$messages))
 		{
 			$this->_status = (int) $status;
 			return $this;
 		}
-		else
-		{
-			throw new KO7_Exception(__METHOD__.' unknown status value : :value', [':value' => $status]);
-		}
+		return false;
 	}
 
 	/**

@@ -11,10 +11,11 @@
  *
  * @package    KO7
  * @category   Tests
- * @author     Kohana Team
+ *
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.ga/LICENSE
  */
 class KO7_CoreTest extends Unittest_TestCase
 {
@@ -63,9 +64,9 @@ class KO7_CoreTest extends Unittest_TestCase
 	/**
 	 * Tests KO7::santize()
 	 *
-	 * @test
 	 * @dataProvider provider_sanitize
 	 * @covers KO7::sanitize
+	 *
 	 * @param boolean $value  Input for KO7::sanitize
 	 * @param boolean $result Output for KO7::sanitize
 	 */
@@ -78,7 +79,6 @@ class KO7_CoreTest extends Unittest_TestCase
 	 * Passing FALSE for the file extension should prevent appending any extension.
 	 * See issue #3214
 	 *
-	 * @test
 	 * @covers  KO7::find_file
 	 */
 	public function test_find_file_no_extension()
@@ -96,7 +96,6 @@ class KO7_CoreTest extends Unittest_TestCase
 	 * only a single file was requested, or an empty array if multiple files
 	 * (i.e. configuration files) were requested
 	 *
-	 * @test
 	 * @covers KO7::find_file
 	 */
 	public function test_find_file_returns_false_or_array_on_failure()
@@ -109,7 +108,6 @@ class KO7_CoreTest extends Unittest_TestCase
 	/**
 	 * KO7::list_files() should return an array on success and an empty array on failure
 	 *
-	 * @test
 	 * @covers KO7::list_files
 	 */
 	public function test_list_files_returns_array_on_success_and_failure()
@@ -120,6 +118,31 @@ class KO7_CoreTest extends Unittest_TestCase
 		$this->assertGreaterThan(3, count($files));
 
 		$this->assertSame([], KO7::list_files('geshmuck'));
+	}
+
+	/**
+	 * KO7::list_files() should only return files with specific extension if
+	 * $ext param is passed to it
+	 *
+	 * @covers KO7::list_files
+	 */
+	public function test_list_files_with_extension() : void
+	{
+		// Test with string
+		$ext = '.php';
+		$files = KO7::list_files('tests' . DIRECTORY_SEPARATOR . 'test_data', [SYSPATH], $ext);
+		array_walk_recursive($files, function($item) use ($ext)
+		{
+			self::assertSame($ext, '.'.pathinfo($item, PATHINFO_EXTENSION));
+		});
+
+		// Test with array
+		$ext = ['.php', '.atom'];
+		$files = KO7::list_files('tests' . DIRECTORY_SEPARATOR . 'test_data', [SYSPATH], $ext);
+		array_walk_recursive($files, function($item) use ($ext)
+		{
+			self::assertContains('.'.pathinfo($item, PATHINFO_EXTENSION), $ext);
+		});
 	}
 
 	/**
