@@ -45,12 +45,12 @@ class KO7_REST_Format_XML extends REST_Format {
      *
      * @return mixed
      */
-    private function array_to_xml(array $array, $rootElement = NULL, $xml = NULL)
+    protected function array_to_xml(array $array, $rootElement = NULL, $xml = NULL)
     {
         // If there is no Root Element then insert root
         if ($xml === NULL)
         {
-            $xml = new SimpleXMLElement($rootElement ?? '<?xml version="1.0" encoding="'.KO7::$charset.'"?><root/>', LIBXML_COMPACT);
+            $xml = new SimpleXMLElement($rootElement ?? '<?xml version="1.0" encoding="'.KO7::$charset.'"?><root/>', LIBXML_COMPACT|LIBXML_BIGLINES);
         }
 
         // Visit all key value pair
@@ -77,7 +77,7 @@ class KO7_REST_Format_XML extends REST_Format {
      *
      * @return string
      */
-    private function evaluate_error() : string
+    protected function evaluate_error() : string
     {
         $error_message = 'Unknown XML Error';
         foreach (libxml_get_errors() as $error)
