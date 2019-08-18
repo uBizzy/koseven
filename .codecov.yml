@@ -5,18 +5,13 @@ codecov:
 coverage:
   status:
     project:
+      default: off
       application:
-        paths:
-          - application/tests
-          - application/classes/*
+        flags: application
       modules:
-        paths:
-          - modules/*/tests
-          - modules/classes/*
+        flags: modules
       system:
-        paths:
-          - sytem/tests
-          - system/classes/*
+        flags: system
 
 flags:
   application:
