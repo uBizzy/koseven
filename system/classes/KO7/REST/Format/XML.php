@@ -27,7 +27,7 @@ class KO7_REST_Format_XML extends REST_Format {
         }
 
         // Create new XML Element
-        $xml = new SimpleXMLElement('<root/>');
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="'.KO7::$charset.'"?><root/>', LIBXML_COMPACT);
 
         // Add Child foreach body element
         $xml = $xml->addChild('data');
@@ -36,7 +36,51 @@ class KO7_REST_Format_XML extends REST_Format {
             $result = $xml->addChild($key, $value);
         });
 
-        return $xml->asXML();
+        $xml = $xml->asXML();
+
+        if ( ! $xml)
+        {
+            throw new REST_Exception($this->evaluate_error());
+        }
+
+        return $xml;
+    }
+
+    /**
+     * Evaluate the XML Error and create a error message
+     *
+     * @return string
+     */
+    private function evaluate_error() : string
+    {
+        $error_message = 'Unknown Error XmlException';
+        foreach (libxml_get_errors() as $error)
+        {
+            if ($error instanceof LibXMLError)
+            {
+                switch ($error->level)
+                {
+                    case LIBXML_ERR_WARNING :
+                        $error_message .= 'Warning '.$error->code.': ';
+                        break;
+                    case LIBXML_ERR_ERROR :
+                        $error_message .= 'Error '.$error->code.': ';
+                        break;
+                    case LIBXML_ERR_FATAL :
+                        $error_message .= 'Fatal '.$error->code.': ';
+                        break;
+                }
+
+                $error_message .= trim($error->message)."\n  Line: $error->line"."\n  Column: $error->column";
+
+                if ($error->file)
+                {
+                    $error_message .= "\n  File: $error->file";
+                }
+            }
+        }
+
+        return $error_message;
     }
 
 }

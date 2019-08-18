@@ -96,7 +96,8 @@ abstract class KO7_Controller_REST extends Controller {
         parent::before();
 
         // Try fetching method from HTTP_X_HTTP_METHOD_OVERRIDE, otherwise use the one sent with the request
-        $this->request->method($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] ?? $this->request->method());
+        $ovr = $_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] ?? $this->request->method();
+        $this->request->method(array_key_exists($ovr, static::$_action_map) ? $ovr : $this->request->method());
 
         // Determine the request action from the request method, if the action/method is not allowed throw error
         if ( ! isset(static::$_action_map[$this->request->method()]))
