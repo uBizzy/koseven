@@ -30,26 +30,7 @@ class KO7_REST_Format_JSON extends REST_Format {
         }
         catch(Exception $e)
         {
-            $message = 'Unknown JSON error.';
-
-            switch(json_last_error()) {
-                case JSON_ERROR_DEPTH:
-                    $message = 'Maximum JSON stack depth has been exceeded.';
-                    break;
-                case JSON_ERROR_STATE_MISMATCH:
-                    $message = 'JSON is not properly formed or invalid.';
-                    break;
-                case JSON_ERROR_CTRL_CHAR:
-                    $message = 'Error in JSON control characters. This usually happens with incorrect encoding.';
-                    break;
-                case JSON_ERROR_SYNTAX:
-                    $message = 'Syntax error - Invalid JSON.';
-                    break;
-                case JSON_ERROR_UTF8:
-                    $message = 'Malformed JSON UTF-8 characters. This usually happens with incorrect encoding.';
-                    break;
-            }
-            throw new REST_Exception($message, NULL, $e->getCode(), $e);
+            throw new REST_Exception($e->getMessage(), NULL, $e->getCode(), $e);
         }
 
         return $body;
