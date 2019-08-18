@@ -2,6 +2,22 @@ codecov:
   notify:
     require_ci_to_pass: yes
 
+coverage:
+  status:
+    project:
+      application:
+        paths:
+          - application/tests
+          - application/classes/*
+      modules:
+        paths:
+          - modules/*/tests
+          - modules/classes/*
+      system:
+        paths:
+          - sytem/tests
+          - system/classes/*
+
 flags:
   application:
     paths:
