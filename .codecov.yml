@@ -2,7 +2,7 @@ comment: off
 
 coverage:
   status:
-    project:
+    koseven:
       default: off
       application:
         target: 100%
