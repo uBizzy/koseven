@@ -12,8 +12,6 @@ class KO7_REST_Format_HTML extends REST_Format {
     /**
      * Format function
      *
-     * @param array $body Body to format
-     *
      * @throws REST_Exception
      *
      * @return string
