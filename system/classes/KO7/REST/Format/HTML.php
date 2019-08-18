@@ -18,7 +18,7 @@ class KO7_REST_Format_HTML extends REST_Format {
      *
      * @return string
      */
-    public function format(array $body) : string
+    public function format() : string
     {
         // Parse Request Directory
         $directory = strtolower($this->_request->directory());
@@ -42,7 +42,7 @@ class KO7_REST_Format_HTML extends REST_Format {
         // Try to initialize View
         try
         {
-            return View::factory($view_name, ['data' => $body])->render();
+            return View::factory($view_name, ['data' => $this->_body])->render();
         }
         catch (View_Exception $e)
         {

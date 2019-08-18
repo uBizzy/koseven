@@ -12,13 +12,11 @@ class KO7_REST_Format_JSON extends REST_Format {
     /**
      * Format function
      *
-     * @param array $body Body to format
-     *
      * @return string
      */
-    public function format(array $body) : string
+    public function format() : string
     {
-        return json_encode($body);
+        return json_encode($this->_body);
     }
 
 }

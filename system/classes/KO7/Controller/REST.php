@@ -18,20 +18,6 @@ abstract class KO7_Controller_REST extends Controller {
     public static $default_output = 'json';
 
     /**
-     * The output format to be used (JSON, XML etc.).
-     *
-     * @var string
-     */
-    public $output_format;
-
-    /**
-     * The response that will be returned from controller
-     *
-     * @var  Response_REST
-     */
-    public $response;
-
-    /**
      * REST types
      *
      * @var array
@@ -51,14 +37,6 @@ abstract class KO7_Controller_REST extends Controller {
     protected $_formatter;
 
     /**
-     * Allows overwriting the content_type in the response header
-     * If this is null, content type will be evaluated from the output_format
-     *
-     * @var string
-     */
-    protected $_content_type;
-
-    /**
      * The request's parameters.
      *
      * @var array
@@ -66,50 +44,24 @@ abstract class KO7_Controller_REST extends Controller {
     protected $_params = [];
 
     /**
-     * KO7_Controller_REST constructor.
-     *
-     * We need to convert the "Response" object to a "Response_REST" object.
-     * This allows as passing arrays and objects as content body and not only strings
-     *
-     * @param Request  $request  Request that created the controller
-     * @param Response $response The request's response
-     */
-    public function __construct(Request $request, Response $response)
-    {
-        // Copy class properties
-        $config = [
-            '_status' => $response->status(),
-            '_body' => $response->body(),
-            '_cookies' => $response->cookie(),
-            '_protocol' => $response->protocol()
-        ];
-
-        // Copy all http header(s)
-        $config += $response->headers()->getArrayCopy();
-
-        // Instance Response_REST and pass it to the constructor
-        parent::__construct($request, Response_REST::factory($config));
-    }
-
-    /**
      * Automatically executed before the controller action.
      * Evaluate Request (method, action, parameter, format)
-     *
-     * @throws HTTP_Exception
      */
     public function before() : void
     {
         // Parent call
         parent::before();
 
-        // Try fetching method from HTTP_X_HTTP_METHOD_OVERRIDE, otherwise use the one sent with the request
-        $ovr = $_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] ?? $this->request->method();
-        $this->request->method(array_key_exists($ovr, static::$_action_map) ? $ovr : $this->request->method());
+        // Inject output format if not set by route
+        $this->request->inject_param('format', $this->request->param('format') ?: static::$default_output);
 
         // Determine the request action from the request method, if the action/method is not allowed throw error
+        // We need to do this because this module does not support all HTTP_Requests
         if ( ! isset(static::$_action_map[$this->request->method()]))
         {
-            $this->response->status(405)->headers('Allow', implode(', ', array_keys(static::$_action_map)));
+            $this->response
+                ->status(405)
+                ->headers('Allow', implode(', ', array_keys(static::$_action_map)));
         }
         else
         {
@@ -118,19 +70,6 @@ abstract class KO7_Controller_REST extends Controller {
 
         // Initialize request parameter
         $this->_params = $this->_parse_params();
-
-        // Get output format from route - use default if not available
-        $this->output_format = $this->request->param('format') ?: static::$default_output;
-
-        // Try initializing the formatter
-        try
-        {
-            $this->_formatter = REST_Format::factory(strtoupper($this->output_format), $this->request);
-        }
-        catch (REST_Exception $e)
-        {
-            throw HTTP_Exception::factory(500, $e->getMessage(), NULL, $e);
-        }
     }
 
     /**
@@ -139,11 +78,24 @@ abstract class KO7_Controller_REST extends Controller {
      * - Adds cache and content header(s).
      * - Formats body with given formatting method
      * - Adds attachment header if necessary
+     *
+     * @throws REST_Exception
+     * @throws HTTP_Exception
      */
     public function after() : void
     {
         // Parent call
         parent::after();
+
+        // Try initializing the formatter
+        try
+        {
+            $this->_formatter = REST_Format::factory($this->request, $this->response);
+        }
+        catch (REST_Exception $e)
+        {
+            throw HTTP_Exception::factory(500, $e->getMessage(), NULL, $e);
+        }
 
         // No cache / must-revalidate cache if method is not GET
         if ($this->request->method() !== HTTP_Request::GET)
@@ -152,29 +104,20 @@ abstract class KO7_Controller_REST extends Controller {
         }
 
         // Format body
-        $body = $this->response->body();
-
-        // Check if body is array, else convert it to one by creating an array with "body" as index
-        if ( ! is_array($body))
-        {
-            $body = [
-                'body' => $body
-            ];
-        }
-
-        $body = $this->_formatter->format($body);
-
-        // Parse and set response headers
-        $this->response->headers('content-type', $this->_content_type ?? File::mime_by_ext($this->output_format));
+        $this->response->body($this->_formatter->format());
 
         // Support attachment header
         if (isset($this->_params['attachment']))
         {
-            $this->response->attachment($this->_params['attachment'], $this->output_format);
+            try
+            {
+                $this->response->send_file(TRUE, $this->_params['attachment'].'.'.($this->request->param('format') ?: static::$default_output));
+            }
+            catch (KO7_Exception $e)
+            {
+                throw new REST_Exception($e->getMessage(), NULL, $e->getCode(), $e);
+            }
         }
-
-        // Set response body
-        $this->response->body($body);
     }
 
     /**
@@ -187,7 +130,7 @@ abstract class KO7_Controller_REST extends Controller {
         // If method is GET, fetch params from query
         if ($this->request->method() === HTTP_Request::GET)
         {
-            return array_merge($this->request->query(), $this->_params);
+            return $this->request->query();
         }
 
         // Otherwise we have a PUT, POST, DELETE Method

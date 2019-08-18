@@ -827,6 +827,20 @@ class KO7_Request implements HTTP_Request {
 		return $this;
 	}
 
+    /**
+     * Allow injecting a route parameter.
+     *
+     * @param string $key      Param Name
+     * @param mixed  $value    Param Value
+     *
+     * @return self
+     */
+	public function inject_param($key, $value) : self
+    {
+        $this->_params[$key] = $value;
+        return $this;
+    }
+
 	/**
 	 * Processes the request, executing the controller action that handles this
 	 * request, determined by the [Route].
@@ -955,8 +969,14 @@ class KO7_Request implements HTTP_Request {
 			return $this->_method;
 		}
 
+		// Method is always uppercase
+		$method = strtoupper($method);
+
+		// Allow overriding method
+		$override = isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+
 		// Act as a setter
-		$this->_method = strtoupper($method);
+		$this->_method = $override && defined('HTTP_REQUEST::' . $override) ? $override : $method;
 
 		return $this;
 	}

@@ -23,18 +23,33 @@ abstract class KO7_REST_Format {
     protected $_request;
 
     /**
+     * Holds an instance of the response class
+     *
+     * @var Response
+     */
+    protected $_response;
+
+    /**
+     * Holds the response body
+     *
+     * @var array|string
+     */
+    protected $_body;
+
+    /**
      * Factory Method for REST Formatter
      *
-     * @param string  $format  Format to use (e.g XML, JSON, XML, etc..)
-     * @param Request $request Request Class
+     * @param string   $format   Format to use (e.g XML, JSON, XML, etc..)
+     * @param Request  $request  Request Class
+     * @param Response $response Response Class
      *
      * @throws REST_Exception
      *
      * @return REST_Format
      */
-    public static function factory(string $format, Request $request) : REST_Format
+    public static function factory(Request $request, Response $response) : REST_Format
     {
-        $formatter = 'REST_Format_'.$format;
+        $formatter = 'REST_Format_'.$request->param('format');
 
         // Check if formatter Exists
         if ( ! class_exists($formatter))
@@ -44,7 +59,7 @@ abstract class KO7_REST_Format {
             ]);
         }
 
-        $formatter = new $formatter($request);
+        $formatter = new $formatter($request, $response);
 
         // Check if client extends Request_Client_External
         if ( ! $formatter instanceof REST_Format)
@@ -54,6 +69,9 @@ abstract class KO7_REST_Format {
             ]);
         }
 
+        // Set response content type by format used
+        $response->headers('Content-Type', File::mime_by_ext($request->param('format')));
+
         return $formatter;
     }
 
@@ -62,18 +80,28 @@ abstract class KO7_REST_Format {
      *
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->_request = $request;
+        $this->_response = $response;
+
+        // Make sure body is an array
+        $body = $response->body();
+        if (is_string($body))
+        {
+            $body = [
+              'body' => $body
+            ];
+        }
+
+        $this->_body = $body;
     }
 
     /**
      * Function for formatting the body
      *
-     * @param array $body Body to Format
-     *
      * @return string
      */
-    abstract public function format(array $body) : string;
+    abstract public function format() : string;
 
 }

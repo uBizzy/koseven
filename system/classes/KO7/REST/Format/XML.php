@@ -12,13 +12,11 @@ class KO7_REST_Format_XML extends REST_Format {
     /**
      * Format function
      *
-     * @param array $body Body to format
-     *
      * @throws REST_Exception
      *
      * @return string
      */
-    public function format(array $body) : string
+    public function format() : string
     {
         // Check if php-xml is loaded
         if ( ! extension_loaded('xml'))
@@ -27,7 +25,7 @@ class KO7_REST_Format_XML extends REST_Format {
         }
 
         // Create new XML Element
-        $xml = $this->array_to_xml($body);
+        $xml = $this->array_to_xml($this->_body);
 
         // Check if xml is valid
         if ( ! $xml)

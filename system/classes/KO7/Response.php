@@ -159,15 +159,20 @@ class KO7_Response implements HTTP_Response {
 
 	/**
 	 * Gets or sets the body of the response
+     *
+     * @param mixed $content   Content of body
 	 *
 	 * @return  mixed
 	 */
 	public function body($content = NULL)
 	{
 		if ($content === NULL)
-			return $this->_body;
+        {
+            return $this->_body;
+        }
 
-		$this->_body = (string) $content;
+        $this->_body = $content;
+
 		return $this;
 	}
 
@@ -612,8 +617,8 @@ class KO7_Response implements HTTP_Response {
 	{
 		if ( ! $this->_header->offsetExists('content-type'))
 		{
-			// Add the default Content-Type header if required
-			$this->_header['content-type'] = KO7::$content_type.'; charset='.KO7::$charset;
+            // Add the default Content-Type header if required
+            $this->_header['content-type'] = KO7::$content_type.'; charset='.KO7::$charset;
 		}
 
 		// Set the content length
