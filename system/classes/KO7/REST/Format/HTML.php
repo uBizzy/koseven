@@ -2,10 +2,10 @@
 /**
  * Class for formatting REST-Response bodies as HTML
  *
- * @package KO7\REST
+ * @package        KO7\REST
  *
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license        https://koseven.ga/LICENSE
  */
 class KO7_REST_Format_HTML extends REST_Format {
 
@@ -18,7 +18,7 @@ class KO7_REST_Format_HTML extends REST_Format {
      *
      * @return string
      */
-    public function format(array $body): string
+    public function format(array $body) : string
     {
         // Parse Request Directory
         $directory = strtolower($this->_request->directory());
@@ -49,4 +49,5 @@ class KO7_REST_Format_HTML extends REST_Format {
             throw new REST_Exception($e->getMessage());
         }
     }
+
 }

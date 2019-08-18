@@ -2,10 +2,10 @@
 /**
  * Class for formatting REST-Response bodies as XML
  *
- * @package KO7\REST
+ * @package        KO7\REST
  *
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license        https://koseven.ga/LICENSE
  */
 class KO7_REST_Format_XML extends REST_Format {
 
@@ -18,7 +18,7 @@ class KO7_REST_Format_XML extends REST_Format {
      *
      * @return string
      */
-    public function format(array $body): string
+    public function format(array $body) : string
     {
         // Check if php-xml is loaded
         if ( ! extension_loaded('xml'))
@@ -31,11 +31,13 @@ class KO7_REST_Format_XML extends REST_Format {
 
         // Add Child foreach body element
         $xml = $xml->addChild('data');
-        array_walk_recursive($data, static function($value, $key) use ($xml, &$result) {
+        array_walk_recursive($data, static function($value, $key) use ($xml, &$result)
+        {
             $result = $xml->addChild($key, $value);
         });
 
         return $xml->asXML();
     }
+
 }
 

@@ -2,10 +2,10 @@
 /**
  * Class for formatting REST-Response bodies as JSON
  *
- * @package KO7\REST
+ * @package        KO7\REST
  *
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license        https://koseven.ga/LICENSE
  */
 class KO7_REST_Format_JSON extends REST_Format {
 
@@ -16,7 +16,7 @@ class KO7_REST_Format_JSON extends REST_Format {
      *
      * @return string
      */
-    public function format(array $body): string
+    public function format(array $body) : string
     {
         return json_encode($body);
     }

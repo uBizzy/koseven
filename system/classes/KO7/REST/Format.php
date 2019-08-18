@@ -8,15 +8,16 @@
  *  - XML
  *  - HTML
  *
- * @package KO7\REST
+ * @package        KO7\REST
  *
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license        https://koseven.ga/LICENSE
  */
 abstract class KO7_REST_Format {
 
     /**
      * Holds an instance of the request class
+     *
      * @var Request
      */
     protected $_request;
@@ -24,8 +25,8 @@ abstract class KO7_REST_Format {
     /**
      * Factory Method for REST Formatter
      *
-     * @param string  $format   Format to use (e.g XML, JSON, XML, etc..)
-     * @param Request $request  Request Class
+     * @param string  $format  Format to use (e.g XML, JSON, XML, etc..)
+     * @param Request $request Request Class
      *
      * @throws REST_Exception
      *
@@ -33,7 +34,7 @@ abstract class KO7_REST_Format {
      */
     public static function factory(string $format, Request $request) : REST_Format
     {
-        $formatter = 'REST_Format_' . $format;
+        $formatter = 'REST_Format_'.$format;
 
         // Check if formatter Exists
         if ( ! class_exists($formatter))
@@ -58,6 +59,7 @@ abstract class KO7_REST_Format {
 
     /**
      * KO7_REST_Format constructor.
+     *
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -68,7 +70,7 @@ abstract class KO7_REST_Format {
     /**
      * Function for formatting the body
      *
-     * @param  array $body Body to Format
+     * @param array $body Body to Format
      *
      * @return string
      */
