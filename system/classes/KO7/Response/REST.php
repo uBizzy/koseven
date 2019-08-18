@@ -29,14 +29,6 @@ class KO7_Response_REST extends Response {
 			return $this->_body;
 		}
 
-        // Check if body is array, else convert it to one by creating an array with "body" as index
-        if ( ! is_array($content))
-        {
-            $content = [
-                'body' => $content
-            ];
-        }
-
 		$this->_body = $content;
 
 		return $this;

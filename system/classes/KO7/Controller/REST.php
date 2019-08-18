@@ -152,7 +152,17 @@ abstract class KO7_Controller_REST extends Controller {
         }
 
         // Format body
-        $body = $this->_formatter->format($this->response->body());
+        $body = $this->response->body();
+
+        // Check if body is array, else convert it to one by creating an array with "body" as index
+        if ( ! is_array($body))
+        {
+            $body = [
+                'body' => $body
+            ];
+        }
+
+        $body = $this->_formatter->format($body);
 
         // Parse and set response headers
         $this->response->headers('content-type', $this->_content_type ?? File::mime_by_ext($this->output_format));
