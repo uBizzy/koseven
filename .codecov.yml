@@ -1,0 +1,27 @@
+codecov:
+  notify:
+    require_ci_to_pass: yes
+
+comment: off
+
+coverage:
+  status:
+    project:
+      default: off
+      application:
+        flags: application
+      modules:
+        flags: modules
+      system:
+        flags: system
+
+flags:
+  application:
+    paths:
+      - application/
+  modules:
+    paths:
+      - modules/
+  system:
+    paths:
+      - system/
