@@ -47,6 +47,9 @@ class KO7_REST_Format_XML extends REST_Format {
      */
     protected function array_to_xml(array $array, $rootElement = NULL, $xml = NULL)
     {
+        // Use internal error handling
+        libxml_use_internal_errors(true);
+
         // If there is no Root Element then insert root
         if ($xml === NULL)
         {
@@ -105,6 +108,9 @@ class KO7_REST_Format_XML extends REST_Format {
                 }
             }
         }
+
+        // Clear error stack
+        libxml_clear_errors();
 
         return $error_message;
     }
