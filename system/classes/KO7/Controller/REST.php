@@ -30,20 +30,6 @@ abstract class KO7_Controller_REST extends Controller {
     ];
 
     /**
-     * Instance of body formatting class
-     *
-     * @var REST_Format
-     */
-    protected $_formatter;
-
-    /**
-     * The request's parameters.
-     *
-     * @var array
-     */
-    protected $_params = [];
-
-    /**
      * Automatically executed before the controller action.
      * Evaluate Request (method, action, parameter, format)
      */
@@ -67,9 +53,6 @@ abstract class KO7_Controller_REST extends Controller {
         {
             $this->request->action(static::$_action_map[$this->request->method()]);
         }
-
-        // Initialize request parameter
-        $this->_params = $this->_parse_params();
     }
 
     /**
@@ -90,7 +73,7 @@ abstract class KO7_Controller_REST extends Controller {
         // Try initializing the formatter
         try
         {
-            $this->_formatter = REST_Format::factory($this->request, $this->response);
+            $formatter = REST_Format::factory($this->request, $this->response);
         }
         catch (REST_Exception $e)
         {
@@ -104,14 +87,15 @@ abstract class KO7_Controller_REST extends Controller {
         }
 
         // Format body
-        $this->response->body($this->_formatter->format());
+        $this->response->body($formatter->format());
 
         // Support attachment header
-        if (isset($this->_params['attachment']))
+        $params = $this->_parse_params();
+        if (isset($params['attachment']))
         {
             try
             {
-                $this->response->send_file(TRUE, $this->_params['attachment'].'.'.($this->request->param('format') ?: static::$default_output));
+                $this->response->send_file(TRUE, $params['attachment'].'.'.($this->request->param('format') ?: static::$default_output));
             }
             catch (KO7_Exception $e)
             {
