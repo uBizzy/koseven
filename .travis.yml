@@ -28,7 +28,9 @@ after_success:
   - ln -s $(pwd) /tmp/koseven
   - sudo chmod -R 777 build
   - sudo chmod -R 777 /tmp
-  - travis_retry vendor/bin/php-coveralls -v
+  - bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F application
+  - bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F modules
+  - bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F system
 
 # Disable E-Mail notifications
 notifications:
