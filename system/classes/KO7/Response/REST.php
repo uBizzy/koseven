@@ -29,8 +29,35 @@ class KO7_Response_REST extends Response {
 			return $this->_body;
 		}
 
+        // Check if body is array, else convert it to one by creating an array with "body" as index
+        if ( ! is_array($content))
+        {
+            $content = [
+                'body' => $content
+            ];
+        }
+
 		$this->_body = $content;
 
 		return $this;
 	}
+
+    /**
+     * Set response as attachment (file download)
+     *
+     * @param string $attachment filename of attachment
+     * @param string $type       file type/extension (e.g json, xml, etc..)
+     *
+     * @return $this
+     */
+	public function attachment(string $attachment, $type) : self
+    {
+        // Check if attachment is valid
+        if (Valid::regex($attachment, '/^[-\pL\pN_, ]++$/uD'))
+        {
+            $this->headers('content-disposition', 'attachment; filename='.$attachment.'.'.$type);
+        }
+
+        return $this;
+    }
 }

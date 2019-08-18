@@ -25,6 +25,13 @@ abstract class KO7_Controller_REST extends Controller {
     public $output_format;
 
     /**
+     * The response that will be returned from controller
+     *
+     * @var  Response_REST
+     */
+    public $response;
+
+    /**
      * REST types
      *
      * @var array
@@ -144,26 +151,16 @@ abstract class KO7_Controller_REST extends Controller {
             $this->response->headers('cache-control', 'no-cache, no-store, max-age=0, must-revalidate');
         }
 
-        $body = $this->response->body();
-
-        // Check if body is array, else convert it to one by creating an array with "body" as index
-        if ( ! is_array($body))
-        {
-            $body = [
-                'body' => $body
-            ];
-        }
-
         // Format body
-        $body = $this->_formatter->format($body);
+        $body = $this->_formatter->format($this->response->body());
 
         // Parse and set response headers
         $this->response->headers('content-type', $this->_content_type ?? File::mime_by_ext($this->output_format));
 
         // Support attachment header
-        if (isset($this->_params['attachment']) && Valid::regex($this->_params['attachment'], '/^[-\pL\pN_, ]++$/uD'))
+        if (isset($this->_params['attachment']))
         {
-            $this->response->headers('content-disposition', 'attachment; filename='.$this->_params['attachment'].'.'.$this->output_format);
+            $this->response->attachment($this->_params['attachment'], $this->output_format);
         }
 
         // Set response body
