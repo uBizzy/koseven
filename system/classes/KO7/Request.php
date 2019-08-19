@@ -894,6 +894,12 @@ class KO7_Request implements HTTP_Request {
 					$this->_directory = $params['directory'];
 				}
 
+				// Requested format e.g XML, JSON, etc..
+				if (isset($params['format']))
+                {
+                    $this->_format = $params['format'];
+                }
+
 				// Store the controller
 				$this->_controller = $params['controller'];
 
@@ -907,7 +913,6 @@ class KO7_Request implements HTTP_Request {
 
 				// Params cannot be changed once matched
 				$this->_params = $params;
-				$this->_format = $params['format'] ?? NULL;
 			}
 		}
 
