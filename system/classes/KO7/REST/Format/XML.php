@@ -24,8 +24,15 @@ class KO7_REST_Format_XML extends REST_Format {
             throw new REST_Exception('PHP XML Module not loaded.');
         }
 
+        // Use internal error handling and backup original state
+        $backup_error = libxml_use_internal_errors();
+        libxml_use_internal_errors(true);
+
         // Create new XML Element
         $xml = $this->array_to_xml($this->_body);
+
+        // Restore original handling
+        libxml_use_internal_errors($backup_error);
 
         // Check if xml is valid
         if ( ! $xml)
@@ -47,9 +54,6 @@ class KO7_REST_Format_XML extends REST_Format {
      */
     protected function array_to_xml(array $array, $rootElement = NULL, $xml = NULL)
     {
-        // Use internal error handling
-        libxml_use_internal_errors(true);
-
         // If there is no Root Element then insert root
         if ($xml === NULL)
         {

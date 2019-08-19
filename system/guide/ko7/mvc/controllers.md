@@ -4,7 +4,9 @@ A Controller is a class file that stands in between the models and the views in 
 
 Controllers are called by the [Request::execute()] function based on the [Route] that the url matched.  Be sure to read the [routing](routing) page to understand how to use routes to map urls to your controllers.
 
-## Creating Controllers
+Since version 4.0 Koseven also supports REST Controller (look below for more Information)
+
+## Creating Standard Controllers
 
 In order to function, a controller must do the following:
 
@@ -176,6 +178,45 @@ In general, you should not have to change the `__construct()` function, as anyth
 		// Do whatever else you want
 	}
 
-## Extending other controllers
+## Creating REST-Controllers
 
-TODO: More description and examples of extending other controllers, multiple extension, etc.
+Creating REST-Controller is easy and very much the same as creating a standard controller.
+The only difference here is that instead of `Controller` your class has to extend `Controller_REST`
+
+Example:
+
+	// classes/Controller/Foobar.php
+	class Controller_Foobar extends Controller_REST {
+	
+	// classes/Controller/Admin.php
+	class Controller_Admin extends Controller_REST {
+
+That's it. They work the same way as standard controller (`Controller_REST` extends `Controller`)
+There are some 'extras' with a REST Controller, which are explained the following sections.
+
+## Formatter
+
+
+## Response Body
+
+The response body for REST Controller supports arrays to be passed.
+If you pass a string to the body function it will automatically be converted to an array with 'data' as key.
+
+Example:
+
+    // Example No 1
+    // Pass array as response
+    $this->response->body(['name' => 'Name']);
+    
+    // Example No 2
+    // Pass string as response
+    $this->response->body('Name');
+    
+Example Output (JSON used as Formatter)
+    
+    // Example No 1
+    {"name":"Name"}
+    
+    // Example No 2
+    {"data":"Name"}
+    

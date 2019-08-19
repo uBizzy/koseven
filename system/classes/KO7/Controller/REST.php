@@ -22,7 +22,7 @@ abstract class KO7_Controller_REST extends Controller {
      *
      * @var array
      */
-    protected static $_action_map = [
+    protected $_action_map = [
         HTTP_Request::GET => 'index',
         HTTP_Request::PUT => 'update',
         HTTP_Request::POST => 'create',
@@ -43,15 +43,15 @@ abstract class KO7_Controller_REST extends Controller {
 
         // Determine the request action from the request method, if the action/method is not allowed throw error
         // We need to do this because this module does not support all HTTP_Requests
-        if ( ! isset(static::$_action_map[$this->request->method()]))
+        if ( ! isset($this->_action_map[$this->request->method()]))
         {
             $this->response
                 ->status(405)
-                ->headers('Allow', implode(', ', array_keys(static::$_action_map)));
+                ->headers('Allow', implode(', ', array_keys($this->_action_map)));
         }
         else
         {
-            $this->request->action(static::$_action_map[$this->request->method()]);
+            $this->request->action($this->_action_map[$this->request->method()]);
         }
     }
 
