@@ -49,7 +49,7 @@ abstract class KO7_REST_Format {
      */
     public static function factory(Request $request, Response $response) : REST_Format
     {
-        $formatter = 'REST_Format_'.$request->param('format');
+        $formatter = 'REST_Format_'.$request->format();
 
         // Check if formatter Exists
         if ( ! class_exists($formatter))

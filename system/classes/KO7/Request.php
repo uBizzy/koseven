@@ -505,6 +505,12 @@ class KO7_Request implements HTTP_Request {
 	 */
 	protected $_controller;
 
+    /**
+     * Requested Format (json, xml, html)
+     * @var string
+     */
+    protected $_format;
+
 	/**
 	 * @var  string  action to be executed in the controller
 	 */
@@ -689,6 +695,25 @@ class KO7_Request implements HTTP_Request {
 		return isset($this->_params[$key]) ? $this->_params[$key] : $default;
 	}
 
+    /**
+     * Get / Set requested format
+     *
+     * @param string|null $format e.g JSON, XML, etc...
+     *
+     * @return $this|string
+     */
+	public function format(?string $format = NULL)
+    {
+        if ($format === NULL)
+        {
+            return $this->_format;
+        }
+
+        $this->_format = $format;
+
+        return $this;
+    }
+
 	/**
 	 * Sets and gets the referrer from the request.
 	 *
@@ -827,20 +852,6 @@ class KO7_Request implements HTTP_Request {
 		return $this;
 	}
 
-    /**
-     * Allow injecting a route parameter.
-     *
-     * @param string $key      Param Name
-     * @param mixed  $value    Param Value
-     *
-     * @return self
-     */
-	public function inject_param($key, $value) : self
-    {
-        $this->_params[$key] = $value;
-        return $this;
-    }
-
 	/**
 	 * Processes the request, executing the controller action that handles this
 	 * request, determined by the [Route].
@@ -896,6 +907,7 @@ class KO7_Request implements HTTP_Request {
 
 				// Params cannot be changed once matched
 				$this->_params = $params;
+				$this->_format = $params['format'] ?? NULL;
 			}
 		}
 
