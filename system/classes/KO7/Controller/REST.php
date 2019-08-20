@@ -11,13 +11,6 @@
 abstract class KO7_Controller_REST extends Controller {
 
     /**
-     * Default Output Format
-     *
-     * @var string
-     */
-    public static $default_format = 'json';
-
-    /**
      * REST types
      *
      * @var array
@@ -37,12 +30,6 @@ abstract class KO7_Controller_REST extends Controller {
     {
         // Parent call
         parent::before();
-
-        // Check if format is set by route, otherwise use default
-        if ($this->request->format() === NULL)
-        {
-            $this->request->format(static::$default_format);
-        }
 
         // Determine the request action from the request method, if the action/method is not allowed throw error
         // We need to do this because this module does not support all HTTP_Requests

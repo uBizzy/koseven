@@ -16,6 +16,13 @@
 abstract class KO7_REST_Format {
 
     /**
+     * Default Output Format
+     *
+     * @var string
+     */
+    public static $default_format = 'json';
+
+    /**
      * Holds an instance of the request class
      *
      * @var Request
@@ -39,7 +46,6 @@ abstract class KO7_REST_Format {
     /**
      * Factory Method for REST Formatter
      *
-     * @param string   $format   Format to use (e.g XML, JSON, XML, etc..)
      * @param Request  $request  Request Class
      * @param Response $response Response Class
      *
@@ -49,6 +55,12 @@ abstract class KO7_REST_Format {
      */
     public static function factory(Request $request, Response $response) : REST_Format
     {
+        // Check if format is set by route, otherwise use default
+        if ($request->format() === NULL)
+        {
+            $request->format(static::$default_format);
+        }
+
         $formatter = 'REST_Format_'.$request->format();
 
         // Check if formatter Exists
