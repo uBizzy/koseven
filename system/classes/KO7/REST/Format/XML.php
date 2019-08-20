@@ -28,6 +28,9 @@ class KO7_REST_Format_XML extends REST_Format {
         $backup_error = libxml_use_internal_errors();
         libxml_use_internal_errors(true);
 
+        // Clear error stack BEFORE dealing with xml (in case user forgot to clear it)
+        libxml_clear_errors();
+
         // Create new XML Element
         $xml = $this->array_to_xml($this->_body);
 
