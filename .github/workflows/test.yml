@@ -1,3 +1,5 @@
+name: Koseven
+
 on: [push,pull_request]
 
 jobs:
