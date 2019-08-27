@@ -12,7 +12,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test
-        run: echo CODECOV_TOKEN
+        run: echo $CODECOV_TOKEN
 
       - name: Download current Docker-Image
         run: docker pull koseven/docker:travis-devel
