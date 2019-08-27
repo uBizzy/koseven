@@ -10,8 +10,6 @@ jobs:
       - name: Set Environment Variables
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Test
         run: echo $CODECOV_TOKEN
 
       - name: Download current Docker-Image
