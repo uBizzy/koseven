@@ -7,10 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Set Environment Variables
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: echo $CODECOV_TOKEN
 
       - name: Download current Docker-Image
         run: docker pull koseven/docker:travis-devel
@@ -28,6 +24,8 @@ jobs:
         run: ln -s $(pwd) /tmp/koseven
 
       - name: Upload Application Coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F application
 
       - name: Upload Modules Coverage
