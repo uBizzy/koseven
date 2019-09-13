@@ -1,11 +1,9 @@
 [![Koseven Logo](https://i.imgur.com/2CeT8JL.png)](https://koseven.ga/)
 
 [![Latest Stable Version](https://poser.pugx.org/koseven/koseven/v/stable)](https://packagist.org/packages/koseven/koseven)
-[![Build Status](https://travis-ci.org/koseven/koseven.svg?branch=devel)](https://travis-ci.org/koseven/koseven)
-[![Coverage Status](https://img.shields.io/codecov/c/github/koseven/koseven/devel)](https://codecov.io/gh/koseven/koseven)
+[![Build Status](https://action-badges.now.sh/koseven/koseven?workflow=test)](https://github.com/koseven/koseven/actions)
 [![License](https://poser.pugx.org/koseven/koseven/license.svg)](https://packagist.org/packages/koseven/koseven)
 [![Github Issues](https://img.shields.io/github/issues/koseven/koseven.svg)](https://github.com/koseven/koseven/issues)
-[![Pending Pull-Requests](http://githubbadges.herokuapp.com/koseven/koseven/pulls.svg)](https://github.com/koseven/koseven/pulls)
 [![Forum](https://img.shields.io/badge/Discourse-Join%20Forum-ff9c08.svg?logo=discourse)](https://koseven.discourse.group)
 
 ## [Download 3.3.9](https://github.com/koseven/koseven/releases/tag/3.3.9)
