@@ -990,7 +990,7 @@ class KO7_Request implements HTTP_Request {
 		$method = strtoupper($method);
 
 		// Allow overriding method
-		$override = $this->headers('HTTP_X_HTTP_METHOD_OVERRIDE');
+		$override = $this->headers('X-HTTP-Method-Override');
 
 		// Act as a setter
 		$this->_method = $override && defined('HTTP_REQUEST::' . $override) ? $override : $method;
