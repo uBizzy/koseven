@@ -171,6 +171,12 @@ class KO7_Response implements HTTP_Response {
             return $this->_body;
         }
 
+		// Cast scalar types or objects (with __toString method) to string
+		if (is_scalar($content) || (is_object($content) && method_exists($content, '__toString')))
+        {
+            $content = (string)$content;
+        }
+
         $this->_body = $content;
 
 		return $this;
