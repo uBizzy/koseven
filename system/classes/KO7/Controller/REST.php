@@ -25,8 +25,6 @@ abstract class KO7_Controller_REST extends Controller {
     /**
      * Automatically executed before the controller action.
      * Evaluate Request (method, action, parameter, format)
-     *
-     * @throws REST_Exception
      */
     public function before() : void
     {
