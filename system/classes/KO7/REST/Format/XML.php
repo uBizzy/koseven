@@ -32,7 +32,7 @@ class KO7_REST_Format_XML extends REST_Format {
         libxml_clear_errors();
 
         // Create new XML Element
-        $xml = $this->array_to_xml($this->_body);
+        $xml = $this->iterable_to_xml($this->_body);
 
         // Restore original handling
         libxml_use_internal_errors($backup_error);
@@ -47,15 +47,15 @@ class KO7_REST_Format_XML extends REST_Format {
     }
 
     /**
-     * Convert Array to an xml element
+     * Convert iterable to an xml element
      *
-     * @param array $array        Array to convert
-     * @param mixed $rootElement  Root element of entry
-     * @param null $xml           Current XML stack
+     * @param iterable $obj          Iterable element to convert
+     * @param mixed    $rootElement  Root element of entry
+     * @param null     $xml          Current XML stack
      *
      * @return mixed
      */
-    protected function array_to_xml(array $array, $rootElement = NULL, $xml = NULL)
+    protected function iterable_to_xml(iterable $obj, $rootElement = NULL, $xml = NULL)
     {
         // If there is no Root Element then insert root
         if ($xml === NULL)
@@ -64,13 +64,13 @@ class KO7_REST_Format_XML extends REST_Format {
         }
 
         // Visit all key value pair
-        foreach ($array as $k => $v)
+        foreach ($obj as $k => $v)
         {
             // If there is nested array then
-            if (is_array($v))
+            if (is_iterable($v))
             {
                 // Call function for nested array
-                $this->array_to_xml($v, $k, $xml->addChild($k));
+                $this->iterable_to_xml($v, $k, $xml->addChild($k));
             }
             else
             {
