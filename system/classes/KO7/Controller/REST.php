@@ -25,6 +25,8 @@ abstract class KO7_Controller_REST extends Controller {
     /**
      * Automatically executed before the controller action.
      * Evaluate Request (method, action, parameter, format)
+     *
+     * @throws REST_Exception
      */
     public function before() : void
     {
@@ -60,6 +62,18 @@ abstract class KO7_Controller_REST extends Controller {
         // Parent call
         parent::after();
 
+        // Parse Parameter
+        $params = $this->_parse_params();
+
+        // Some clients cannot handle HTTP responses different than 200
+        if (isset($params['suppressResponseCodes']) && (bool)$params['suppressResponseCodes'] === true)
+        {
+            $body = $this->response->body();
+            $body['responseCode'] = $this->response->status();
+            $this->response->body($body);
+            $this->response->status(200);
+        }
+
         // Try initializing the formatter
         try
         {
@@ -80,12 +94,11 @@ abstract class KO7_Controller_REST extends Controller {
         $this->response->body($formatter->format());
 
         // Support attachment header
-        $params = $this->_parse_params();
         if (isset($params['attachment']))
         {
             try
             {
-                $this->response->send_file(TRUE, $params['attachment'].'.'.($this->request->param('format') ?: static::$default_output));
+                $this->response->send_file(TRUE, $params['attachment'].'.'.($this->request->param('format') ?: REST_Format::$default_format));
             }
             catch (KO7_Exception $e)
             {
@@ -96,6 +109,8 @@ abstract class KO7_Controller_REST extends Controller {
 
     /**
      * Initializes the request params array based on the current request.
+     *
+     * @throws REST_Exception
      *
      * @return array
      */
@@ -111,7 +126,14 @@ abstract class KO7_Controller_REST extends Controller {
         // If content_type is JSON we need to decode the body first
         if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== FALSE)
         {
-            $parsed_body = json_decode($this->request->body(), TRUE);
+            try
+            {
+                $parsed_body = json_decode($this->request->body(), true, 512, JSON_THROW_ON_ERROR);
+            }
+            catch (JsonException $e)
+            {
+                throw new REST_Exception($e->getMessage(). NULL, $e->getCode(), $e);
+            }
         }
         else
         {
