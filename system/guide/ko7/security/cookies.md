@@ -17,11 +17,10 @@ cookie. For example if you set a cookie:
 
 The Value of the Cookie will automatically be hashed through the `hash_hmac` function. Let's look a bit closer into it:
 
-    hash_hmac('sha1', $agent.$name.$value.Cookie::$salt, Cookie::$salt);
+    hash_hmac('sha1', $name.$value.Cookie::$salt, Cookie::$salt);
     
 As you can see the value gets hashed with the `sha1` algorithm. As 'data' variable we pass a string consisting of: 
-The users Browser Agent, the cookie name, the cookie value and the cookie salt - which is also used as hashing key.
-This ensures that the cookie is bound to the user agent and it's value cannot be modified outside of Koseven.
+The cookie name, the cookie value and the cookie salt - which is also used as hashing key.
 
 ## Additional Hints
 
