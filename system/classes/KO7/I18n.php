@@ -22,7 +22,7 @@
  * 
  * @copyright  (c) 2008 - 2016 Kohana Team
  * @copyright  (c) since  2018 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_I18n {
 

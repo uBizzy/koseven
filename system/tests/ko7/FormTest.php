@@ -12,7 +12,7 @@
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_FormTest extends Unittest_TestCase {
 
@@ -23,7 +23,7 @@ class KO7_FormTest extends Unittest_TestCase {
 	// @codingStandardsIgnoreStart
 	protected $environmentDefault = [
 		'KO7::$base_url' => '/',
-		'HTTP_HOST' => 'koseven.ga',
+		'HTTP_HOST' => 'koseven.dev',
 		'KO7::$index_file' => '',
 	];
 	// @codingStandardsIgnoreEnd

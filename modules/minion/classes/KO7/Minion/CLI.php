@@ -5,7 +5,7 @@
  * 
  * @copyright  (c) 2015 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Minion_CLI {
 

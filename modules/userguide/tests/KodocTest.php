@@ -7,7 +7,7 @@
  * 
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_KodocTest extends Unittest_TestCase
 {
@@ -180,29 +180,29 @@ COMMENT
 			[
 <<<'COMMENT'
 /**
- * @license http://koseven.ga/license
+ * @license http://koseven.dev/license
  */
 COMMENT
 ,
-				['', ['license' => ['<a href="http://koseven.ga/license">http://koseven.ga/license</a>']]],
+				['', ['license' => ['<a href="http://koseven.dev/license">http://koseven.dev/license</a>']]],
 			],
 			[
 <<<'COMMENT'
 /**
- * @link http://koseven.ga
+ * @link http://koseven.dev
  */
 COMMENT
 ,
-				['', ['link' => ['<a href="http://koseven.ga">http://koseven.ga</a>']]],
+				['', ['link' => ['<a href="http://koseven.dev">http://koseven.dev</a>']]],
 			],
 			[
 <<<'COMMENT'
 /**
- * @link http://koseven.ga Description
+ * @link http://koseven.dev Description
  */
 COMMENT
 ,
-				['', ['link' => ['<a href="http://koseven.ga">Description</a>']]],
+				['', ['link' => ['<a href="http://koseven.dev">Description</a>']]],
 			],
 			[
 <<<'COMMENT'

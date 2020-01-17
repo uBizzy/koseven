@@ -128,7 +128,7 @@
 
         <h1>Environment Tests</h1>
         <p>
-            The following tests have been run to determine if Koseven will work in your environment. If any of the tests have failed, consult the <a href="https://docs.koseven.ga/guide/ko7/install" target="_blank">documentation</a> for more information on how to correct the problem.
+            The following tests have been run to determine if Koseven will work in your environment. If any of the tests have failed, consult the <a href="https://koseven.dev/guide/ko7/install" target="_blank">documentation</a> for more information on how to correct the problem.
         </p>
 
         <?php $failed = FALSE ?>

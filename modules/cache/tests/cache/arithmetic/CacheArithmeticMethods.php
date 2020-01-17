@@ -9,7 +9,7 @@ include_once(KO7::find_file('tests/cache', 'CacheBasicMethodsTest'));
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 abstract class KO7_CacheArithmeticMethodsTest extends KO7_CacheBasicMethodsTest {
 

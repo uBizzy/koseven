@@ -7,7 +7,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Valid {
 
@@ -529,4 +529,74 @@ class KO7_Valid {
 		return ($array[$field] === $array[$match]);
 	}
 
+    /**
+     * Checks type of field value.
+     *
+     * @param mixed $value Field value.
+     * @param string[] ...$types Valid value types.
+     * @return bool
+     */
+    public static function type($value, string ...$types): bool
+    {
+        $type = gettype($value);
+        if (in_array($type, $types)) {
+            return true;
+        }
+        // Check extra types as "numeric", "iterable", "countable" and etc.
+        foreach ($types as $type) {
+            $func = 'is_' . $type;
+            if (function_exists($func) && $func($value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Tests if a field value more than minimum.
+     *
+     * @param float|int $value Field value.
+     * @param float|int $min Minimum value.
+     * @return bool
+     */
+    public static function more($value, $min): bool
+    {
+        return (float) $value > (float) $min;
+    }
+
+    /**
+     * Tests if a field value more or equal than minimum.
+     *
+     * @param float|int $value Field value.
+     * @param float|int $min Minimum value.
+     * @return bool
+     */
+    public static function more_or_equal($value, $min): bool
+    {
+        return (float) $value >= (float) $min;
+    }
+
+    /**
+     * Tests if a field value less than maximum.
+     *
+     * @param float|int $value Field value.
+     * @param float|int $max Maximum value.
+     * @return bool
+     */
+    public static function less($value, $max): bool
+    {
+        return (float) $value < (float) $max;
+    }
+
+    /**
+     * Tests if a field value less or equal than maximum.
+     *
+     * @param float|int $value Field value.
+     * @param float|int $max Maximum value.
+     * @return bool
+     */
+    public static function less_or_equal($value, $max): bool
+    {
+        return (float) $value <= (float) $max;
+    }
 }

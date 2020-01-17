@@ -9,7 +9,7 @@
  * @category       Test
  * even Team
  * @copyright  (c) Koseven Team
- * @license        https://koseven.ga/LICENSE
+ * @license        https://koseven.dev/LICENSE
  */
 class EncryptSodiumTest extends EncryptTestBase {
 
