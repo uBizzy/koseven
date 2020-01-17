@@ -15,10 +15,13 @@
  * `Security::strip_image_tags` was deprecated since 3.3.6 and got removed
  * `Request::accept_type`, `Request:accept_lang`, `Request::accept_encoding` were deprecated since 3.3.0 and got removed
  * `Validation->as_array()` was deprecated and got removed
+ * Integrated REST module into core ....`Controller_REST` and multiple Formatters `XML`, `JSON` and `XML` are now built-in
 ## Configuration
  * Added support for multiple configuration files (`php`, `json`, `yaml`)
 ## Auth
  * `Auth->hash_password` was deprecated and got removed
+## Cookie
+ * Remove hashing the Cookie with the User Agent (as it does not provide an extra layer of security)
 ## Encryption
  * Deprecated Mcrypt Class (deprecated since PHP 7.1 - removed in PHP 7.2).
  * Add Support for Libsodium.

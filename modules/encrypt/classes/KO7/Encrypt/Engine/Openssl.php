@@ -15,7 +15,7 @@
  * 
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Encrypt_Engine_Openssl extends KO7_Encrypt_Engine {
 

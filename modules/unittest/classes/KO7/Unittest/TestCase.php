@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * 
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 abstract class KO7_Unittest_TestCase extends TestCase {
 

@@ -1,4 +1,4 @@
-# KO7 PHP Framework - system
+# KO7 PHP Framework - core
 
 This is the core package for the [Koseven](http://koseven.dev/) object oriented HMVC framework built using PHP7+.
 It aims to be swift, secure, and small.

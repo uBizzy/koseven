@@ -10,7 +10,7 @@
  *
  * 	   Koseven Team
  * @copyright  (c) since 2018 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class HelpersTest extends Unittest_TestCase {
 

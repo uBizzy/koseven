@@ -4,7 +4,7 @@
  * @category   Test
  *
  * @copyright  (c) Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_RedisTest extends KO7_CacheBasicMethodsTest {
 

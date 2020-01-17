@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @author     Matt Button <matthew@sigswitch.com>
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Config_GroupTest extends TestCase
 {

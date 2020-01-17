@@ -9,7 +9,9 @@ Controllers are called by the [Request::execute()](../api/Request#execute) funct
 the url matched. Be sure to read the [Routing](routing) page to understand how to use routes to map urls to your 
 controllers.
 
-## Creating Controllers
+Since version 4.0 Koseven also supports REST Controller (look below for more Information)
+
+## Creating Standard Controllers
 
 In order to function, a controller must do the following:
 
@@ -193,21 +195,104 @@ This is so the Request object that called the controller is available.
 		// Do whatever else you want
 	}
 
-## Extending other controllers
+# Creating REST-Controllers
 
-Controllers can extend other controller classe(s). This can be useful if multiple Controller share the same
-function. You can for example declare an abstract Controller from which your other controller can extend.
+Creating REST-Controller is easy and very much the same as creating a standard controller.
+The only difference here is that instead of `Controller` your class has to extend `Controller_REST`
 
-Example of the Abstract controller:
+Example:
 
-    abstract class Controller_Application extends Controller {
+	// classes/Controller/Foobar.php
+	class Controller_Foobar extends Controller_REST {
+	
+	// classes/Controller/Admin.php
+	class Controller_Admin extends Controller_REST {
+
+That's it. They work the same way as standard controller (`Controller_REST` extends `Controller`)
+There are some 'extras' with a REST Controller, which are explained the following sections.
+
+## Formatter
+
+REST Controller support different formatter. A formatter is a class which handles formatting the response body.
+
+Formatter's are stored like normal classes inside the `classes\REST\Format` folder.
+Each formatter needs to extend the `REST_Format` class and needs to implement the `format` method which is automatically called
+inside the `after` method of the Controller.
+
+The output content-type header is automatically determined by the Controllers name via `File::mime_by_ext`.
+e.g `Format_JSON` = `application/json`
+
+JSON is the default formatter, there are 2 Options to tell the Controller which formatter to use:
+
+**First** of all you could change the default formatter - NOTE: This will change the default output for all `REST` Controller -
+to do this add the following line in your `bootstrap.php`:
+
+    REST_Format::$default_format = <formatter>;
     
-        public function action_index() 
-        {
-            $this->response->body('hello, world!');
-        }
+    // e.g. This will change the default formatter to XML
+    REST_Format::$default_format = 'xml';
     
-    }
+**Second** Option is you can set it via the Route, passing it as a parameter called `format`:
 
-now all Controllers which extend from this controller automatically have the `action_index` function and use it, just
-like extending a normal class.
+    Route::set('api', 'api/<controller>(.<format>)', [
+        'format'  => '(json|xml|html)'
+	])
+	->defaults([
+	    'controller' => 'welcome',
+	    'format'     => 'html'
+	]);
+	
+In the example above the format can be set by the client (default is set to `html`), meaning that for example the url:
+`https://www.example.com/api/welcome.json` will format the body with the `JSON` formatter.
+
+Koseven comes shipped with 3 integrated Formatter which are described below.
+
+#### JSON (default)
+
+JSON is the default formatter for Koseven.
+It simply formats the output body as JSON string.
+
+#### HTML
+
+This formatter searches for a view inside `views` folder with the same name as the controller and renders it.
+
+e.g `Controller_Welcome` will search for `views/Welcome.php`
+
+If you need different views for different methods/actions you can also do this, because
+if the above view is not found Koseven will look for it depending on the action you called:
+
+e.g `Controller_Welcome::index()` will render `views/Welcome/index.php`
+
+The body is passed to the view, which means it's array key's are available as variables inside the view.
+
+#### XML
+
+XML formatter simply converts the response body to an XML String.
+
+## Response Body
+
+The response body for REST Controller supports arrays to be passed.
+If you pass a string to the body function it will automatically be converted to an array with 'data' as key.
+Example:
+
+    // Example No 1
+    // Pass array as response
+    $this->response->body(['name' => 'Name']);
+    
+    // Example No 2
+    // Pass string as response
+    $this->response->body('Name');
+    
+Example Output (JSON used as Formatter)
+    
+    // Example No 1
+    {"name":"Name"}
+    
+    // Example No 2`
+    {"data":"Name"}
+    
+## Special parameter
+
+`attachment` - you may sometimes like to allow your users to query your API directly from their browser with a direct link to download the data. For these occasions you may add this parameter with a value representing a file name. This will make the module declare a "content-disposition" header that'll make the user's browser open a download window.
+
+`suppressResponseCodes` - some clients cannot handle HTTP responses different than 200. Passing suppressResponseCodes=true will make the response always return 200 OK, while attaching the real response code as an extra key (`responseCode`) in the response body.

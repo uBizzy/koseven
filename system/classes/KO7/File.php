@@ -7,7 +7,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_File {
 
@@ -73,6 +73,9 @@ class KO7_File {
 	 */
 	public static function mime_by_ext($extension)
 	{
+	    // Extension has to be lowercase
+        $extension = strtolower($extension);
+
 		// Load all of the mime types
 		$mimes = KO7::$config->load('mimes');
 

@@ -7,7 +7,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Arr {
 
@@ -102,7 +102,7 @@ class KO7_Arr {
 		}
 		else
 		{
-			if (array_key_exists($path, $array))
+			if (isset($array[$path]))
 			{
 				// No need to do extra processing
 				return $array[$path];

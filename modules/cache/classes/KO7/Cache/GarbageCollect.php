@@ -10,7 +10,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  * @since      3.0.8
  */
 interface KO7_Cache_GarbageCollect {

@@ -8,7 +8,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Request implements HTTP_Request {
 
@@ -264,7 +264,7 @@ class KO7_Request implements HTTP_Request {
 			}
 			else
 			{
-				// If you ever see this error, please report an issue at http://koseven.ga/projects/KO7/issues
+				// If you ever see this error, please report an issue at http://koseven.dev/projects/KO7/issues
 				// along with any relevant information about your web server setup. Thanks!
 				throw new KO7_Exception('Unable to detect the URI using PATH_INFO, REQUEST_URI, PHP_SELF or REDIRECT_URL');
 			}
@@ -505,6 +505,12 @@ class KO7_Request implements HTTP_Request {
 	 */
 	protected $_controller;
 
+    /**
+     * Requested Format (json, xml, html)
+     * @var string
+     */
+    protected $_format;
+
 	/**
 	 * @var  string  action to be executed in the controller
 	 */
@@ -689,6 +695,25 @@ class KO7_Request implements HTTP_Request {
 		return isset($this->_params[$key]) ? $this->_params[$key] : $default;
 	}
 
+    /**
+     * Get / Set requested format
+     *
+     * @param string|null $format e.g JSON, XML, etc...
+     *
+     * @return $this|string
+     */
+	public function format(?string $format = NULL)
+    {
+        if ($format === NULL)
+        {
+            return $this->_format;
+        }
+
+        $this->_format = $format;
+
+        return $this;
+    }
+
 	/**
 	 * Sets and gets the referrer from the request.
 	 *
@@ -869,6 +894,12 @@ class KO7_Request implements HTTP_Request {
 					$this->_directory = $params['directory'];
 				}
 
+				// Requested format e.g XML, JSON, etc..
+				if (isset($params['format']))
+                {
+                    $this->_format = $params['format'];
+                }
+
 				// Store the controller
 				$this->_controller = $params['controller'];
 
@@ -955,8 +986,14 @@ class KO7_Request implements HTTP_Request {
 			return $this->_method;
 		}
 
+		// Method is always uppercase
+		$method = strtoupper($method);
+
+		// Allow overriding method
+		$override = $this->headers('X-HTTP-Method-Override');
+
 		// Act as a setter
-		$this->_method = strtoupper($method);
+		$this->_method = $override && defined('HTTP_REQUEST::' . $override) ? $override : $method;
 
 		return $this;
 	}
