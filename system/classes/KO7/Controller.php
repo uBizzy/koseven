@@ -39,6 +39,7 @@ abstract class KO7_Controller {
 	 *
 	 * @param   Request   $request  Request that created the controller
 	 * @param   Response  $response The request's response
+	 *
 	 * @return  void
 	 */
 	public function __construct(Request $request, Response $response)

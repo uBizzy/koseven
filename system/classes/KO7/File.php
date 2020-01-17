@@ -73,6 +73,9 @@ class KO7_File {
 	 */
 	public static function mime_by_ext($extension)
 	{
+	    // Extension has to be lowercase
+        $extension = strtolower($extension);
+
 		// Load all of the mime types
 		$mimes = KO7::$config->load('mimes');
 
