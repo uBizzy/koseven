@@ -2,8 +2,6 @@
 /**
  * Class for formatting REST-Response bodies as XML
  *
- * @package        KO7\REST
- *
  * @copyright  (c) since 2016 Koseven Team
  * @license        https://koseven.ga/LICENSE
  */
