@@ -203,9 +203,7 @@ class KO7_CookieTest extends Unittest_TestCase
 		return [
 			[['name' => 'foo', 'value' => 'bar', 'salt' => 'our-salt', 'user-agent' => 'Chrome'], ['name' => 'changed']],
 			[['name' => 'foo', 'value' => 'bar', 'salt' => 'our-salt', 'user-agent' => 'Chrome'], ['value' => 'changed']],
-			[['name' => 'foo', 'value' => 'bar', 'salt' => 'our-salt', 'user-agent' => 'Chrome'], ['salt' => 'changed-salt']],
-			[['name' => 'foo', 'value' => 'bar', 'salt' => 'our-salt', 'user-agent' => 'Chrome'], ['user-agent' => 'Firefox']],
-			[['name' => 'foo', 'value' => 'bar', 'salt' => 'our-salt', 'user-agent' => 'Chrome'], ['user-agent' => NULL]],
+			[['name' => 'foo', 'value' => 'bar', 'salt' => 'our-salt', 'user-agent' => 'Chrome'], ['salt' => 'changed-salt']]
 		];
 	}
 
