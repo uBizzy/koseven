@@ -12,7 +12,7 @@
  * @author     BRMatt <matthew@sigswitch.com>
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_HTMLTest extends Unittest_TestCase {
 
@@ -36,7 +36,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 		'KO7::$base_url'    => '/ko7/',
 		'KO7::$index_file'  => 'index.php',
 		'HTML::$strict' => TRUE,
-		'HTTP_HOST'	=> 'www.koseven.ga',
+		'HTTP_HOST'	=> 'www.koseven.dev',
 	];
 	// @codingStandardsIgnoreStart
 
@@ -108,21 +108,21 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				'http://google.com/script.js',
 			],
 			[
-				'<script type="text/javascript" src="http://www.koseven.ga/ko7/index.php/my/script.js"></script>',
+				'<script type="text/javascript" src="http://www.koseven.dev/ko7/index.php/my/script.js"></script>',
 				'my/script.js',
 				NULL,
 				'http',
 				TRUE
 			],
 			[
-				'<script type="text/javascript" src="https://www.koseven.ga/ko7/my/script.js"></script>',
+				'<script type="text/javascript" src="https://www.koseven.dev/ko7/my/script.js"></script>',
 				'my/script.js',
 				NULL,
 				'https',
 				FALSE
 			],
 			[
-				'<script type="text/javascript" src="https://www.koseven.ga/ko7/my/script.js"></script>',
+				'<script type="text/javascript" src="https://www.koseven.dev/ko7/my/script.js"></script>',
 				'/my/script.js', // Test absolute paths
 				NULL,
 				'https',
@@ -178,29 +178,29 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				FALSE
 			],
 			[
-				'<link type="text/css" href="https://www.koseven.ga/ko7/my/style.css" rel="stylesheet" />',
+				'<link type="text/css" href="https://www.koseven.dev/ko7/my/style.css" rel="stylesheet" />',
 				'my/style.css',
 				[],
 				'https',
 				FALSE
 			],
 			[
-				'<link type="text/css" href="https://www.koseven.ga/ko7/index.php/my/style.css" rel="stylesheet" />',
+				'<link type="text/css" href="https://www.koseven.dev/ko7/index.php/my/style.css" rel="stylesheet" />',
 				'my/style.css',
 				[],
 				'https',
 				TRUE
 			],
 			[
-				'<link type="text/css" href="https://www.koseven.ga/ko7/index.php/my/style.css" rel="stylesheet" />',
+				'<link type="text/css" href="https://www.koseven.dev/ko7/index.php/my/style.css" rel="stylesheet" />',
 				'/my/style.css',
 				[],
 				'https',
 				TRUE
 			],
 			[
-				// #4283: http://koseven.ga/issues/4283
-				'<link type="text/css" href="https://www.koseven.ga/ko7/index.php/my/style.css" rel="stylesheet/less" />',
+				// #4283: http://koseven.dev/issues/4283
+				'<link type="text/css" href="https://www.koseven.dev/ko7/index.php/my/style.css" rel="stylesheet/less" />',
 				'my/style.css',
 				[
 					'rel' => 'stylesheet/less'
@@ -260,9 +260,9 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				'Category A',
 			],
 			[
-				'<a href="http://koseven.ga/">KO7</a>',
+				'<a href="http://koseven.dev/">KO7</a>',
 				[],
-				'http://koseven.ga/',
+				'http://koseven.dev/',
 				'KO7',
 			],
 			[
@@ -280,7 +280,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				'GOOGLE',
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/users/example">KO7</a>',
+				'<a href="https://www.koseven.dev/ko7/users/example">KO7</a>',
 				[],
 				'users/example',
 				'KO7',
@@ -289,7 +289,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				FALSE,
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/index.php/users/example">KO7</a>',
+				'<a href="https://www.koseven.dev/ko7/index.php/users/example">KO7</a>',
 				[],
 				'users/example',
 				'KO7',
@@ -298,7 +298,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				TRUE,
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/index.php/users/example">KO7</a>',
+				'<a href="https://www.koseven.dev/ko7/index.php/users/example">KO7</a>',
 				[],
 				'users/example',
 				'KO7',
@@ -306,7 +306,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				'https',
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/index.php/users/example">KO7</a>',
+				'<a href="https://www.koseven.dev/ko7/index.php/users/example">KO7</a>',
 				[],
 				'users/example',
 				'KO7',
@@ -315,7 +315,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				TRUE,
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/users/example">KO7</a>',
+				'<a href="https://www.koseven.dev/ko7/users/example">KO7</a>',
 				[],
 				'users/example',
 				'KO7',
@@ -324,7 +324,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				FALSE,
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/users/example">KO7</a>',
+				'<a href="https://www.koseven.dev/ko7/users/example">KO7</a>',
 				[],
 				'/users/example',
 				'KO7',
@@ -366,7 +366,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				'My picture file',
 			],
 			[
-				'<a href="https://www.koseven.ga/ko7/index.php/mypic.png" attr="value">My picture file</a>',
+				'<a href="https://www.koseven.dev/ko7/index.php/mypic.png" attr="value">My picture file</a>',
 				['attr' => 'value'],
 				'mypic.png',
 				'My picture file',
@@ -374,7 +374,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				TRUE
 			],
 			[
-				'<a href="ftp://www.koseven.ga/ko7/mypic.png">My picture file</a>',
+				'<a href="ftp://www.koseven.dev/ko7/mypic.png">My picture file</a>',
 				[],
 				'mypic.png',
 				'My picture file',
@@ -382,7 +382,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				FALSE
 			],
 			[
-				'<a href="ftp://www.koseven.ga/ko7/mypic.png">My picture file</a>',
+				'<a href="ftp://www.koseven.dev/ko7/mypic.png">My picture file</a>',
 				[],
 				'/mypic.png',
 				'My picture file',
@@ -429,7 +429,7 @@ class KO7_HTMLTest extends Unittest_TestCase {
 				'img/image.png',
 			],
 			[
-				'<img src="https://www.koseven.ga/ko7/index.php/img/image.png" alt="..." />',
+				'<img src="https://www.koseven.dev/ko7/index.php/img/image.png" alt="..." />',
 				'img/image.png',
 				['alt' => '...',],
 				'https',

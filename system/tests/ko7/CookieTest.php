@@ -14,7 +14,7 @@
  * @author     Andrew Coulton <andrew@ingenerator.com>
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_CookieTest extends Unittest_TestCase
 {
@@ -163,8 +163,8 @@ class KO7_CookieTest extends Unittest_TestCase
 
 	/**
 	 * @covers Cookie::delete
-	 * @link    http://koseven.ga/issues/3501
-	 * @link    http://koseven.ga/issues/3020
+	 * @link    http://koseven.dev/issues/3501
+	 * @link    http://koseven.dev/issues/3020
 	 */
 	public function test_delete_does_not_require_configured_salt()
 	{

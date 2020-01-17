@@ -14,7 +14,7 @@
  * @category   Security
  *
  * @copyright  (c) Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Encrypt_Engine_Sodium extends KO7_Encrypt_Engine {
 

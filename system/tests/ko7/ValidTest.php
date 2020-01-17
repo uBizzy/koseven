@@ -12,7 +12,7 @@
  *
  * @author     BRMatt <matthew@sigswitch.com>
  * @copyright  (c) Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_ValidTest extends Unittest_TestCase
 {

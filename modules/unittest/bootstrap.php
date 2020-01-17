@@ -27,7 +27,7 @@ $public = 'public';
  * The default extension of resource files. If you change this, all resources
  * must be renamed to use the new extension.
  *
- * @link http://koseven.ga/guide/about.install#ext
+ * @link http://koseven.dev/guide/about.install#ext
  */
 define('EXT', '.php');
 
@@ -59,7 +59,7 @@ error_reporting(E_ALL & ~E_DEPRECATED);
  * End of standard configuration! Changing any of the code below should only be
  * attempted by those with a working knowledge of KO7 internals.
  *
- * @link http://koseven.ga/guide/using.configuration
+ * @link http://koseven.dev/guide/using.configuration
  */
 
 // Make the application relative to the docroot

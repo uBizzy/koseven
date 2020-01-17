@@ -11,7 +11,7 @@
  * @category   Base
  *
  * @copyright  (c) Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Cache_Redis extends Cache implements Cache_Tagging
 {

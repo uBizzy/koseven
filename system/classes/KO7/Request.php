@@ -8,7 +8,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Request implements HTTP_Request {
 
@@ -264,7 +264,7 @@ class KO7_Request implements HTTP_Request {
 			}
 			else
 			{
-				// If you ever see this error, please report an issue at http://koseven.ga/projects/KO7/issues
+				// If you ever see this error, please report an issue at http://koseven.dev/projects/KO7/issues
 				// along with any relevant information about your web server setup. Thanks!
 				throw new KO7_Exception('Unable to detect the URI using PATH_INFO, REQUEST_URI, PHP_SELF or REDIRECT_URL');
 			}

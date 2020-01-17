@@ -6,7 +6,7 @@
  *
  * @copyright  (c) 2007-2016  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
- * @license    http:/koseven.ga/license
+ * @license    http:/koseven.dev/license
  */
 class KO7_Auth_Bcrypt extends Auth {
 

@@ -2,4 +2,4 @@ Discuss database security.
 
 How to avoid injection, etc.
 
-Not sure why I'm linking to this: <http://koseven.ga/guide/security.database>
+Not sure why I'm linking to this: <http://koseven.dev/guide/security.database>

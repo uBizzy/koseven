@@ -4,7 +4,7 @@
  * @package    KO7/ORM
  * 
  * @copyright  (c) 2016-2018 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_ORM_Behavior_LocalBehavior extends ORM_Behavior {
 
