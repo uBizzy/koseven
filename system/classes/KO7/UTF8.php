@@ -41,10 +41,9 @@ class KO7_UTF8 {
 	 *
 	 *     UTF8::clean($_GET); // Clean GET data
 	 *
-	 * @param   mixed   $var        variable to clean
-	 * @param   string  $charset    character set, defaults to KO7::$charset
+	 * @param   mixed   $var      variable to clean
+	 * @param   string  $charset  character set, defaults to KO7::$charset
 	 * @return  mixed
-	 * @uses    UTF8::clean
 	 * @uses    UTF8::strip_ascii_ctrl
 	 * @uses    UTF8::is_ascii
 	 */
@@ -55,36 +54,33 @@ class KO7_UTF8 {
 			// Use the application character set
 			$charset = KO7::$charset;
 		}
-
-		if (is_array($var) OR is_object($var))
+		
+		if (is_iterable($var))
 		{
+			$vars = [];
 			foreach ($var as $key => $val)
 			{
-				// Recursion!
-				$var[UTF8::clean($key)] = UTF8::clean($val);
+				$vars[UTF8::clean($key, $charset)] = UTF8::clean($val, $charset);
 			}
+			$var = $vars;
 		}
 		elseif (is_string($var) AND $var !== '')
 		{
 			// Remove control characters
 			$var = UTF8::strip_ascii_ctrl($var);
-
 			if ( ! UTF8::is_ascii($var))
 			{
 				// Temporarily save the mb_substitute_character() value into a variable
-				$mb_substitute_character = mb_substitute_character();
-
+				$substitute_character = mb_substitute_character();
 				// Disable substituting illegal characters with the default '?' character
 				mb_substitute_character('none');
-
 				// convert encoding, this is expensive, used when $var is not ASCII
 				$var = mb_convert_encoding($var, $charset, $charset);
-
 				// Reset mb_substitute_character() value back to the original setting
-				mb_substitute_character($mb_substitute_character);
+				mb_substitute_character($substitute_character);
 			}
 		}
-
+		
 		return $var;
 	}
 
