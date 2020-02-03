@@ -23,10 +23,10 @@ abstract class KO7_View {
 	 * you must call [View::set_filename].
 	 *
 	 * @param   string|null  $file   view filename
-	 * @param   array        $data   array of values
+	 * @param   iterable     $data   array of values
 	 * @return  View
 	 */
-	public static function factory($file = NULL, array $data = [])
+	public static function factory($file = NULL, iterable $data = [])
 	{
 		return new View($file, $data);
 	}
@@ -144,9 +144,9 @@ abstract class KO7_View {
 	 * always only be created using [View::factory].
 	 * 
 	 * @param   string|null  $file   view filename
-	 * @param   array   $data   array of values
+	 * @param   iterable     $data   array of values
 	 */
-	public function __construct($file = NULL, array $data = [])
+	public function __construct($file = NULL, iterable $data = [])
 	{
 		if ($file !== NULL)
 		{
@@ -168,7 +168,7 @@ abstract class KO7_View {
 	 * @return  mixed
 	 * @throws  View_Exception
 	 */
-	public function &__get(string $key)
+	public function &__get($key)
 	{
 		if (array_key_exists($key, $this->_data))
 		{
