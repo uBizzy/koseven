@@ -7,26 +7,26 @@
  * @package    KO7
  * @category   Base
  *
- * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) 2007-2020  Kohana Team
  * @copyright  (c) since 2016 Koseven Team
  * @license    https://koseven.dev/LICENSE
  */
-class KO7_View {
+abstract class KO7_View {
 
-	// Array of global variables
+	/**
+	 * @var array Global variables
+	 */
 	protected static $_global_data = [];
 
 	/**
 	 * Returns a new View object. If you do not define the "file" parameter,
 	 * you must call [View::set_filename].
 	 *
-	 *     $view = View::factory($file);
-	 *
-	 * @param   string  $file   view filename
-	 * @param   array   $data   array of values
+	 * @param   string|null  $file   view filename
+	 * @param   array        $data   array of values
 	 * @return  View
 	 */
-	public static function factory($file = NULL, array $data = NULL)
+	public static function factory($file = NULL, array $data = [])
 	{
 		return new View($file, $data);
 	}
@@ -36,14 +36,12 @@ class KO7_View {
 	 * The view data will be extracted to make local variables. This method
 	 * is static to prevent object scope resolution.
 	 *
-	 *     $output = View::capture($file, $data);
-	 *
 	 * @param   string  $ko7_view_filename   filename
 	 * @param   array   $ko7_view_data       variables
 	 * @return  string
-	 * @throws  Exception
+	 * @throws  Throwable
 	 */
-	protected static function capture($ko7_view_filename, array $ko7_view_data)
+	protected static function capture($ko7_view_filename, $ko7_view_data)
 	{
 		// Import the view variables to local namespace
 		extract($ko7_view_data, EXTR_SKIP);
@@ -62,13 +60,18 @@ class KO7_View {
 			// Load the view within the current scope
 			include $ko7_view_filename;
 		}
-		catch (Exception $e)
+		catch (Throwable $e)
 		{
 			// Delete the output buffer
 			ob_end_clean();
-
-			// Re-throw the exception
-			throw $e;
+ 			// Re-throw the exception
+ 			$path = Dump::path($ko7_view_filename);
+			throw new View_Exception(
+				'Rendering error in view :file: :error',
+				[':file' => $path, ':error' => $e->getMessage()],
+				0,
+				$e
+			);
 		}
 
 		// Get the captured output and close the buffer
@@ -84,18 +87,18 @@ class KO7_View {
 	 * You can also use an array or Traversable object to set several values at once:
 	 *
 	 *     // Create the values $food and $beverage in the view
-	 *     View::set_global(array('food' => 'bread', 'beverage' => 'water'));
+	 *     View::set_global(['food' => 'bread', 'beverage' => 'water']);
 	 *
 	 * [!!] Note: When setting with using Traversable object we're not attaching the whole object to the view,
 	 * i.e. the object's standard properties will not be available in the view context.
 	 *
-	 * @param   string|array|Traversable  $key    variable name or an array of variables
-	 * @param   mixed                     $value  value
+	 * @param   string|iterable  $key    variable name or an array of variables
+	 * @param   mixed            $value  value
 	 * @return  void
 	 */
 	public static function set_global($key, $value = NULL)
 	{
-		if (is_array($key) OR $key instanceof Traversable)
+		if (is_iterable($key))
 		{
 			foreach ($key as $name => $value)
 			{
@@ -111,61 +114,61 @@ class KO7_View {
 	/**
 	 * Assigns a global variable by reference, similar to [View::bind], except
 	 * that the variable will be accessible to all views.
-	 *
-	 *     View::bind_global($key, $value);
-	 *
+	 * 
 	 * @param   string  $key    variable name
 	 * @param   mixed   $value  referenced variable
 	 * @return  void
 	 */
-	public static function bind_global($key, & $value)
+	public static function bind_global($key, &$value)
 	{
 		View::$_global_data[$key] =& $value;
 	}
 
-	// View filename
+	/**
+	 * @var string Full path to view
+	 */
 	protected $_file;
 
-	// Array of local variables
+	/**
+	 * @var string Source view filename
+	 */
+	protected $_source_file;
+
+	/**
+	 * @var array Local variables
+	 */
 	protected $_data = [];
 
 	/**
 	 * Sets the initial view filename and local data. Views should almost
 	 * always only be created using [View::factory].
-	 *
-	 *     $view = new View($file);
-	 *
-	 * @param   string  $file   view filename
+	 * 
+	 * @param   string|null  $file   view filename
 	 * @param   array   $data   array of values
-	 * @uses    View::set_filename
 	 */
-	public function __construct($file = NULL, array $data = NULL)
+	public function __construct($file = NULL, array $data = [])
 	{
 		if ($file !== NULL)
 		{
 			$this->set_filename($file);
 		}
-
-		if ($data !== NULL)
+		if ($data)
 		{
-			// Add the values to the current data
-			$this->_data = $data + $this->_data;
+			$this->set($data);
 		}
 	}
 
 	/**
 	 * Magic method, searches for the given variable and returns its value.
 	 * Local variables will be returned before global variables.
-	 *
-	 *     $value = $view->foo;
-	 *
+	 * 
 	 * [!!] If the variable has not yet been set, an exception will be thrown.
 	 *
-	 * @param   string  $key    variable name
+	 * @param   string  $key  Variable name
 	 * @return  mixed
-	 * @throws  KO7_Exception
+	 * @throws  View_Exception
 	 */
-	public function & __get($key)
+	public function &__get(string $key)
 	{
 		if (array_key_exists($key, $this->_data))
 		{
@@ -175,18 +178,15 @@ class KO7_View {
 		{
 			return View::$_global_data[$key];
 		}
-		else
-		{
-			throw new KO7_Exception('View variable is not set: :var',
-				[':var' => $key]);
-		}
+		throw new View_Exception(
+			'Variable is not set: :var',
+			[':var' => $key]
+		);
 	}
 
 	/**
 	 * Magic method, calls [View::set] with the same parameters.
-	 *
-	 *     $view->foo = 'something';
-	 *
+	 * 
 	 * @param   string  $key    variable name
 	 * @param   mixed   $value  value
 	 * @return  void
@@ -198,24 +198,20 @@ class KO7_View {
 
 	/**
 	 * Magic method, determines if a variable is set.
-	 *
-	 *     isset($view->foo);
-	 *
-	 * [!!] `NULL` variables are not considered to be set by [isset](http://php.net/isset).
-	 *
-	 * @param   string  $key    variable name
-	 * @return  boolean
+	 * 
+	 * [!!] `NULL` variables are not considered to be set by [isset](https://php.net/isset).
+	 * 
+	 * @param   string  $key  variable name
+	 * @return  bool
 	 */
 	public function __isset($key)
 	{
-		return (isset($this->_data[$key]) OR isset(View::$_global_data[$key]));
+		return isset($this->_data[$key]) OR isset(View::$_global_data[$key]);
 	}
 
 	/**
 	 * Magic method, unsets a given variable.
-	 *
-	 *     unset($view->foo);
-	 *
+	 * 
 	 * @param   string  $key    variable name
 	 * @return  void
 	 */
@@ -227,8 +223,7 @@ class KO7_View {
 	/**
 	 * Magic method, returns the output of [View::render].
 	 *
-	 * @return  string
-	 * @uses    View::render
+	 * @return string
 	 */
 	public function __toString()
 	{
@@ -236,16 +231,14 @@ class KO7_View {
 		{
 			return $this->render();
 		}
-		catch (Exception $e)
+		catch (Throwable $e)
 		{
 			/**
 			 * Display the exception message and halt script execution.
-			 *
 			 * We use this method here because it's impossible to throw an
-			 * exception from __toString().
+			 * exception from `__toString()`.
 			 */
-			KO7_Exception::handler($e);
-
+			View_Exception::handler($e);
 			// This line will never ne reached
 			return '';
 		}
@@ -253,50 +246,59 @@ class KO7_View {
 
 	/**
 	 * Sets the view filename.
-	 *
-	 *     $view->set_filename($file);
-	 *
+	 * 
 	 * @param   string  $file   view filename
-	 * @return  View
+	 * @return  $this
 	 * @throws  View_Exception
 	 */
 	public function set_filename($file)
 	{
-		if (($path = KO7::find_file('views', $file)) === FALSE)
+		$path = KO7::find_file('views', $file);
+		if (! $path)
 		{
-			throw new View_Exception('The requested view :file could not be found', [
-				':file' => $file,
-			]);
+			throw new View_Exception(
+				'The requested view :file could not be found',
+				[':file' => $file]
+			);
 		}
 
 		// Store the file path locally
 		$this->_file = $path;
+		$this->_source_file = $file;
 
 		return $this;
 	}
 
 	/**
+	 * Gets the view filename.
+	 * 
+	 * @param bool $full If true, return full path, else source filename
+	 * @return string|null
+	 */
+	public function get_filename(bool $full = false): ?string
+	{
+		return $full ? $this->_file : $this->_source_file;
+	}
+
+	/**
 	 * Assigns a variable by name. Assigned values will be available as a
-	 * variable within the view file:
-	 *
-	 *     // This value can be accessed as $foo within the view
-	 *     $view->set('foo', 'my value');
-	 *
+	 * variable within the view file.
+	 * 
 	 * You can also use an array or Traversable object to set several values at once:
 	 *
 	 *     // Create the values $food and $beverage in the view
-	 *     $view->set(array('food' => 'bread', 'beverage' => 'water'));
+	 *     $view->set(['food' => 'bread', 'beverage' => 'water']);
 	 *
 	 * [!!] Note: When setting with using Traversable object we're not attaching the whole object to the view,
 	 * i.e. the object's standard properties will not be available in the view context.
 	 *
-	 * @param   string|array|Traversable  $key    variable name or an array of variables
-	 * @param   mixed                     $value  value
+	 * @param   string|iterable  $key    variable name or an array of variables
+	 * @param   mixed            $value  value
 	 * @return  $this
 	 */
 	public function set($key, $value = NULL)
 	{
-		if (is_array($key) OR $key instanceof Traversable)
+		if (is_iterable($key))
 		{
 			foreach ($key as $name => $value)
 			{
@@ -315,16 +317,13 @@ class KO7_View {
 	 * Assigns a value by reference. The benefit of binding is that values can
 	 * be altered without re-setting them. It is also possible to bind variables
 	 * before they have values. Assigned values will be available as a
-	 * variable within the view file:
-	 *
-	 *     // This reference can be accessed as $ref within the view
-	 *     $view->bind('ref', $bar);
-	 *
+	 * variable within the view file.
+	 * 
 	 * @param   string  $key    variable name
 	 * @param   mixed   $value  referenced variable
 	 * @return  $this
 	 */
-	public function bind($key, & $value)
+	public function bind($key, &$value)
 	{
 		$this->_data[$key] =& $value;
 
@@ -334,16 +333,13 @@ class KO7_View {
 	/**
 	 * Renders the view object to a string. Global and local data are merged
 	 * and extracted to create local variables within the view file.
-	 *
-	 *     $output = $view->render();
-	 *
+	 * 
 	 * [!!] Global variables with the same key name as local variables will be
 	 * overwritten by the local variable.
 	 *
-	 * @param   string  $file   view filename
+	 * @param   string|null  $file   view filename
 	 * @return  string
 	 * @throws  View_Exception
-	 * @uses    View::capture
 	 */
 	public function render($file = NULL)
 	{
@@ -351,14 +347,13 @@ class KO7_View {
 		{
 			$this->set_filename($file);
 		}
-
-		if (empty($this->_file))
+		if (! $this->_file)
 		{
-			throw new View_Exception('You must set the file to use within your view before rendering');
+			throw new View_Exception(
+				'You must set the file to use within your view before rendering'
+			);
 		}
-
 		// Combine local and global data and capture the output
 		return View::capture($this->_file, $this->_data);
 	}
-
 }
