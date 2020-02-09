@@ -46,7 +46,7 @@ spl_autoload_register(['KO7', 'auto_load']);
  *
  * It is recommended to not enable this unless absolutely necessary.
  */
-//spl_autoload_register(array('KO7', 'auto_load_lowercase'));
+// spl_autoload_register(array('KO7', 'auto_load_lowercase'));
 
 /**
  * Enable the KO7 auto-loader for unserialization.
@@ -68,9 +68,9 @@ if (KO7::$compatibility AND is_file(APPPATH.'classes/Kohana'.EXT))
 /**
  * Enable composer autoload libraries
  */
-if (is_file(DOCROOT.'/vendor/autoload.php'))
+if (is_file(DOCROOT.'vendor/autoload.php'))
 {
-	require DOCROOT.'/vendor/autoload.php';
+	require DOCROOT.'vendor/autoload.php';
 }
 
 /**
