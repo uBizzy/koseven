@@ -27,7 +27,7 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 *
 	 * @param string $directory Configuration directory to search
 	 */
-	public function __construct(string $directory = null)
+	public function __construct($directory = null)
 	{
 		if ($directory !== null)
 		{
@@ -42,7 +42,7 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 * @return array Configuration
 	 * @throws KO7_Exception YAML extension/package not loaded
 	 */
-	public function load(string $group): array
+	public function load($group): array
 	{
 		// @codeCoverageIgnoreStart
 		// Check cache
