@@ -40,18 +40,18 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 *
 	 * @param string $group Configuration group name
 	 * @return array Configuration
-	 * @throws KO7_Exception
+	 * @throws KO7_Exception YAML extension/package not loaded
 	 */
-	public function load($group): array
+	public function load(string $group): array
 	{
-		$cache_key = $this->_directory.' '.$group;
+		// @codeCoverageIgnoreStart
 		// Check cache
+		$cache_key = $this->_directory.' '.$group;
 		if (KO7::$caching && isset(static::$_cache[$cache_key]))
 		{
-			// @codeCoverageIgnoreStart
 			return static::$_cache[$cache_key];
-			// @codeCoverageIgnoreEnd
 		}
+		// @codeCoverageIgnoreEnd
 
 		if (KO7::$profiling)
 		{
@@ -60,13 +60,13 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 		}
 
 		$config = [];
-		// Loop through paths. Notice: array_reverse(), so system files get overwritten by app files
+		// Loop through paths. Notice: reverse paths, so system and modules files get overwritten by application files
 		foreach (array_reverse(KO7::include_paths()) as $path)
 		{
 			// Build path
 			$file = $path.$this->_directory.DIRECTORY_SEPARATOR.$group;
 			$value = false;
-			// Try .php .json and .yaml extensions and parse contents with PHP support
+			// Try ".php", ".json" and ".yaml" extensions and parse contents with PHP support
 			if (file_exists($file.'.php'))
 			{
 				$value = KO7::load($file.'.php');
@@ -77,12 +77,12 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 			}
 			elseif (file_exists($file.'.yaml'))
 			{
-				if ( ! extension_loaded('yaml'))
+				// @codeCoverageIgnoreStart
+				if ( ! function_exists('yaml_parse'))
 				{
-					// @codeCoverageIgnoreStart
-					throw new KO7_Exception('PECL YAML extension is required in order to parse YAML config');
-					// @codeCoverageIgnoreEnd
+					throw new KO7_Exception('YAML extension/package is required in order to parse YAML files');
 				}
+				// @codeCoverageIgnoreEnd
 				$value = yaml_parse($this->read_from_ob($file.'.yaml'));
 			}
 			// Merge configurations
@@ -92,12 +92,12 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 			}
 		}
 
+		// @codeCoverageIgnoreStart
 		if (KO7::$caching)
 		{
-			// @codeCoverageIgnoreStart
 			static::$_cache[$cache_key] = $config;
-			// @codeCoverageIgnoreEnd
 		}
+		// @codeCoverageIgnoreEnd
 
 		if (isset($benchmark))
 		{
@@ -112,15 +112,15 @@ abstract class KO7_Config_File_Reader implements KO7_Config_Reader {
 	 * Read contents from file with output buffering. Used to support `<?php` `?>` tags and code inside configurations.
 	 *
 	 * @param string $path Path to File
-	 * @return false|string
+	 * @return string
 	 * @codeCoverageIgnore
 	 */
-	protected function read_from_ob(string $path)
+	protected function read_from_ob(string $path): string
 	{
 		// Start output buffer
 		ob_start();
 		KO7::load($path);
 		// Return contents of buffer
-		return ob_get_clean();
+		return (string) ob_get_clean();
 	}
 }
