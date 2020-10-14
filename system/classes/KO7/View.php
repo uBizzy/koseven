@@ -65,10 +65,9 @@ abstract class KO7_View {
 			// Delete the output buffer
 			ob_end_clean();
  			// Re-throw the exception
- 			$path = Dump::path($ko7_view_filename);
 			throw new View_Exception(
-				'Rendering error in view :file: :error',
-				[':file' => $path, ':error' => $e->getMessage()],
+				'Rendering error in template :view: :error',
+				[':view' => Debug::path($ko7_view_filename), ':error' => $e],
 				0,
 				$e
 			);
@@ -125,12 +124,12 @@ abstract class KO7_View {
 	}
 
 	/**
-	 * @var string Full path to view
+	 * @var string Absolute path to view
 	 */
 	protected $_file;
 
 	/**
-	 * @var string Source view filename
+	 * @var string Relative path to view
 	 */
 	protected $_source_file;
 
@@ -239,7 +238,7 @@ abstract class KO7_View {
 			 * exception from `__toString()`.
 			 */
 			View_Exception::handler($e);
-			// This line will never ne reached
+			// This line will never be reached
 			return '';
 		}
 	}
@@ -272,12 +271,12 @@ abstract class KO7_View {
 	/**
 	 * Gets the view filename.
 	 * 
-	 * @param bool $full If true, return full path, else source filename
+	 * @param bool $source If true, return source filename, else absolute path
 	 * @return string|null
 	 */
-	public function get_filename(bool $full = false): ?string
+	public function get_filename(bool $source = false): ?string
 	{
-		return $full ? $this->_file : $this->_source_file;
+		return $source ? $this->_source_file : $this->_file;
 	}
 
 	/**
@@ -347,13 +346,13 @@ abstract class KO7_View {
 		{
 			$this->set_filename($file);
 		}
-		if (! $this->_file)
+		if (! $this->get_filename())
 		{
 			throw new View_Exception(
 				'You must set the file to use within your view before rendering'
 			);
 		}
 		// Combine local and global data and capture the output
-		return View::capture($this->_file, $this->_data);
+		return View::capture($this->get_filename(), $this->_data);
 	}
 }
