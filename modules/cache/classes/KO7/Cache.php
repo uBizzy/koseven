@@ -294,7 +294,10 @@ abstract class KO7_Cache {
 	abstract public function delete_all();
 
     /**
-     * Replaces troublesome characters with underscores and adds prefix to avoid duplicates
+     * Takes the sha1 of the id and adds prefix to avoid duplicates
+     *
+     * The id is converted to a sha1 to prevent any issues with
+     * id length or any special character
      *
      *     // Sanitize a cache id
      *     $id = $this->_sanitize_id($id);
