@@ -382,7 +382,7 @@ class KO7_Route {
 	 * [!!] Default parameters are added before filters are called!
 	 *
 	 * @throws  KO7_Exception
-	 * @param   array   $callback   callback string, array, or closure
+	 * @param   mixed   $callback   callback string, array, or closure
 	 * @return  $this
 	 */
 	public function filter($callback)
