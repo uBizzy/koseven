@@ -29,9 +29,10 @@
  *
  * @package    KO7
  * @category   Base
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_Route {
 
@@ -381,7 +382,7 @@ class KO7_Route {
 	 * [!!] Default parameters are added before filters are called!
 	 *
 	 * @throws  KO7_Exception
-	 * @param   array   $callback   callback string, array, or closure
+	 * @param   mixed   $callback   callback string, array, or closure
 	 * @return  $this
 	 */
 	public function filter($callback)

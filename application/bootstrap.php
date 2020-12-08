@@ -19,7 +19,7 @@ else
 /**
  * Set the default time zone.
  *
- * @link http://koseven.ga/guide/using.configuration
+ * @link http://koseven.dev/guide/using.configuration
  * @link http://www.php.net/manual/timezones
  */
 date_default_timezone_set('America/Chicago');
@@ -27,7 +27,7 @@ date_default_timezone_set('America/Chicago');
 /**
  * Set the default locale.
  *
- * @link http://koseven.ga/guide/using.configuration
+ * @link http://koseven.dev/guide/using.configuration
  * @link http://www.php.net/manual/function.setlocale
  */
 setlocale(LC_ALL, 'en_US.utf-8');
@@ -35,7 +35,7 @@ setlocale(LC_ALL, 'en_US.utf-8');
 /**
  * Enable the KO7 auto-loader.
  *
- * @link http://koseven.ga/guide/using.autoloading
+ * @link http://koseven.dev/guide/using.autoloading
  * @link http://www.php.net/manual/function.spl-autoload-register
  */
 spl_autoload_register(['KO7', 'auto_load']);
@@ -46,7 +46,7 @@ spl_autoload_register(['KO7', 'auto_load']);
  *
  * It is recommended to not enable this unless absolutely necessary.
  */
-//spl_autoload_register(array('KO7', 'auto_load_lowercase'));
+// spl_autoload_register(array('KO7', 'auto_load_lowercase'));
 
 /**
  * Enable the KO7 auto-loader for unserialization.
@@ -68,9 +68,9 @@ if (KO7::$compatibility AND is_file(APPPATH.'classes/Kohana'.EXT))
 /**
  * Enable composer autoload libraries
  */
-if (is_file(DOCROOT.'/vendor/autoload.php'))
+if (is_file(DOCROOT.'vendor/autoload.php'))
 {
-	require DOCROOT.'/vendor/autoload.php';
+	require DOCROOT.'vendor/autoload.php';
 }
 
 /**
@@ -165,7 +165,7 @@ KO7::modules($modules);
 
 /**
  * Cookie Salt
- * @see  http://koseven.ga/3.3/guide/ko7/cookies
+ * @see  http://koseven.dev/3.3/guide/ko7/cookies
  *
  * If you have not defined a cookie salt in your Cookie class then
  * uncomment the line below and define a preferrably long salt.

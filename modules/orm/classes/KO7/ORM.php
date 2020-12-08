@@ -9,11 +9,12 @@
  * [ref-act]: http://wikipedia.org/wiki/Active_record
  *
  * @package    KO7/ORM
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
- * @license    https://koseven.ga/LICENSE.md
+ *
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) since 2016 Koseven Team
+ * @license    https://koseven.dev/LICENSE
  */
-class KO7_ORM extends Model implements serializable {
+class KO7_ORM extends Model implements Serializable {
 
 	/**
 	 * Stores column information for ORM models
@@ -74,10 +75,10 @@ class KO7_ORM extends Model implements serializable {
 	 * Validation object created before saving/updating
 	 * @var Validation
 	 */
-	protected $_validation = NULL;
+	protected $_validation;
 
 	/**
-	 * Current object
+	 * Properties of current object.
 	 * @var array
 	 */
 	protected $_object = [];
@@ -115,7 +116,7 @@ class KO7_ORM extends Model implements serializable {
 	/**
 	 * @var array
 	 */
-	protected $_sorting;
+	protected $_sorting = [];
 
 	/**
 	 * Foreign key suffix
@@ -151,13 +152,13 @@ class KO7_ORM extends Model implements serializable {
 	 * Auto-update columns for updates
 	 * @var string
 	 */
-	protected $_updated_column = NULL;
+	protected $_updated_column;
 
 	/**
 	 * Auto-update columns for creation
 	 * @var string
 	 */
-	protected $_created_column = NULL;
+	protected $_created_column;
 
 	/**
 	 * Auto-serialize and unserialize columns on get/set
@@ -193,13 +194,13 @@ class KO7_ORM extends Model implements serializable {
 	 * Database Object
 	 * @var Database
 	 */
-	protected $_db = NULL;
+	protected $_db;
 
 	/**
 	 * Database config group
 	 * @var String
 	 */
-	protected $_db_group = NULL;
+	protected $_db_group;
 
 	/**
 	 * Database methods applied
@@ -238,11 +239,11 @@ class KO7_ORM extends Model implements serializable {
 	protected $_cast_data = [];
 
 	/**
-	 * The message filename used for validation errors.
-	 * Defaults to ORM::$_object_name
+	 * The message filename used for validation errors. Defaults to `ORM::$_object_name`.
+	 * 
 	 * @var string
 	 */
-	protected $_errors_filename = NULL;
+	protected $_errors_filename;
 
 	/**
 	 * List of behaviors
@@ -254,7 +255,7 @@ class KO7_ORM extends Model implements serializable {
 	 * List of private columns that will not appear in array or object
 	 * @var array
 	 */
-	protected $_private_columns = FALSE;
+	protected $_private_columns = [];
 
 	/**
 	 * Constructs a new model and loads a record if given
@@ -485,7 +486,7 @@ class KO7_ORM extends Model implements serializable {
 	public function clear()
 	{
 		// Create an array with all the columns set to NULL
-		$values = array_combine(array_keys($this->_table_columns), array_fill(0, count($this->_table_columns), NULL));
+		$values = array_fill_keys(array_keys($this->_table_columns), NULL);
 
 		// Replace the object and reset the object status
 		$this->_object = $this->_changed = $this->_related = $this->_original_values = [];
@@ -2076,7 +2077,9 @@ class KO7_ORM extends Model implements serializable {
 	}
 
 	/**
-	 * @return object
+	 * Returns object properties.
+	 
+	 * @return array
 	 */
 	public function object()
 	{
