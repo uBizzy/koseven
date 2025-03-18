@@ -10,7 +10,7 @@ abstract class KO7_HTTP_Exception extends KO7_Exception {
 	 * @param   array   $variables  translation variables
 	 * @return  HTTP_Exception
 	 */
-	public static function factory($code, $message = NULL, array $variables = NULL, Exception $previous = NULL)
+	public static function factory($code, $message = '', array $variables = NULL, Exception $previous = NULL)
 	{
 		$class = 'HTTP_Exception_'.$code;
 
